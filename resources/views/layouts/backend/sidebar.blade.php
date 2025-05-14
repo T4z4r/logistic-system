@@ -44,7 +44,7 @@
                  <span class="nav-main-link-name">Clients </span>
              </a>
          </li>
-           <li class="nav-main-item{{ request()->is('trips/create') ? ' open' : '' }}">
+         <li class="nav-main-item{{ request()->is('trips/create') ? ' open' : '' }}">
              <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="/trips/create">
                  <i class="nav-main-link-icon fa fa-users"></i>
                  <span class="nav-main-link-name">Drivers </span>
@@ -112,13 +112,13 @@
                  </span>
              </a>
          </li>
-             <li class="nav-main-item">
+         <li class="nav-main-item">
              <a class="nav-main-link{{ request()->is('trip-settings/costs') ? ' active' : '' }}"
                  href="/trip-settings/costs">
                  <i class="nav-main-link-icon fa fa-file-pdf"></i>
                  <span class="nav-main-link-name">
-                    Reports
-                </span>
+                     Reports
+                 </span>
              </a>
          </li>
          <li class="nav-main-heading">Finance Menu</li>
@@ -186,12 +186,51 @@
                  </li>
              </ul>
          </li>
-
-
-
+         <li class="nav-main-item">
+             <a class="nav-main-link{{ request()->is('trip-settings/costs') ? ' active' : '' }}"
+                 href="/trip-settings/costs">
+                 <i class="nav-main-link-icon fa fa-file-pdf"></i>
+                 <span class="nav-main-link-name">
+                     Reports
+                 </span>
+             </a>
+         </li>
 
 
          <li class="nav-main-heading">Settings Menu</li>
+        <li class="nav-main-item{{ request()->is('finance-settings*') ? ' open' : '' }}">
+            <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                aria-expanded="{{ request()->is('finance-settings*') ? 'true' : 'false' }}" href="#">
+                <i class="nav-main-link-icon fa fa-file-pdf"></i>
+                <span class="nav-main-link-name">Finance Settings</span>
+            </a>
+            <ul class="nav-main-submenu">
+                <li class="nav-main-item">
+                    <a class="nav-main-link{{ request()->is('finance-settings/general') ? ' active' : '' }}"
+                        href="/finance-settings/general">
+                        <span class="nav-main-link-name">General</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link{{ request()->is('currencies.*') ? ' active' : '' }}"
+                        href="{{ route('currencies.index') }}">
+                        <span class="nav-main-link-name">Currencies</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link{{ request()->is('finance-settings/tax') ? ' active' : '' }}"
+                        href="/finance-settings/tax">
+                        <span class="nav-main-link-name">Tax Settings</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link{{ request()->is('finance-settings/banks') ? ' active' : '' }}"
+                        href="/finance-settings/banks">
+                        <span class="nav-main-link-name">Bank Accounts</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
 
          <li class="nav-main-item{{ request()->is('trip-settings*') ? ' open' : '' }}">
              <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"

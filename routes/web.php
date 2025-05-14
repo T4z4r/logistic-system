@@ -41,5 +41,5 @@ Route::view('/pages/blank', 'pages.blank');
 
 require __DIR__.'/auth.php';
 
-
+require __DIR__.'/currency.php';
 require __DIR__.'/department.php';

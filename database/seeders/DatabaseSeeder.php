@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Database\Seeders\CurrencySeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,6 +17,8 @@ class DatabaseSeeder extends Seeder
             DepartmentSeeder::class,
             RolePermissionSeeder::class,
             UserSeeder::class,
+            CurrencySeeder::class,
+
         ]);
     }
  }
