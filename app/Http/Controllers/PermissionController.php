@@ -12,13 +12,13 @@ use Illuminate\Support\Facades\Validator;
 class PermissionController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('permission:add permission')->only('index');
-        $this->middleware('permission:view permissions')->only('index');
-        $this->middleware('permission:edit permission')->only('index');
-        $this->middleware('permission:delete permission')->only('index');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('permission:add permission')->only('index');
+    //     $this->middleware('permission:view permissions')->only('index');
+    //     $this->middleware('permission:edit permission')->only('index');
+    //     $this->middleware('permission:delete permission')->only('index');
+    // }
 
 
     // This method will show permissions page

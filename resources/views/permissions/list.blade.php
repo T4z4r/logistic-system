@@ -1,70 +1,89 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between">
-            <h2> {{ __('Permissions') }}</h2>
-            <a href="{{ route('permissions.create') }}"
-                class="bg-slate-700 text-sm rounded-md text-white px-5 py-2">Create</a>
-        </div>
-    </x-slot>
+@extends('layouts.backend')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-
-                    <x-message></x-message>
-                    @if ($permissions->isNotEmpty())
-
-                    <table class="table table-auto w-full">
-                        <thead class="bg-gray-50">
-                            <tr class="border-b">
-                                <th class="px-6 py-3 text-left" width="60">#</th>
-                                <th class="px-6 py-3 text-left">Name</th>
-                                <th class="px-6 py-3 text-left" width="200">Created At</th>
-                                <th class="px-6 py-3 text-center" with="180">Action</th>
-                            </tr>
-
-                        </thead>
-                        <tbody class="bg-white">
-                                @foreach ($permissions as $permission)
-                                    <tr class="border-b">
-                                        <td class="px-6 py-3 text-left">{{ $count++ }}</td>
-                                        <td class="px-6 py-3 text-left">{{ $permission->name }}</td>
-                                        <td class="px-6 py-3 text-left">{{  \Carbon\Carbon::parse($permission->created_at)->format('d M,Y') }}</td>
-                                        <td class="px-6 py-3 text-center">
-
-                                            <a href="{{ route('permissions.edit',$permission->id) }}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-2 me-2 hover:bg-slate-600">
-                                                Edit
-                                            </a>
-
-                                            <form action="{{ route('permissions.destroy',$permission->id) }}" method="post" class="inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="bg-red-700 text-sm rounded-md text-white px-3 py-2 hover:bg-red-600">
-                                                    Delete
-                                                </button>
-                                            </form>
-
-                                        </td>
-                                    </tr>
-                                @endforeach
-
-
-                        </tbody>
-
-                    </table>
-
-                    <div class="my-3">
-                        {{ $permissions->links() }}
-
-                    </div>
-
-                    @endif
+@section('content')
+    <!-- Hero -->
+    <div class="bg-body-light">
+        <div class="content content-full">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+                <div class="flex-grow-1">
+                    <h1 class="h3 fw-bold mb-1">Permissions</h1>
+                    <h2 class="fs-base lh-base fw-medium text-muted mb-0">
+                        Manage system permissions
+                    </h2>
                 </div>
+                <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-alt">
+                        <li class="breadcrumb-item">
+                            <a class="link-fx" href="{{ url('/') }}">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item" aria-current="page">
+                            Permissions
+                        </li>
+                    </ol>
+                </nav>
             </div>
         </div>
     </div>
-    <x-slot name="script">
+    <!-- END Hero -->
 
-    </x-slot>
-</x-app-layout>
+    <!-- Page Content -->
+    <div class="content">
+        <div class="block block-rounded">
+            <div class="block-header block-header-default d-flex justify-content-between align-items-center">
+                <h3 class="block-title">Permissions List</h3>
+                <a href="{{ route('permissions.create') }}" class="btn btn-sm btn-alt-primary">
+                    <i class="fa fa-plus me-1"></i> Create
+                </a>
+            </div>
+            <div class="block-content">
+                <x-message />
+
+                @if ($permissions->isNotEmpty())
+                    @php $count = ($permissions->currentPage() - 1) * $permissions->perPage() + 1; @endphp
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-vcenter">
+                            <thead>
+                                <tr>
+                                    <th style="width: 60px">#</th>
+                                    <th>Name</th>
+                                    <th style="width: 200px">Created At</th>
+                                    <th class="text-center" style="width: 180px">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($permissions as $permission)
+                                    <tr>
+                                        <td>{{ $count++ }}</td>
+                                        <td>{{ $permission->name }}</td>
+                                        <td>{{ $permission->created_at->format('d M, Y') }}</td>
+                                        <td class="text-center">
+                                            <a href="{{ route('permissions.edit', $permission->id) }}" class="btn btn-sm btn-alt-secondary">
+                                                <i class="fa fa-edit"></i> Edit
+                                            </a>
+                                            <form action="{{ route('permissions.destroy', $permission->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-alt-danger">
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-3">
+                        {{ $permissions->links() }}
+                    </div>
+                @else
+                    <div class="text-center py-4 text-muted">
+                        No permissions found.
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+    <!-- END Page Content -->
+@endsection

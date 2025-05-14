@@ -38,8 +38,9 @@
 
          <li class="nav-main-heading">Logistics Menus</li>
 
-         <li class="nav-main-item{{ request()->is('customers.*') ? ' open' : '' }}">
-             <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="{{ route('customers.index') }}">
+         <li class="nav-main-item{{ (request()->is('customers') || request()->is('customers/*')) ? ' open' : '' }}">
+             <a class="nav-main-link{{ (request()->is('customers') || request()->is('customers/*')) ? ' active' : '' }}"
+                 href="{{ route('customers.index') }}">
                  <i class="nav-main-link-icon fa fa-user-tie"></i>
                  <span class="nav-main-link-name">Clients </span>
              </a>
@@ -121,123 +122,54 @@
                  </span>
              </a>
          </li>
-         <li class="nav-main-heading">Finance Menu</li>
-         <li class="nav-main-item">
-             <a class="nav-main-link{{ request()->is('trip-settings/costs') ? ' active' : '' }}"
-                 href="/trip-settings/costs">
-                 <i class="nav-main-link-icon fa fa-truck"></i>
-                 <span class="nav-main-link-name">
-                     Trips
-                 </span>
-             </a>
-         </li>
-         <li class="nav-main-item">
-             <a class="nav-main-link{{ request()->is('trip-settings/costs') ? ' active' : '' }}"
-                 href="/trip-settings/costs">
-                 <i class="nav-main-link-icon fa fa-calculator"></i>
-                 <span class="nav-main-link-name">
-                     Trip Expenses
-                 </span>
-             </a>
-         </li>
-         <li class="nav-main-item">
-             <a class="nav-main-link{{ request()->is('trip-settings/costs') ? ' active' : '' }}"
-                 href="/trip-settings/costs">
-                 <i class="nav-main-link-icon fa fa-gas-pump"></i>
-                 <span class="nav-main-link-name">
-                     Fuel Procurements
-                 </span>
-             </a>
-         </li>
-         <li class="nav-main-item{{ request()->is('client-payments*') ? ' open' : '' }}">
-             <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                 aria-expanded="{{ request()->is('client-payments*') ? 'true' : 'false' }}" href="#">
-                 <i class="nav-main-link-icon fa fa-credit-card"></i>
-                 <span class="nav-main-link-name">Client Payments</span>
-             </a>
-             <ul class="nav-main-submenu">
-                 <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('client-payments/invoices') ? ' active' : '' }}"
-                         href="/client-payments/invoices">
-                         <i class="nav-main-link-icon fa fa-file-invoice"></i>
-                         <span class="nav-main-link-name">Trip Invoices</span>
-                     </a>
-                 </li>
-                 <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('client-payments/debit-notes') ? ' active' : '' }}"
-                         href="/client-payments/debit-notes">
-                         <i class="nav-main-link-icon fa fa-file-invoice-dollar"></i>
-                         <span class="nav-main-link-name">Debit Notes</span>
-                     </a>
-                 </li>
-                 <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('client-payments/credit-notes') ? ' active' : '' }}"
-                         href="/client-payments/credit-notes">
-                         <i class="nav-main-link-icon fa fa-file-invoice"></i>
-                         <span class="nav-main-link-name">Credit Notes</span>
-                     </a>
-                 </li>
-                 <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('client-payments/standing-charges') ? ' active' : '' }}"
-                         href="/client-payments/standing-charges">
-                         <i class="nav-main-link-icon fa fa-money-bill"></i>
-                         <span class="nav-main-link-name">Standing Charges</span>
-                     </a>
-                 </li>
-             </ul>
-         </li>
-         <li class="nav-main-item">
-             <a class="nav-main-link{{ request()->is('trip-settings/costs') ? ' active' : '' }}"
-                 href="/trip-settings/costs">
-                 <i class="nav-main-link-icon fa fa-file-pdf"></i>
-                 <span class="nav-main-link-name">
-                     Reports
-                 </span>
-             </a>
-         </li>
+         @can('view-finance-menu')
+             @include('layouts.backend.sidebar.finance')
+         @endcan
 
 
          <li class="nav-main-heading">Settings Menu</li>
-        <li class="nav-main-item{{ request()->is('finance-settings*') ? ' open' : '' }}">
-            <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                aria-expanded="{{ request()->is('finance-settings*') ? 'true' : 'false' }}" href="#">
-                <i class="nav-main-link-icon fa fa-file-pdf"></i>
-                <span class="nav-main-link-name">Finance Settings</span>
-            </a>
-            <ul class="nav-main-submenu">
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('finance-settings/general') ? ' active' : '' }}"
-                        href="/finance-settings/general">
-                        <span class="nav-main-link-name">General</span>
-                    </a>
-                </li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('currencies.*') ? ' active' : '' }}"
-                        href="{{ route('currencies.index') }}">
-                        <span class="nav-main-link-name">Currencies</span>
-                    </a>
-                </li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('finance-settings/tax') ? ' active' : '' }}"
-                        href="/finance-settings/tax">
-                        <span class="nav-main-link-name">Tax Settings</span>
-                    </a>
-                </li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('finance-settings/banks') ? ' active' : '' }}"
-                        href="/finance-settings/banks">
-                        <span class="nav-main-link-name">Bank Accounts</span>
-                    </a>
-                </li>
+         @can('view-finance-settings')
+             <li class="nav-main-item{{ request()->is('finance-settings*') ? ' open' : '' }}">
+                 <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                     aria-expanded="{{ request()->is('finance-settings*') ? 'true' : 'false' }}" href="#">
+                     <i class="nav-main-link-icon fa fa-file-pdf"></i>
+                     <span class="nav-main-link-name">Finance Settings</span>
+                 </a>
+                 <ul class="nav-main-submenu">
+                     <li class="nav-main-item">
+                         <a class="nav-main-link{{ request()->is('finance-settings/general') ? ' active' : '' }}"
+                             href="/finance-settings/general">
+                             <span class="nav-main-link-name">General</span>
+                         </a>
+                     </li>
+                     <li class="nav-main-item">
+                         <a class="nav-main-link{{ request()->is('currencies.*') ? ' active' : '' }}"
+                             href="{{ route('currencies.index') }}">
+                             <span class="nav-main-link-name">Currencies</span>
+                         </a>
+                     </li>
+                     <li class="nav-main-item">
+                         <a class="nav-main-link{{ request()->is('finance-settings/tax') ? ' active' : '' }}"
+                             href="/finance-settings/tax">
+                             <span class="nav-main-link-name">Tax Settings</span>
+                         </a>
+                     </li>
+                     <li class="nav-main-item">
+                         <a class="nav-main-link{{ request()->is('finance-settings/banks') ? ' active' : '' }}"
+                             href="/finance-settings/banks">
+                             <span class="nav-main-link-name">Bank Accounts</span>
+                         </a>
+                     </li>
 
-                  <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('finance-settings/banks') ? ' active' : '' }}"
-                        href="/finance-settings/banks">
-                        <span class="nav-main-link-name">Payment Methods</span>
-                    </a>
-                </li>
-            </ul>
-        </li>
+                     <li class="nav-main-item">
+                         <a class="nav-main-link{{ request()->is('finance-settings/banks') ? ' active' : '' }}"
+                             href="/finance-settings/banks">
+                             <span class="nav-main-link-name">Payment Methods</span>
+                         </a>
+                     </li>
+                 </ul>
+             </li>
+         @endcan
 
          <li class="nav-main-item{{ request()->is('trip-settings*') ? ' open' : '' }}">
              <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
@@ -260,7 +192,7 @@
                          <span class="nav-main-link-name">Fuel Stations</span>
                      </a>
                  </li>
-                     <li class="nav-main-item">
+                 <li class="nav-main-item">
                      <a class="nav-main-link{{ request()->is('trip-settings/fuel-stations') ? ' active' : '' }}"
                          href="/trip-settings/fuel-stations">
                          <i class="nav-main-link-icon fa fa-truck"></i>
@@ -282,25 +214,31 @@
                          <i class="nav-main-link-icon si si-settings"></i>
                          <span class="nav-main-link-name">General Settings</span>
                      </a>
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('departments.*') ? ' active' : '' }}"
-                        href="{{ route('departments.index') }}">
-                        <i class="nav-main-link-icon si si-settings"></i>
-                        <span class="nav-main-link-name">Departments</span>
-                    </a>
-                </li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('positions.*') ? ' active' : '' }}"
-                        href="{{ route('positions.index') }}">
-                        <i class="nav-main-link-icon si si-settings"></i>
-                        <span class="nav-main-link-name">Positions</span>
-                    </a>
-                </li>
+                 <li class="nav-main-item">
+                     <a class="nav-main-link{{ request()->is('departments.*') ? ' active' : '' }}"
+                         href="{{ route('departments.index') }}">
+                         <i class="nav-main-link-icon si si-settings"></i>
+                         <span class="nav-main-link-name">Departments</span>
+                     </a>
+                 </li>
+                 <li class="nav-main-item">
+                     <a class="nav-main-link{{ request()->is('positions.*') ? ' active' : '' }}"
+                         href="{{ route('positions.index') }}">
+                         <i class="nav-main-link-icon si si-settings"></i>
+                         <span class="nav-main-link-name">Positions</span>
+                     </a>
                  <li class="nav-main-item">
                      <a class="nav-main-link{{ request()->is('system-configurations/roles') ? ' active' : '' }}"
                          href="/system-configurations/roles">
                          <i class="nav-main-link-icon si si-user-following"></i>
-                         <span class="nav-main-link-name">Roles & Permissions</span>
+                         <span class="nav-main-link-name">Roles</span>
+                     </a>
+                 </li>
+                 <li class="nav-main-item">
+                     <a class="nav-main-link{{ request()->is('permissions.*') ? ' active' : '' }}"
+                         href="{{ route('permissions.index') }}">
+                         <i class="nav-main-link-icon si si-lock"></i>
+                         <span class="nav-main-link-name">Permissions</span>
                      </a>
                  </li>
                  <li class="nav-main-item">
