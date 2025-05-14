@@ -236,7 +236,7 @@
              <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                  aria-expanded="{{ request()->is('trip-settings*') ? 'true' : 'false' }}" href="#">
                  <i class="nav-main-link-icon fa fa-list"></i>
-                 <span class="nav-main-link-name">Trip Settings</span>
+                 <span class="nav-main-link-name">Logistics Settings</span>
              </a>
              <ul class="nav-main-submenu">
                  <li class="nav-main-item">
@@ -251,6 +251,13 @@
                          href="/trip-settings/fuel-stations">
                          <i class="nav-main-link-icon fa fa-gas-pump"></i>
                          <span class="nav-main-link-name">Fuel Stations</span>
+                     </a>
+                 </li>
+                     <li class="nav-main-item">
+                     <a class="nav-main-link{{ request()->is('trip-settings/fuel-stations') ? ' active' : '' }}"
+                         href="/trip-settings/fuel-stations">
+                         <i class="nav-main-link-icon fa fa-truck"></i>
+                         <span class="nav-main-link-name">Truck Types</span>
                      </a>
                  </li>
              </ul>
