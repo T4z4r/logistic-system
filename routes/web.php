@@ -37,9 +37,12 @@ Route::match(['get', 'post'], '/dashboard', function(){
 Route::view('/pages/slick', 'pages.slick');
 Route::view('/pages/datatables', 'pages.datatables');
 Route::view('/pages/blank', 'pages.blank');
+  require __DIR__.'/auth.php';
 
+Route::middleware('auth')->group(function () {
 
-require __DIR__.'/auth.php';
-
-require __DIR__.'/currency.php';
-require __DIR__.'/department.php';
+    require __DIR__.'/customers.php';
+    require __DIR__.'/currency.php';
+    require __DIR__.'/department.php';
+    require __DIR__.'/position.php';
+});

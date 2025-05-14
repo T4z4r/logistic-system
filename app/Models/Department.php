@@ -16,6 +16,12 @@ class Department extends Model
         'created_by',
     ];
 
+     public function head()
+    {
+        return $this->belongsTo(User::class, 'hod');
+    }
+
+
     /**
      * The user who is the head of this department.
      */

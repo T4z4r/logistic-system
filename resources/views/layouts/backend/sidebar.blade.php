@@ -38,8 +38,8 @@
 
          <li class="nav-main-heading">Logistics Menus</li>
 
-         <li class="nav-main-item{{ request()->is('trips/create') ? ' open' : '' }}">
-             <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="/trips/create">
+         <li class="nav-main-item{{ request()->is('customers.*') ? ' open' : '' }}">
+             <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="{{ route('customers.index') }}">
                  <i class="nav-main-link-icon fa fa-user-tie"></i>
                  <span class="nav-main-link-name">Clients </span>
              </a>
@@ -229,6 +229,13 @@
                         <span class="nav-main-link-name">Bank Accounts</span>
                     </a>
                 </li>
+
+                  <li class="nav-main-item">
+                    <a class="nav-main-link{{ request()->is('finance-settings/banks') ? ' active' : '' }}"
+                        href="/finance-settings/banks">
+                        <span class="nav-main-link-name">Payment Methods</span>
+                    </a>
+                </li>
             </ul>
         </li>
 
@@ -275,7 +282,20 @@
                          <i class="nav-main-link-icon si si-settings"></i>
                          <span class="nav-main-link-name">General Settings</span>
                      </a>
-                 </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link{{ request()->is('departments.*') ? ' active' : '' }}"
+                        href="{{ route('departments.index') }}">
+                        <i class="nav-main-link-icon si si-settings"></i>
+                        <span class="nav-main-link-name">Departments</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link{{ request()->is('positions.*') ? ' active' : '' }}"
+                        href="{{ route('positions.index') }}">
+                        <i class="nav-main-link-icon si si-settings"></i>
+                        <span class="nav-main-link-name">Positions</span>
+                    </a>
+                </li>
                  <li class="nav-main-item">
                      <a class="nav-main-link{{ request()->is('system-configurations/roles') ? ' active' : '' }}"
                          href="/system-configurations/roles">

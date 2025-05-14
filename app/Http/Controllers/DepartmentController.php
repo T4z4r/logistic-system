@@ -5,55 +5,59 @@ namespace App\Http\Controllers;
 use App\Models\Department;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class DepartmentController extends Controller
 {
     public function index()
     {
-        $departments = Department::with('headOfDepartment', 'creator')->get();
-        $users = User::all(); // For dropdowns
+        $departments = Department::with('head')->get();
+        $users = User::all();
         return view('departments.index', compact('departments', 'users'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:departments,name',
+            'name' => 'required|string|max:255',
+            'hod' => 'nullable|exists:users,id',
             'status' => 'required|in:active,inactive',
-            'hod' => 'nullable|exists:users,id'
         ]);
 
         Department::create([
             'name' => $request->name,
             'status' => $request->status,
             'hod' => $request->hod,
-            'created_by' => Auth::id(),
+            'created_by' => auth()->id(),
         ]);
 
-        return redirect()->back()->with('success', 'Department created successfully.');
+        return redirect()->route('departments.index')->with('success', 'Department created successfully.');
     }
 
-    public function update(Request $request, Department $department)
+    public function edit($id)
+    {
+        return response()->json(Department::findOrFail($id));
+    }
+
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|unique:departments,name,' . $department->id,
+            'name' => 'required|string|max:255',
             'status' => 'required|in:active,inactive',
-            'hod' => 'nullable|exists:users,id'
+            'hod' => 'nullable|exists:users,id',
         ]);
 
-        $department->update([
+        Department::findOrFail($id)->update([
             'name' => $request->name,
             'status' => $request->status,
             'hod' => $request->hod,
         ]);
 
-        return redirect()->back()->with('success', 'Department updated successfully.');
+        return redirect()->route('departments.index')->with('success', 'Department updated successfully.');
     }
 
-    public function destroy(Department $department)
+    public function destroy($id)
     {
-        $department->delete();
-        return redirect()->back()->with('success', 'Department deleted.');
+        Department::findOrFail($id)->delete();
+        return redirect()->route('departments.index')->with('success', 'Department deleted successfully.');
     }
 }
