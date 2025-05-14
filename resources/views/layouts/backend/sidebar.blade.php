@@ -112,6 +112,15 @@
                  </span>
              </a>
          </li>
+             <li class="nav-main-item">
+             <a class="nav-main-link{{ request()->is('trip-settings/costs') ? ' active' : '' }}"
+                 href="/trip-settings/costs">
+                 <i class="nav-main-link-icon fa fa-file-pdf"></i>
+                 <span class="nav-main-link-name">
+                    Reports
+                </span>
+             </a>
+         </li>
          <li class="nav-main-heading">Finance Menu</li>
          <li class="nav-main-item">
              <a class="nav-main-link{{ request()->is('trip-settings/costs') ? ' active' : '' }}"
