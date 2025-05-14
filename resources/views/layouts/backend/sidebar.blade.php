@@ -51,6 +51,15 @@
                  <span class="nav-main-link-name">Drivers </span>
              </a>
          </li>
+           <li class="nav-main-item">
+             <a class="nav-main-link{{ request()->is('trip-settings/costs') ? ' active' : '' }}"
+                 href="/trip-settings/costs">
+                 <i class="nav-main-link-icon fa fa-file"></i>
+                 <span class="nav-main-link-name">
+                     Driver Debts
+                 </span>
+             </a>
+         </li>
          <li class="nav-main-item{{ request()->is('trips/create') ? ' open' : '' }}">
              <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="/trips/create">
                  <i class="nav-main-link-icon fa fa-truck"></i>
@@ -104,15 +113,7 @@
              </a>
          </li>
 
-         <li class="nav-main-item">
-             <a class="nav-main-link{{ request()->is('trip-settings/costs') ? ' active' : '' }}"
-                 href="/trip-settings/costs">
-                 <i class="nav-main-link-icon fa fa-file"></i>
-                 <span class="nav-main-link-name">
-                     Driver Debts
-                 </span>
-             </a>
-         </li>
+       
          <li class="nav-main-item">
              <a class="nav-main-link{{ request()->is('trip-settings/costs') ? ' active' : '' }}"
                  href="/trip-settings/costs">

@@ -2,100 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Permission;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Permission;
-use Illuminate\Support\Facades\Validator;
-// Remove these imports as they're not needed for standard middleware registration
-// use Illuminate\Routing\Controllers\HasMiddleware;
-// use Illuminate\Routing\Controllers\Middleware;
+use Spatie\Permission\Models\Permission as SpatiePermission;
 
 class PermissionController extends Controller
 {
-
-    // public function __construct()
-    // {
-    //     $this->middleware('permission:add permission')->only('index');
-    //     $this->middleware('permission:view permissions')->only('index');
-    //     $this->middleware('permission:edit permission')->only('index');
-    //     $this->middleware('permission:delete permission')->only('index');
-    // }
-
-
-    // This method will show permissions page
     public function index()
     {
-        $data['permissions'] = Permission::latest()->paginate(10);
-        $data['count'] = 1;
-        return view('permissions.list', $data);
+        $permissions = SpatiePermission::all();
+        return view('permissions.index', compact('permissions'));
     }
 
-    // This method will show create permission page
     public function create()
     {
         return view('permissions.create');
     }
 
-    // This method will insert permission in DB
     public function store(Request $request)
     {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'name' => 'required|unique:permissions|min:3'
-            ]
-        );
+        $request->validate([
+            'name' => 'required|unique:permissions,name',
+        ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        } else {
-            Permission::create(['name' => $request->name]);
+        SpatiePermission::create([
+            'name' => $request->name,
+        ]);
 
-            return redirect()->route('permissions.index')->with('success', 'Permissions Added Successifully !');
-        }
+        return redirect()->route('permissions.index')->with('success', 'Permission created successfully');
     }
 
-    // This method will show edit permission page
-    public function edit($id)
+    public function edit(SpatiePermission $permission)
     {
-        $data['permission'] = Permission::findOrFail($id);
-
-        return view('permissions.edit', $data);
+        return view('permissions.edit', compact('permission'));
     }
 
-    // This method will update permission in DB
-    public function update($id,Request $request)
+    public function update(Request $request, SpatiePermission $permission)
     {
-        $validator = Validator::make(
-            request()->all(),
-            [
-                'name' => 'required|min:3|unique:permissions,name,' . $id
-            ]
-        );
+        $request->validate([
+            'name' => 'required|unique:permissions,name,' . $permission->id,
+        ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        } else {
-            $permission = Permission::findOrFail($id);
-            $permission->name = request('name');
-            $permission->update();
+        $permission->update([
+            'name' => $request->name,
+        ]);
 
-            return redirect()->route('permissions.index')->with('success', 'Permission Updated Successfully!');
-        }
+        return redirect()->route('permissions.index')->with('success', 'Permission updated successfully');
     }
 
-    // This method will delete permission in DB
-    public function destroy($id,Request $request)
+    public function destroy(SpatiePermission $permission)
     {
-        $permission = Permission::findOrFail($id);
-
-        // Check if permission is assigned to any role
-        if ($permission->roles->count() > 0) {
-            return redirect()->route('permissions.index')->with('error', 'Permission is assigned to a role and can not be deleted!');
-        }
-
-        // Delete permission from DB
         $permission->delete();
 
-        return redirect()->route('permissions.index')->with('success', 'Permission Deleted Successfully!');
+        return redirect()->route('permissions.index')->with('success', 'Permission deleted successfully');
     }
 }
