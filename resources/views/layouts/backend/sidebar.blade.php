@@ -15,7 +15,8 @@
              </a>
              <ul class="nav-main-submenu">
                  <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('users/active') ? ' active' : '' }}"href="{{ route('users.active') }}">
+                     <a
+                         class="nav-main-link{{ request()->is('users/active') ? ' active' : '' }}"href="{{ route('users.active') }}">
                          <i class="nav-main-link-icon si si-user"></i>
                          <span class="nav-main-link-name">Active Staffs</span>
                      </a>
@@ -33,54 +34,59 @@
 
          <li class="nav-main-heading">Logistics Menus</li>
 
-         <li class="nav-main-item{{ (request()->is('customers') || request()->is('customers/*')) ? ' open' : '' }}">
-             <a class="nav-main-link{{ (request()->is('customers') || request()->is('customers/*')) ? ' active' : '' }}"
+         <li class="nav-main-item{{ request()->is('customers') || request()->is('customers/*') ? ' open' : '' }}">
+             <a class="nav-main-link{{ request()->is('customers') || request()->is('customers/*') ? ' active' : '' }}"
                  href="{{ route('customers.index') }}">
                  <i class="nav-main-link-icon fa fa-user-tie"></i>
                  <span class="nav-main-link-name">Customers </span>
              </a>
          </li>
-         <li class="nav-main-item{{ (request()->is('drivers') || request()->is('drivers/*')) ? ' open' : '' }}">
-             <a class="nav-main-link{{ (request()->is('drivers') || request()->is('drivers/*')) ? ' active' : '' }}" href="{{  route('drivers.list') }}">
+         <li class="nav-main-item{{ request()->is('drivers') || request()->is('drivers/*') ? ' open' : '' }}">
+             <a class="nav-main-link{{ request()->is('drivers') || request()->is('drivers/*') ? ' active' : '' }}"
+                 href="{{ route('drivers.list') }}">
                  <i class="nav-main-link-icon fa fa-users"></i>
                  <span class="nav-main-link-name">Drivers </span>
              </a>
          </li>
-           {{-- <li class="nav-main-item">
+         {{-- <li class="nav-main-item">
              <a class="nav-main-link{{ request()->is('trip-settings/costs') ? ' active' : '' }}"
                  href="/trip-settings/costs">
                  <i class="nav-main-link-icon fa fa-file"></i>
                  <span class="nav-main-link-name">
                      Driver Debts
                  </span> --}}
-            <li class="nav-main-item{{ (request()->is('trucks*') || request()->is('trailers*')) ? ' open' : '' }}">
-                <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                    aria-expanded="{{ (request()->is('trucks*') || request()->is('trailers*')) ? 'true' : 'false' }}" href="#">
-                    <i class="nav-main-link-icon fa fa-truck"></i>
-                    <span class="nav-main-link-name">Truck Management</span>
-                </a>
-                <ul class="nav-main-submenu">
-                    <li class="nav-main-item">
-                        <a class="nav-main-link{{ (request()->is('trucks') || request()->is('trucks/*')) ? ' active' : '' }}" href="{{ route('trucks.list') }}">
-                            <i class="nav-main-link-icon fa fa-truck"></i>
-                            <span class="nav-main-link-name">Trucks</span>
-                        </a>
-                    </li>
-                    <li class="nav-main-item">
-                        <a class="nav-main-link{{ (request()->is('trailers') || request()->is('trailers/*')) ? ' active' : '' }}" href="{{ route('trailers.list') }}">
-                            <i class="nav-main-link-icon fa fa-trailer"></i>
-                            <span class="nav-main-link-name">Trailers</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+         <li class="nav-main-item{{ request()->is('trucks*') || request()->is('trailers*') ? ' open' : '' }}">
+             <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                 aria-expanded="{{ request()->is('trucks*') || request()->is('trailers*') ? 'true' : 'false' }}"
+                 href="#">
+                 <i class="nav-main-link-icon fa fa-truck"></i>
+                 <span class="nav-main-link-name">Truck Management</span>
+             </a>
+             <ul class="nav-main-submenu">
+                 <li class="nav-main-item">
+                     <a class="nav-main-link{{ request()->is('trucks') || request()->is('trucks/*') ? ' active' : '' }}"
+                         href="{{ route('trucks.list') }}">
+                         <i class="nav-main-link-icon fa fa-truck"></i>
+                         <span class="nav-main-link-name">Trucks</span>
+                     </a>
+                 </li>
+                 <li class="nav-main-item">
+                     <a class="nav-main-link{{ request()->is('trailers') || request()->is('trailers/*') ? ' active' : '' }}"
+                         href="{{ route('trailers.list') }}">
+                         <i class="nav-main-link-icon fa fa-trailer"></i>
+                         <span class="nav-main-link-name">Trailers</span>
+                     </a>
+                 </li>
+             </ul>
+         </li>
 
-         <li class="nav-main-item{{ request()->is('trips/create') ? ' open' : '' }}">
-             <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="/trips/create">
+         <li class="nav-main-item{{ request()->is('routes') ? ' open' : '' }}">
+             <a class="nav-main-link{{ request()->is('routes') ? ' active' : '' }}" href="{{ route('routes.list') }}">
                  <i class="nav-main-link-icon fa fa-map"></i>
                  <span class="nav-main-link-name">Routes</span>
              </a>
          </li>
+
          <li class="nav-main-item{{ request()->is('trips*') ? ' open' : '' }}">
              <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                  aria-expanded="{{ request()->is('trips*') ? 'true' : 'false' }}" href="#">

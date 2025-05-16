@@ -16,7 +16,7 @@ class CreateRoutesTable extends Migration
             $table->double('estimated_distance');
             $table->integer('estimated_days');
             $table->boolean('status')->default(0);
-            $table->foreignId('created_by')->constrained('users')->onDelete('set null');
+            $table->bigInteger('created_by');
             $table->timestamps();
         });
     }
