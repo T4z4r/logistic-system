@@ -21,7 +21,7 @@ return new class extends Migration
             $table->double('length');
             $table->string('trailer_type');
             $table->boolean('status')->default(0);
-            $table->foreignId(column: 'added_by')->nullable();
+            $table->bigInteger('added_by')->nullable();
             $table->timestamps();
         });
     }
