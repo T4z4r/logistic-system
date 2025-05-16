@@ -5,10 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <title> KRISMO | ERP</title>
+    <title> SudEnergy | ERP</title>
 
     <meta name="description"
-        content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
+        content="Krismo ERP">
     <meta name="author" content="pixelcave">
     <meta name="robots" content="noindex, nofollow">
 
@@ -16,7 +16,7 @@
     <link rel="shortcut icon" href="{{ asset('media/favicons/favicon.png') }}">
     <link rel="icon" sizes="192x192" type="image/png" href="{{ asset('media/favicons/favicon-192x192.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('media/favicons/apple-touch-icon-180x180.png') }}">
-
+    <link rel="stylesheet" href="{{ asset('media/css/custom.css') }}">
     <!-- Modules -->
     @yield('css')
     @vite(['resources/sass/main.scss', 'resources/js/oneui/app.js'])
@@ -131,8 +131,8 @@
                     <span class="smini-visible">
                         <i class="fa fa-circle-notch text-primary"></i>
                     </span>
-                    <span class="smini-hide fs-5 tracking-wider">Krismo<span
-                            class="fw-normal text-danger">ERP</span></span>
+                    <span class="smini-hide fs-5 tracking-wider">Sud<span
+                            class="fw-normal text-danger">Energy</span></span>
                 </a>
                 <!-- END Logo -->
 
@@ -435,7 +435,7 @@
         <!-- END Header -->
 
         <!-- Main Container -->
-        <main id="main-container ">
+        <main id="main-container p-1 mt-5">
             @yield('content')
         </main>
         <!-- END Main Container -->

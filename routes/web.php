@@ -19,10 +19,6 @@ use App\Http\Controllers\PermissionController;
 //     return view('welcome');
 // });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -34,7 +30,7 @@ Route::middleware('auth')->group(function () {
 Route::view('/', 'landing');
 Route::match(['get', 'post'], '/dashboard', function(){
     return view('dashboard');
-});
+})->name('dashboard');
 Route::view('/pages/slick', 'pages.slick');
 Route::view('/pages/datatables', 'pages.datatables');
 Route::view('/pages/blank', 'pages.blank');
@@ -51,8 +47,11 @@ Route::middleware('auth')->group(function () {
     Route::put('/permissions/update/{id}', [PermissionController::class, 'update'])->name('permissions.update');
     Route::delete('/permissions/destroy/{id}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
 
-
+    require __DIR__.'/users.php';
     require __DIR__.'/customers.php';
+    require __DIR__.'/drivers.php';
+    require __DIR__.'/trucks.php';
+    require __DIR__.'/trailers.php';
     require __DIR__.'/currency.php';
     require __DIR__.'/department.php';
     require __DIR__.'/position.php';

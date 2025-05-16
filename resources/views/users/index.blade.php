@@ -6,15 +6,15 @@
     <div class="content content-full">
       <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
         <div class="flex-grow-1">
-          <h1 class="h3 fw-bold mb-1">Customer Management</h1>
-          <h2 class="fs-base lh-base fw-medium text-muted mb-0">Manage all customers in the system</h2>
+          <h1 class="h3 fw-bold mb-1">User Management</h1>
+          <h2 class="fs-base lh-base fw-medium text-muted mb-0">Manage all users in the system</h2>
         </div>
         <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
           <ol class="breadcrumb breadcrumb-alt">
             <li class="breadcrumb-item">
               <a class="link-fx" href="{{ route('dashboard') }}">Dashboard</a>
             </li>
-            <li class="breadcrumb-item" aria-current="page">Customers</li>
+            <li class="breadcrumb-item" aria-current="page">Users</li>
           </ol>
         </nav>
       </div>
@@ -24,14 +24,14 @@
 
   <!-- Page Content -->
   <div class="content">
-    <!-- Customers Block -->
+    <!-- Users Block -->
     <div class="block block-rounded">
       <div class="block-header block-header-default">
-        <h3 class="block-title">Customers Overview</h3>
+        <h3 class="block-title">Users Overview</h3>
         <div class="block-options">
-          <a href="{{ route('customers.create') }}" class="btn btn-primary">Add New Customer</a>
-          <a href="{{ route('customers.active') }}" class="btn btn-secondary">View Active Customers</a>
-          <a href="{{ route('customers.inactive') }}" class="btn btn-secondary">View Inactive Customers</a>
+          <a href="{{ route('users.create') }}" class="btn btn-primary">Add New User</a>
+          <a href="{{ route('users.active') }}" class="btn btn-secondary">View Active Users</a>
+          <a href="{{ route('users.inactive') }}" class="btn btn-secondary">View Inactive Users</a>
         </div>
       </div>
       <div class="block-content">
@@ -42,31 +42,27 @@
         <table class="table table-bordered table-striped">
           <thead>
             <tr>
-              <th>Company</th>
-              <th>Contact Person</th>
+              <th>Name</th>
               <th>Email</th>
-              <th>Phone</th>
-              <th>TIN</th>
-              <th>VRN</th>
-              <th>Created By</th>
+              <th>Department</th>
+              <th>Position</th>
+              <th>Line Manager</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            @foreach ($customers as $customer)
+            @foreach ($users as $user)
               <tr>
-                <td>{{ $customer->company }}</td>
-                <td>{{ $customer->contact_person }}</td>
-                <td>{{ $customer->email }}</td>
-                <td>{{ $customer->phone }}</td>
-                <td>{{ $customer->TIN }}</td>
-                <td>{{ $customer->VRN }}</td>
-                <td>{{ $customer->createdBy?->name ?? 'N/A' }}</td>
-                <td>{{ $customer->status ? 'Active' : 'Inactive' }}</td>
+                <td>{{ $user->name }}</td>
+                <td>{{ $user->email }}</td>
+                <td>{{ $user->department?->name ?? 'N/A' }}</td>
+                <td>{{ $user->position?->name ?? 'N/A' }}</td>
+                <td>{{ $user->lineManager?->name ?? 'N/A' }}</td>
+                <td>{{ $user->status ? 'Active' : 'Inactive' }}</td>
                 <td>
-                  <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                  <form action="{{ route('customers.delete', $customer->id) }}" method="POST" style="display: inline;">
+                  <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-primary">Edit</a>
+                  <form action="{{ route('users.destroy', $user) }}" method="POST" style="display: inline;">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
@@ -76,10 +72,10 @@
             @endforeach
           </tbody>
         </table>
-        {{ $customers->links() }}
+        {{ $users->links() }}
       </div>
     </div>
-    <!-- END Customers Block -->
+    <!-- END Users Block -->
   </div>
   <!-- END Page Content -->
 @endsection

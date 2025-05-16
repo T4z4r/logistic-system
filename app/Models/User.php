@@ -23,6 +23,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'department_id',
+        'line_manager_id',
+        'position_id',
+        'status',
     ];
 
     /**
@@ -46,7 +50,7 @@ class User extends Authenticatable
     ];
 
 
-
+    // Define relationships if necessary
     public function department()
     {
         return $this->belongsTo(Department::class);
@@ -55,6 +59,11 @@ class User extends Authenticatable
     public function lineManager()
     {
         return $this->belongsTo(User::class, 'line_manager_id');
+    }
+
+    public function position()
+    {
+        return $this->belongsTo(Position::class);
     }
 
     public function managedEmployees()

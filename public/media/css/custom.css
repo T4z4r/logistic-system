@@ -1,0 +1,31 @@
+.btn-primary {
+    background-color: #2a3e87 !important;
+    border-color: #233781 !important;
+}
+
+
+
+.btn-primary:hover {
+    background-color: #233781 !important;
+    border-color: #1e2a6d !important;
+}
+
+
+
+.btn-danger {
+
+    background-color: #eb1e25 !important;
+    border-color: #fc1c23 !important;
+}
+
+.btn-danger:hover {
+    background-color: #fc1c23 !important;
+    border-color: #e61a20 !important;
+}
+
+
+.text-primary {
+    color: #2a3e87 !important;
+}
+
+
