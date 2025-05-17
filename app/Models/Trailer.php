@@ -29,4 +29,10 @@ class Trailer extends Model
     {
         return $this->belongsTo(User::class, 'added_by');
     }
+
+
+    public function assignments()
+    {
+        return $this->hasMany(TrailerAssignment::class, 'trailer_id');
+    }
 }

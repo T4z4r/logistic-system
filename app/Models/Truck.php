@@ -48,4 +48,9 @@ class Truck extends Model
     {
         return $this->hasMany(DriverAssignment::class, 'truck_id');
     }
+
+    public function trailers()
+    {
+        return $this->hasMany(TrailerAssignment::class, 'trailer_id');
+    }
 }
