@@ -250,6 +250,13 @@
                          <span class="nav-main-link-name">Permissions</span>
                      </a>
                  </li>
+                <li class="nav-main-item">
+                     <a class="nav-main-link{{ request()->is('permissions.*') ? ' active' : '' }}"
+                         href="{{ route('permissions.index') }}">
+                         <i class="nav-main-link-icon fa fa-check"></i>
+                         <span class="nav-main-link-name">Approvals</span>
+                     </a>
+                 </li>
                  <li class="nav-main-item">
                      <a class="nav-main-link{{ request()->is('system-configurations/notifications') ? ' active' : '' }}"
                          href="/system-configurations/notifications">

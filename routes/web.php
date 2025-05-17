@@ -58,4 +58,5 @@ Route::middleware('auth')->group(function () {
     require __DIR__.'/currency.php';
     require __DIR__.'/department.php';
     require __DIR__.'/position.php';
+    require __DIR__.'/settings.php';
 });
