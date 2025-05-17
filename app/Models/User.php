@@ -27,6 +27,7 @@ class User extends Authenticatable
         'line_manager_id',
         'position_id',
         'status',
+        'mode'
     ];
 
     /**

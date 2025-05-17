@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('approval_levels', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('approval_id')->constrained('approvals')->onDelete('cascade');
-            $table->foreignId('role_id')->constrained('roles')->onDelete(action: 'restrict');
+            $table->bigInteger('approval_id');
+            $table->bigInteger('role_id');
             $table->string('level_name');
             $table->string('rank');
             $table->string('label_name');

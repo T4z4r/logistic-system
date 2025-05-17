@@ -13,7 +13,7 @@ return new class extends Migration
     {
      Schema::create('fuel_costs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string(column: 'name')->unique();
+            $table->string('name')->unique();
             $table->bigInteger('ledger_id');
             $table->bigInteger('created_by');
             $table->timestamps();

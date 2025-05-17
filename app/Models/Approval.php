@@ -18,4 +18,9 @@ class Approval extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    public function level()
+    {
+        return $this->hasMany(ApprovalLevel::class, 'approval_id');
+    }
 }
