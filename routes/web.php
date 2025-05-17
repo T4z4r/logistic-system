@@ -52,6 +52,8 @@ Route::middleware('auth')->group(function () {
     require __DIR__.'/drivers.php';
     require __DIR__.'/trucks.php';
     require __DIR__.'/trailers.php';
+    require __DIR__.'/driver_assignment.php';
+
     require __DIR__.'/routes.php';
     require __DIR__.'/common_costs.php';
     require __DIR__.'/fuel_costs.php';

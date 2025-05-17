@@ -84,7 +84,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($approval->levels as $level)
+                        @foreach ($approval->level as $level)
                             <tr>
                                 <td>{{ $level->level_name }}</td>
                                 <td>{{ $level->role?->name ?? 'N/A' }}</td>
@@ -180,7 +180,7 @@
     <!-- END Create Level Modal -->
 
     <!-- Edit Level Modals -->
-    @foreach ($approval->levels as $level)
+    @foreach ($approval->level as $level)
         <div class="modal fade" id="editLevelModal{{ $level->id }}" tabindex="-1"
             aria-labelledby="editLevelModalLabel{{ $level->id }}" aria-hidden="true">
             <div class="modal-dialog">
