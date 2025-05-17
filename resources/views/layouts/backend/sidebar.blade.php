@@ -194,10 +194,10 @@
              </a>
              <ul class="nav-main-submenu">
                  <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('trip-settings/costs') ? ' active' : '' }}"
-                         href="/trip-settings/costs">
+                     <a class="nav-main-link{{ request()->is('common-costs*') ? ' active' : '' }}"
+                         href="{{ route('common-costs.list') }}">
                          <i class="nav-main-link-icon fa fa-calculator"></i>
-                         <span class="nav-main-link-name">Trip Costs</span>
+                         <span class="nav-main-link-name">Common Costs</span>
                      </a>
                  </li>
                  <li class="nav-main-item">

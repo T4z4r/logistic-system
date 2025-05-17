@@ -40,7 +40,7 @@ class UserSeeder extends Seeder
                 ['email' => $data['email']],
                 [
                     'name' => $data['name'],
-                    'password' => Hash::make('password'), // Default password
+                    'password' => Hash::make(value: 'password'), // Default password
                     'department_id' => $department->id,
                 ]
             );

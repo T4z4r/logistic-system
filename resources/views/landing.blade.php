@@ -6,7 +6,7 @@
         style="background-image: url('{{ asset('media/backgrounds/bg.jpeg') }}'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
         <div class="content w-100">
             <div class="row justify-content-end push">
-                <div class="col-md-4 col-lg-4 col-xl-4" style="opacity: 0.98;">
+                <div class="col-md-4 col-lg-4 col-xl-4 col-12" style="opacity: 0.98;">
                     <!-- Sign In Block -->
                     <div class="block block-rounded mb-0" style="opacity: 0.96;">
                         <div class="block-header block-header-default" style="opacity: 0.96;">
