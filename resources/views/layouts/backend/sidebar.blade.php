@@ -201,19 +201,13 @@
                      </a>
                  </li>
                  <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('trip-settings/fuel-stations') ? ' active' : '' }}"
-                         href="/trip-settings/fuel-stations">
+                     <a class="nav-main-link{{ request()->is('fuel-costs*') ? ' active' : '' }}"
+                         href="{{ route('fuel-costs.list') }}">
                          <i class="nav-main-link-icon fa fa-gas-pump"></i>
-                         <span class="nav-main-link-name">Fuel Stations</span>
+                         <span class="nav-main-link-name">Fuel Costs</span>
                      </a>
                  </li>
-                 <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('trip-settings/fuel-stations') ? ' active' : '' }}"
-                         href="/trip-settings/fuel-stations">
-                         <i class="nav-main-link-icon fa fa-truck"></i>
-                         <span class="nav-main-link-name">Truck Types</span>
-                     </a>
-                 </li>
+
              </ul>
          </li>
          <li class="nav-main-item{{ request()->is('system-configurations*') ? ' open' : '' }}">
