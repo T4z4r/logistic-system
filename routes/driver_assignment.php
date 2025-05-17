@@ -13,3 +13,8 @@ Route::post('/driver-assignments', [DriverAssignmentController::class, 'store'])
 Route::get('/driver-assignments/{id}/edit', [DriverAssignmentController::class, 'edit'])->name('driver-assignments.edit');
 Route::put('/driver-assignments/{id}', [DriverAssignmentController::class, 'update'])->name('driver-assignments.update');
 Route::delete('/driver-assignments/{id}', [DriverAssignmentController::class, 'destroy'])->name('driver-assignments.delete');
+
+
+// New Routes for Assign/Deassign
+Route::post('/trucks/{truck_id}/assign-driver', [DriverAssignmentController::class, 'assignDriver'])->name('trucks.assign-driver');
+Route::delete('/trucks/{truck_id}/deassign-driver', [DriverAssignmentController::class, 'deassignDriver'])->name('trucks.deassign-driver');

@@ -14,7 +14,7 @@ class DriverController extends Controller
     public function index()
     {
         $drivers = User::with(['department', 'lineManager', 'position'])
-            ->where('position_id', 5)
+            ->where('position_id', 1)
             ->paginate(10);
         return view('drivers.index', compact('drivers'));
     }

@@ -99,4 +99,66 @@ class DriverAssignmentController extends Controller
         $assignment->delete();
         return redirect()->route('driver-assignments.list')->with('success', 'Driver assignment deleted successfully.');
     }
+
+
+
+    public function assignDriver(Request $request, $truck_id)
+    {
+        $truck = Truck::findOrFail($truck_id);
+
+        $validator = Validator::make($request->all(), [
+            'driver_id' => 'required|exists:users,id',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('trucks.list')
+                ->withErrors($validator)
+                ->with('modal', 'assign-driver-' . $truck_id);
+        }
+
+        // Check for existing active assignment for the truck
+        $existingAssignment = DriverAssignment::where('truck_id', $truck_id)
+            ->where('status', 1)
+            ->first();
+
+        if ($existingAssignment) {
+            // Update existing assignment
+            $existingAssignment->update([
+                'driver_id' => $request->driver_id,
+                'assigned_by' => Auth::id(),
+                'status' => 1,
+            ]);
+        } else {
+            // Create new assignment
+            DriverAssignment::create([
+                'driver_id' => $request->driver_id,
+                'truck_id' => $truck_id,
+                'assigned_by' => Auth::id(),
+                'status' => 1,
+            ]);
+        }
+
+        return redirect()->route('trucks.list')->with('success', 'Driver assigned successfully.');
+    }
+
+    public function deassignDriver($truck_id)
+    {
+        $truck = Truck::findOrFail($truck_id);
+
+        $assignment = DriverAssignment::where('truck_id', $truck_id)
+            ->where('status', 1)
+            ->first();
+
+        if (!$assignment) {
+            return redirect()->route('trucks.list')->with('error', 'No active driver assignment found for this truck.');
+        }
+
+        // Set status to inactive (or delete if preferred)
+        $assignment->update([
+            'status' => 0,
+            'assigned_by' => Auth::id(),
+        ]);
+
+        return redirect()->route('trucks.list')->with('success', 'Driver deassigned successfully.');
+    }
 }

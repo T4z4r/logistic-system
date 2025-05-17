@@ -42,4 +42,10 @@ class Truck extends Model
     {
         return $this->belongsTo(User::class, 'added_by');
     }
+
+
+    public function assignments()
+    {
+        return $this->hasMany(DriverAssignment::class, 'truck_id');
+    }
 }
