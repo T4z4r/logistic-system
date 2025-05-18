@@ -61,6 +61,7 @@ Route::middleware('auth')->group(function () {
     require __DIR__ . '/currency.php';
     require __DIR__ . '/payment_method.php';
     require __DIR__ . '/payment_modes.php';
+      require __DIR__ . '/cargo_nature.php';
     require __DIR__ . '/department.php';
     require __DIR__ . '/position.php';
     require __DIR__ . '/approvals.php';

@@ -20,7 +20,9 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CurrencySeeder::class,
             CommonCostsSeeder::class,
-            PaymentModesTableSeeder::class
+            PaymentModesTableSeeder::class,
+            CargoNaturesTableSeeder::class,
         ]);
     }
 }
+
