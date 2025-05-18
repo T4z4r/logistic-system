@@ -228,7 +228,20 @@
                          <span class="nav-main-link-name">Fuel Costs</span>
                      </a>
                  </li>
-
+                 <li class="nav-main-item">
+                     <a class="nav-main-link{{ request()->is('payment-methods*') ? ' active' : '' }}"
+                         href="{{ route('payment-methods.list') }}">
+                         <i class="nav-main-link-icon fa fa-credit-card"></i>
+                         <span class="nav-main-link-name">Payment Methods</span>
+                     </a>
+                 </li>
+                 <li class="nav-main-item">
+                     <a class="nav-main-link{{ request()->is('payment-modes*') ? ' active' : '' }}"
+                         href="{{ route('payment-modes.list') }}">
+                         <i class="nav-main-link-icon fa fa-money-check-alt"></i>
+                         <span class="nav-main-link-name">Payment Modes</span>
+                     </a>
+                 </li>
              </ul>
          </li>
          <li class="nav-main-item{{ request()->is('system-configurations*') ? ' open' : '' }}">

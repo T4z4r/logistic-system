@@ -14,8 +14,8 @@ return new class extends Migration
     Schema::create('payment_methods', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->foreignId('ledger_id')->constrained('ledgers')->onDelete('restrict');
-            $table->foreignId('created_by')->constrained('users')->onDelete('restrict');
+            $table->bigInteger('ledger_id');
+            $table->bigInteger('created_by');
             $table->integer('status')->default(0);
             $table->timestamps();
             $table->integer('currency_id')->default(0);
