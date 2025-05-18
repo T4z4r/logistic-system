@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             RolePermissionSeeder::class,
             UserSeeder::class,
             CurrencySeeder::class,
-
+            CommonCostsSeeder::class
         ]);
     }
  }

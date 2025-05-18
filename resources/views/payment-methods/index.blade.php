@@ -2,19 +2,19 @@
 
 @section('content')
   <!-- Hero -->
-  <div class="bg-body-light mt-5">
+  <div class="bg-body-light">
     <div class="content content-full">
       <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
         <div class="flex-grow-1">
-          <h1 class="h3 fw-bold mb-1">User Management</h1>
-          <h2 class="fs-base lh-base fw-medium text-muted mb-0">Manage all users in the system</h2>
+          <h1 class="h3 fw-bold mb-1">Payment Methods</h1>
+          <h2 class="fs-base lh-base fw-medium text-muted mb-0">Manage payment methods</h2>
         </div>
         <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
           <ol class="breadcrumb breadcrumb-alt">
             <li class="breadcrumb-item">
               <a class="link-fx" href="{{ route('dashboard') }}">Dashboard</a>
             </li>
-            <li class="breadcrumb-item" aria-current="page">Users</li>
+            <li class="breadcrumb-item" aria-current="page">Payment Methods</li>
           </ol>
         </nav>
       </div>
@@ -23,15 +23,15 @@
   <!-- END Hero -->
 
   <!-- Page Content -->
-  <div class="content p-2">
-    <!-- Users Block -->
+  <div class="content">
+    <!-- Payment Methods Block -->
     <div class="block block-rounded">
       <div class="block-header block-header-default">
-        <h3 class="block-title">Users Overview</h3>
+        <h3 class="block-title">Payment Methods Overview</h3>
         <div class="block-options">
-          <a href="{{ route('users.create') }}" class="btn btn-primary">Add New User</a>
-          <a href="{{ route('users.active') }}" class="btn btn-secondary">View Active Users</a>
-          <a href="{{ route('users.inactive') }}" class="btn btn-secondary">View Inactive Users</a>
+          <a href="{{ route('payment-methods.create') }}" class="btn btn-primary">Add New Payment Method</a>
+          <a href="{{ route('payment-methods.active') }}" class="btn btn-success">Active</a>
+          <a href="{{ route('payment-methods.inactive') }}" class="btn btn-warning">Inactive</a>
         </div>
       </div>
       <div class="block-content">
@@ -43,26 +43,24 @@
           <thead>
             <tr>
               <th>Name</th>
-              <th>Email</th>
-              <th>Department</th>
-              <th>Position</th>
-              <th>Line Manager</th>
+              <th>Ledger</th>
+              <th>Bank Name</th>
+              <th>Created By</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            @foreach ($users as $user)
+            @foreach ($paymentMethods as $paymentMethod)
               <tr>
-                <td>{{ $user->name }}</td>
-                <td>{{ $user->email }}</td>
-                <td>{{ $user->department?->name ?? 'N/A' }}</td>
-                <td>{{ $user->position?->name ?? 'N/A' }}</td>
-                <td>{{ $user->lineManager?->name ?? 'N/A' }}</td>
-                <td>{{ $user->status ? 'Active' : 'Inactive' }}</td>
+                <td>{{ $paymentMethod->name }}</td>
+                <td>{{ $paymentMethod->ledger?->name ?? 'N/A' }}</td>
+                <td>{{ $paymentMethod->bank_name ?? 'N/A' }}</td>
+                <td>{{ $paymentMethod->createdBy?->name ?? 'N/A' }}</td>
+                <td>{{ $paymentMethod->status ? 'Active' : 'Inactive' }}</td>
                 <td>
-                  <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-primary">Edit</a>
-                  <form action="{{ route('users.destroy', $user) }}" method="POST" style="display: inline;">
+                  <a href="{{ route('payment-methods.edit', $paymentMethod->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                  <form action="{{ route('payment-methods.delete', $paymentMethod->id) }}" method="POST" style="display: inline;">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
@@ -72,10 +70,10 @@
             @endforeach
           </tbody>
         </table>
-        {{ $users->links() }}
+        {{ $paymentMethods->links() }}
       </div>
     </div>
-    <!-- END Users Block -->
+    <!-- END Payment Methods Block -->
   </div>
   <!-- END Page Content -->
 @endsection

@@ -26,4 +26,9 @@ class Route extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+    public function costs()
+    {
+        return $this->hasMany(RouteCost::class, 'route_id');
+    }
 }

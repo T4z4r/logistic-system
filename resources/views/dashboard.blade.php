@@ -4,9 +4,9 @@
     <!-- Hero -->
     <div class="bg-body-light mt-5">
         <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-1">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0    ">
                 <div class="flex-grow-1">
-                    <h5 class="h3 fw-bold mb-1">
+                    <h5 class="h5 fw-bold mb-1">
                         Dashboard
                     </h5>
                     <h2 class="fs-base lh-base fw-medium text-muted mb-0">

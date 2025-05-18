@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Route;
 use App\Models\User;
+use App\Models\Route;
+use App\Models\RouteCost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -37,6 +38,13 @@ class RouteController extends Controller
         return view('routes.create', compact('users'));
     }
 
+
+    public function show($id)
+    {
+        $route = Route::findOrFail($id);
+        return view('routes.show', compact('route'));
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -68,6 +76,7 @@ class RouteController extends Controller
 
     public function edit($id)
     {
+
         $route = Route::findOrFail($id);
         $users = User::where('status', 1)->get();
         return view('routes.edit', compact('route', 'users'));
