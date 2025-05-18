@@ -29,9 +29,9 @@
       <div class="block-header block-header-default">
         <h3 class="block-title">Users Overview</h3>
         <div class="block-options">
-          <a href="{{ route('users.create') }}" class="btn btn-primary">Add New User</a>
-          <a href="{{ route('users.active') }}" class="btn btn-secondary">View Active Users</a>
-          <a href="{{ route('users.inactive') }}" class="btn btn-secondary">View Inactive Users</a>
+          <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm">Add New User</a>
+          <a href="{{ route('users.active') }}" class="btn btn-secondary btn-sm">Active Users</a>
+          <a href="{{ route('users.inactive') }}" class="btn btn-secondary btn-sm">Inactive Users</a>
         </div>
       </div>
       <div class="block-content">

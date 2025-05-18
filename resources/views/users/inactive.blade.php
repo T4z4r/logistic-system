@@ -4,7 +4,7 @@
   <!-- Hero -->
   <div class="bg-body-light mt-5">
     <div class="content content-full">
-      <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+      <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center ">
         <div class="flex-grow-1">
           <h5 class="h5 fw-bold mb-1">Inactive Users</h5>
           <h2 class="fs-base lh-base fw-medium text-muted mb-0">View all inactive users in the system</h2>
@@ -25,21 +25,21 @@
   <!-- Page Content -->
   <div class="content p-2">
     <!-- Inactive Users Block -->
-    <div class="block block-rounded">
+    <div class="block block-rounded rounded-0">
       <div class="block-header block-header-default">
         <h3 class="block-title">Inactive Users List</h3>
         <div class="block-options">
-          <a href="{{ route('users.create') }}" class="btn btn-primary">Add New User</a>
-          <a href="{{ route('users.active') }}" class="btn btn-secondary">View Active Users</a>
+          <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm">Add New User</a>
+          <a href="{{ route('users.active') }}" class="btn btn-secondary btn-sm">View Active Users</a>
         </div>
       </div>
-      <div class="block-content">
+      <div class="block-content rounded-0">
         @if (session('success'))
           <div class="alert alert-success" role="alert">{{ session('success') }}</div>
         @endif
 
-        <table class="table table-bordered table-striped">
-          <thead>
+        <table class="table table-bordered table-striped table-sm">
+          <thead class="table-secondary">
             <tr>
               <th>Name</th>
               <th>Email</th>
