@@ -68,7 +68,7 @@
           <div class="alert alert-success" role="alert">{{ session('success') }}</div>
         @endif
 
-        <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm">
+        <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
           <thead class="table-secondary">
             <tr>
               <th>Name</th>

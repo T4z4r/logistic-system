@@ -1,5 +1,32 @@
 @extends('layouts.backend')
 
+@section('css')
+    <!-- Page JS Plugins CSS -->
+    <link rel="stylesheet" href="{{ asset('js/plugins/datatables-bs5/css/dataTables.bootstrap5.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/plugins/datatables-buttons-bs5/css/buttons.bootstrap5.min.css') }}">
+@endsection
+
+@section('js')
+    <!-- jQuery (required for DataTables plugin) -->
+    <script src="{{ asset('js/lib/jquery.min.js') }}"></script>
+
+    <!-- Page JS Plugins -->
+    <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-bs5/js/buttons.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons/buttons.html5.min.js') }}"></script>
+
+    <!-- Page JS Code -->
+    @vite(['resources/js/pages/datatables.js'])
+@endsection
+
+
+
 @section('content')
   <!-- Hero -->
   <div class="bg-body-light mt-5">
@@ -33,8 +60,8 @@
             <i class="fa fa-plus"></i>
             Add New Truck
         </a>
-          <a href="{{ route('trucks.active') }}" class="btn btn-success btn-sm">Active</a>
-          <a href="{{ route('trucks.inactive') }}" class="btn btn-warning btn-sm">Inactive</a>
+          {{-- <a href="{{ route('trucks.active') }}" class="btn btn-success btn-sm">Active</a>
+          <a href="{{ route('trucks.inactive') }}" class="btn btn-warning btn-sm">Inactive</a> --}}
         </div>
       </div>
       <div class="block-content">
@@ -54,7 +81,7 @@
           </div>
         @endif
 
-        <table class="table table-bordered table-striped table-sm">
+          <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
           <thead class="table-secondary">
             <tr>
               <th>Plate Number</th>
