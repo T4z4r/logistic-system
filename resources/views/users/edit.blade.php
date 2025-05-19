@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- Hero -->
-    <div class="bg-body-light">
+    <div class="bg-body-light mt-5">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
                 <div class="flex-grow-1">
@@ -23,7 +23,7 @@
     <!-- END Hero -->
 
     <!-- Page Content -->
-    <div class="content">
+    <div class="content p-2">
         <!-- Edit User Block -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
@@ -37,7 +37,8 @@
                         <div class="col-md-6 mb-4">
                             <label class="form-label" for="name">Name</label>
                             <input type="text" name="name" id="name"
-                                class="form-control @error('name') is-invalid @enderror" value="{{ old('name', $user->name) }}">
+                                class="form-control @error('name') is-invalid @enderror"
+                                value="{{ old('name', $user->name) }}">
                             @error('name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -64,7 +65,8 @@
 
                         <div class="col-md-6 mb-4">
                             <label class="form-label" for="password_confirmation">Confirm Password</label>
-                            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
+                            <input type="password" name="password_confirmation" id="password_confirmation"
+                                class="form-control">
                         </div>
 
                         <div class="col-md-6 mb-4">
@@ -113,7 +115,17 @@
                             </select>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Update User</button>
+                    <hr>
+                    <div class="row">
+                        <div class="col-6">
+                        </div>
+                        <div class="col-6">
+                            <button type="submit" class="btn btn-primary float-end mb-3">
+                                <i class="fa fa-save"></i>
+                                Update User
+                            </button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>

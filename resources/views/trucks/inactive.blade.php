@@ -2,11 +2,11 @@
 
 @section('content')
   <!-- Hero -->
-  <div class="bg-body-light">
+  <div class="bg-body-light mt-5">
     <div class="content content-full">
       <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
         <div class="flex-grow-1">
-          <h1 class="h3 fw-bold mb-1">Inactive Trucks</h1>
+          <h5 class="h5 fw-bold mb-1">Inactive Trucks</h5>
           <h2 class="fs-base lh-base fw-medium text-muted mb-0">View all inactive trucks in the system</h2>
         </div>
         <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
@@ -23,14 +23,14 @@
   <!-- END Hero -->
 
   <!-- Page Content -->
-  <div class="content">
+  <div class="content p-2">
     <!-- Inactive Trucks Block -->
     <div class="block block-rounded">
       <div class="block-header block-header-default">
         <h3 class="block-title">Inactive Trucks List</h3>
         <div class="block-options">
-          <a href="{{ route('trucks.create') }}" class="btn btn-primary">Add New Truck</a>
-          <a href="{{ route('trucks.active') }}" class="btn btn-secondary">View Active Trucks</a>
+          <a href="{{ route('trucks.create') }}" class="btn btn-primary btn-sm">Add New Truck</a>
+          <a href="{{ route('trucks.active') }}" class="btn btn-secondary btn-sm">View Active Trucks</a>
         </div>
       </div>
       <div class="block-content">

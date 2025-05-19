@@ -25,13 +25,15 @@
   <!-- Page Content -->
   <div class="content p-2">
     <!-- Customers Block -->
-    <div class="block block-rounded">
+    <div class="block block-rounded rounded-0">
       <div class="block-header block-header-default">
         <h3 class="block-title">Customers Overview</h3>
         <div class="block-options">
-          <a href="{{ route('customers.create') }}" class="btn btn-primary">Add New Customer</a>
-          <a href="{{ route('customers.active') }}" class="btn btn-secondary">View Active Customers</a>
-          <a href="{{ route('customers.inactive') }}" class="btn btn-secondary">View Inactive Customers</a>
+          <a href="{{ route('customers.create') }}" class="btn btn-primary btn-sm">
+            <i class="fa fa-plus"></i>
+            Add New Customer</a>
+          <a href="{{ route('customers.active') }}" class="btn btn-secondary btn-sm">View Active Customers</a>
+          <a href="{{ route('customers.inactive') }}" class="btn btn-secondary btn-sm">View Inactive Customers</a>
         </div>
       </div>
       <div class="block-content">
@@ -39,11 +41,11 @@
           <div class="alert alert-success" role="alert">{{ session('success') }}</div>
         @endif
 
-        <table class="table table-bordered table-striped">
-          <thead>
+        <table class="table table-bordered table-striped table-sm">
+          <thead class="table-secondary">
             <tr>
               <th>Company</th>
-              <th>Contact Person</th>
+              <th>Contact</th>
               <th>Email</th>
               <th>Phone</th>
               <th>TIN</th>
