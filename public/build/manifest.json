@@ -1,0 +1,119 @@
+{
+  "resources/fonts/fontawesome/fa-brands-400.ttf": {
+    "file": "assets/fa-brands-400-20c4a58b.ttf",
+    "src": "resources/fonts/fontawesome/fa-brands-400.ttf"
+  },
+  "resources/fonts/fontawesome/fa-brands-400.woff2": {
+    "file": "assets/fa-brands-400-74833209.woff2",
+    "src": "resources/fonts/fontawesome/fa-brands-400.woff2"
+  },
+  "resources/fonts/fontawesome/fa-regular-400.ttf": {
+    "file": "assets/fa-regular-400-528d022d.ttf",
+    "src": "resources/fonts/fontawesome/fa-regular-400.ttf"
+  },
+  "resources/fonts/fontawesome/fa-regular-400.woff2": {
+    "file": "assets/fa-regular-400-8e7e5ea1.woff2",
+    "src": "resources/fonts/fontawesome/fa-regular-400.woff2"
+  },
+  "resources/fonts/fontawesome/fa-solid-900.ttf": {
+    "file": "assets/fa-solid-900-67a65763.ttf",
+    "src": "resources/fonts/fontawesome/fa-solid-900.ttf"
+  },
+  "resources/fonts/fontawesome/fa-solid-900.woff2": {
+    "file": "assets/fa-solid-900-7152a693.woff2",
+    "src": "resources/fonts/fontawesome/fa-solid-900.woff2"
+  },
+  "resources/fonts/inter/inter-v12-latin-300.woff2": {
+    "file": "assets/inter-v12-latin-300-6b2cee46.woff2",
+    "src": "resources/fonts/inter/inter-v12-latin-300.woff2"
+  },
+  "resources/fonts/inter/inter-v12-latin-500.woff2": {
+    "file": "assets/inter-v12-latin-500-d5333670.woff2",
+    "src": "resources/fonts/inter/inter-v12-latin-500.woff2"
+  },
+  "resources/fonts/inter/inter-v12-latin-600.woff2": {
+    "file": "assets/inter-v12-latin-600-048d136d.woff2",
+    "src": "resources/fonts/inter/inter-v12-latin-600.woff2"
+  },
+  "resources/fonts/inter/inter-v12-latin-700.woff2": {
+    "file": "assets/inter-v12-latin-700-ced2d8e0.woff2",
+    "src": "resources/fonts/inter/inter-v12-latin-700.woff2"
+  },
+  "resources/fonts/inter/inter-v12-latin-800.woff2": {
+    "file": "assets/inter-v12-latin-800-a51ac27d.woff2",
+    "src": "resources/fonts/inter/inter-v12-latin-800.woff2"
+  },
+  "resources/fonts/inter/inter-v12-latin-900.woff2": {
+    "file": "assets/inter-v12-latin-900-f2db7f82.woff2",
+    "src": "resources/fonts/inter/inter-v12-latin-900.woff2"
+  },
+  "resources/fonts/inter/inter-v12-latin-regular.woff2": {
+    "file": "assets/inter-v12-latin-regular-0364d368.woff2",
+    "src": "resources/fonts/inter/inter-v12-latin-regular.woff2"
+  },
+  "resources/fonts/simple-line-icons/Simple-Line-Icons.eot": {
+    "file": "assets/Simple-Line-Icons-1c823013.eot",
+    "src": "resources/fonts/simple-line-icons/Simple-Line-Icons.eot"
+  },
+  "resources/fonts/simple-line-icons/Simple-Line-Icons.svg": {
+    "file": "assets/Simple-Line-Icons-b381f90a.svg",
+    "src": "resources/fonts/simple-line-icons/Simple-Line-Icons.svg"
+  },
+  "resources/fonts/simple-line-icons/Simple-Line-Icons.ttf": {
+    "file": "assets/Simple-Line-Icons-3f501ddb.ttf",
+    "src": "resources/fonts/simple-line-icons/Simple-Line-Icons.ttf"
+  },
+  "resources/fonts/simple-line-icons/Simple-Line-Icons.woff": {
+    "file": "assets/Simple-Line-Icons-14b825d7.woff",
+    "src": "resources/fonts/simple-line-icons/Simple-Line-Icons.woff"
+  },
+  "resources/fonts/simple-line-icons/Simple-Line-Icons.woff2": {
+    "file": "assets/Simple-Line-Icons-104673f4.woff2",
+    "src": "resources/fonts/simple-line-icons/Simple-Line-Icons.woff2"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-0d91dc04.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  },
+  "resources/js/oneui/app.js": {
+    "file": "assets/app-03458936.js",
+    "isEntry": true,
+    "src": "resources/js/oneui/app.js"
+  },
+  "resources/js/pages/datatables.js": {
+    "file": "assets/datatables-ad71b457.js",
+    "isEntry": true,
+    "src": "resources/js/pages/datatables.js"
+  },
+  "resources/sass/main.scss": {
+    "file": "assets/main-5f28902e.css",
+    "isEntry": true,
+    "src": "resources/sass/main.scss"
+  },
+  "resources/sass/oneui/themes/amethyst.scss": {
+    "file": "assets/amethyst-d85f66d8.css",
+    "isEntry": true,
+    "src": "resources/sass/oneui/themes/amethyst.scss"
+  },
+  "resources/sass/oneui/themes/city.scss": {
+    "file": "assets/city-7720995c.css",
+    "isEntry": true,
+    "src": "resources/sass/oneui/themes/city.scss"
+  },
+  "resources/sass/oneui/themes/flat.scss": {
+    "file": "assets/flat-b51a8cf8.css",
+    "isEntry": true,
+    "src": "resources/sass/oneui/themes/flat.scss"
+  },
+  "resources/sass/oneui/themes/modern.scss": {
+    "file": "assets/modern-e13447c3.css",
+    "isEntry": true,
+    "src": "resources/sass/oneui/themes/modern.scss"
+  },
+  "resources/sass/oneui/themes/smooth.scss": {
+    "file": "assets/smooth-ab8416d9.css",
+    "isEntry": true,
+    "src": "resources/sass/oneui/themes/smooth.scss"
+  }
+}
