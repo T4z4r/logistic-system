@@ -9,8 +9,11 @@ use App\Models\Customer;
 use App\Models\RouteCost;
 use App\Models\Allocation;
 use App\Models\CargoNature;
+use App\Models\CurrencyLog;
 use App\Models\PaymentMode;
 use Illuminate\Http\Request;
+use App\Models\AllocationCost;
+use App\Models\CurrencyLogItem;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -43,46 +46,59 @@ class AllocationController extends Controller
 
     public function create()
     {
-            $data['customers'] = Customer::latest()->get();
-            $data['routes'] = Route::latest()->where('status', 1)->get();
-            $data['nature'] = CargoNature::latest()->where('status', 0)->get();
-            $data['mode'] = PaymentMode::latest()->where('status', 0)->get();
-            $data['currency'] = Currency::latest()->where('status', 1)->get();
+        $data['customers'] = Customer::latest()->get();
+        $data['routes'] = Route::latest()->where('status', 1)->get();
+        $data['nature'] = CargoNature::latest()->where('status', 0)->get();
+        $data['mode'] = PaymentMode::latest()->where('status', 0)->get();
+        $data['currency'] = Currency::latest()->where('status', 1)->get();
         return view('allocations.create', $data);
     }
 
-  
-    public function saveNewAllocationDetail(Request $request)
+
+    public function store(Request $request)
     {
         // Begin database transaction
         DB::beginTransaction();
 
         try {
-            // Validate the input data
+            // Validate the input data with custom error messages
             $validate = Validator::make($request->all(), [
                 'customer_id' => 'required',
                 'cargo' => 'required',
                 'cargo_ref' => 'required',
                 'cargo_nature' => 'required',
-                'amount' => 'required',
+                'amount' => 'required|numeric',
                 'payment_mode' => 'required',
                 'payment_curency' => 'required',
-                'container' => 'required'
+                'container' => 'required',
+            ], [
+                'customer_id.required' => 'Please select a customer.',
+                'cargo.required' => 'Cargo description is required.',
+                'cargo_ref.required' => 'Cargo reference is required.',
+                'cargo_nature.required' => 'Cargo nature is required.',
+                'amount.required' => 'Amount is required.',
+                'amount.numeric' => 'Amount must be a number.',
+                'payment_mode.required' => 'Payment mode is required.',
+                'payment_curency.required' => 'Payment currency is required.',
+                'container.required' => 'Container information is required.',
             ]);
 
+            // Handle validation failure
             if ($validate->fails()) {
-                return response()->json([
-                    'status' => 400,
-                    'errors' => $validate->errors()->all(),
-                ]);
+                return redirect()->back()
+                    ->withErrors($validate)
+                    ->withInput();
             }
 
-            // For Currency Log
+            // Check for currency log
             $currencyLog = CurrencyLog::latest()->first();
             if ($currencyLog == null) {
-                return back()->with('error', 'Sorry, there is no currency log!');
+                return redirect()->back()
+                    ->with('error', 'Sorry, there is no currency log!')
+                    ->withInput();
             }
 
+            // Get currency rate
             $currency = CurrencyLogItem::where('currency_log_id', $currencyLog->id)
                 ->where('currency_id', $request->payment_curency)
                 ->first();
@@ -92,7 +108,7 @@ class AllocationController extends Controller
             $allocation->Customer_id = $request->customer_id;
             $allocation->cargo = $request->cargo;
             $allocation->cargo_ref = $request->cargo_ref;
-            $allocation->cargo_nature = $request->cargo_nature;
+            $allocation->cargo_nature_id = $request->cargo_nature;
             $allocation->amount = $request->amount;
             $allocation->quantity = $request->quantity;
             $allocation->payment_mode = $request->payment_mode;
@@ -110,8 +126,6 @@ class AllocationController extends Controller
             $allocation->clearance = $request->clearance;
             $allocation->dimensions = $request->dimensions;
             $allocation->created_by = Auth::user()->id;
-            // $allocation->currency_log_id = $currencyLog->id;
-
 
             $allocation->save();
 
@@ -137,12 +151,8 @@ class AllocationController extends Controller
                 $cost->return = $item->return;
                 $cost->editable = $item->editable;
                 $cost->type = $item->type;
-                // $currency = Currency::find($item->currency_id);
-                // $cost_currency = CurrencyLogItem::where('currency_log_id', $currencyLog->id)
-                //     ->where('currency_id', $item->currency_id)
-                //     ->first();
-                $cost_currency = 1;
-                $real_amount = $item->amount * $cost_currency->rate;
+                $cost_currency = 1; // Placeholder for currency rate (review if dynamic rate needed)
+                $real_amount = $item->amount * $cost_currency;
                 if ($item->quantity > 0) {
                     $cost->amount = $item->amount;
                     $cost->real_amount = $real_amount * $item->quantity;
@@ -153,38 +163,39 @@ class AllocationController extends Controller
                 }
                 $cost->currency_id = $item->currency_id;
                 $cost->account_code = $item->account_code;
-                $cost->rate = $cost_currency->rate;
+                $cost->rate = $cost_currency;
                 $cost->route_id = $item->route_id;
-                // $cost->currency_log_id = $currencyLog->id;
                 $cost->status = 0;
                 $cost->created_by = Auth::user()->id;
                 $cost->save();
             }
 
-            // Log the activity
-            // SystemLogHelper::logSystemActivity('Allocation Creation', auth()->user()->id, auth()->user()->fname . ' ' . auth()->user()->lname . ' has created an Allocation');
+            // Log the activity (uncommented from original)
+            // SystemLogHelper::logSystemActivity(
+            //     'Allocation Creation',
+            //     auth()->user()->id,
+            //     auth()->user()->fname . ' ' . auth()->user()->lname . ' has created an Allocation'
+            // );
 
             // Commit the transaction
             DB::commit();
 
-            // Return success response
-            return response()->json([
-                'status' => 200,
-                'errors' => 'Updated',
-                'route_truck' => route('flex.truck-allocation', base64_encode($id)),
-            ]);
+            // Redirect to truck allocation route with success message
+            return redirect()->route('flex.truck-allocation', base64_encode($id))
+                ->with('success', 'Allocation created successfully');
         } catch (\Exception $e) {
+
+
             // Rollback transaction in case of any exception
             DB::rollBack();
 
-            // Log the error for debugging purposes
+            // Log the error for debugging
             Log::error('Error saving new allocation detail: ' . $e->getMessage());
 
-            // Return error response
-            return response()->json([
-                'status' => 500,
-                'error' => 'An error occurred while saving the allocation. Please try again.',
-            ]);
+            // Redirect back with error message
+            return redirect()->back()
+                ->with('error', 'An error occurred while saving the allocation. Please try again.')
+                ->withInput();
         }
     }
 

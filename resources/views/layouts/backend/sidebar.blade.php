@@ -204,14 +204,15 @@
                              <span class="nav-main-link-name">Payment Methods</span>
                          </a>
                      </li>
+
                  </ul>
              </li>
          @endcan
 
          <li
-             class="nav-main-item{{ request()->is('common-costs*', 'fuel-costs*', 'payment-methods*', 'payment-modes*', 'cargo-natures*') ? ' open' : '' }}">
+             class="nav-main-item{{ request()->is('common-costs*', 'fuel-costs*', 'payment-methods*', 'payment-modes*', 'cargo-natures*', 'currencies*') ? ' open' : '' }}">
              <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                 aria-expanded="{{ request()->is('common-costs*', 'fuel-costs*', 'payment-methods*', 'payment-modes*', 'cargo-natures*') ? 'true' : 'false' }}"
+                 aria-expanded="{{ request()->is('common-costs*', 'fuel-costs*', 'payment-methods*', 'payment-modes*', 'cargo-natures*', 'currencies*') ? 'true' : 'false' }}"
                  href="#">
                  <i class="nav-main-link-icon fa fa-list"></i>
                  <span class="nav-main-link-name">Logistics Settings</span>
@@ -252,6 +253,14 @@
                          href="{{ route('cargo-natures.list') }}">
                          <i class="nav-main-link-icon fa fa-boxes"></i>
                          <span class="nav-main-link-name">Cargo Natures</span>
+                     </a>
+                 </li>
+
+                 <li class="nav-main-item">
+                     <a class="nav-main-link{{ request()->is('currencies*') ? ' active' : '' }}"
+                         href="{{ route('currencies.index') }}">
+                         <i class="nav-main-link-icon fa fa-coins"></i>
+                         <span class="nav-main-link-name">Currencies</span>
                      </a>
                  </li>
              </ul>

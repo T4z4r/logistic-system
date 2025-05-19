@@ -5,7 +5,7 @@
     <div class="hero-static d-flex align-items-center"
         style="background-image: url('{{ asset('media/backgrounds/bg.jpeg') }}'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
         <div class="content w-100">
-            <div class="row justify-content-end push">
+            <div class="row justify-content-center ">
                      <div class="col-md-4 col-lg-4 col-xl-4" style="opacity: 0.98;">
                     <!-- Sign In Block -->
                     <div class="block block-rounded mb-0" style="opacity: 0.96;">
@@ -94,7 +94,7 @@
                 </div>
             </div>
             <div class="fs-sm text-muted text-center">
-                <strong>OneUI 5.7</strong> &copy; <span data-toggle="year-copy"></span>
+                <strong>Krismo 0.0.1</strong> &copy; <span data-toggle="year-copy"></span>
             </div>
         </div>
     </div>
