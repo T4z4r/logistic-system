@@ -102,14 +102,14 @@
                      </a>
                  </li>
                  <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('trips/active') ? ' active' : '' }}" href="/trips/active">
+                     <a class="nav-main-link{{ request()->is('trips/active') ? ' active' : '' }}" href="{{ route('blank') }}">
                          {{-- <i class="nav-main-link-icon si si-circle"></i> --}}
                          <span class="nav-main-link-name">Going Load</span>
                      </a>
                  </li>
                  <li class="nav-main-item">
                      <a class="nav-main-link{{ request()->is('trips/inactive') ? ' active' : '' }}"
-                         href="/trips/inactive">
+                         href="{{ route('blank') }}">
                          {{-- <i class="nav-main-link-icon si si-plane"></i> --}}
                          <span class="nav-main-link-name">Back Load</span>
                      </a>
@@ -118,7 +118,7 @@
 
          </li>
          <li class="nav-main-item{{ request()->is('trips/create') ? ' open' : '' }}">
-             <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="/trips/create">
+             <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="{{ route('blank') }}">
                  <i class="nav-main-link-icon fa fa-database"></i>
                  <span class="nav-main-link-name">Truck Loading</span>
              </a>
@@ -126,13 +126,13 @@
 
 
          <li class="nav-main-item{{ request()->is('trips/create') ? ' open' : '' }}">
-             <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="/trips/create">
+             <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="{{ route('blank') }}">
                  <i class="nav-main-link-icon fa fa-screwdriver-wrench"></i>
                  <span class="nav-main-link-name">Breakdowns</span>
              </a>
          </li>
          <li class="nav-main-item{{ request()->is('trips/create') ? ' open' : '' }}">
-             <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="/trips/create">
+             <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="{{ route('blank') }}">
                  <i class="nav-main-link-icon fa fa-car-burst"></i>
                  <span class="nav-main-link-name">Accidents</span>
              </a>
@@ -140,7 +140,7 @@
 
          <li class="nav-main-item">
              <a class="nav-main-link{{ request()->is('trip-settings/costs') ? ' active' : '' }}"
-                 href="/trip-settings/costs">
+                 href="{{ route('blank') }}">
                  <i class="nav-main-link-icon fa fa-wallet"></i>
                  <span class="nav-main-link-name">
                      Out of Budget
@@ -151,7 +151,7 @@
 
          <li class="nav-main-item">
              <a class="nav-main-link{{ request()->is('trip-settings/costs') ? ' active' : '' }}"
-                 href="/trip-settings/costs">
+                 href="{{ route('blank') }}">
                  <i class="nav-main-link-icon fa fa-file-pdf"></i>
                  <span class="nav-main-link-name">
                      Reports
@@ -174,7 +174,7 @@
                  <ul class="nav-main-submenu">
                      <li class="nav-main-item">
                          <a class="nav-main-link{{ request()->is('finance-settings/general') ? ' active' : '' }}"
-                             href="/finance-settings/general">
+                             href="{{ route('blank') }}">
                              <span class="nav-main-link-name">General</span>
                          </a>
                      </li>
@@ -186,20 +186,20 @@
                      </li>
                      <li class="nav-main-item">
                          <a class="nav-main-link{{ request()->is('finance-settings/tax') ? ' active' : '' }}"
-                             href="/finance-settings/tax">
+                             href="{{ route('blank') }}">
                              <span class="nav-main-link-name">Tax Settings</span>
                          </a>
                      </li>
                      <li class="nav-main-item">
                          <a class="nav-main-link{{ request()->is('finance-settings/banks') ? ' active' : '' }}"
-                             href="/finance-settings/banks">
+                             href="{{ route('blank') }}">
                              <span class="nav-main-link-name">Bank Accounts</span>
                          </a>
                      </li>
 
                      <li class="nav-main-item">
                          <a class="nav-main-link{{ request()->is('payment-methods*') ? ' active' : '' }}"
-                             href="{{ route('Pagamento-methods.list') }}">
+                             href="{{ route('Pagament-methods.list') }}">
                              <i class="nav-main-link-icon fa fa-credit-card"></i>
                              <span class="nav-main-link-name">Payment Methods</span>
                          </a>
@@ -315,7 +315,7 @@
                  </li>
                  <li class="nav-main-item">
                      <a class="nav-main-link{{ request()->is('system-configurations/notifications') ? ' active' : '' }}"
-                         href="/system-configurations/notifications">
+                         href="{{ route('blank') }}">
                          <i class="nav-main-link-icon si si-bell"></i>
                          <span class="nav-main-link-name">Notifications</span>
                      </a>

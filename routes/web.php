@@ -33,7 +33,7 @@ Route::match(['get', 'post'], '/dashboard', function () {
 })->name('dashboard');
 Route::view('/pages/slick', 'pages.slick');
 Route::view('/pages/datatables', 'pages.datatables');
-Route::view('/pages/blank', 'pages.blank');
+Route::view('/pages/blank', 'pages.blank')->name('blank');
 require __DIR__ . '/auth.php';
 
 Route::middleware('auth')->group(function () {
