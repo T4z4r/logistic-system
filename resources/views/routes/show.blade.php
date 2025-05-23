@@ -320,7 +320,13 @@
                                 @enderror
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Add Cost</button>
+                        <hr>
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-save"></i>
+                                Save Cost
+                            </button>
+                        </div>
                     </form>
 
                 </div>
@@ -345,7 +351,7 @@
                             method="POST">
                             @csrf
                             @method('PUT')
-                     
+
                             <div class=" row">
                                 <div class="mb-3 col-md-6">
                                     <label for="name_{{ $cost->id }}" class="form-label">Name</label>
@@ -434,7 +440,8 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label for="quantity_{{ $cost->id }}" class="form-label">Quantity
-                                        (Optional)</label>
+                                        (Optional)
+                                    </label>
                                     <input type="number" name="quantity" id="quantity_{{ $cost->id }}"
                                         class="form-control @error('quantity') is-invalid @enderror"
                                         value="{{ old('quantity', $cost->quantity) }}" step="0.01">
@@ -524,9 +531,12 @@
                                     @enderror
                                 </div>
                             </div>
-
+                            <hr>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Update Cost</button>
+                                <button type="submit" class="btn btn-primary">
+                                     <i class="fa fa-save"></i>
+                                    Update Cost
+                                </button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             </div>
                         </form>
