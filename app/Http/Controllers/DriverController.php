@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Department;
-use App\Models\Position;
 use App\Models\User;
+use App\Models\Position;
+use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -47,33 +48,44 @@ class DriverController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'name' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/', // Allow only letters and spaces
             'department_id' => 'nullable|exists:departments,id',
             'line_manager_id' => 'nullable|exists:users,id',
             'status' => 'required|boolean',
-            'created_by' => 'required|exists:users,id',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        // Generate email from name
+        $name = trim($request->name);
+        $email = strtolower(str_replace(' ', '.', $name)) . '@sudenergy.co.tz';
+
+        // Check if email is unique
+        $validator = Validator::make(['email' => $email], [
+            'email' => 'required|email|unique:users,email',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors(['name' => 'This name generates an email that already exists'])
+                ->withInput();
+        }
+
         User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'name' => $name,
+            'email' => $email,
+            'password' => Hash::make('Password123'),
             'department_id' => $request->department_id,
             'line_manager_id' => $request->line_manager_id,
-            'position_id' => 5, // Fixed to Driver position
+            'position_id' => 1, // Fixed to Driver position
             'status' => $request->status,
-            'created_by' => $request->created_by,
+            'created_by' => Auth::user()->id,
         ]);
 
         return redirect()->route('drivers.list')->with('success', 'Driver created successfully.');
     }
-
     public function edit($id)
     {
         $driver = User::where('position_id', 5)->findOrFail($id);
@@ -88,38 +100,42 @@ class DriverController extends Controller
         $driver = User::where('position_id', 5)->findOrFail($id);
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $driver->id,
-            'password' => 'nullable|string|min:8|confirmed',
+            'name' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/', // Allow only letters and spaces
             'department_id' => 'nullable|exists:departments,id',
             'line_manager_id' => 'nullable|exists:users,id',
             'status' => 'required|boolean',
-            'created_by' => 'required|exists:users,id',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $data = [
-            'name' => $request->name,
-            'email' => $request->email,
+        // Generate email from name
+        $name = trim($request->name);
+        $email = strtolower(str_replace(' ', '.', $name)) . '@sudenergy.co.tz';
+
+        // Check if email is unique (excluding current driver)
+        $emailValidator = Validator::make(['email' => $email], [
+            'email' => 'required|email|unique:users,email,' . $driver->id,
+        ]);
+
+        if ($emailValidator->fails()) {
+            return redirect()->back()
+                ->withErrors(['name' => 'This name generates an email that already exists'])
+                ->withInput();
+        }
+
+        $driver->update([
+            'name' => $name,
+            'email' => $email,
             'department_id' => $request->department_id,
             'line_manager_id' => $request->line_manager_id,
             'position_id' => 5, // Ensure remains Driver
             'status' => $request->status,
-            'created_by' => $request->created_by,
-        ];
-
-        if ($request->filled('password')) {
-            $data['password'] = Hash::make($request->password);
-        }
-
-        $driver->update($data);
+        ]);
 
         return redirect()->route('drivers.list')->with('success', 'Driver updated successfully.');
     }
-
     public function destroy($id)
     {
         $driver = User::where('position_id', 5)->findOrFail($id);
