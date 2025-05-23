@@ -95,13 +95,17 @@
                                 <td>{{ $customer->status ? 'Active' : 'Inactive' }}</td>
                                 <td>
                                     <a href="{{ route('customers.edit', $customer->id) }}"
-                                        class="btn btn-sm btn-primary">Edit</a>
+                                        class="btn btn-sm btn-primary">
+                                    <i class="fa fa-edit"></i>
+                                    </a>
                                     <form action="{{ route('customers.delete', $customer->id) }}" method="POST"
                                         style="display: inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger"
-                                            onclick="return confirm('Are you sure?')">Delete</button>
+                                            onclick="return confirm('Are you sure?')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
                                     </form>
                                 </td>
                             </tr>
