@@ -275,7 +275,7 @@
              <ul class="nav-main-submenu">
                  <li class="nav-main-item">
                      <a class="nav-main-link{{ request()->is('system-configurations/general') ? ' active' : '' }}"
-                         href="/system-configurations/general">
+                         href="{{ route('blank') }}">
                          <i class="nav-main-link-icon si si-settings"></i>
                          <span class="nav-main-link-name">General Settings</span>
                      </a>
