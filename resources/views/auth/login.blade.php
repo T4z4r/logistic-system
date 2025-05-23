@@ -4,9 +4,9 @@
     <!-- Page Content -->
     <div class="hero-static d-flex align-items-center"
         style="background-image: url('{{ asset('media/backgrounds/bg.jpeg') }}'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
-        <div class="content w-80">
+        <div class="content w-50">
             <div class="row justify-content-center ">
-                     <div class="col-md-4 col-lg-4 col-xl-4 col-10" style="opacity: 0.98;">
+                     <div class="col-md-7 col-lg-7 col-xl-7" style="opacity: 0.95;">
                     <!-- Sign In Block -->
                     <div class="block block-rounded mb-0" style="opacity: 0.96;">
                         <div class="block-header block-header-default" style="opacity: 0.96;">
