@@ -70,6 +70,7 @@
                 <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
                     <thead class="table-secondary">
                         <tr>
+                            <th>#</th>
                             <th>Name</th>
                             <th>Start Point</th>
                             <th>Destination</th>
@@ -81,21 +82,34 @@
                     <tbody>
                         @foreach ($routes as $route)
                             <tr>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $route->name }}</td>
                                 <td>{{ $route->start_point }}</td>
                                 <td>{{ $route->destination }}</td>
                                 <td>{{ $route->createdBy?->name ?? 'N/A' }}</td>
-                                <td>{{ $route->status ? 'Active' : 'Inactive' }}</td>
                                 <td>
-                                    <a href="{{ route('routes.show', $route->id) }}" class="btn btn-sm btn-info">View</a>
-                                    <a href="{{ route('routes.edit', $route->id) }}"
-                                        class="btn btn-sm btn-primary">Edit</a>
+                                    @if ($route->status)
+                                        <span class="badge bg-success">Active</span>
+                                    @else
+                                        <span class="badge bg-danger">Inactive</span>
+                                    @endif
+                                </td>
+
+                                <td>
+                                    <a href="{{ route('routes.show', $route->id) }}" class="btn btn-sm btn-primary">
+                                        <i class="fa fa-list"></i>
+                                    </a>
+                                    <a href="{{ route('routes.edit', $route->id) }}" class="btn btn-sm btn-primary">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
                                     <form action="{{ route('routes.delete', $route->id) }}" method="POST"
                                         style="display: inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger"
-                                            onclick="return confirm('Are you sure?')">Delete</button>
+                                            onclick="return confirm('Are you sure?')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
                                     </form>
                                 </td>
                             </tr>

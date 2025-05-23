@@ -80,8 +80,8 @@
              </ul>
          </li>
 
-         <li class="nav-main-item{{ request()->is('routes') ? ' open' : '' }}">
-             <a class="nav-main-link{{ request()->is('routes') ? ' active' : '' }}" href="{{ route('routes.list') }}">
+         <li class="nav-main-item{{ request()->is('routes*') ? ' open' : '' }}">
+             <a class="nav-main-link{{ request()->is('routes*') ? ' active' : '' }}" href="{{ route('routes.list') }}">
                  <i class="nav-main-link-icon fa fa-map"></i>
                  <span class="nav-main-link-name">Routes Master</span>
              </a>

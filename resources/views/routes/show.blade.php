@@ -1,5 +1,31 @@
 @extends('layouts.backend')
 
+@section('css')
+    <!-- Page JS Plugins CSS -->
+    <link rel="stylesheet" href="{{ asset('js/plugins/datatables-bs5/css/dataTables.bootstrap5.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/plugins/datatables-buttons-bs5/css/buttons.bootstrap5.min.css') }}">
+@endsection
+
+@section('js')
+    <!-- jQuery (required for DataTables plugin) -->
+    <script src="{{ asset('js/lib/jquery.min.js') }}"></script>
+
+    <!-- Page JS Plugins -->
+    <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-bs5/js/buttons.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons/buttons.html5.min.js') }}"></script>
+
+    <!-- Page JS Code -->
+    @vite(['resources/js/pages/datatables.js'])
+@endsection
+
+
 @section('content')
     <!-- Hero -->
     <div class="bg-body-light mt-5">
@@ -23,13 +49,21 @@
     <!-- END Hero -->
 
     <!-- Page Content -->
-    <div class="content">
+    <div class="content p-2">
         <!-- Route Details Block -->
-        <div class="block block-rounded">
+        <div class="block block-rounded rounded-0">
             <div class="block-header block-header-default">
                 <h3 class="block-title">Route Details</h3>
                 <div class="block-options">
-                    <a href="{{ route('routes.edit', $route->id) }}" class="btn btn-primary">Edit Route</a>
+                  
+                    <a href="{{ route('routes.edit', $route->id) }}" class="btn btn-primary btn-sm">
+                        <i class="fa fa-edit"></i>
+                        Edit Route
+                    </a>
+                      <a href="{{ route('routes.list') }}" class="btn btn-danger btn-sm">
+                        <i class="fa fa-list"></i>
+                        Back 
+                    </a>
                 </div>
             </div>
             <div class="block-content">
@@ -41,12 +75,15 @@
         <!-- END Route Details Block -->
 
         <!-- Route Costs Block -->
-        <div class="block block-rounded">
+        <div class="block block-rounded mt-1">
             <div class="block-header block-header-default">
                 <h3 class="block-title">Route Costs</h3>
                 <div class="block-options">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#createCostModal{{ $route->id }}">Add New Cost</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#createCostModal{{ $route->id }}">
+                        <i class="fa fa-plus"></i>
+                        Add New Cost
+                    </button>
                 </div>
             </div>
             <div class="block-content">
@@ -66,8 +103,8 @@
                     </div>
                 @endif
 
-                <table class="table table-bordered table-striped">
-                    <thead>
+                <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
+                    <thead class="table-secondary">
                         <tr>
                             <th>Name</th>
                             <th>Amount</th>
@@ -89,14 +126,18 @@
                                 <td>{{ $cost->status ? 'Active' : 'Inactive' }}</td>
                                 <td>
                                     <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#editCostModal{{ $cost->id }}">Edit</button>
+                                        data-bs-target="#editCostModal{{ $cost->id }}">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
                                     <form
                                         action="{{ route('route-costs.delete', ['route_id' => $route->id, 'id' => $cost->id]) }}"
                                         method="POST" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger"
-                                            onclick="return confirm('Are you sure?')">Delete</button>
+                                            onclick="return confirm('Are you sure?')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
                                     </form>
                                 </td>
                             </tr>
