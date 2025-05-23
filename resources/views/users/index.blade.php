@@ -56,7 +56,10 @@
         <div class="block-header block-header-default">
             <h3 class="block-title">Users Overview</h3>
             <div class="block-options">
-                <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm">Add New User</a>
+                <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm">
+                    <i class="fa fa-plus"></i>
+                    Add New User
+                </a>
                 <a href="{{ route('users.active') }}" class="btn btn-secondary btn-sm">Active Users</a>
                 <a href="{{ route('users.inactive') }}" class="btn btn-secondary btn-sm">Inactive Users</a>
             </div>
@@ -88,13 +91,17 @@
                             <td>{{ $user->lineManager?->name ?? 'N/A' }}</td>
                             <td>{{ $user->status ? 'Active' : 'Inactive' }}</td>
                             <td>
-                                <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-primary">Edit</a>
+                                <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-primary">
+                                    <i class="fa fa-edit"></i>
+                                </a>
                                 <form action="{{ route('users.destroy', $user) }}" method="POST"
                                     style="display: inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger"
-                                        onclick="return confirm('Are you sure?')">Delete</button>
+                                        onclick="return confirm('Are you sure?')">
+                                    <i class="fa fa-trash"></i>
+                                    </button>
                                 </form>
                             </td>
                         </tr>
