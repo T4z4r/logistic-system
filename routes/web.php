@@ -28,16 +28,16 @@ Route::middleware('auth')->group(function () {
 
 // Example Routes
 Route::view('/', 'landing');
-Route::match(['get', 'post'], '/dashboard', function () {
+
+require __DIR__ . '/auth.php';
+
+Route::middleware('auth')->group(function () {
+    Route::match(['get', 'post'], '/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 Route::view('/pages/slick', 'pages.slick');
 Route::view('/pages/datatables', 'pages.datatables');
 Route::view('/pages/blank', 'pages.blank')->name('blank');
-require __DIR__ . '/auth.php';
-
-Route::middleware('auth')->group(function () {
-
     // start of Permission Routes
     Route::get('permissions', [PermissionController::class, 'index'])->name('permissions.index');
 
