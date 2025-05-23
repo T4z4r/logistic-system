@@ -65,12 +65,7 @@
                 </div>
             </div>
             <div class="block-content">
-                @if (session('success'))
-                    <div class="alert alert-success" role="alert">{{ session('success') }}</div>
-                @endif
-                @if (session('error'))
-                    <div class="alert alert-danger" role="alert">{{ session('error') }}</div>
-                @endif
+             
                 @if ($errors->any())
                     <div class="alert alert-danger" role="alert">
                         <ul>
@@ -84,8 +79,10 @@
                 <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
                     <thead class="table-secondary">
                         <tr>
+                            <th>#</th>
                             <th>Plate Number</th>
                             <th>Type</th>
+                            <th>Capacity</th>
                             <th>Status</th>
                             <th>Assigned Truck</th>
                             <th>Actions</th>
@@ -94,8 +91,10 @@
                     <tbody>
                         @foreach ($trailers as $trailer)
                             <tr>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $trailer->plate_number }}</td>
-                                <td>{{ $trailer->type??'--' }}</td>
+                                <td>{{ $trailer->trailer_type??'--' }}</td>
+                                <td>{{ $trailer->capacity??'--' }} Ton</td>
                                 <td>{{ $trailer->status ? 'Active' : 'Inactive' }}</td>
                                 <td>
                                     @php
@@ -105,24 +104,34 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('trailers.edit', $trailer->id) }}"
-                                        class="btn btn-sm btn-primary">Edit</a>
+                                        class="btn btn-sm btn-primary">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
                                     <form action="{{ route('trailers.delete', $trailer->id) }}" method="POST"
                                         style="display: inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger"
-                                            onclick="return confirm('Are you sure?')">Delete</button>
+                                            onclick="return confirm('Are you sure?')">
+                                        <i class="fa fa-trash"></i>
+                                        </button>
                                     </form>
-                                    <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
-                                        data-bs-target="#assignTruckModal{{ $trailer->id }}">Assign</button>
+                                  
                                     @if ($assignment)
                                         <form action="{{ route('trailers.deassign-truck', $trailer->id) }}" method="POST"
                                             style="display: inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-warning"
-                                                onclick="return confirm('Are you sure you want to deassign the truck?')">Deassign</button>
+                                                onclick="return confirm('Are you sure you want to deassign the truck?')">
+                                                <i class="fa fa-minus"></i>
+                                            </button>
                                         </form>
+                                    @else
+                                          <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
+                                        data-bs-target="#assignTruckModal{{ $trailer->id }}">
+                                        <i class="fa fa-truck"></i>
+                                    </button>
                                     @endif
                                 </td>
                             </tr>
