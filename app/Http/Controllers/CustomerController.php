@@ -48,7 +48,6 @@ class CustomerController extends Controller
             'email' => 'required|email|max:255|unique:customers,email',
             'company' => 'required|string|max:255',
             'abbreviation' => 'required|string|max:50',
-            'created_by' => 'required|exists:users,id',
             'status' => 'required|boolean',
             'credit_term' => 'nullable|integer|min:0',
         ]);
@@ -57,6 +56,7 @@ class CustomerController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        $request->merge(['created_by' => auth()->id()]);
         Customer::create($request->only([
             'contact_person',
             'TIN',
@@ -94,7 +94,6 @@ class CustomerController extends Controller
             'email' => 'required|email|max:255|unique:customers,email,' . $customer->id,
             'company' => 'required|string|max:255',
             'abbreviation' => 'required|string|max:50',
-            'created_by' => 'required|exists:users,id',
             'status' => 'required|boolean',
             'credit_term' => 'nullable|integer|min:0',
         ]);
@@ -112,7 +111,6 @@ class CustomerController extends Controller
             'email',
             'company',
             'abbreviation',
-            'created_by',
             'status',
             'credit_term',
         ]));
