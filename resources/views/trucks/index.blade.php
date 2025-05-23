@@ -65,12 +65,7 @@
                 </div>
             </div>
             <div class="block-content">
-                @if (session('success'))
-                    <div class="alert alert-success" role="alert">{{ session('success') }}</div>
-                @endif
-                @if (session('error'))
-                    <div class="alert alert-danger" role="alert">{{ session('error') }}</div>
-                @endif
+
                 @if ($errors->any())
                     <div class="alert alert-danger" role="alert">
                         <ul>
@@ -84,28 +79,41 @@
                 <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
                     <thead class="table-secondary">
                         <tr>
+                            <th>#</th>
                             <th>Plate Number</th>
                             <th>Vehicle Model</th>
                             <th>Manufacturer</th>
                             <th>Added By</th>
                             <th>Status</th>
                             <th>Assigned Driver</th>
+                            <th>Date</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($trucks as $truck)
                             <tr>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $truck->plate_number }}</td>
                                 <td>{{ $truck->vehicle_model }}</td>
                                 <td>{{ $truck->manufacturer }}</td>
                                 <td>{{ $truck->addedBy?->name ?? 'N/A' }}</td>
-                                <td>{{ $truck->status ? 'Active' : 'Inactive' }}</td>
+                                <td>
+                                    @if ($truck->status)
+                                        <span class="badge bg-success">Active</span>
+                                    @else
+                                        <span class="badge bg-danger">Inactive</span>
+                                    @endif
+                                </td>
+
                                 <td>
                                     @php
                                         $assignment = $truck->assignments()->where('status', 1)->first();
                                     @endphp
                                     {{ $assignment ? $assignment->driver?->name : 'None' }}
+                                </td>
+                                <td>
+                                    {{ $truck->created_at->format('d M Y H:i:s') ?? 'N/A' }}
                                 </td>
                                 <td>
                                     <a href="{{ route('trucks.edit', $truck->id) }}" class="btn btn-sm btn-primary">

@@ -59,7 +59,6 @@ class TruckController extends Controller
             'gross_weight' => 'nullable|numeric|min:0',
             'location' => 'nullable|string|max:255',
             'status' => 'required|boolean',
-            'added_by' => 'required|exists:users,id',
             'amount' => 'nullable|numeric|min:0',
             'capacity' => 'nullable|numeric|min:0',
         ]);
@@ -68,6 +67,7 @@ class TruckController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        $request->merge(['added_by' => auth()->id()]);
         Truck::create($request->only([
             'purchase_date',
             'plate_number',
@@ -127,7 +127,6 @@ class TruckController extends Controller
             'gross_weight' => 'nullable|numeric|min:0',
             'location' => 'nullable|string|max:255',
             'status' => 'required|boolean',
-            'added_by' => 'required|exists:users,id',
             'amount' => 'nullable|numeric|min:0',
             'capacity' => 'nullable|numeric|min:0',
         ]);
@@ -156,7 +155,6 @@ class TruckController extends Controller
             'gross_weight',
             'location',
             'status',
-            'added_by',
             'amount',
             'capacity',
         ]));

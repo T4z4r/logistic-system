@@ -65,7 +65,7 @@
                 </div>
             </div>
             <div class="block-content">
-             
+
                 @if ($errors->any())
                     <div class="alert alert-danger" role="alert">
                         <ul>
@@ -93,9 +93,16 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $trailer->plate_number }}</td>
-                                <td>{{ $trailer->trailer_type??'--' }}</td>
-                                <td>{{ $trailer->capacity??'--' }} Ton</td>
-                                <td>{{ $trailer->status ? 'Active' : 'Inactive' }}</td>
+                                <td>{{ $trailer->trailer_type ?? '--' }}</td>
+                                <td>{{ $trailer->capacity ?? '--' }} Ton</td>
+                                <td>
+                                    @if ($trailer->status)
+                                        <span class="badge bg-success">Active</span>
+                                    @else
+                                        <span class="badge bg-danger">Inactive</span>
+                                    @endif
+                                </td>
+
                                 <td>
                                     @php
                                         $assignment = $trailer->assignments()->where('status', 1)->first();
@@ -103,8 +110,7 @@
                                     {{ $assignment ? $assignment->truck?->plate_number : 'None' }}
                                 </td>
                                 <td>
-                                    <a href="{{ route('trailers.edit', $trailer->id) }}"
-                                        class="btn btn-sm btn-primary">
+                                    <a href="{{ route('trailers.edit', $trailer->id) }}" class="btn btn-sm btn-primary">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                     <form action="{{ route('trailers.delete', $trailer->id) }}" method="POST"
@@ -113,10 +119,10 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger"
                                             onclick="return confirm('Are you sure?')">
-                                        <i class="fa fa-trash"></i>
+                                            <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
-                                  
+
                                     @if ($assignment)
                                         <form action="{{ route('trailers.deassign-truck', $trailer->id) }}" method="POST"
                                             style="display: inline;">
@@ -128,10 +134,10 @@
                                             </button>
                                         </form>
                                     @else
-                                          <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
-                                        data-bs-target="#assignTruckModal{{ $trailer->id }}">
-                                        <i class="fa fa-truck"></i>
-                                    </button>
+                                        <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
+                                            data-bs-target="#assignTruckModal{{ $trailer->id }}">
+                                            <i class="fa fa-truck"></i>
+                                        </button>
                                     @endif
                                 </td>
                             </tr>
