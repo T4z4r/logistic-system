@@ -38,6 +38,11 @@ class Truck extends Model
         'updated_at' => 'datetime',
     ];
 
+    public function type()
+    {
+        return $this->belongsTo(TruckType::class, 'truck_type', 'id');
+    }
+
     public function addedBy()
     {
         return $this->belongsTo(User::class, 'added_by');

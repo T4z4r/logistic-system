@@ -56,6 +56,7 @@ Route::view('/pages/blank', 'pages.blank')->name('blank');
     require __DIR__ . '/trailer_assignment.php';
     require __DIR__ . '/routes.php';
     require __DIR__ . '/route_costs.php';
+    require __DIR__ . '/mobilization_routes.php';
     require __DIR__ . '/common_costs.php';
     require __DIR__ . '/fuel_costs.php';
     require __DIR__ . '/currency.php';

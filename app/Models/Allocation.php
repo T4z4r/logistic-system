@@ -14,8 +14,8 @@ class Allocation extends Model
         'cargo',
         'cargo_ref',
         'estimated_pay',
-        'cargo_nature_id',
-        'payment_mode_id',
+        'cargo_nature',
+        'payment_mode',
         'loading_site',
         'offloading_site',
         'clearance',
@@ -58,7 +58,7 @@ class Allocation extends Model
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class, 'Customer_id');
+        return $this->belongsTo(Customer::class, 'Customer_id', 'id');
     }
 
     public function route()
@@ -71,14 +71,14 @@ class Allocation extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function cargoNature()
+    public function nature()
     {
-        return $this->belongsTo(CargoNature::class, 'cargo_nature_id');
+        return $this->belongsTo(CargoNature::class, 'cargo_nature');
     }
 
-    public function paymentMode()
+    public function mode()
     {
-        return $this->belongsTo(PaymentMode::class, 'payment_mode_id');
+        return $this->belongsTo(PaymentMode::class, 'payment_mode');
     }
 
     public function approver()
@@ -89,5 +89,19 @@ class Allocation extends Model
     public function disapprover()
     {
         return $this->belongsTo(User::class, 'disapprover_id');
+    }
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class, 'payment_currency', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    public function truck_allocations()
+    {
+        return $this->hasMany(TruckAllocation::class, 'allocation_id', 'id');
     }
 }

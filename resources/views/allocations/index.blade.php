@@ -72,11 +72,15 @@
                   @endif
                 </td>
                 <td>
-                  <a href="{{ route('allocations.edit', $allocation->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                  <a href="{{ url('/trips/truck-allocation/' . base64_encode($allocation->id)) }}" class="btn btn-sm btn-primary">
+                    <i class="fa fa-edit"></i>
+                  </a>
                   <form action="{{ route('allocations.delete', $allocation->id) }}" method="POST" style="display: inline;">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
+                        <i class="fa fa-trash"></i>
+                    </button>
                   </form>
                 </td>
               </tr>

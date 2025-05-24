@@ -61,23 +61,24 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="mb-4">
-                                <label class="form-label" for="truck_type">Truck Type</label>
-                                <input type="text" name="truck_type" id="truck_type"
-                                    class="form-control @error('truck_type') is-invalid @enderror"
-                                    value="{{ old('truck_type') }}" placeholder="Enter truck type">
-                                @error('truck_type')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                            <div class=" mb-4">
+                                <label class="form-label ">Truck Type</label>
+                                <select name="truck_type" id="" class="select form-control">
+                                    <option value="">--choose Truck Type--</option>
+                                    <option value="1">Semi </option>
+                                    <option value="2">Pulling</option>
+                                    <option value="3">Private</option>
+                                </select>
                             </div>
-                            <div class="mb-4">
-                                <label class="form-label" for="fuel_type">Fuel Type</label>
-                                <input type="text" name="fuel_type" id="fuel_type"
-                                    class="form-control @error('fuel_type') is-invalid @enderror"
-                                    value="{{ old('fuel_type') }}" placeholder="Enter fuel type">
-                                @error('fuel_type')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                            <div class=" mb-4">
+                                <label class="form-label ">Fuel Type</label>
+                                <select name="fuel_type" id="" class=" select form-control">
+                                    <option value="Diesel">Diesel </option>
+                                    <option value="Petrol">Petrol </option>
+                                    <option value="Electric">Electric</option>
+                                    <option value="Hybrid">Hybrid</option>
+                                </select>
+
                             </div>
                             <div class="mb-4">
                                 <label class="form-label" for="fuel_capacity">Fuel Capacity</label>
@@ -133,7 +134,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                         
+
                         </div>
                         <div class="col-md-6">
                             <div class="mb-4">
@@ -220,7 +221,7 @@
                                 @enderror
                             </div>
 
-                               <div class="mb-4">
+                            <div class="mb-4">
                                 <label class="form-label" for="manufacturer">Manufacturer</label>
                                 <input type="text" name="manufacturer" id="manufacturer"
                                     class="form-control @error('manufacturer') is-invalid @enderror"

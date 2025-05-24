@@ -36,4 +36,22 @@ class TruckAllocation extends Model
         'mobilization',
         'mobilization_route'
     ];
+
+
+    public function truck()
+    {
+        return $this->belongsTo(Truck::class, 'truck_id', 'id');
+    }
+    public function trailer()
+    {
+        return $this->belongsTo(Trailer::class, 'trailer_id', 'id');
+    }
+    public function driver()
+    {
+        return $this->belongsTo(User::class, 'driver_id', 'id');
+    }
+    public function allocation()
+    {
+        return $this->belongsTo(Allocation::class, 'allocation_id', 'id');
+    }
 }
