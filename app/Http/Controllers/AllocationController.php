@@ -315,7 +315,7 @@ class AllocationController extends Controller
         $current = ApprovalLevel::where('level_name', $latest_status)->where('approval_id', $process->id)->first();
         if ($current) {
 
-            $data['current_person'] = $current->roles->name;
+            $data['current_person'] = $current->roles?->name??'--';
         } else {
             if ($latest_status <= 0) {
                 $data['current_person'] = 'Assistant Fleet Controller';
