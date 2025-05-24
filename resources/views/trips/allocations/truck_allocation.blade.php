@@ -3,7 +3,7 @@
 
 @section('content')
 
-    <div class="card  border-top  border-top-width-3 border-top-black rounded-0">
+    <div class="card  border-top  border-top-width-3 border-top-black rounded-0 mt-5">
 
         <div class="card-body ">
 
