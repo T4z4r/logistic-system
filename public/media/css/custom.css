@@ -33,3 +33,15 @@
 {
     border-radius: 0% !important;
 }
+
+.nav-link
+{
+    color: black !important ;
+}
+
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+
+    color: #233781 !important;
+    background-color: aliceblue !important;
+}

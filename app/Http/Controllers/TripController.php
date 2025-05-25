@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Trip;
+use App\Models\Route;
 use App\Models\Approval;
+use App\Models\Currency;
 use App\Models\Position;
+use App\Models\RouteCost;
 use App\Models\Allocation;
+use App\Models\CargoNature;
+use App\Models\PaymentMode;
 use Illuminate\Http\Request;
 use App\Models\ApprovalLevel;
+use App\Models\AllocationCost;
 use Illuminate\Support\Facades\Auth;
 
 class TripController extends Controller
@@ -77,4 +83,82 @@ class TripController extends Controller
         $data['currency'] = Currency::latest()->where('status', 1)->get();
         return view('trips.goingload.detail', $data);
     }
+
+   // For Add Allocation cost
+    public function add_cost(Request $request)
+    {
+        $cost = new AllocationCost();
+        $cost->allocation_id = $request->allocation_id;
+        $route = RouteCost::where('id', $request->cost_id)->first();
+        // dd($request->allocation_id);
+        $cost->name = $route->name;
+        $cost->amount = $request->amount;
+        $cost->currency_id = $request->currency_id;
+        $cost->editable = $request->editable == true ? '1' : '0';
+        $cost->return = $request->return == true ? '1' : '0';
+        $currency = Currency::find($request->currency_id);
+
+        if ($request->quantity > 0) {
+            $cost->amount = $request->amount;
+            $cost->real_amount = $request->amount * $request->quantity;
+            $cost->quantity = $request->quantity;
+        } else {
+            $cost->amount = $request->amount;
+            $cost->real_amount = $request->amount * $currency->rate;
+        }
+        // $cost->real_amount = $currency->rate * $request->amount;
+        $cost->rate = $currency->rate;
+        $cost->account_code = $route->account_code;
+        $cost->route_id = $route->route_id;
+        $cost->type =$request->type;
+        $cost->status = 0;
+        $cost->created_by = Auth::user()->id;
+        $cost->save();
+
+        return back()->with('msg', 'Allocation cost has been updated successfully !');
+    }
+
+    // For Update Allocation cost
+    public function update_cost(Request $request)
+    {
+
+        // dd($request->id);
+        $cost = AllocationCost::find($request->id);
+        $cost->name = $request->name;
+        $currency = Currency::find($request->currency_id);
+
+        if ($request->quantity > 0) {
+            $cost->amount = $request->amount;
+            $cost->real_amount = $request->amount * $request->quantity;
+            $cost->quantity = $request->quantity;
+        } else {
+            $cost->amount = $request->amount;
+            $cost->real_amount = $request->amount * $currency->rate;
+        }
+        // $cost->amount = $request->amount;
+        $cost->currency_id = $request->currency_id;
+        // $cost->real_amount = $currency->rate * $request->amount;
+        $cost->rate = $currency->rate;
+        $cost->return = $request->return == true ? '1' : '0';
+        $cost->editable = $request->editable == true ? '1' : '0';
+
+        $cost->type =$request->type;
+
+        $cost->update();
+
+        return back()->with('msg', 'Allocation cost has been updated successfully !');
+    }
+
+    // For Delete Allocation cost
+    public function delete_cost($id)
+    {
+        $cost = AllocationCost::find($id);
+        $cost->delete();
+        $msg = "Allocation Cost Was Removed Successfully !";
+        return back()->with('msg', $msg);
+    }
+
+
+
+
 }

@@ -19,6 +19,7 @@ use App\Models\ApprovalLevel;
 use App\Models\AllocationCost;
 use App\Models\CurrencyLogItem;
 use App\Models\TruckAllocation;
+use App\Helpers\SystemLogHelper;
 use App\Models\DriverAssignment;
 use App\Models\TrailerAssignment;
 use Illuminate\Support\Facades\DB;
@@ -517,18 +518,18 @@ class AllocationController extends Controller
         $allocation->update();
 
         // For User Log
-        // SystemLogHelper::logSystemActivity('Allocation Submission', auth()->user()->id, auth()->user()->fname . ' ' . auth()->user()->lname . ' has Submitted an Allocation');
+        SystemLogHelper::logSystemActivity('Allocation Submission', auth()->user()->id, auth()->user()->fname . ' ' . auth()->user()->lname . ' has Submitted an Allocation');
 
         // Start Of Approval Email Alert
-        $process = Approval::where('process_name', 'Allocation Approval')->first();
-        $level = ApprovalLevel::where('approval_id', $process->id)->first();
-        $employees = User::where('position_id', $level->role_id)->get(); //To be Modified
+        // $process = Approval::where('process_name', 'Allocation Approval')->first();
+        // $level = ApprovalLevel::where('approval_id', $process->id)->first();
+        // $employees = User::where('position_id', $level->role_id)->get(); //To be Modified
 
-        $email_data = array(
-            'subject' => $allocation->ref_no . ' Allocation Request Approval',
-            'view' => 'emails.allocations.fleet-approval',
-            'allocation' => $allocation,
-        );
+        // $email_data = array(
+        //     'subject' => $allocation->ref_no . ' Allocation Request Approval',
+        //     'view' => 'emails.allocations.fleet-approval',
+        //     'allocation' => $allocation,
+        // );
 
         // $job = (new \App\Jobs\SendEmail($email_data, $employees));
         // dispatch($job);
@@ -537,7 +538,7 @@ class AllocationController extends Controller
         return response()->json([
             'status' => 200,
             'errors' => 'Updated',
-            'route_truck' => route('flex.allocation-requests'),
+            'route_truck' => route('allocations.list'),
 
         ]);
     }

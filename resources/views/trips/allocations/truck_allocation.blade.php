@@ -1,5 +1,31 @@
 @extends('layouts.backend')
 
+@section('css')
+    <!-- Page JS Plugins CSS -->
+    <link rel="stylesheet" href="{{ asset('js/plugins/datatables-bs5/css/dataTables.bootstrap5.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/plugins/datatables-buttons-bs5/css/buttons.bootstrap5.min.css') }}">
+@endsection
+
+@section('js')
+    <!-- jQuery (required for DataTables plugin) -->
+    <script src="{{ asset('js/lib/jquery.min.js') }}"></script>
+
+    <!-- Page JS Plugins -->
+    <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-bs5/js/buttons.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons/buttons.html5.min.js') }}"></script>
+
+    <!-- Page JS Code -->
+    @vite(['resources/js/pages/datatables.js'])
+@endsection
+
+
 
 @section('content')
 
@@ -11,17 +37,17 @@
                 <h4 class="lead  "> <i class="ph-truck text-brand-secondary"></i><code>{{ $allocation->ref_no }}</code> Allocation
                     Details</h4>
 
-                <a href="{{ route('allocations.list') }}" class="btn btn-main btn-sm">
+                <a href="{{ route('allocations.list') }}" class="btn btn-danger btn-sm">
                     <i class="ph-list me-2"></i> All Requests
                 </a>
 
-  {{-- @can('print-allocation') --}}
+  @can('print-allocation')
   <a href="{{ url('/trips/print-allocation/' . base64_encode($allocation->id)) }}"
     class="btn btn-sm btn-primary">
     <i class="ph-printer"></i>
     Print Allocation
 </a>
-{{-- @endcan --}}
+@endcan
 
                 @if ($level && ($allocation->status > 0) && ($allocation->status!=4))
                     @if ($level->level_name == $allocation->approval_status)
@@ -132,10 +158,120 @@
                     @endphp
                     @if ($trucks > 0)
                         {{-- @can('create-allocation') --}}
-                            <button id="submit_allocation" class="btn btn-primary btn-sm float-end">
-                                <i class="ph-paper-plane-tilt"></i>
-                                Submit Request
-                            </button>
+                       <button id="submit_allocation" class="btn btn-primary btn-sm float-end" type="button">
+                            <i class="ph-paper-plane-tilt"></i>
+                            Submit Request
+                        </button>
+                             {{-- For Submit Allocation --}}
+<script>
+$(document).on('click', '#submit_allocation', function(e) {
+    e.preventDefault(); // Prevent default button behavior
+    
+    const $button = $(this);
+    const originalContent = $button.html();
+    const allocationId = '{{ $allocation->id }}'; // Ensure this is properly sanitized
+    
+    // Disable button and show loading state
+    $button
+        .html("<i class='ph-spinner spinner me-2'></i> Submitting...")
+        .prop('disabled', true)
+        .addClass('disabled');
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: `/trips/submit-allocation/${allocationId}`,
+        type: 'POST',
+        data: {}, // Add necessary data if needed
+        success: function(response) {
+            // Restore button state
+            $button.html(originalContent).prop('disabled', false).removeClass('disabled');
+
+            if (response.status === 200) {
+                new Noty({
+                    text: 'Allocation submitted successfully!',
+                    type: 'success',
+                    timeout: 3000
+                }).show();
+                
+                // Redirect after success
+                setTimeout(() => {
+                    window.location = response.route_truck;
+                }, 1000);
+            } else {
+                handleError(response);
+            }
+        },
+        error: function(xhr) {
+            // Restore button state
+            $button.html(originalContent).prop('disabled', false).removeClass('disabled');
+            
+            // Handle server errors
+            new Noty({
+                text: 'An error occurred while submitting the allocation.',
+                type: 'error',
+                timeout: 3000
+            }).show();
+            
+            // Display server error message if available
+            const errorMessage = xhr.responseJSON?.message || 'Please try again later.';
+            displayError([errorMessage]);
+        }
+    });
+});
+
+// Helper function to handle error responses
+function handleError(response) {
+    const $errorMessage = $('#error_message');
+    $errorMessage.hide(); // Hide initially
+
+    let errorsHtml = '<div class="alert alert-danger"><ul>';
+    
+    if (response.status === 400 || response.status === 401) {
+        const errors = response.errors;
+        
+        if (Array.isArray(errors) || typeof errors === 'object') {
+            $.each(errors, (key, value) => {
+                errorsHtml += `<li>${value}</li>`;
+            });
+        } else {
+            errorsHtml += `<li>${errors}</li>`;
+        }
+    } else {
+        errorsHtml += '<li>An unexpected error occurred.</li>';
+    }
+    
+    errorsHtml += '</ul></div>';
+    
+    $errorMessage
+        .html(errorsHtml)
+        .show();
+    
+    new Noty({
+        text: 'Failed to submit allocation.',
+        type: 'error',
+        timeout: 3000
+    }).show();
+}
+
+// Helper function to display error messages
+function displayError(errors) {
+    const $errorMessage = $('#error_message');
+    let errorsHtml = '<div class="alert alert-danger"><ul>';
+    
+    errors.forEach(error => {
+        errorsHtml += `<li>${error}</li>`;
+    });
+    
+    errorsHtml += '</ul></div>';
+    
+    $errorMessage
+        .html(errorsHtml)
+        .show();
+}
+</script>
+    {{--  --}}
                         {{-- @endcan --}}
                     @else
                         <small class="text-danger float-end">please Select Trucks</small>
@@ -197,7 +333,7 @@
                         </p>
                     @endif
                 @endforeach
-                <p><span class="badge bg-primary bg-opacity-10 text-info">
+                <p><span class="badge bg-primary bg-opacity-10 text-light">
                     Initiator: </span>
                 {{ $allocation->user?->name??'--' }}
             </p>
@@ -209,7 +345,7 @@
 
                 {{-- start of allocation detail --}}
                 <div class="row bg-light " id="#hiddenDiv1">
-                    <p><span class="badge bg-primary bg-opacity-10 m-2 text-info">
+                    <p><span class="badge bg-primary bg-opacity-10 m-2 text-light">
                         Current To: </span>
                     {{ $current_person }}
                 </p>
@@ -732,7 +868,7 @@
                                 </p>
                                 <hr>
                                 <table id=""
-                                    class="table table-striped table-bordered datatable-basic table-responsive">
+                                    class="table table-striped table-bordered datatable-basic1 table-responsive">
                                     <thead>
                                         <th>
                                             <input type="checkbox" class="form-check-input form-check-input-warning checkAll2"
@@ -897,8 +1033,8 @@
         {{-- For Submitted Allocation Requests --}}
         <div class="col-12">
 
-            <table id="" class="table table-striped table-bordered datatable-basic">
-                <thead>
+         <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
+                    <thead class="table-secondary">
                     <th>No.</th>
                     <th>Truck</th>
                     <th>Trailer</th>
@@ -936,7 +1072,7 @@
                             <td>
                                 <a href="{{ url('/trips/truck-cost/' . base64_encode($item->id)) }}"
                                     title="View Truck Cost" class="btn btn-sm btn-primary">
-                                    <i class="ph-info"></i>
+                                    <i class="fa fa-list"></i>
                                 </a>
                                 <br>
                                 <br>
@@ -975,11 +1111,11 @@
         <div class="p-2">
 
             @if ($allocation->status <= 0)
-                @can('add-trip-cost')
-                    <button class="btn btn-sm btn-primary float-end" data-bs-toggle="modal" data-bs-target="#add-cost">
+                {{-- @can('add-trip-cost') --}}
+                    <button class="btn btn-sm btn-primary float-end mb-3" data-bs-toggle="modal" data-bs-target="#add-cost">
                         Add Cost
                     </button>
-                @endcan
+                {{-- @endcan --}}
             @endif
 
 
@@ -1007,13 +1143,13 @@
                         Additional Truck Costs
                     </a>
                 </li>
-                @can('view-calculations')
+                {{-- @can('view-calculations') --}}
                     <li class="nav-item" role="presentation">
                         <a href="#summary" class="nav-link " data-bs-toggle="tab" aria-selected="false" role="tab">
                             Calculations
                         </a>
                     </li>
-                @endcan
+                {{-- @endcan --}}
 
 
                 <li class="nav-item" role="presentation">
@@ -1051,15 +1187,15 @@
                     {{-- <h6> <b>Total:</b> {{ number_format($total_all_costs,2)}} </h6> --}}
                     <hr>
 
-                    <table class="table table-striped table-bordered datatable-basic ">
-                        <thead>
+                       <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
+                    <thead class="table-secondary">
                             <th>No.</th>
                             <th>Expense Name</th>
                             <th>Amount</th>
                             @if ($allocation->status <= 0)
-                                @can('edit-trip-cost')
+                                {{-- @can('edit-trip-cost') --}}
                                     <th>Option</th>
-                                @endcan
+                                {{-- @endcan --}}
                             @else
                                 <th hidden></th>
                             @endif
@@ -1120,10 +1256,10 @@
                                         {{-- <small>{{ number_format($totalConvert, 2) }}</small> --}}
                                     </td>
                                     @if ($allocation->status <= 0)
-                                        @can('edit-trip-cost')
+                                        {{-- @can('edit-trip-cost') --}}
                                             <td>
                                                 @if ($item->editable == 1)
-                                                    @can('edit-trip-cost')
+                                                    {{-- @can('edit-trip-cost') --}}
                                                         <button class="btn btn-primary btn-sm edit-button1"
                                                             data-bs-toggle="modal" data-bs-target="#edit-cost"
                                                             data-id1="{{ $item->id }}" data-name="{{ $item->name }}"
@@ -1131,20 +1267,20 @@
                                                             data-litre="{{ $item->quantity }}">
                                                             <i class="ph-note-pencil"></i>
                                                         </button>
-                                                    @endcan
-                                                    @can('delete-trip-cost')
+                                                    {{-- @endcan --}}
+                                                    {{-- @can('delete-trip-cost') --}}
                                                         <a href="javascript:void(0)" title="Remove Cost"
                                                             class="icon-2 info-tooltip btn btn-danger btn-sm {{ $item->status == '0' ? '' : 'disabled' }} "
                                                             onclick="removeCost(<?php echo $item->id; ?>)">
                                                             <i class="ph-trash"></i>
                                                         </a>
-                                                    @endcan
+                                                    {{-- @endcan --}}
                                                 @else
                                                     <span class="badge bg-info  bg-opacity-10 text-danger">Not
                                                         Editable</span>
                                                 @endif
                                             </td>
-                                        @endcan
+                                        {{-- @endcan --}}
                                     @else
                                         <td hidden></td>
                                     @endif
@@ -1197,15 +1333,15 @@
                 </div>
                 {{-- For Pulling Trucks Costs --}}
                 <div class="tab-pane fade  show" id="pulling" role="tabpanel">
-                    <table class="table table-striped table-bordered datatable-basic ">
-                        <thead>
+                   <table class="table table-bordered table-striped table-vcenter js-dataTable-full1 fs-sm table-sm">
+                    <thead class="table-secondary">
                             <th>No.</th>
                             <th>Expense Name</th>
                             <th>Amount</th>
                             @if ($allocation->status <= 0)
-                                @can('edit-trip-cost')
+                                {{-- @can('edit-trip-cost') --}}
                                     <th>Option</th>
-                                @endcan
+                                {{-- @endcan --}}
                             @else
                                 <th hidden></th>
                             @endif
@@ -1265,7 +1401,7 @@
 
                                     </td>
                                     @if ($allocation->status <= 0)
-                                        @can('edit-trip-cost')
+                                        {{-- @can('edit-trip-cost') --}}
                                             <td>
                                                 @if ($item->editable == 1)
                                                     @can('edit-trip-cost')
@@ -1289,7 +1425,7 @@
                                                         Editable</span>
                                                 @endif
                                             </td>
-                                        @endcan
+                                        {{-- @endcan --}}
                                     @else
                                         <td hidden></td>
                                     @endif
@@ -1340,18 +1476,21 @@
                 </div>
                 {{-- For Semi Trucks Costs --}}
                 <div class="tab-pane fade  show" id="semi" role="tabpanel">
-                    <table class="table table-striped table-bordered datatable-basic ">
+                    <table class="table table-striped table-bordered datatable-basic1 ">
                         <thead>
                             <th>No.</th>
                             <th>Expense Name</th>
                             <th>Amount</th>
                             @if ($allocation->status <= 0)
-                                @can('edit-trip-cost')
+                                {{-- @can('edit-trip-cost') --}}
                                     <th>Option</th>
-                                @endcan
+                                {{-- @endcan --}}
                             @else
                                 <th hidden></th>
                             @endif
+                            <th hidden></th>
+                            <th hidden></th>
+
 
                         </thead>
 
@@ -1407,7 +1546,7 @@
 
                                     </td>
                                     @if ($allocation->status <= 0)
-                                        @can('edit-trip-cost')
+                                        {{-- @can('edit-trip-cost') --}}
                                             <td>
                                                 @if ($item->editable == 1)
                                                     @can('edit-trip-cost')
@@ -1431,7 +1570,7 @@
                                                         Editable</span>
                                                 @endif
                                             </td>
-                                        @endcan
+                                        {{-- @endcan --}}
                                     @else
                                         <td hidden></td>
                                     @endif
@@ -1483,16 +1622,16 @@
                 </div>
                 {{-- For Single Truck Cost --}}
                 <div class="tab-pane fade  show" id="additional" role="tabpanel">
-                    <table class="table table-striped table-bordered datatable-basic " id="hiddenDiv">
+                    <table class="table table-striped table-bordered datatable-basic1 " id="hiddenDiv">
                         <thead>
                             <th>No.</th>
                             <th>Truck</th>
                             <th>Expense Name</th>
                             <th>Amount</th>
                             @if ($allocation->status <= 0)
-                                @can('edit-trip-cost')
+                                {{-- @can('edit-trip-cost') --}}
                                     <th>Option</th>
-                                @endcan
+                                {{-- @endcan --}}
                             @else
                                 <th hidden></th>
                                 <th hidden></th>
@@ -1563,7 +1702,7 @@
 
                                         </td>
                                         @if ($allocation->status <= 0)
-                                            @can('edit-trip-cost')
+                                            {{-- @can('edit-trip-cost') --}}
                                                 <td>
                                                     @if ($item->editable == 1)
                                                         @can('edit-trip-cost')
@@ -1587,7 +1726,7 @@
                                                             Editable</span>
                                                     @endif
                                                 </td>
-                                            @endcan
+                                            {{-- @endcan --}}
                                         @else
                                             <td hidden></td>
                                             <td hidden></td>
@@ -2553,7 +2692,15 @@
 
 
     {{-- For Replace Truck Modal --}}
+<!-- jQuery (minified) -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-3gJwYp4SXN9KejGAAZ8nQhC7LsLhH9V3IrM3x+p5DPE="
+        crossorigin="anonymous"></script>
 
+<!-- Bootstrap 5 JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76A2z02tPqdjP3WA2bFZ8t7ZtDfN1zLxgL4TcN4RAfK6oE6tM9CkDQ3CKP9xjYg"
+        crossorigin="anonymous"></script>
 
     <script>
         $(document).ready(function() {
@@ -2964,58 +3111,7 @@
         });
     </script>
 
-    {{-- For Submit Allocation --}}
-    <script>
-        $(document).on('click', '#submit_allocation', function() {
-            // e.preventDefault();
-            $("#submit_allocation").html("<i class='ph-spinner spinner me-2'></i> Submitting ...").addClass(
-                'disabled');
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: "{{ url('/trips/submit-allocation/' . $allocation->id) }}",
-                type: "POST",
-                data: $(this).serialize(),
-                success: function(response) {
-                    $("#submit_allocation").html("Submit Allocation").removeClass('disabled');
-                    // Basic initialization
-                    if (response.status == 200) {
-                        // $("#add_allocation_form")[0].reset();
-                        new Noty({
-                            text: 'Allocation was Submitted successfully!',
-                            type: 'success'
-                        }).show();
-                        setTimeout(function() {
-                            window.location = response.route_truck;
-                        }, 1000);
-                    } else {
-                        if (response.status == 400) {
-                            document.getElementById('error_message').style.display = 'block';
-                            errorsHtml = '<div class="alert alert-danger"><ul>';
-                            $.each(response.errors, function(key, value) {
-                                errorsHtml += '<li>' + value + '</li>';
-                            });
-                            errorsHtml += '</ul></di>';
-                            $('#error_message').html(errorsHtml);
-                        } else if (response.status == 401) {
-                            document.getElementById('error_message').style.display = 'block';
-                            errorsHtml = '<div class="alert alert-danger"><ul>';
-                            errorsHtml += '<li>' + response.errors + '</li>';
-                            errorsHtml += '</ul></di>';
-                            $('#error_message').html(errorsHtml);
-                        }
-                        new Noty({
-                            text: 'Whoops!! Allocation Was Not Submitted.',
-                            type: 'error'
-                        }).show();
-                    }
-                }
-
-            });
-        });
-    </script>
-    {{--  --}}
+   
 
     {{-- For Add Truck --}}
     <script>
