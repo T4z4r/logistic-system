@@ -17,7 +17,7 @@
 
   {{-- @can('print-allocation') --}}
   <a href="{{ url('/trips/print-allocation/' . base64_encode($allocation->id)) }}"
-    class="btn btn-sm btn-main">
+    class="btn btn-sm btn-primary">
     <i class="ph-printer"></i>
     Print Allocation
 </a>
@@ -78,7 +78,7 @@
 
                                 </div>
 
-                                <button type="submit" class="btn btn-sm btn-main "> <i class="ph-check-circle"></i> Submit Approval</button>
+                                <button type="submit" class="btn btn-sm btn-primary "> <i class="ph-check-circle"></i> Submit Approval</button>
 
 
                             </form>
@@ -110,7 +110,7 @@
 
                                 </div>
 
-                                <button type="submit" class="btn btn-sm btn-main"> <i class="ph-check-circle"></i> Submit Disapproval</button>
+                                <button type="submit" class="btn btn-sm btn-primary"> <i class="ph-check-circle"></i> Submit Disapproval</button>
 
 
                             </form>
@@ -132,7 +132,7 @@
                     @endphp
                     @if ($trucks > 0)
                         {{-- @can('create-allocation') --}}
-                            <button id="submit_allocation" class="btn btn-main btn-sm float-end">
+                            <button id="submit_allocation" class="btn btn-primary btn-sm float-end">
                                 <i class="ph-paper-plane-tilt"></i>
                                 Submit Request
                             </button>
@@ -162,7 +162,7 @@
                         @else
                         {{ url('/trips/backload-trip/' . base64_encode($allocation->id)) }} @endif
                          "
-                        class="btn btn-main btn-sm float-end">
+                        class="btn btn-primary btn-sm float-end">
                         <i class="ph-list"></i>
                         View Trip Details
                     </a>
@@ -495,7 +495,7 @@
                     <hr>
                     @can('edit-allocation')
                         @if ($allocation->status <= 0)
-                            <button class="btn btn-main btn-sm edit-button float-end" data-bs-toggle="modal"
+                            <button class="btn btn-primary btn-sm edit-button float-end" data-bs-toggle="modal"
                                 data-bs-target="#edit-allocation-modal" data-id="{{ $allocation->id }}"
                                 data-ref="{{ $allocation->cargo_ref }}" data-cargo="{{ $allocation->cargo }}">
                                 <i class="ph-note-pencil"></i> Edit Details
@@ -503,7 +503,7 @@
 
 
                             {{-- For Change Route --}}
-                            <button type="button" class="btn btn-main mx-1 btn-sm float-end" data-bs-toggle="collapse" data-bs-target="#myCollapsibleDiv">
+                            <button type="button" class="btn btn-primary mx-1 btn-sm float-end" data-bs-toggle="collapse" data-bs-target="#myCollapsibleDiv">
                                 <i class="ph-path"></i>
 
                                 Change Route
@@ -536,7 +536,7 @@
 
                                     </div>
 
-                                    <button type="submit" class="btn btn-sm btn-main float-end" id="change_route_btn"> <i class="ph-recycle"></i> Change</button>
+                                    <button type="submit" class="btn btn-sm btn-primary float-end" id="change_route_btn"> <i class="ph-recycle"></i> Change</button>
                                     <br>
                                     <br>
                                     <hr>
@@ -819,12 +819,12 @@
                                                     <td style="">
                                                         @can('add-truck-cost')
                                                             <a href="{{ url('/trips/truck-cost/' . base64_encode($item->id)) }}"
-                                                                title="Add Truck Cost" class="btn btn-sm btn-main">
+                                                                title="Add Truck Cost" class="btn btn-sm btn-primary">
                                                                 <i class="ph-info"></i>
                                                             </a>
                                                         @endcan
 
-                                                        <a class="btn btn-main btn-sm add-plan" data-bs-toggle="modal"
+                                                        <a class="btn btn-primary btn-sm add-plan" data-bs-toggle="modal"
                                                             data-bs-target="#add-plan-modal" title="Plan Quantity"
                                                             data-id="{{ $item->id }}"
                                                             data-ref="{{ $allocation->cargo_ref }}"
@@ -935,7 +935,7 @@
                             </td>
                             <td>
                                 <a href="{{ url('/trips/truck-cost/' . base64_encode($item->id)) }}"
-                                    title="View Truck Cost" class="btn btn-sm btn-main">
+                                    title="View Truck Cost" class="btn btn-sm btn-primary">
                                     <i class="ph-info"></i>
                                 </a>
                                 <br>
@@ -948,7 +948,7 @@
                                             class="btn btn-sm btn-danger m-1"> Remove </a>
 
                                             <br> --}}
-                                        {{-- <button type="button" class="btn btn-sm btn-main replace" data-bs-toggle="modal" data-bs-target="#replaceModal"
+                                        {{-- <button type="button" class="btn btn-sm btn-primary replace" data-bs-toggle="modal" data-bs-target="#replaceModal"
 
                                         data-id="{{ $item->id }}"
                                          data-name="{{ $item->truck->plate_number }}"
@@ -976,7 +976,7 @@
 
             @if ($allocation->status <= 0)
                 @can('add-trip-cost')
-                    <button class="btn btn-sm btn-main float-end" data-bs-toggle="modal" data-bs-target="#add-cost">
+                    <button class="btn btn-sm btn-primary float-end" data-bs-toggle="modal" data-bs-target="#add-cost">
                         Add Cost
                     </button>
                 @endcan
@@ -1124,7 +1124,7 @@
                                             <td>
                                                 @if ($item->editable == 1)
                                                     @can('edit-trip-cost')
-                                                        <button class="btn btn-main btn-sm edit-button1"
+                                                        <button class="btn btn-primary btn-sm edit-button1"
                                                             data-bs-toggle="modal" data-bs-target="#edit-cost"
                                                             data-id1="{{ $item->id }}" data-name="{{ $item->name }}"
                                                             data-description="{{ $item->amount }}"
@@ -1269,7 +1269,7 @@
                                             <td>
                                                 @if ($item->editable == 1)
                                                     @can('edit-trip-cost')
-                                                        <button class="btn btn-main btn-sm edit-button1"
+                                                        <button class="btn btn-primary btn-sm edit-button1"
                                                             data-bs-toggle="modal" data-bs-target="#edit-cost"
                                                             data-id1="{{ $item->id }}" data-name="{{ $item->name }}"
                                                             data-description="{{ $item->amount }}"
@@ -1411,7 +1411,7 @@
                                             <td>
                                                 @if ($item->editable == 1)
                                                     @can('edit-trip-cost')
-                                                        <button class="btn btn-main btn-sm edit-button1"
+                                                        <button class="btn btn-primary btn-sm edit-button1"
                                                             data-bs-toggle="modal" data-bs-target="#edit-cost"
                                                             data-id1="{{ $item->id }}" data-name="{{ $item->name }}"
                                                             data-description="{{ $item->amount }}"
@@ -1567,7 +1567,7 @@
                                                 <td>
                                                     @if ($item->editable == 1)
                                                         @can('edit-trip-cost')
-                                                            <button class="btn btn-main btn-sm edit-button1"
+                                                            <button class="btn btn-primary btn-sm edit-button1"
                                                                 data-bs-toggle="modal" data-bs-target="#edit-cost"
                                                                 data-id1="{{ $item->id }}" data-name="{{ $item->name }}"
                                                                 data-description="{{ $item->amount }}"
@@ -1924,7 +1924,7 @@
 
                     <div class="modal-footer">
 
-                        <button type="submit" id="update_allocation_btn" class="btn btn-main btn-sm"> Update
+                        <button type="submit" id="update_allocation_btn" class="btn btn-primary btn-sm"> Update
                             Request &nbsp; <i class="ph-truck"></i></button>
                         </a>
                     </div>
@@ -1981,7 +1981,7 @@
 
                                     <div class="form-group">
                                         <button type="submit" id="pay_allocation_btn"
-                                            class="btn btn-sm btn-main float-end mb-2">
+                                            class="btn btn-sm btn-primary float-end mb-2">
                                             <i class="ph-check"></i>
                                             Mobile Selected Trucks
                                         </button>
@@ -2054,7 +2054,7 @@
 
                             <div class="modal-footer">
 
-                                {{-- <button type="submit" id="update_allocation_btn" class="btn btn-main btn-sm"> Mobilize Trucks &nbsp; <i class="ph-truck"></i></button> --}}
+                                {{-- <button type="submit" id="update_allocation_btn" class="btn btn-primary btn-sm"> Mobilize Trucks &nbsp; <i class="ph-truck"></i></button> --}}
                                 </a>
                             </div>
                         </form>
@@ -2096,7 +2096,7 @@
 
                                 <div class="form-group">
                                     <button type="submit" id="demobilize_trucks_btn"
-                                        class="btn btn-sm btn-main float-end mb-2">
+                                        class="btn btn-sm btn-primary float-end mb-2">
                                         <i class="ph-check"></i>
                                         Mobile Selected Trucks
                                     </button>

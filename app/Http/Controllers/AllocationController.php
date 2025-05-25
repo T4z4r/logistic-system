@@ -69,7 +69,7 @@ class AllocationController extends Controller
         try {
             // Validate input with custom error messages
             $validator = Validator::make($request->all(), [
-                'customer_id' => 'required|integer|exists:customers,id',
+                'customer_id' => 'required',
                 'cargo' => 'required|string|max:255',
                 'cargo_ref' => 'required|string|max:255',
                 'cargo_nature' => 'required|integer|exists:cargo_natures,id',
@@ -114,6 +114,8 @@ class AllocationController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
+
+            $customer = Customer::where('id', $request->customer_id)->first();
             // Create allocation
             $allocation = new Allocation();
             $allocation->customer_id = $request->customer_id;
@@ -138,12 +140,14 @@ class AllocationController extends Controller
             $allocation->created_by = Auth::user()->id;
             $allocation->save();
 
+
+
             // Generate reference number
             $prefix = $allocation->type == 1 ? 'GL' : 'BL';
             $allocation->ref_no = sprintf(
                 '%s-%s%s%s-%d',
                 $prefix,
-                $allocation->customer?->abbreviation ?? 'Trip',
+                $customer?->abbreviation ?? 'Trip',
                 date('y', strtotime($allocation->created_at)),
                 date('m', strtotime($allocation->created_at)),
                 $allocation->id
@@ -174,12 +178,6 @@ class AllocationController extends Controller
                 $cost->save();
             }
 
-            // Log activity
-            // SystemLogHelper::logSystemActivity(
-            //     'Allocation Creation',
-            //     Auth::user()->id,
-            //     Auth::user()->fname . ' ' . Auth::user()->lname . ' has created an Allocation #' . $allocation->ref_no
-            // );
 
             DB::commit();
 
@@ -315,7 +313,7 @@ class AllocationController extends Controller
         $current = ApprovalLevel::where('level_name', $latest_status)->where('approval_id', $process->id)->first();
         if ($current) {
 
-            $data['current_person'] = $current->roles?->name??'--';
+            $data['current_person'] = $current->roles?->name ?? '--';
         } else {
             if ($latest_status <= 0) {
                 $data['current_person'] = 'Assistant Fleet Controller';
@@ -411,7 +409,7 @@ class AllocationController extends Controller
     }
 
 
-     // For Remove Bulk Truck Allocation
+    // For Remove Bulk Truck Allocation
     public function remove_bulk_trucks(Request $request)
     {
         if ($request->input('selectedRows1') == null) {
@@ -464,4 +462,83 @@ class AllocationController extends Controller
         return back()->with('error', $error);
     }
 
+
+    // For Submitting Allocation Request
+    public function submit_allocation($id)
+    {
+
+        $allocation = Allocation::where('id', $id)->first();
+        $allocation->status = 1;
+        $allocation->approval_status = 1;
+        $allocation->state = 'Waiting Approval';
+
+
+        $trucks_allocations = TruckAllocation::where('allocation_id', $allocation->id)->get();
+
+        $total_pulling = 0;
+        $total_semi = 0;
+
+
+        foreach ($trucks_allocations as $truck) {
+
+            // For Counting Pulling Trucks
+            if ($truck->truck->truck_type == 2) {
+                $total_pulling = $total_pulling + 1;
+            }
+            // For Counting Semi Trucks
+            else {
+                $total_semi = $total_semi + 1;
+            }
+        }
+
+
+
+        // Start of Automatic Allocation Costs Deletion
+
+        // For Pulling Trucks
+        if ($total_pulling == 0) {
+            $pulling_costs = AllocationCost::where('allocation_id', $allocation->id)->where('type', 'Pulling')->get();
+            foreach ($pulling_costs as $cost) {
+                $cost->delete();
+            }
+        }
+
+
+        // For Semi Trucks
+        if ($total_semi == 0) {
+            $semi_costs = AllocationCost::where('allocation_id', $allocation->id)->where('type', 'Semi')->get();
+            foreach ($semi_costs as $cost) {
+                $cost->delete();
+            }
+        }
+
+        //End of Automatic Allocation Costs Deletion
+
+        $allocation->update();
+
+        // For User Log
+        // SystemLogHelper::logSystemActivity('Allocation Submission', auth()->user()->id, auth()->user()->fname . ' ' . auth()->user()->lname . ' has Submitted an Allocation');
+
+        // Start Of Approval Email Alert
+        $process = Approval::where('process_name', 'Allocation Approval')->first();
+        $level = ApprovalLevel::where('approval_id', $process->id)->first();
+        $employees = User::where('position_id', $level->role_id)->get(); //To be Modified
+
+        $email_data = array(
+            'subject' => $allocation->ref_no . ' Allocation Request Approval',
+            'view' => 'emails.allocations.fleet-approval',
+            'allocation' => $allocation,
+        );
+
+        // $job = (new \App\Jobs\SendEmail($email_data, $employees));
+        // dispatch($job);
+        // end of Approval Email Alert
+
+        return response()->json([
+            'status' => 200,
+            'errors' => 'Updated',
+            'route_truck' => route('flex.allocation-requests'),
+
+        ]);
+    }
 }

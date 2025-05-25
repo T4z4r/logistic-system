@@ -81,15 +81,20 @@
          </li>
 
          <li class="nav-main-item{{ request()->is('routes*') ? ' open' : '' }}">
-             <a class="nav-main-link{{ request()->is('routes*') ? ' active' : '' }}" href="{{ route('routes.list') }}">
+             <a class="nav-main-link{{ request()->is('routes*') ? ' active' : '' }}"
+                 href="{{ route('routes.list') }}">
                  <i class="nav-main-link-icon fa fa-map"></i>
                  <span class="nav-main-link-name">Routes Master</span>
              </a>
          </li>
 
-         <li class="nav-main-item{{ request()->is('trips*') ? ' open' : '' }}">
+         @php
+             $isTrips = request()->is('trips*') || request()->is('allocations*');
+         @endphp
+
+         <li class="nav-main-item{{ $isTrips ? ' open' : '' }}">
              <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                 aria-expanded="{{ request()->is('trips*') ? 'true' : 'false' }}" href="#">
+                 aria-expanded="{{ $isTrips ? 'true' : 'false' }}" href="#">
                  <i class="nav-main-link-icon fa fa-location"></i>
                  <span class="nav-main-link-name">Trips Management</span>
              </a>
@@ -97,26 +102,24 @@
                  <li class="nav-main-item">
                      <a class="nav-main-link{{ request()->is('allocations*') ? ' active' : '' }}"
                          href="{{ route('allocations.list') }}">
-                         {{-- <i class="nav-main-link-icon fa fa-dolly"></i> --}}
                          <span class="nav-main-link-name">Allocations</span>
                      </a>
                  </li>
                  <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('trips/active') ? ' active' : '' }}" href="{{ route('blank') }}">
-                         {{-- <i class="nav-main-link-icon si si-circle"></i> --}}
+                     <a class="nav-main-link{{ request()->is('trips/active') ? ' active' : '' }}"
+                         href="{{ route('blank') }}">
                          <span class="nav-main-link-name">Going Load</span>
                      </a>
                  </li>
                  <li class="nav-main-item">
                      <a class="nav-main-link{{ request()->is('trips/inactive') ? ' active' : '' }}"
                          href="{{ route('blank') }}">
-                         {{-- <i class="nav-main-link-icon si si-plane"></i> --}}
                          <span class="nav-main-link-name">Back Load</span>
                      </a>
                  </li>
              </ul>
-
          </li>
+
          <li class="nav-main-item{{ request()->is('trips/create') ? ' open' : '' }}">
              <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="{{ route('blank') }}">
                  <i class="nav-main-link-icon fa fa-database"></i>
