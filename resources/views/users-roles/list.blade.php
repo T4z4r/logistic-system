@@ -25,18 +25,17 @@
     @vite(['resources/js/pages/datatables.js'])
 @endsection
 
-
 @section('content')
     <!-- Hero -->
     <div class="bg-body-light mt-5">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
                 <div class="flex-grow-1">
-                    <h1 class="h3 fw-bold mb-1">
-                        Permissions Management
-                    </h1>
+                    <h5 class="h5 fw-bold mb-1">
+                        Users Management
+                    </h5>
                     <h2 class="fs-base lh-base fw-medium text-muted mb-0">
-                        Manage system permissions
+                        Manage system users and their roles
                     </h2>
                 </div>
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
@@ -45,7 +44,7 @@
                             <a class="link-fx" href="{{ route('dashboard') }}">Dashboard</a>
                         </li>
                         <li class="breadcrumb-item" aria-current="page">
-                            Permissions
+                            Users
                         </li>
                     </ol>
                 </nav>
@@ -56,15 +55,15 @@
 
     <!-- Page Content -->
     <div class="content p-2">
-        <!-- Permissions Block -->
+        <!-- Users Block -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
                 <h3 class="block-title">
-                    Permissions List
+                    Users List
                 </h3>
                 <div class="block-options">
-                    <a href="{{ route('permissions.create') }}" class="btn btn-sm btn-primary">
-                        <i class="fa fa-plus me-1"></i> Create Permission
+                    <a href="{{ route('users-roles.create') }}" class="btn btn-sm btn-primary">
+                        <i class="fa fa-plus me-1"></i> Create User
                     </a>
                 </div>
             </div>
@@ -76,36 +75,40 @@
                     </div>
                 @endif
 
-                @if ($permissions->isNotEmpty())
+                @if ($users->isNotEmpty())
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
                             <thead class="table-secondary">
                                 <tr>
                                     <th style="width: 60px;">#</th>
                                     <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
                                     <th style="width: 200px;">Created At</th>
                                     <th style="width: 180px;" class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @php $count = $permissions->firstItem(); @endphp
-                                @foreach ($permissions as $permission)
+                                @php $count = $users->firstItem(); @endphp
+                                @foreach ($users as $user)
                                     <tr>
                                         <td>{{ $count++ }}</td>
-                                        <td>{{ $permission->name }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($permission->created_at)->format('d M, Y') }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->roles->pluck('name')->implode(', ') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($user->created_at)->format('d M, Y') }}</td>
                                         <td class="text-center">
-                                            <a href="{{ route('permissions.edit', $permission->id) }}"
-                                                class="btn btn-sm btn-alt-primary me-1" title="Edit Permission">
+                                            <a href="{{ route('users-roles.edit', $user->id) }}"
+                                                class="btn btn-sm btn-alt-primary me-1" title="Edit User">
                                                 <i class="fa fa-fw fa-pencil-alt"></i> Edit
                                             </a>
-                                            <form action="{{ route('permissions.destroy', $permission->id) }}"
-                                                method="POST" class="d-inline-block"
-                                                onsubmit="return confirm('Are you sure you want to delete this permission?')">
+                                            <form action="{{ route('users.destroy', $user->id) }}" method="POST"
+                                                class="d-inline-block"
+                                                onsubmit="return confirm('Are you sure you want to delete this user?')">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-alt-danger"
-                                                    title="Delete Permission">
+                                                    title="Delete User">
                                                     <i class="fa fa-fw fa-trash"></i> Delete
                                                 </button>
                                             </form>
@@ -117,16 +120,16 @@
                     </div>
 
                     <div class="mt-3">
-                        {{ $permissions->links() }}
+                        {{ $users->links() }}
                     </div>
                 @else
                     <div class="alert alert-info" role="alert">
-                        No permissions found. Create a new permission to get started.
+                        No users found. Create a new user to get started.
                     </div>
                 @endif
             </div>
         </div>
-        <!-- END Permissions Block -->
+        <!-- END Users Block -->
     </div>
     <!-- END Page Content -->
 @endsection

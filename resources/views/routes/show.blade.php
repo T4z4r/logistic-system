@@ -494,14 +494,18 @@
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label for="advancable_{{ $cost->id }}" class="form-label">Advancable</label>
-                                    <input type="number" name="advancable" id="advancable_{{ $cost->id }}"
-                                        class="form-control @error('advancable') is-invalid @enderror"
-                                        value="{{ old('advancable', $cost->advancable) }}" step="1">
-                                    @error('advancable')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                                    <div class="form-check">
+                                        <input type="checkbox" name="advancable" id="advancable_{{ $cost->id }}"
+                                            class="form-check-input @error('advancable') is-invalid @enderror"
+                                            value="1" {{ old('advancable', $cost->advancable) ? 'checked' : '' }}>
+                                        <label class="form-check-label"
+                                            for="advancable_{{ $cost->id }}">Advancable</label>
+                                        @error('advancable')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
+
 
                                 <div class="mb-3 col-md-6">
                                     <label for="return_{{ $cost->id }}" class="form-label">Return</label>
@@ -534,7 +538,7 @@
                             <hr>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">
-                                     <i class="fa fa-save"></i>
+                                    <i class="fa fa-save"></i>
                                     Update Cost
                                 </button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

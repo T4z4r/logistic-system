@@ -101,6 +101,7 @@ class ApprovalController extends Controller
     public function storeLevel(Request $request, $approval_id)
     {
         $approval = Approval::findOrFail($approval_id);
+        dd($approval);
 
         $validator = Validator::make($request->all(), [
             'role_id' => 'required|exists:roles,id',

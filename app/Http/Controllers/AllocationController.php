@@ -297,8 +297,10 @@ class AllocationController extends Controller
     public function truck_allocation($id)
     {
         $id = base64_decode($id);
-        $uid = Auth::user()->position;
-        $position = Position::where('id', $uid)->first();
+        // $uid = Auth::user()->position;
+         $uid = Auth::user()->roles->first()?->id;
+        $positionId=Auth::user()->position_id;
+        $position = Position::where('id', $positionId)->first();
         $process = Approval::firstOrCreate(
             ['process_name' => 'Allocation Approval'],
             [
@@ -311,7 +313,10 @@ class AllocationController extends Controller
 
         $allocation = Allocation::where('id', $id)->first();
         $latest_status = $allocation->approval_status;
+     
+        
         $current = ApprovalLevel::where('level_name', $latest_status)->where('approval_id', $process->id)->first();
+        dd($current);
         if ($current) {
 
             $data['current_person'] = $current->roles?->name ?? '--';
