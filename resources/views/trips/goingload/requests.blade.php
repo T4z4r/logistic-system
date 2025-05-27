@@ -139,8 +139,8 @@
             <div class="tab-content">
                 {{-- For Goingload Requests --}}
                 <div class="tab-pane fade active show" id="requests" role="tabpanel">
-                    <table id="" class="table table-striped table-bordered datatable-basic">
-                        <thead>
+                   <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
+                    <thead class="table-secondary">
                             <th>No.</th>
                             <th>Date</th>
                             <th>Ref No </th>
@@ -288,8 +288,8 @@
 
                 {{-- For Goingload Trips --}}
                 <div class="tab-pane fade  show" id="trips" role="tabpanel">
-                    <table id="" class="table table-striped table-bordered datatable-basic">
-                        <thead>
+                   <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
+                    <thead class="table-secondary">
                             <th>No.</th>
                             <th>Date</th>
                             <th>Trip Number</th>
@@ -403,8 +403,8 @@
 
                 {{-- For Completion Trips --}}
                 <div class="tab-pane fade  show" id="completion" role="tabpanel">
-                    <table id="" class="table table-striped table-bordered datatable-basic">
-                        <thead>
+                   <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
+                    <thead class="table-secondary">
                             <th>No.</th>
                             <th>Date</th>
                             <th>Trip Number</th>
@@ -526,8 +526,8 @@
 
                 {{-- For Completed Trips --}}
                 <div class="tab-pane fade  show" id="completed" role="tabpanel">
-                    <table id="" class="table table-striped table-bordered datatable-basic">
-                        <thead>
+                   <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
+                    <thead class="table-secondary">
                             <th>No.</th>
                             <th>Date</th>
                             <th>Trip Number</th>
