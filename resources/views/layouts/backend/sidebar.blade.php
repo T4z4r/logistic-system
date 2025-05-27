@@ -107,7 +107,7 @@
                  </li>
                  <li class="nav-main-item">
                      <a class="nav-main-link{{ request()->is('trips/active') ? ' active' : '' }}"
-                         href="{{ route('blank') }}">
+                         href="{{ route('flex.trip-requests') }}">
                          <span class="nav-main-link-name">Going Load</span>
                      </a>
                  </li>
@@ -120,6 +120,12 @@
              </ul>
          </li>
 
+         <li class="nav-main-item{{ request()->routeIs('truck-change-requests.*') ? ' open' : '' }}">
+             <a class="nav-main-link{{ request()->routeIs('truck-change-requests.*') ? ' active' : '' }}" href="{{ route('truck-change-requests.index') }}">
+                 <i class="nav-main-link-icon fa fa-recycle"></i>
+                 <span class="nav-main-link-name">Truck Change</span>
+             </a>
+         </li>
          <li class="nav-main-item{{ request()->is('trips/create') ? ' open' : '' }}">
              <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="{{ route('blank') }}">
                  <i class="nav-main-link-icon fa fa-database"></i>
@@ -269,7 +275,7 @@
              </ul>
          </li>
 
-         <li class="nav-main-item{{ request()->is('system-configurations*','roles.*') ? ' open' : '' }}">
+         <li class="nav-main-item{{ request()->is('system-configurations*', 'roles.*') ? ' open' : '' }}">
              <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                  aria-expanded="{{ request()->is('system-configurations*') ? 'true' : 'false' }}" href="#">
                  <i class="nav-main-link-icon fa fa-cogs"></i>
@@ -277,7 +283,7 @@
              </a>
              <ul class="nav-main-submenu">
                  <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('system-configurations/general','roles.*') ? ' active' : '' }}"
+                     <a class="nav-main-link{{ request()->is('system-configurations/general', 'roles.*') ? ' active' : '' }}"
                          href="{{ route('blank') }}">
                          <i class="nav-main-link-icon si si-settings"></i>
                          <span class="nav-main-link-name">General Settings</span>
@@ -296,7 +302,7 @@
                          <span class="nav-main-link-name">Positions</span>
                      </a>
                  </li>
-                     <li class="nav-main-item">
+                 <li class="nav-main-item">
                      <a class="nav-main-link{{ request()->is('user-roles.*') ? ' active' : '' }}"
                          href="{{ route('users-roles.index') }}">
                          <i class="nav-main-link-icon si si-users"></i>

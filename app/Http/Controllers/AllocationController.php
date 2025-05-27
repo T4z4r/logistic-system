@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Trip;
 use App\Models\User;
 use App\Models\Route;
 use App\Models\Truck;
@@ -20,6 +21,7 @@ use App\Models\AllocationCost;
 use App\Models\CurrencyLogItem;
 use App\Models\TruckAllocation;
 use App\Helpers\SystemLogHelper;
+use App\Models\AllocationRemark;
 use App\Models\DriverAssignment;
 use App\Models\TrailerAssignment;
 use Illuminate\Support\Facades\DB;
@@ -31,10 +33,37 @@ class AllocationController extends Controller
 {
     public function index()
     {
-        $allocations = Allocation::with(['customer', 'route', 'createdBy', 'nature', 'mode'])
-            ->paginate(10);
-        return view('allocations.index', compact('allocations'));
+        // $allocations = Allocation::with(['customer', 'route', 'createdBy', 'nature', 'mode'])
+        //     ->paginate(10);
+
+        $uid = Auth::user()->position;
+        $process = Approval::where('process_name', 'Allocation Approval')->first();
+        $data['level'] = ApprovalLevel::where('role_id', $uid)->where('approval_id', $process->id)->first();
+        $data['final'] = $process->levels;
+        $data['tab'] = 'pending';
+        $data['check'] = 'Approved By ' . Auth()->user()->fname . ' ' . Auth::user()->lname;
+        $data['total_allocations'] = Allocation::count();
+        $data['incomplete_allocations'] = Allocation::where('status', '<', 1)->whereNot('status', -2)->count();
+        $data['pending_allocations'] = Allocation::where('status', '<', 2)->where('status', '>', 1)->whereNot('status', -2)->count();
+        $data['approved_allocations'] = Allocation::where('status', '>', 2)->whereNot('status', -2)->count();
+        $data['rejected_allocations'] = Allocation::where('status', -1)->whereNot('status', -2)->count();
+        $data['pending'] = Allocation::latest()->where('status', '<', 3)->latest()->orderBy('id', 'desc')->whereNot('status', -2)->get();
+        $data['active'] = Allocation::latest()->where('status', '>', 2)->latest()->orderBy('id', 'desc')->whereNot('status', -2)->limit(100)->get();
+        $data['approved'] = Allocation::latest()->where('status', 3)->latest()->orderBy('id', 'desc')->whereNot('status', -2)->get();
+        $data['incomplete'] = Allocation::where('status', '<', 1)->whereNot('status', -2)->get();
+
+        return view('allocations.index', $data);
     }
+
+
+    public function request_trip($id)
+    {
+        $id = base64_decode($id);
+        $data['allocation'] = Allocation::find($id);
+        $data['trucks'] = TruckAllocation::where('allocation_id', $id)->latest()->get();
+        return view('trips.allocations.trip_detail', $data);
+    }
+
 
     public function active()
     {
@@ -298,8 +327,8 @@ class AllocationController extends Controller
     {
         $id = base64_decode($id);
         // $uid = Auth::user()->position;
-         $uid = Auth::user()->roles->first()?->id;
-        $positionId=Auth::user()->position_id;
+        $uid = Auth::user()->roles->first()?->id;
+        $positionId = Auth::user()->position_id;
         $position = Position::where('id', $positionId)->first();
         $process = Approval::firstOrCreate(
             ['process_name' => 'Allocation Approval'],
@@ -314,7 +343,7 @@ class AllocationController extends Controller
         $allocation = Allocation::where('id', $id)->first();
         $latest_status = $allocation->approval_status;
 
-     
+
         $current = ApprovalLevel::where('level_name', $latest_status)->where('approval_id', $process->id)->first();
         // dd($current);
         if ($current) {
@@ -551,14 +580,20 @@ class AllocationController extends Controller
 
 
 
-     // For Approving allocation
+    // For Approving allocation
     public function  approveAllocation(Request $request)
     {
 
-        $role_id = Auth::User()->position;
+
+
+        // $uid = Auth::user()->position;
+        $role_id = Auth::user()->roles->first()?->id;
+        $positionId = Auth::user()->position_id;
+        $position = Position::where('id', $positionId)->first();
         $approval = Approval::where('process_name', 'Allocation Approval')->first();
-        $roles = Position::where('id', $role_id)->first();
+
         $level = ApprovalLevel::where('role_id', $role_id)->where('approval_id', $approval->id)->first();
+
         if ($level) {
             $allocation = Allocation::where('id', $request->allocation_id)->first();
 
@@ -609,16 +644,16 @@ class AllocationController extends Controller
 
                 // Start of Final Approval Email Notification
                 $creator = User::where('id', $allocation->created_by)->first();
-                $employees = User::where('position', $creator->position)->get();
+                // $employees = User::where('position', $creator->position)->get();
 
-                $email_data = array(
-                    'subject' => $allocation->ref_no . ' Allocation Request Approval',
-                    'view' => 'emails.allocations.final-approval',
-                    'allocation' => $allocation,
+                // $email_data = array(
+                //     'subject' => $allocation->ref_no . ' Allocation Request Approval',
+                //     'view' => 'emails.allocations.final-approval',
+                //     'allocation' => $allocation,
 
-                );
-                $job = (new \App\Jobs\SendEmail($email_data, $employees));
-                dispatch($job);
+                // );
+                // $job = (new \App\Jobs\SendEmail($email_data, $employees));
+                // dispatch($job);
 
                 // end of Final Email Notification
                 $msg = 'Allocation request has been approved Successfully !';
@@ -628,7 +663,7 @@ class AllocationController extends Controller
                 $allocation = Allocation::where('id', $request->allocation_id)->first();
                 $approvalStatus = $allocation->approval_status;
 
-                if ( $approvalStatus  == $level->level_name) {
+                if ($approvalStatus  == $level->level_name) {
 
 
                     // For Allocation Update
@@ -667,15 +702,13 @@ class AllocationController extends Controller
                         'allocation' => $allocation,
 
                     );
-                    $job = (new \App\Jobs\SendEmail($email_data, $employees));
-                    dispatch($job);
+                    // $job = (new \App\Jobs\SendEmail($email_data, $employees));
+                    // dispatch($job);
                     // end of Approval Email Alert
 
                     $msg = 'Approved By ' . Auth::user()->positions->name;
                     return back()->with('msg', $msg);
-                }
-                else
-                {
+                } else {
                     $msg = "Failed To Approve !";
                     return back()->with('msg', $msg);
                 }

@@ -166,11 +166,11 @@
 <script>
 $(document).on('click', '#submit_allocation', function(e) {
     e.preventDefault(); // Prevent default button behavior
-    
+
     const $button = $(this);
     const originalContent = $button.html();
     const allocationId = '{{ $allocation->id }}'; // Ensure this is properly sanitized
-    
+
     // Disable button and show loading state
     $button
         .html("<i class='ph-spinner spinner me-2'></i> Submitting...")
@@ -194,7 +194,7 @@ $(document).on('click', '#submit_allocation', function(e) {
                     type: 'success',
                     timeout: 3000
                 }).show();
-                
+
                 // Redirect after success
                 setTimeout(() => {
                     window.location = response.route_truck;
@@ -206,14 +206,14 @@ $(document).on('click', '#submit_allocation', function(e) {
         error: function(xhr) {
             // Restore button state
             $button.html(originalContent).prop('disabled', false).removeClass('disabled');
-            
+
             // Handle server errors
             new Noty({
                 text: 'An error occurred while submitting the allocation.',
                 type: 'error',
                 timeout: 3000
             }).show();
-            
+
             // Display server error message if available
             const errorMessage = xhr.responseJSON?.message || 'Please try again later.';
             displayError([errorMessage]);
@@ -227,10 +227,10 @@ function handleError(response) {
     $errorMessage.hide(); // Hide initially
 
     let errorsHtml = '<div class="alert alert-danger"><ul>';
-    
+
     if (response.status === 400 || response.status === 401) {
         const errors = response.errors;
-        
+
         if (Array.isArray(errors) || typeof errors === 'object') {
             $.each(errors, (key, value) => {
                 errorsHtml += `<li>${value}</li>`;
@@ -241,13 +241,13 @@ function handleError(response) {
     } else {
         errorsHtml += '<li>An unexpected error occurred.</li>';
     }
-    
+
     errorsHtml += '</ul></div>';
-    
+
     $errorMessage
         .html(errorsHtml)
         .show();
-    
+
     new Noty({
         text: 'Failed to submit allocation.',
         type: 'error',
@@ -259,13 +259,13 @@ function handleError(response) {
 function displayError(errors) {
     const $errorMessage = $('#error_message');
     let errorsHtml = '<div class="alert alert-danger"><ul>';
-    
+
     errors.forEach(error => {
         errorsHtml += `<li>${error}</li>`;
     });
-    
+
     errorsHtml += '</ul></div>';
-    
+
     $errorMessage
         .html(errorsHtml)
         .show();
@@ -320,7 +320,7 @@ function displayError(errors) {
                     @if ($level)
                         @if ($level->level_name >= $remark->status)
                             <p><span class="badge bg-primary bg-opacity-10 text-warning">
-                                    {{ $remark->remarked_by }} :</span> <code>{{ $remark->user->full_name }}</code> -
+                                    {{ $remark->remarked_by }} :</span> <code>{{ $remark->user?->name??'--' }}</code> -
                                 {{ $remark->remark }}
                                 <br>
                                 {{ $remark->created_at}}
@@ -3109,7 +3109,7 @@ function displayError(errors) {
         });
     </script>
 
-   
+
 
     {{-- For Add Truck --}}
     <script>

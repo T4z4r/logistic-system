@@ -65,6 +65,7 @@ Route::view('/pages/blank', 'pages.blank')->name('blank');
     require __DIR__ . '/cargo_nature.php';
     require __DIR__ . '/allocations.php';
     require __DIR__ . '/trips.php';
+    require __DIR__ . '/truck_change.php';
     require __DIR__ . '/department.php';
     require __DIR__ . '/position.php';
     require __DIR__ . '/approvals.php';

@@ -42,6 +42,7 @@ Route::prefix('trips/')->controller(TripController::class)->group(function () {
 });
 
 
+ Route::any('/trips/submit-trip/{id}', [TripController::class, 'submit_trip'])->name('flex.submit-trip');
 Route::any('/trips/delete-truck-cost/{id}', [TripController::class, 'delete_truck_cost'])->name('flex.delete_truck_cost');
 Route::any('/trips/delete-cost/{id}', [TripController::class, 'delete_cost'])->name('flex.delete_cost');
 
