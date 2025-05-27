@@ -3,7 +3,7 @@
 
 @section('content')
     <!-- Traffic sources -->
-    <div class="card border-0  border-top  border-top-width-3 border-top-main  rounded-0 d-md-block d-none">
+    <div class="card border-0  border-top  border-top-width-3 border-top-main  rounded-0 d-md-block d-none mt-5">
         <div class="card-body pb-0">
             <div class="row">
                 <div class="col-sm-3">
@@ -210,7 +210,7 @@
                                         </a>
                                     @endif
 
-                                    @if (Auth::user()->dept_id != 1)
+                                    {{-- @if (Auth::user()->dept_id != 1) --}}
                                         @if ($item->status == -1)
                                             <a href="{{ url('/trips/backload-trip/' . base64_encode($item->allocation_id)) }}"
                                                 class="btn btn-sm btn-main">
@@ -222,7 +222,7 @@
                                                 <i class="ph-info"></i>
                                             </a>
                                         @endif
-                                    @endif
+                                    {{-- @endif --}}
                                     @if ($item->status == -1)
                                         <br>
                                         <a href="{{ url('trips/resubmit-trip/' . base64_encode($item->allocation_id)) }}"
@@ -383,7 +383,7 @@
                                             <i class="ph-link"></i>
                                         </a>
                                     @endif
-                                    @if (Auth::user()->dept_id != 1)
+                                    {{-- @if (Auth::user()->dept_id != 1) --}}
                                         @if ($item->state == 2)
                                             @php
                                                 $comp = App\Models\TruckAllocation::where('allocation_id', $item->allocation_id)
@@ -398,7 +398,7 @@
                                                 </a> --}}
                                             @endif
                                         @endif
-                                    @endif
+                                    {{-- @endif --}}
 
                                 </td>
                             </tr>
@@ -675,7 +675,7 @@
                                             <i class="ph-link"></i>
                                         </a>
                                     @endif
-                                    @if (Auth::user()->dept_id != 1)
+                                    {{-- @if (Auth::user()->dept_id != 1) --}}
                                         @if ($item->state == 2)
                                             @php
                                                 $comp = App\Models\TruckAllocation::where('allocation_id', $item->allocation_id)
@@ -690,7 +690,7 @@
                                                 </a> --}}
                                             @endif
                                         @endif
-                                    @endif
+                                    {{-- @endif --}}
 
                                 </td>
                             </tr>
