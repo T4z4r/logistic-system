@@ -36,7 +36,7 @@ class TripController extends Controller
             ]
         );
 
-        $data['level'] = ApprovalLevel::where('role_id', $uid)->where('approval_id', $process->id)->first()??null;
+        $data['level'] = ApprovalLevel::where('role_id', $uid)->where('approval_id', $process->id)->first() ?? null;
 
         // For Completion Requests
 
@@ -48,7 +48,7 @@ class TripController extends Controller
                 'escallation_time' => null
             ]
         );
-        $data['level1'] = ApprovalLevel::where('role_id', $uid)->where('approval_id', $process1->id)->first()??null;
+        $data['level1'] = ApprovalLevel::where('role_id', $uid)->where('approval_id', $process1->id)->first() ?? null;
 
         $data['pending'] = Trip::where('type', 1)->where('status', 1)->orWhere('status', '-1')->latest()->get();
         $data['completed'] = Trip::where('status', 0)->where('type', 1)->where('state', 4)->latest()->get();
@@ -99,6 +99,58 @@ class TripController extends Controller
         $data['currency'] = Currency::latest()->where('status', 1)->get();
         return view('trips.goingload.detail', $data);
     }
+
+
+    //For Backload Trips
+    public function backload_requests()
+    {
+      $uid = Auth::user()->roles->first()?->id;
+        $positionId = Auth::user()->position_id;
+        $position = Position::where('id', $positionId)->first();
+        // For Trip Requests
+
+        $process = Approval::firstOrCreate(
+            ['process_name' => 'Trip Approval'],
+            [
+                'levels' => 0,
+                'escallation' => false, // or true, depending on your logic
+                'escallation_time' => null
+            ]
+        );
+
+        $data['level'] = ApprovalLevel::where('role_id', $uid)->where('approval_id', $process->id)->first() ?? null;
+
+        // For Completion Requests
+
+        $process1 = Approval::firstOrCreate(
+            ['process_name' => 'Trip Completion Approval'],
+            [
+                'levels' => 0,
+                'escallation' => false, // or true, depending on your logic
+                'escallation_time' => null
+            ]
+        );
+        $data['level1'] = ApprovalLevel::where('role_id', $uid)->where('approval_id', $process1->id)->first() ?? null;
+
+        $data['pending'] = Trip::where('type', 2)->where('status', 1)->orWhere('status', '-1')->latest()->get();
+        $data['completed'] = Trip::where('status', 0)->where('type', 2)->where('state', 4)->latest()->get();
+
+        $data['active'] = Trip::where('status', 0)->where('type', 2)->where('state', '!=', 5)->where('state', '!=', 4)->latest()->get();
+        $data['completion'] = Trip::where('status', 0)->where('type', 2)->where('state', 5)->latest()->get();
+
+
+
+        $data['check'] = 'Approved By ' . Auth()->user()->position?->name;
+        $data['completed_trips'] = Trip::where('type', 2)->where('status', 0)->latest()->count();
+        $data['total_trips'] = Trip::where('type', 2)->count();
+        $data['active_trips'] = Trip::where('type', 2)->where('status', '>', 1)->latest()->count();
+        $data['trip_requests'] = Trip::where('type', 2)->where('status', 1)->orWhere('status', '-1')->latest()->count();
+
+
+
+        return view('trips.backloads.requests', $data);
+    }
+
 
     // For Add Allocation cost
     public function add_cost(Request $request)

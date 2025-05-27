@@ -113,7 +113,7 @@
                  </li>
                  <li class="nav-main-item">
                      <a class="nav-main-link{{ request()->is('trips/inactive') ? ' active' : '' }}"
-                         href="{{ route('blank') }}">
+                         href="{{ route('flex.backload-requests') }}">
                          <span class="nav-main-link-name">Back Load</span>
                      </a>
                  </li>
