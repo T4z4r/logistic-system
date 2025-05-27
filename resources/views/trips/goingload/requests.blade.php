@@ -1,557 +1,819 @@
 @extends('layouts.backend')
 
+@section('css')
+    <!-- Page JS Plugins CSS -->
+    <link rel="stylesheet" href="{{ asset('js/plugins/datatables-bs5/css/dataTables.bootstrap5.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/plugins/datatables-buttons-bs5/css/buttons.bootstrap5.min.css') }}">
+@endsection
+
+@section('js')
+    <!-- jQuery (required for DataTables plugin) -->
+    <script src="{{ asset('js/lib/jquery.min.js') }}"></script>
+
+    <!-- Page JS Plugins -->
+    <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-bs5/js/buttons.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons/buttons.html5.min.js') }}"></script>
+
+    <!-- Page JS Code -->
+    @vite(['resources/js/pages/datatables.js'])
+@endsection
+
 @section('content')
-  <!-- Hero -->
-  <div class="bg-body-light">
-    <div class="content content-full">
-      <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-        <div class="flex-grow-1">
-          <h1 class="h3 fw-bold mb-1">Trip Details</h1>
-          <h2 class="fs-base lh-base fw-medium text-muted mb-0">
-            @php
-              $trip = App\Models\Trip::where('allocation_id', $allocation->id)->first();
-            @endphp
-            <code>
-              @if ($trip)
-                {{ $trip->ref_no }}
-              @else
-                Not Assigned
-              @endif
-            </code>
-          </h2>
-        </div>
-        <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
-          <ol class="breadcrumb breadcrumb-alt">
-            <li class="breadcrumb-item">
-              <a class="link-fx" href="{{ route('flex.trip-requests') }}">Trips</a>
-            </li>
-            <li class="breadcrumb-item" aria-current="page">
-              Details
-            </li>
-          </ol>
-        </nav>
-      </div>
-    </div>
-  </div>
-  <!-- END Hero -->
-
-  <!-- Page Content -->
-  <div class="content">
-    <!-- Trip Details Block -->
-    <div class="block block-rounded">
-      <div class="block-header block-header-default">
-        <h3 class="block-title">Trip Information</h3>
-        <div class="block-options">
-          <a href="{{ route('flex.allocation-requests') }}" class="btn btn-sm btn-primary">
-            <i class="ph-printer me-1"></i> Print
-          </a>
-          @if ($trip->status == -1)
-            <a href="{{ url('trips/resubmit-trip/' . base64_encode($trip->allocation_id)) }}" class="btn btn-sm btn-primary">
-              Resubmit
-            </a>
-          @endif
-          <a href="{{ url('/trips/truck-allocation/' . base64_encode($trip->allocation_id)) }}" class="btn btn-sm btn-primary">
-            <i class="ph-list me-1"></i> View Allocation
-          </a>
-          <a href="{{ $allocation->status == 3 ? route('flex.allocation-requests') : route('flex.trip-requests') }}" class="btn btn-sm btn-primary">
-            <i class="ph-list me-1"></i> All Trips
-          </a>
-        </div>
-      </div>
-      <div class="block-content">
-        <!-- Approval Buttons -->
-        @if ($level && $level->level_name == $trip->approval_status)
-          <div class="mb-3">
-            <a href="#" class="btn btn-sm btn-success me-2" data-bs-toggle="modal" data-bs-target="#trip-approval"
-               data-id="{{ $trip->id }}" data-name="{{ $allocation->name }}" data-description="{{ $allocation->amount }}">
-              <i class="ph-check-circle me-1"></i> Approve
-            </a>
-            <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#trip-disapproval"
-               data-id="{{ $trip->id }}" data-name="{{ $allocation->name }}" data-description="{{ $allocation->amount }}">
-              <i class="ph-x-circle me-1"></i> Disapprove
-            </a>
-          </div>
-        @endif
-
-        <!-- Current Person -->
-        <p><span class="badge bg-primary bg-opacity-10 text-info p-2">Current To:</span> {{ $current_person }}</p>
-        <hr>
-
-        <!-- Trip Remarks -->
-        @php
-          $remarks = App\Models\TripRemark::where('trip_id', $trip->id)->latest()->get();
-        @endphp
-        @if ($remarks->count() > 0)
-          <h4 class="h5"><i class="ph-note-pencil me-1"></i> Trip Remarks</h4>
-          @foreach ($remarks as $remark)
-            <p>
-              <span class="badge bg-primary bg-opacity-10 text-warning">{{ $remark->remarked_by }}:</span>
-              <code>{{ $remark->user->fname . ' ' . $remark->user->lname }}</code> - {{ $remark->remark }}
-            </p>
-          @endforeach
-          <hr>
-        @endif
-        <p><span class="badge bg-primary bg-opacity-10 text-info">Initiator:</span> {{ $trip->user->full_name }}</p>
-
-        <!-- Trip Details Include -->
-        @include('trips.includes.trip_details')
-
-        <!-- Trip Trucks -->
-        <h4 class="h5 mt-4"><i class="ph-truck me-1"></i> Trip Trucks</h4>
-        @if (session('error'))
-          <div class="alert alert-danger" role="alert">{{ session('error') }}</div>
-        @endif
-        <div class="table-responsive">
-          <table class="table table-striped table-bordered">
-            <thead>
-              <tr>
-                <th>No.</th>
-                <th>Driver</th>
-                <th>Truck</th>
-                <th>Trailer</th>
-                <th>Quantity</th>
-                <th>Options</th>
-              </tr>
-            </thead>
-            <tbody>
-              @php
-                $trucks = App\Models\TruckAllocation::where('allocation_id', $allocation->id)->latest()->get();
-                $i = 1;
-              @endphp
-              @forelse($trucks as $item)
-                @php
-                  $trailers = App\Models\TrailerAssignment::where('truck_id', $item->truck_id)->first();
-                  $drivers = App\Models\User::where('position', '9')->get();
-                  $truck_cost = App\Models\TruckAllocation::where('truck_id', $item->truck_id)
-                    ->where('allocation_id', $allocation->id)
-                    ->first();
-                  $allocation_cost = App\Models\AllocationCost::where('allocation_id', $allocation->id)->first();
-                  $payment = App\Models\AllocationCostPayment::where('truck_id', $item->truck_id)
-                    ->where('allocation_id', $truck_cost->allocation_id)
-                    ->count();
-                @endphp
-                <tr>
-                  <td>{{ $i++ }}</td>
-                  <td>{{ $item->driver->fname }} {{ $item->driver->mname }} {{ $item->driver->lname }}</td>
-                  <td>
-                    {{ $item->truck->plate_number }}<br>
-                    <small>{{ $item->truck->type->name }}</small>
-                  </td>
-                  <td>{{ $item->trailer->plate_number ?? 'N/A' }}</td>
-                  <td>
-                    <span>Capacity: {{ $item->trailer->capacity }}</span><br>
-                    <span>Planned: {{ $item->planned }}</span><br>
-                    <span>Loaded: {{ $item->loaded }}</span><br>
-                    <span>Offloaded: {{ $item->offloaded }}</span>
-                  </td>
-                  <td>
-                    <a href="{{ url('/trips/truck-cost/' . base64_encode($item->id)) }}" title="Add Truck Cost" class="btn btn-sm btn-primary">
-                      <i class="ph-info"></i>
-                    </a>
-                    @can('control-trip')
-                      @if ($truck_cost->status != 3 && $item->offloaded <= 0 && $item->rescue_status != 1)
-                        @can('assign-driver')
-                          <button class="btn btn-sm btn-primary edit-driver" data-bs-toggle="modal" data-bs-target="#edit-driver"
-                                  data-id="{{ $item->id }}" data-name="{{ $item->truck->plate_number }}"
-                                  data-description="{{ $item->driver->fname . ' ' . $item->driver->lname }}">
-                            <i class="ph-user-plus"></i>
-                          </button>
-                        @endcan
-                        @can('deassign-trailer')
-                          <button class="btn btn-sm btn-primary edit-trailer" data-bs-toggle="modal" data-bs-target="#edit-trailer"
-                                  data-id="{{ $item->id }}" data-name="{{ $item->truck->plate_number ?? '0' }}"
-                                  data-description="{{ $item->trailer->plate_number ?? '0' }}">
-                            <i class="ph-truck"></i>
-                          </button>
-                        @endcan
-                      @endif
-                      @if ($item->rescue_status == 1)
-                        <span class="badge bg-danger">Truck Rescued</span>
-                      @elseif ($payment > 0)
-                        @can('load-truck')
-                          @if ($truck_cost->status == 0)
-                            <button class="btn btn-sm btn-success edit-button" data-bs-toggle="modal" data-bs-target="#edit-modal"
-                                    data-id="{{ $item->id }}" data-name="{{ $item->truck->plate_number }}"
-                                    data-truck="{{ $item->truck_id }}" data-quantity="{{ $item->loaded }}"
-                                    data-capacity="{{ $item->trailer->capacity }} Ton" data-description="{{ $truck_cost->id }}">
-                              Load
-                            </button>
-                          @elseif ($truck_cost->status == 2)
-                            <span class="badge bg-info">On Transit</span>
-                            @can('edit-loaded')
-                              <button class="btn btn-sm btn-primary edit-button" data-bs-toggle="modal" data-bs-target="#edit-modal"
-                                      data-id="{{ $item->id }}" data-name="{{ $item->truck->plate_number }}"
-                                      data-truck="{{ $item->truck_id }}" data-quantity="{{ $item->loaded }}"
-                                      data-capacity="{{ $item->trailer->capacity }} Ton" data-description="{{ $truck_cost->id }}">
-                                Edit Loading
-                              </button>
-                            @endcan
-                            <button class="btn btn-sm btn-success offload-button" data-bs-toggle="modal" data-bs-target="#offload-modal"
-                                    data-id="{{ $item->id }}" data-name="{{ $item->truck->plate_number }}"
-                                    data-truck="{{ $item->truck_id }}" data-loaded="{{ $item->loaded }} Ton"
-                                    data-description="{{ $truck_cost->id }}">
-                              Offload
-                            </button>
-                          @elseif ($truck_cost->status == 3)
-                            <span class="badge bg-success">Delivered</span>
-                            @can('edit-loaded')
-                              <button class="btn btn-sm btn-primary edit-button" data-bs-toggle="modal" data-bs-target="#edit-modal"
-                                      data-id="{{ $item->id }}" data-name="{{ $item->truck->plate_number }}"
-                                      data-truck="{{ $item->truck_id }}" data-quantity="{{ $item->loaded }}"
-                                      data-capacity="{{ $item->trailer->capacity }} Ton" data-description="{{ $truck_cost->id }}">
-                                Edit Loading
-                              </button>
-                            @endcan
-                            @can('edit-offloaded')
-                              <button class="btn btn-sm btn-primary offload-button" data-bs-toggle="modal" data-bs-target="#offload-modal"
-                                      data-id="{{ $item->id }}" data-name="{{ $item->truck->plate_number }}"
-                                      data-truck="{{ $item->truck_id }}" data-quantity="{{ $item->offloaded }}"
-                                      data-loaded="{{ $item->loaded }} Ton" data-description="{{ $truck_cost->id }}">
-                                Edit Offload
-                              </button>
-                            @endcan
-                            @if ($item->pod)
-                              <a class="btn btn-sm btn-primary" href="{{ asset('storage/pod/' . $item->pod) }}">
-                                <i class="ph-download me-1"></i> Download POD
-                              </a>
-                            @endif
-                          @endif
-                        @endcan
-                      @elseif ($trip->state == 4)
-                        <span class="badge bg-success">Completed</span>
-                        @if ($item->pod)
-                          <a class="btn btn-sm btn-primary" href="{{ url('pods/download/' . $item->pod) }}">
-                            <i class="ph-download me-1"></i> Download POD
-                          </a>
-                        @endif
-                      @else
-                        <span class="badge bg-warning">Waiting</span>
-                      @endif
-                      @if ($trip->state == 4 && Auth::user()->dept_id == 2)
-                        <a href="{{ url('/finance/create-invoice/' . $trip->id) }}" class="btn btn-sm btn-primary">
-                          Create Invoice
+    <!-- Traffic sources -->
+    <div class="card border-0  border-top  border-top-width-3 border-top-main  rounded-0 d-md-block d-none mt-5">
+        <div class="card-body pb-0">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="d-flex align-items-center justify-content-center mb-2">
+                        <a href="#" class="bg-success bg-opacity-10 text-success lh-1 rounded-pill p-2 me-3">
+                            <i class="ph-list"></i>
                         </a>
-                      @endif
-                    @endcan
-                  </td>
-                </tr>
-              @empty
-                <tr><td colspan="6">No trucks assigned.</td></tr>
-              @endforelse
-            </tbody>
-          </table>
-        </div>
+                        <div class="text-center">
+                            <div class="fw-semibold">Total Trips</div>
+                            <span class="text-muted">{{ $total_trips }}</span>
+                        </div>
+                    </div>
+                    <div class="w-75 mx-auto mb-3" id="new-visitors"></div>
+                </div>
 
-        <!-- Trip Completion -->
-        @if ($allocation->status < 4)
-          <hr>
-          <a href="{{ url('/trips/submit-trip/' . $allocation->id) }}" class="btn btn-sm btn-primary">
-            Request Trip Expenses
-          </a>
-        @elseif ($allocation->status == 4)
-          @php
-            $comp = App\Models\TruckAllocation::where('allocation_id', $allocation->id)
-              ->whereNot('status', '3')
-              ->where('rescue_status', '0')
-              ->count();
-          @endphp
-          @if ($comp == 0 && $trip->state != 5)
-            <a href="{{ url('trips/complete-trip/' . $trip->id) }}" id="complete_btn" class="btn btn-sm btn-success">
-              <i class="ph-check-circle me-1"></i> Complete Trip
+                <div class="col-sm-3">
+                    <div class="d-flex align-items-center justify-content-center mb-2">
+                        <a href="#" class="bg-success bg-opacity-10 text-warning lh-1 rounded-pill p-2 me-3">
+                            <i class="ph-download"></i>
+                        </a>
+                        <div class="text-center">
+                            <div class="fw-semibold">Trip Requests</div>
+                            <span class="text-muted">{{ $trip_requests }}</span>
+                        </div>
+                    </div>
+                    <div class="w-75 mx-auto mb-3" id="new-sessions"></div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="d-flex align-items-center justify-content-center mb-2">
+                        <a href="#" class="bg-success bg-opacity-10 text-success lh-1 rounded-pill p-2 me-3">
+                            <i class="ph-clock"></i>
+                        </a>
+                        <div class="text-center">
+                            <div class="fw-semibold">Active Trips</div>
+                            <span class="text-muted">{{ $active_trips }}</span>
+                        </div>
+                    </div>
+                    <div class="w-75 mx-auto mb-3" id="total-online"></div>
+                </div>
+
+
+                <div class="col-sm-3">
+                    <div class="d-flex align-items-center justify-content-center mb-2">
+                        <a href="#" class="bg-success bg-opacity-10 text-success lh-1 rounded-pill p-2 me-3">
+                            <i class="ph-check"></i>
+                        </a>
+                        <div class="text-center">
+                            <div class="fw-semibold">Completed Trips</div>
+                            <span class="text-muted">{{ $completed_trips }}</span>
+                        </div>
+                    </div>
+                    <div class="w-75 mx-auto mb-3" id="new-sessions"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /traffic sources -->
+
+    {{-- Start of Trip Requests --}}
+    <div class="card  border-top  border-top-width-3 border-top-main  rounded-0 ">
+
+        <div class="card-head p-2">
+            <div class="d-flex justify-content-between">
+                <h4 class="lead "> <i class="ph-truck text-brand-secondary "></i> Goingload Trips</h4>
+            </div>
+            <a href="" class="btn btn-primary btn-sm float-end" title="Add New Truck">
+                <i class="ph-printer me-2"></i> Print Trips
             </a>
-          @endif
-        @endif
-      </div>
-    </div>
-    <!-- END Trip Details Block -->
-
-    <!-- Modals -->
-    @include('trips.goingload.approvals')
-
-    <!-- Load Truck Modal -->
-    <div class="modal fade" id="edit-modal" role="dialog" aria-labelledby="edit-modal-label">
-      <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-        <div class="modal-content">
-          <form id="loading_form" method="POST" action="{{ route('flex.load-truck') }}">
-            @csrf
-            @method('PUT')
-            <div class="modal-header">
-              <h6 class="modal-title lead" id="edit-modal-label">Load Truck: <input type="text" id="edit-name" disabled></h6>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <input type="hidden" name="id" id="edit-id">
-              <div class="form-group">
-                <div class="mb-3">
-                  <label>Capacity: <input type="text" id="edit-capacity" disabled></label>
-                </div>
-                <div class="mb-3">
-                  <label>Quantity</label>
-                  <input type="number" min="0" step="any" required name="quantity" placeholder="Enter Quantity" id="edit-quantity" class="form-control">
-                  <input type="hidden" required name="truck_id" id="edit-truck" class="form-control">
-                  <input type="hidden" required name="allocation_id" id="edit-description" class="form-control">
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="submit" id="loading_btn" class="btn btn-primary">Load Truck</button>
-            </div>
-          </form>
         </div>
-      </div>
-    </div>
 
-    <!-- Assign Driver Modal -->
-    <div class="modal fade" id="edit-driver" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label">
-      <div class="modal-dialog modal-md modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <form id="edit-driver-form" method="POST" action="{{ route('flex.change_driver') }}">
-            @csrf
-            @method('PUT')
-            <div class="modal-header">
-              <h6 class="modal-title lead" id="edit-modal-label">Assign Driver</h6>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <input type="hidden" name="truck_id" id="edit-id2">
-              <div class="mb-3">
-                <label>Truck</label>
-                <input type="text" disabled class="form-control" name="name" id="edit-plate">
-              </div>
-              <div class="mb-3">
-                <label>Available Driver</label>
-                <select name="driver_id" class="select2 form-control">
-                  @php
-                    $drivers = App\Models\User::where('position', '9')->get();
-                  @endphp
-                  @foreach ($drivers as $driver)
-                    <option value="{{ $driver->id }}">{{ $driver->fname . ' ' . $driver->mname . ' ' . $driver->lname }}</option>
-                  @endforeach
-                </select>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="submit" id="assign_driver_btn" class="btn btn-primary">Change Driver</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
 
-    <!-- Assign Trailer Modal -->
-    <div class="modal fade" id="edit-trailer" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label">
-      <div class="modal-dialog modal-md modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <form id="trailer-form" method="POST" action="{{ route('flex.change_trailer') }}">
-            @csrf
-            @method('PUT')
-            <div class="modal-header">
-              <h6 class="modal-title lead" id="edit-modal-label">Change Trailer</h6>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <input type="hidden" name="allocation_id" id="edit-id3">
-              <div class="mb-3">
-                <label>Truck</label>
-                <input type="text" disabled class="form-control" name="name" id="edit-plate1">
-              </div>
-              <div class="mb-3">
-                <label>Available Trailer</label>
-                <select name="trailer_id" class="select2 form-control">
-                  @php
-                    $trailers = App\Models\Trailer::get();
-                  @endphp
-                  @foreach ($trailers as $trailer)
-                    <option value="{{ $trailer->id }}">{{ $trailer->plate_number }}</option>
-                  @endforeach
-                </select>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="submit" id="assign_trailer_btn" class="btn btn-primary">Change Trailer</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
 
-    <!-- Offload Truck Modal -->
-    <div class="modal fade" id="offload-modal" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label">
-      <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-        <div class="modal-content">
-          <form method="POST" id="offloading_form" action="{{ route('flex.dispatch') }}" onsubmit="return validateForm()" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
-            <div class="modal-header">
-              <h6 class="modal-title lead" id="edit-modal-label">Offload Truck: <input type="text" id="edit-name1" disabled></h6>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <input type="hidden" name="id" id="edit-id1">
-              <div class="form-group">
-                <div class="mb-3">
-                  <label>Loaded: <input type="text" id="edit-loaded" disabled></label>
+        <div class="card-body ">
+
+            <ul class="nav nav-tabs mb-3 px-2" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a href="#requests" class="nav-link active " data-bs-toggle="tab" aria-selected="true" role="tab"
+                        tabindex="-1">
+                        Trip Requests
+                        <span class="badge bg-dark text-brand-secondary rounded-pill ms-2">{{ count($pending) }}</span>
+
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a href="#trips" class="nav-link " data-bs-toggle="tab" aria-selected="false" role="tab">
+                        Ongoing Trips
+                        <span class="badge bg-dark text-brand-secondary rounded-pill ms-2">{{ count($active) }}</span>
+
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a href="#completion" class="nav-link " data-bs-toggle="tab" aria-selected="false" role="tab">
+                        Completion Requests
+                        <span class="badge bg-dark text-brand-secondary rounded-pill ms-2">{{ count($completion) }}</span>
+
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a href="#completed" class="nav-link " data-bs-toggle="tab" aria-selected="false" role="tab">
+                        Completed Trips
+                        <span class="badge bg-dark text-brand-secondary rounded-pill ms-2">{{ count($completed) }}</span>
+
+                    </a>
+                </li>
+
+
+            </ul>
+            <div class="tab-content">
+                {{-- For Goingload Requests --}}
+                <div class="tab-pane fade active show" id="requests" role="tabpanel">
+                    <table id="" class="table table-striped table-bordered datatable-basic">
+                        <thead>
+                            <th>No.</th>
+                            <th>Date</th>
+                            <th>Ref No </th>
+                            <th>Customer </th>
+                            <th>Route</th>
+                            <th hidden>To</th>
+                            <th hidden>Trucks</th>
+                            <th>Revenue</th>
+                            <th>Status</th>
+                            <th>Options</th>
+
+                        </thead>
+
+                        <tbody>
+                            <?php $i = 1; ?>
+                            @foreach ($pending as $item)
+                                @php
+                                    $trucks = App\Models\TruckAllocation::where('allocation_id', $item->allocation_id)->count();
+                                    $costs = App\Models\TripCost::where('trip_id', $item->id)->sum('amount');
+                                    $truck_cost = 0;
+                                    $total_summed_cost = 0;
+                                    $trucks_allocated = App\Models\TruckAllocation::where('allocation_id', $item->allocation->id)->get();
+                                    $total_allocated_trucks = App\Models\TruckAllocation::where('allocation_id', $item->allocation->id)->count();
+                                    $semi = 0;
+                                    $pulling = 0;
+                                    foreach ($trucks_allocated as $truc) {
+                                        if ($truc->truck->truck_type == 1) {
+                                            $semi += 1;
+                                        } else {
+                                            $pulling += 1;
+                                        }
+                                        $allocated_trucks = App\Models\TruckCost::where('allocation_id', $truc->id)->sum('real_amount');
+                                        $truck_cost += $allocated_trucks;
+                                    }
+
+                                    $total_costs =
+                                        App\Models\AllocationCost::where('allocation_id', $item->allocation->id)
+                                            ->where('type', 'All')
+                                            ->sum('real_amount') *
+                                            $total_allocated_trucks +
+                                        $truck_cost;
+                                    $total_semi =
+                                        App\Models\AllocationCost::where('allocation_id', $item->allocation->id)
+                                            ->where('type', 'Semi')
+                                            ->sum('real_amount') * $semi;
+                                    $total_pulling =
+                                        App\Models\AllocationCost::where('allocation_id', $item->allocation->id)
+                                            ->where('type', 'Pulling')
+                                            ->sum('real_amount') * $pulling;
+                                    $total_summed_cost = $total_costs + $total_semi + $total_pulling;
+                                @endphp
+
+                                <tr>
+                                    <td>{{ $i++ }}</td>
+                                    <td>{{ $item->created_at->format('d/m/Y') }} </td>
+                                    <td>{{ $item->allocation->ref_no }} </td>
+                                    <td>{{ $item->allocation->customer->company }} </td>
+                                    <td>{{ $item->allocation->route->name }}</td>
+                                    <td hidden>{{ $item->allocation->route->destination }}</td>
+                                    <td hidden>{{ $trucks }}</td>
+                                    <td width="15%"> <small> {{ $item->allocation->currency->symbol }} </small>
+                                        {{-- {{ number_format($total_summed_cost / $item->allocation->currency->rate, 2) }} --}}
+                                        {{ number_format($item->allocation->usd_income, 2) }}
+
+
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="badge {{ $item->status == '-1' ? 'bg-info text-warning' : 'bg-info text-warning' }}  bg-opacity-10  mb-1">
+                                            {{ $item->status == '-1' ? 'Disapproved' : 'Pending' }} </span>
+
+                                    </td>
+                                    <td>
+                                        {{-- @if (Auth::user()->dept_id != 1) --}}
+                                        @if ($item->status == -1)
+                                            <a href="{{ url('trips/resubmit-trip/' . base64_encode($item->allocation_id)) }}"
+                                                class="btn btn-sm btn-success">
+                                                Resubmit
+                                            </a>
+                                        @endif
+
+
+                                        <a href="{{ url('/trips/goingload-trip/' . base64_encode($item->allocation_id)) }}"
+                                            class="btn btn-sm btn-primary">
+                                            <i class="ph-info"></i>
+                                        </a>
+
+
+                                        @can('view-settings-menu')
+                                            <a href="{{ url('/trips/delete-trip/' . $item->id) }}"
+                                                class="btn btn-sm btn-danger">
+                                                <i class="ph-trash"></i>
+                                            </a>
+                                        @endcan
+
+
+                                        @php
+                                            $initiations = App\Models\TruckAllocation::where('allocation_id', $item->allocation_id)
+                                                ->where('initiation_status', '<', 1)
+                                                ->count();
+                                        @endphp
+                                        {{-- @if ($initiations == 0) --}}
+
+                                        @if ($level)
+                                            @if ($level->level_name == $item->approval_status)
+                                                <hr>
+                                                {{-- @if ($item->state != $check) --}}
+                                                {{-- start of termination confirm button --}}
+                                                <a href="" class="btn btn-sm btn-success edit-button"
+                                                    title="Approve Trip " data-bs-toggle="modal"
+                                                    data-bs-target="#approval" data-id="{{ $item->id }}"
+                                                    data-name="{{ $item->name }}"
+                                                    data-description="{{ $item->amount }}">
+
+                                                    <i class="ph-check-circle"></i>
+                                                    Approve
+
+                                                </a>
+                                                {{-- / --}}
+
+                                                {{-- start of trip confirm button --}}
+                                                <a href="" class="btn btn-sm btn-danger edit-button"
+                                                    title="Disapprove Trip " data-bs-toggle="modal"
+                                                    data-bs-target="#disapproval" data-id="{{ $item->id }}"
+                                                    data-name="{{ $item->name }}"
+                                                    data-description="{{ $item->amount }}">
+
+                                                    <i class="ph-x-circle"></i>
+                                                    Disapprove
+                                                </a>
+                                                {{-- / --}}
+                                                {{-- @endif --}}
+                                            @endif
+                                        @endif
+                                        {{-- @endif --}}
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                        </tbody>
+
+                    </table>
                 </div>
-                <div class="mb-3">
-                  <label>Quantity</label>
-                  <input type="number" min="0" step="any" required name="quantity" id="edit-quantity1" placeholder="Enter Quantity" class="form-control">
-                  <input type="hidden" required name="truck_id" id="edit-truck1" class="form-control">
-                  <input type="hidden" required name="allocation_id" id="edit-description1" class="form-control">
-                </div>
-                <div class="mb-3">
-                  <label>POD</label>
-                  <input type="file" name="pod" class="form-control" id="pod">
-                  <p id="fileError" style="color: red;"></p>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="submit" id="offloading_btn" class="btn btn-primary">Offload Truck</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- END Page Content -->
+                {{-- ./ --}}
 
-  <!-- Scripts -->
-  @push('js')
-    <script src="{{ asset('assets/js/components/tables/datatables/datatables.min.js') }}"></script>
-    <script src="{{ asset('assets/js/components/forms/selects/select2.min.js') }}"></script>
-    <script src="{{ asset('assets/js/pages/datatables_basic.js') }}"></script>
-    <script src="{{ asset('assets/js/pages/form_select2.js') }}"></script>
+                {{-- For Goingload Trips --}}
+                <div class="tab-pane fade  show" id="trips" role="tabpanel">
+                    <table id="" class="table table-striped table-bordered datatable-basic">
+                        <thead>
+                            <th>No.</th>
+                            <th>Date</th>
+                            <th>Trip Number</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>No. of Trucks</th>
+                            <th>Revenue</th>
+                            <th>Status</th>
+                            <th>Options</th>
+
+                        </thead>
+
+
+                        <tbody>
+                            <?php $i = 1; ?>
+                            @foreach ($active as $item)
+                                @php
+                                    $trucks = App\Models\TruckAllocation::where('allocation_id', $item->allocation_id)->count();
+                                    $costs = App\Models\TripCost::where('trip_id', $item->id)->sum('amount');
+                                    $truck_cost = 0;
+                                    $total_summed_cost = 0;
+                                    $trucks_allocated = App\Models\TruckAllocation::where('allocation_id', $item->allocation->id)->get();
+                                    $total_allocated_trucks = App\Models\TruckAllocation::where('allocation_id', $item->allocation->id)->count();
+                                    $semi = 0;
+                                    $pulling = 0;
+                                    foreach ($trucks_allocated as $truc) {
+                                        if ($truc->truck->truck_type == 1) {
+                                            $semi += 1;
+                                        } else {
+                                            $pulling += 1;
+                                        }
+                                        $allocated_trucks = App\Models\TruckCost::where('allocation_id', $truc->id)->sum('real_amount');
+                                        $truck_cost += $allocated_trucks;
+                                    }
+
+                                    $total_costs =
+                                        App\Models\AllocationCost::where('allocation_id', $item->allocation->id)
+                                            ->where('type', 'All')
+                                            ->sum('real_amount') *
+                                            $total_allocated_trucks +
+                                        $truck_cost;
+                                    $total_semi =
+                                        App\Models\AllocationCost::where('allocation_id', $item->allocation->id)
+                                            ->where('type', 'Semi')
+                                            ->sum('real_amount') * $semi;
+                                    $total_pulling =
+                                        App\Models\AllocationCost::where('allocation_id', $item->allocation->id)
+                                            ->where('type', 'Pulling')
+                                            ->sum('real_amount') * $pulling;
+                                    $total_summed_cost = $total_costs + $total_semi + $total_pulling;
+                                @endphp
+
+                                <tr>
+                                    <td>{{ $i++ }}</td>
+                                    <td>{{ $item->created_at->format('d/m/Y') }} </td>
+                                    <td>{{ $item->ref_no }}</td>
+                                    <td>{{ $item->allocation->route->start_point }}</td>
+                                    <td>{{ $item->allocation->route->destination }}</td>
+                                    <td>{{ $trucks }}</td>
+                                    <td width="15%"> <small> {{ $item->allocation->currency->symbol }} </small>
+                                        {{ number_format($item->allocation->usd_income, 2) }}
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="badge  {{ $item->state == 4 ? 'bg-success text-success ' : '' }} {{ $item->state == 2 ? 'bg-info text-info ' : '' }}bg-opacity-10 ">
+                                            {{ $item->state == 4 ? 'Completed' : '' }}
+                                            {{ $item->state == 2 ? 'On Progress' : '' }}
+                                        </span>
+
+                                    </td>
+                                    <td>
+                                        <a href="{{ url('/trips/goingload-trip/' . base64_encode($item->allocation_id)) }}"
+                                            class="btn btn-sm btn-primary">
+                                            <i class="ph-info"></i>
+                                        </a>
+
+                                        @can('view-settings-menu')
+                                            <a href="{{ url('/trips/delete-trip/' . $item->id) }}"
+                                                class="btn btn-sm btn-danger">
+                                                <i class="ph-trash"></i>
+                                            </a>
+                                        @endcan
+
+                                        @if (Auth::user()->dept_id != 1)
+                                            @if ($item->state == 2)
+                                                @php
+                                                    $comp = App\Models\TruckAllocation::where('allocation_id', $item->allocation_id)
+                                                        ->where('rescue_status', '0')
+                                                        ->whereNot('status', '3')
+                                                        ->count();
+                                                @endphp
+                                                @if ($comp == 0 && $item->allocation->status == 4)
+                                                    {{-- <a href="{{ url('trips/complete-trip/' . $item->id) }}"
+                                                        class="btn btn-sm btn-success">
+                                                        <i class="ph-check-circle"></i> Complete
+                                                    </a> --}}
+                                                @endif
+                                            @endif
+                                        @endif
+
+                                    </td>
+                                </tr>
+                            @endforeach
+
+
+                        </tbody>
+
+                    </table>
+                </div>
+                {{-- ./ --}}
+
+                {{-- For Completion Trips --}}
+                <div class="tab-pane fade  show" id="completion" role="tabpanel">
+                    <table id="" class="table table-striped table-bordered datatable-basic">
+                        <thead>
+                            <th>No.</th>
+                            <th>Date</th>
+                            <th>Trip Number</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>No. of Trucks</th>
+                            <th>Revenue</th>
+                            <th>Status</th>
+                            <th>Options</th>
+
+                        </thead>
+
+
+                        <tbody>
+                            <?php $i = 1; ?>
+                            @foreach ($completion as $item)
+                                @php
+                                    $trucks = App\Models\TruckAllocation::where('allocation_id', $item->allocation_id)->count();
+                                    $costs = App\Models\TripCost::where('trip_id', $item->id)->sum('amount');
+                                    $truck_cost = 0;
+                                    $total_summed_cost = 0;
+                                    $trucks_allocated = App\Models\TruckAllocation::where('allocation_id', $item->allocation->id)->get();
+                                    $total_allocated_trucks = App\Models\TruckAllocation::where('allocation_id', $item->allocation->id)->count();
+                                    $semi = 0;
+                                    $pulling = 0;
+                                    foreach ($trucks_allocated as $truc) {
+                                        if ($truc->truck->truck_type == 1) {
+                                            $semi += 1;
+                                        } else {
+                                            $pulling += 1;
+                                        }
+                                        $allocated_trucks = App\Models\TruckCost::where('allocation_id', $truc->id)->sum('real_amount');
+                                        $truck_cost += $allocated_trucks;
+                                    }
+
+                                    $total_costs =
+                                        App\Models\AllocationCost::where('allocation_id', $item->allocation->id)
+                                            ->where('type', 'All')
+                                            ->sum('real_amount') *
+                                            $total_allocated_trucks +
+                                        $truck_cost;
+                                    $total_semi =
+                                        App\Models\AllocationCost::where('allocation_id', $item->allocation->id)
+                                            ->where('type', 'Semi')
+                                            ->sum('real_amount') * $semi;
+                                    $total_pulling =
+                                        App\Models\AllocationCost::where('allocation_id', $item->allocation->id)
+                                            ->where('type', 'Pulling')
+                                            ->sum('real_amount') * $pulling;
+                                    $total_summed_cost = $total_costs + $total_semi + $total_pulling;
+                                @endphp
+
+                                <tr>
+                                    <td>{{ $i++ }}</td>
+                                    <td>{{ $item->created_at->format('d/m/Y') }} </td>
+                                    <td>{{ $item->ref_no }}</td>
+                                    <td>{{ $item->allocation->route->start_point }}</td>
+                                    <td>{{ $item->allocation->route->destination }}</td>
+                                    <td>{{ $trucks }}</td>
+                                    <td width="15%"> <small> {{ $item->allocation->currency->symbol }} </small>
+                                        {{ number_format($item->allocation->usd_income, 2) }}
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="badge  {{ $item->state == 4 ? 'bg-success text-success ' : '' }} {{ $item->state == 5 ? 'bg-info text-warning ' : '' }}bg-opacity-10 ">
+                                            {{ $item->state == 4 ? 'Completed' : '' }}
+                                            {{ $item->state == 5 ? 'Waiting Approval' : '' }}
+                                        </span>
+
+                                    </td>
+                                    <td>
+                                        <a href="{{ url('/trips/goingload-trip/' . base64_encode($item->allocation_id)) }}"
+                                            class="btn btn-sm btn-primary">
+                                            <i class="ph-info"></i>
+                                        </a>
+
+                                        @if ($level1)
+                                            @if ($level1->level_name == $item->completion_approval_status)
+                                                <hr>
+                                                {{-- @if ($item->state != $check) --}}
+                                                {{-- start of termination confirm button --}}
+                                                <a href="" class="btn btn-sm btn-success edit-button"
+                                                    title="Approve Trip " data-bs-toggle="modal"
+                                                    data-bs-target="#approval" data-id="{{ $item->id }}"
+                                                    data-name="{{ $item->name }}"
+                                                    data-description="{{ $item->amount }}">
+
+                                                    <i class="ph-check-circle"></i>
+                                                    Approve
+
+                                                </a>
+                                                {{-- / --}}
+
+                                                {{-- start of trip confirm button --}}
+                                                <a href="" class="btn btn-sm btn-danger edit-button"
+                                                    title="Disapprove Trip " data-bs-toggle="modal"
+                                                    data-bs-target="#disapproval" data-id="{{ $item->id }}"
+                                                    data-name="{{ $item->name }}"
+                                                    data-description="{{ $item->amount }}">
+
+                                                    <i class="ph-x-circle"></i>
+                                                    Disapprove
+                                                </a>
+                                                {{-- / --}}
+                                                {{-- @endif --}}
+                                            @endif
+                                        @endif
+
+                                    </td>
+                                </tr>
+                            @endforeach
+
+
+                        </tbody>
+
+                    </table>
+                </div>
+                {{-- ./ --}}
+
+                {{-- For Completed Trips --}}
+                <div class="tab-pane fade  show" id="completed" role="tabpanel">
+                    <table id="" class="table table-striped table-bordered datatable-basic">
+                        <thead>
+                            <th>No.</th>
+                            <th>Date</th>
+                            <th>Trip Number</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>No. of Trucks</th>
+                            <th>Revenue</th>
+                            <th>Status</th>
+                            <th>Options</th>
+
+                        </thead>
+
+
+                        <tbody>
+                            <?php $i = 1; ?>
+                            @foreach ($completed as $item)
+                                @php
+                                    $trucks = App\Models\TruckAllocation::where('allocation_id', $item->allocation_id)->count();
+                                    $costs = App\Models\TripCost::where('trip_id', $item->id)->sum('amount');
+                                    $truck_cost = 0;
+                                    $total_summed_cost = 0;
+                                    $trucks_allocated = App\Models\TruckAllocation::where('allocation_id', $item->allocation->id)->get();
+                                    $total_allocated_trucks = App\Models\TruckAllocation::where('allocation_id', $item->allocation->id)->count();
+                                    $semi = 0;
+                                    $pulling = 0;
+                                    foreach ($trucks_allocated as $truc) {
+                                        if ($truc->truck->truck_type == 1) {
+                                            $semi += 1;
+                                        } else {
+                                            $pulling += 1;
+                                        }
+                                        $allocated_trucks = App\Models\TruckCost::where('allocation_id', $truc->id)->sum('real_amount');
+                                        $truck_cost += $allocated_trucks;
+                                    }
+
+                                    $total_costs =
+                                        App\Models\AllocationCost::where('allocation_id', $item->allocation->id)
+                                            ->where('type', 'All')
+                                            ->sum('real_amount') *
+                                            $total_allocated_trucks +
+                                        $truck_cost;
+                                    $total_semi =
+                                        App\Models\AllocationCost::where('allocation_id', $item->allocation->id)
+                                            ->where('type', 'Semi')
+                                            ->sum('real_amount') * $semi;
+                                    $total_pulling =
+                                        App\Models\AllocationCost::where('allocation_id', $item->allocation->id)
+                                            ->where('type', 'Pulling')
+                                            ->sum('real_amount') * $pulling;
+                                    $total_summed_cost = $total_costs + $total_semi + $total_pulling;
+                                @endphp
+
+                                <tr>
+                                    <td>{{ $i++ }}</td>
+                                    <td>{{ $item->created_at->format('d/m/Y') }} </td>
+                                    <td>{{ $item->ref_no }}</td>
+                                    <td>{{ $item->allocation->route->start_point }}</td>
+                                    <td>{{ $item->allocation->route->destination }}</td>
+                                    <td>{{ $trucks }}</td>
+                                    <td width="15%"> <small> {{ $item->allocation->currency->symbol }} </small>
+                                        {{ number_format($item->allocation->usd_income, 2) }}
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="badge  {{ $item->state == 4 ? 'bg-success text-success ' : '' }} {{ $item->state == 2 ? 'bg-info text-info ' : '' }}bg-opacity-10 ">
+                                            {{ $item->state == 4 ? 'Completed' : '' }}
+                                            {{ $item->state == 2 ? 'On Progress' : '' }}
+                                        </span>
+
+                                    </td>
+                                    <td>
+                                        <a href="{{ url('/trips/goingload-trip/' . base64_encode($item->allocation_id)) }}"
+                                            class="btn btn-sm btn-primary">
+                                            <i class="ph-info"></i>
+                                        </a>
+
+                                        @if (Auth::user()->dept_id != 1)
+                                            @if ($item->state == 2)
+                                                @php
+                                                    $comp = App\Models\TruckAllocation::where('allocation_id', $item->allocation_id)
+                                                        ->where('rescue_status', '0')
+                                                        ->whereNot('status', '3')
+                                                        ->count();
+                                                @endphp
+                                                @if ($comp == 0 && $item->allocation->status == 4)
+                                                    {{-- <a href="{{ url('trips/complete-trip/' . $item->id) }}"
+                                                                        class="btn btn-sm btn-success">
+                                                                        <i class="ph-check-circle"></i> Complete
+                                                                    </a> --}}
+                                                @endif
+                                            @endif
+                                        @endif
+
+                                    </td>
+                                </tr>
+                            @endforeach
+
+
+                        </tbody>
+
+                    </table>
+                </div>
+                {{-- ./ --}}
+
+            </div>
+        </div>
+        {{-- / --}}
+    </div>
+    {{-- ./ --}}
+
+
+
+
+    {{-- start of Trip Request approval  modal --}}
+    <div id="approval" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="btn-close btn-danger " data-bs-dismiss="modal">
+
+                    </button>
+                </div>
+                <modal-body class="p-4">
+                    <h6 class="text-center">Are you Sure you want to Approve this request ?</h6>
+                    <form action="{{ url('trips/approve-trip') }}" id="approve_form" method="post">
+                        @csrf
+                        <input name="allocation_id" id="edit-id" type="hidden">
+                        <div class="row mb-2">
+                            <div class="form-group">
+                                <label for="">Remark</label>
+                                <textarea name="reason" required placeholder="Please Enter Remarks Here" class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-4 mx-auto">
+                                <button type="submit" id="approve_yes"
+                                    class="btn btn-primary btn-sm px-4 ">Yes</button>
+
+                                <button type="button" id="approve_no" class="btn btn-danger btn-sm  px-4 text-light"
+                                    data-bs-dismiss="modal">
+                                    No
+                                </button>
+                            </div>
+
+                    </form>
+
+
+            </div>
+            </modal-body>
+            <modal-footer>
+
+            </modal-footer>
+
+
+        </div>
+    </div>
+    </div>
+    {{-- end of approval modal --}}
+
+
+    {{-- start of disapproval  modal --}}
+    <div id="disapproval" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="btn-close btn-danger " data-bs-dismiss="modal">
+
+                    </button>
+                </div>
+                <modal-body class="p-4">
+                    <h6 class="text-center">Are you Sure you want to Disapprove this request ?</h6>
+                    <form action="{{ url('trips/disapprove-trip') }}" id="disapprove_form" method="post">
+                        @csrf
+                        <input name="allocation_id" id="id" type="hidden">
+                        <div class="row mb-2">
+                            <div class="form-group">
+                                <label for="">Remark</label>
+                                <textarea name="reason" required placeholder="Please Enter Remarks Here" class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-4 mx-auto">
+                                <button type="submit" id="disapprove_yes"
+                                    class="btn btn-primary btn-sm px-4 ">Yes</button>
+
+                                <button type="button" id="disapprove_no" class="btn btn-danger btn-sm  px-4 text-light"
+                                    data-bs-dismiss="modal">
+                                    No
+                                </button>
+                            </div>
+
+                    </form>
+
+
+            </div>
+            </modal-body>
+            <modal-footer>
+
+            </modal-footer>
+
+
+        </div>
+    </div>
+    </div>
+
+
+    {{-- end of disapproval modal --}}
+    {{-- start of approval  modal --}}
+    <div id="approval" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="btn-close btn-danger " data-bs-dismiss="modal">
+
+                    </button>
+                </div>
+                <modal-body class="p-4">
+                    <h6 class="text-center">Are you Sure you want to Approve this request ?</h6>
+                    <form action="{{ url('trips/approve-trip') }}" id="approve_form" method="post">
+                        @csrf
+                        <input name="allocation_id" id="edit-id" type="hidden">
+                        <div class="row mb-2">
+                            <div class="form-group">
+                                <label for="">Remark</label>
+                                <textarea name="reason" placeholder="Please Enter Remarks Here" class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-4 mx-auto">
+                                <button type="submit" id="approve_yes"
+                                    class="btn btn-primary btn-sm px-4 ">Yes</button>
+
+                                <button type="button" id="approve_no" class="btn btn-danger btn-sm  px-4 text-light"
+                                    data-bs-dismiss="modal">
+                                    No
+                                </button>
+                            </div>
+
+                    </form>
+
+
+            </div>
+            </modal-body>
+            <modal-footer>
+
+            </modal-footer>
+
+
+        </div>
+    </div>
+    </div>
+    {{-- end of approval modal --}}
+
+
     <script>
-      $(document).ready(function() {
-        $('.select2').each(function() {
-          $(this).select2({
-            dropdownParent: $(this).parent()
-          });
+        $(document).on('click', '.edit-button', function() {
+            $('#edit-name').empty();
+            var id = $(this).data('id');
+            var name = $(this).data('name');
+            var description = $(this).data('description');
+            $('#edit-id').val(id);
+            $('#id').val(id);
+            $('#edit-name').append(name);
+            $('#edit-description').val(description);
         });
-      });
-
-      $(document).on('click', '.edit-button', function() {
-        var id = $(this).data('id');
-        var name = $(this).data('name');
-        var truck = $(this).data('truck');
-        var capacity = $(this).data('capacity');
-        var description = $(this).data('description');
-        var quantity = $(this).data('quantity');
-        $('#edit-id').val(id);
-        $('#edit-name').val(name);
-        $('#edit-truck').val(truck);
-        $('#edit-description').val(description);
-        $('#edit-capacity').val(capacity);
-        $('#edit-quantity').val(quantity);
-      });
-
-      $(document).on('click', '.edit-driver', function() {
-        var id = $(this).data('id');
-        var name = $(this).data('name');
-        $('#edit-id2').val(id);
-        $('#edit-plate').val(name);
-      });
-
-      $(document).on('click', '.edit-trailer', function() {
-        var id = $(this).data('id');
-        var name = $(this).data('name');
-        $('#edit-id3').val(id);
-        $('#edit-plate1').val(name);
-      });
-
-      $(document).on('click', '.offload-button', function() {
-        var id = $(this).data('id');
-        var name = $(this).data('name');
-        var truck = $(this).data('truck');
-        var description = $(this).data('description');
-        var loaded = $(this).data('loaded');
-        var quantity = $(this).data('quantity');
-        $('#edit-id1').val(id);
-        $('#edit-name1').val(name);
-        $('#edit-truck1').val(truck);
-        $('#edit-description1').val(description);
-        $('#edit-loaded').val(loaded);
-        $('#edit-quantity1').val(quantity);
-      });
-
-      $("#loading_form").submit(function() {
-        $("#loading_btn").html("<i class='ph-spinner spinner me-2'></i> Loading ...").addClass('disabled');
-      });
-
-      $("#offloading_form").submit(function() {
-        $("#offloading_btn").html("<i class='ph-spinner spinner me-2'></i> Offloading ...").addClass('disabled');
-      });
-
-      $("#trailer-form").submit(function() {
-        $("#assign_trailer_btn").html("<i class='ph-spinner spinner me-2'></i> Changing Trailer...").addClass('disabled');
-      });
-
-      $("#complete_btn").on('click', function() {
-        $("#complete_btn").html("<i class='ph-spinner spinner me-2'></i> Completing Trip ...").addClass('disabled');
-      });
-
-      $(document).ready(function() {
-        $("#remark").slideDown(60000).delay(50000).slideUp(300);
-      });
-
-      function validateForm() {
-        var fileInput = document.getElementById('pod');
-        var fileError = document.getElementById('fileError');
-        if (fileInput.files.length === 0) {
-          fileError.textContent = 'Please select a file.';
-          $("#offloading_btn").html("Offload").removeClass('disabled');
-          return false;
-        }
-        var maxSize = 20.9 * 1024 * 1024;
-        if (fileInput.files[0].size > maxSize) {
-          fileError.textContent = 'File size exceeds 20 MB.';
-          $("#offloading_btn").html("Offload").removeClass('disabled');
-          return false;
-        }
-        var allowedTypes = ['docx', 'pdf', 'jpg', 'jpeg', 'png'];
-        var fileType = fileInput.files[0].name.split('.').pop().toLowerCase();
-        if (allowedTypes.indexOf(fileType) === -1) {
-          fileError.textContent = 'Invalid file type. Allowed types: ' + allowedTypes.join(', ');
-          $("#offloading_btn").html("Offload").removeClass('disabled');
-          return false;
-        }
-        fileError.textContent = '';
-        return true;
-      }
-
-      function removeTruck(id) {
-        Swal.fire({
-          text: 'Are you sure you want to remove this truck?',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, remove it!'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            $.ajax({
-              url: "{{ url('trips/remove-truck/') }}/" + id
-            })
-            .done(function(data) {
-              $('#resultfeedOvertime').fadeOut('fast', function() {
-                $('#resultfeedOvertime').fadeIn('fast').html(data);
-              });
-              $('#status' + id).fadeOut('fast', function() {
-                $('#status' + id).fadeIn('fast').html(
-                  '<div class="col-md-12"><span class="label label-warning">DISAPPROVED</span></div>'
-                );
-              });
-              Swal.fire('Deleted!', 'Truck removed successfully.', 'success');
-              setTimeout(function() {
-                location.reload();
-              }, 1000);
-            })
-            .fail(function() {
-              Swal.fire('Failed!', 'Truck removal failed.', 'error');
-            });
-          }
-        });
-      }
     </script>
-  @endpush
+
+    {{-- For Approving --}}
+    <script>
+        $("#approve_form").submit(function(e) {
+            $("#approve_yes").html("<i class='ph-spinner spinner me-2'></i> Approving")
+                .addClass('disabled');
+            $("#approve_no").hide();
+        });
+    </script>
+
+    {{-- For Disapproving --}}
+    <script>
+        $("#disapprove_form").submit(function(e) {
+            $("#disapprove_yes").html("<i class='ph-spinner spinner me-2'></i> Disapproving")
+                .addClass('disabled');
+            $("#disapprove_no").hide();
+        });
+    </script>
+
 @endsection
