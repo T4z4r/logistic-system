@@ -313,10 +313,10 @@ class AllocationController extends Controller
 
         $allocation = Allocation::where('id', $id)->first();
         $latest_status = $allocation->approval_status;
+
      
-        
         $current = ApprovalLevel::where('level_name', $latest_status)->where('approval_id', $process->id)->first();
-        dd($current);
+        // dd($current);
         if ($current) {
 
             $data['current_person'] = $current->roles?->name ?? '--';
@@ -546,5 +546,280 @@ class AllocationController extends Controller
             'route_truck' => route('allocations.list'),
 
         ]);
+    }
+
+
+
+
+     // For Approving allocation
+    public function  approveAllocation(Request $request)
+    {
+
+        $role_id = Auth::User()->position;
+        $approval = Approval::where('process_name', 'Allocation Approval')->first();
+        $roles = Position::where('id', $role_id)->first();
+        $level = ApprovalLevel::where('role_id', $role_id)->where('approval_id', $approval->id)->first();
+        if ($level) {
+            $allocation = Allocation::where('id', $request->allocation_id)->first();
+
+
+
+            $approval_id = $level->approval_id;
+
+            $approval = Approval::where('id', $approval_id)->first();
+
+            if ($approval->levels == $level->level_name) {
+
+                $approvalStatus = $allocation->approval_status;
+
+                // Checking Trip
+                $trip = Trip::where('allocation_id', $request->allocation_id)->first();
+
+                if ($trip) {
+                    // For Allocation Update
+                    Allocation::where('id', $request->allocation_id)->update(
+                        [
+                            'approval_status' => $approvalStatus + 1,
+                            'state' => Auth::user()->name,
+                            'approver_id' => Auth::user()->id,
+                            'status' => '4'
+                        ]
+                    );
+                } else {
+                    // For Allocation Update
+                    Allocation::where('id', $request->allocation_id)->update(
+                        [
+                            'approval_status' => $approvalStatus + 1,
+                            'state' => Auth::user()->name,
+                            'status' => '3'
+                        ]
+                    );
+                }
+
+
+
+                // For Approval Remark
+                AllocationRemark::create([
+                    'allocation_id' => $request->allocation_id,
+                    'remark' => $request->reason,
+                    'remarked_by' => $level->label_name,
+                    'created_by' => Auth::user()->id,
+                ]);
+
+
+                // Start of Final Approval Email Notification
+                $creator = User::where('id', $allocation->created_by)->first();
+                $employees = User::where('position', $creator->position)->get();
+
+                $email_data = array(
+                    'subject' => $allocation->ref_no . ' Allocation Request Approval',
+                    'view' => 'emails.allocations.final-approval',
+                    'allocation' => $allocation,
+
+                );
+                $job = (new \App\Jobs\SendEmail($email_data, $employees));
+                dispatch($job);
+
+                // end of Final Email Notification
+                $msg = 'Allocation request has been approved Successfully !';
+                return back()->with('msg', $msg);
+            } else {
+                // To be approved by another person
+                $allocation = Allocation::where('id', $request->allocation_id)->first();
+                $approvalStatus = $allocation->approval_status;
+
+                if ( $approvalStatus  == $level->level_name) {
+
+
+                    // For Allocation Update
+                    Allocation::where('id', $request->allocation_id)->update(
+                        [
+                            'approval_status' => $approvalStatus + 1,
+                            'state' => Auth::user()->full_name,
+                            'status' => 1,
+                            'approver_id' => Auth::user()->id
+
+                        ]
+                    );
+
+                    // Start Of Approval Remark
+                    AllocationRemark::create(
+                        [
+                            'allocation_id' => $request->allocation_id,
+                            'remark' => $request->reason,
+                            'remarked_by' => $level->label_name,
+                            'created_by' => Auth::user()->id,
+                            'status' => 0
+                        ]
+                    );
+
+
+
+                    // Start Of Approval Email Alert
+                    $approved = $allocation->approval_status + 1;
+                    $level = ApprovalLevel::where('level_name', $approved)->where('approval_id', $approval->id)->first();
+                    $employees = User::where('position', $level->role_id)->get();
+
+
+                    $email_data = array(
+                        'subject' => $allocation->ref_no . ' Allocation Request Approval',
+                        'view' => 'emails.allocations.fleet-approval',
+                        'allocation' => $allocation,
+
+                    );
+                    $job = (new \App\Jobs\SendEmail($email_data, $employees));
+                    dispatch($job);
+                    // end of Approval Email Alert
+
+                    $msg = 'Approved By ' . Auth::user()->positions->name;
+                    return back()->with('msg', $msg);
+                }
+                else
+                {
+                    $msg = "Failed To Approve !";
+                    return back()->with('msg', $msg);
+                }
+            }
+        } else {
+            $msg = "Failed To Approve !";
+            return back()->with('msg', $msg);
+        }
+    }
+
+
+    // For New  Disapproval Allocation By Level
+    public function disapproveAllocation(Request $request)
+    {
+        $role_id = Auth::User()->position;
+        $process = Approval::where('process_name', 'Allocation Approval')->first();
+        $roles = Position::where('id', $role_id)->first();
+        $allocation = Allocation::where('id', $request->allocation_id)->first();
+
+        $level = ApprovalLevel::where('role_id', $role_id)->where('approval_id', $process->id)->first();
+        if ($level) {
+            // if ($allocation->disapprover_id == Auth::user()->id) {
+            //     return back()->with('error', 'Sorry,You have already Disapproved this allocation');
+            // }
+
+            $approval_id = $level->approval_id;
+            $approval = Approval::where('id', $approval_id)->first();
+
+            if ($level->level_name == 1) {
+
+                $approvalStatus = $allocation->approval_status;
+                $allocation->state = Auth::user()->fname . ' ' . Auth::user()->lname;
+                $allocation->disapprover_id = Auth::user()->id;
+                $allocation->status = -1;
+                $allocation->approval_status = $approvalStatus - 1;
+
+
+
+                $remark = new AllocationRemark();
+                $remark->allocation_id = $request->allocation_id;
+                $remark->remark = $request->reason;
+                $remark->remarked_by =  $level->label_name;
+
+                $remark->status = $approvalStatus - 1;
+                $remark->created_by = Auth::user()->id;
+                $remark->save();
+
+                $allocation->update();
+
+
+
+                // Start Of Approval Email Alert
+                $employees = User::where('id', $allocation->created_by)->get();
+                $email_data = array(
+                    'subject' => $allocation->ref_no . ' Allocation Request Disapproval',
+                    'view' => 'emails.allocations.fleet-disapproval',
+                    'allocation' => $allocation,
+
+                );
+                $job = (new \App\Jobs\SendEmail($email_data, $employees));
+                dispatch($job);
+                // end of Approval Email Alert
+
+
+                return back()->with('Allocation has been Disapproved Successfully !');
+            } else {
+                $approvalStatus = $allocation->approval_status;
+                $allocation->state = Auth::user()->fname . ' ' . Auth::user()->lname;
+                $allocation->disapprover_id = Auth::user()->id;
+                $allocation->approver_id = Auth::user()->id;
+
+                $allocation->approval_status = $approvalStatus - 1;
+
+
+                $remark = new AllocationRemark();
+                $remark->allocation_id = $request->allocation_id;
+                $remark->remark = $request->reason;
+                $remark->remarked_by = $level->label_name;
+                $remark->status = $approvalStatus - 1;
+                $remark->created_by = Auth::user()->id;
+                $remark->save();
+
+                $allocation->update();
+
+                // Start Of Approval Email Alert
+                $approved = $allocation->approval_status;
+                $level = ApprovalLevel::where('level_name', $approved)->first();
+                $employees = User::where('position', $level->role_id)->get();
+
+
+                $email_data = array(
+                    'subject' => $allocation->ref_no . ' Allocation Request Disapproval',
+                    'view' => 'emails.allocations.fleet-disapproval',
+                    'allocation' => $allocation,
+
+                );
+                $job = (new \App\Jobs\SendEmail($email_data, $employees));
+                dispatch($job);
+                // end of Approval Email Alert
+
+                return back()->with('msg', 'Allocation has been Disapproved Successfully !');
+            }
+        } else {
+            $msg = "Failed To Disapprove !";
+            return back()->with('msg', $msg);
+        }
+    }
+
+    // For Delete Truck Allocation Request
+    public function delete_allocation($id)
+    {
+        $allocation = Allocation::find($id);
+
+        $truck = TruckAllocation::where('allocation_id', $allocation->id)->get();
+        // dd($truck);
+        if ($truck) {
+            foreach ($truck as $item) {
+
+                $trck = Truck::where('id', $item->truck_id)->first();
+                //  dd($trck);
+                $trck->status = 0;
+                $trck->update();
+
+                $item->delete();
+            }
+        }
+
+        $allocation->delete();
+        $msg = "Allocation Was Deleted Successfully !";
+        return redirect()->route('allocations.list')->with('msg', $msg);
+        // return redirect('/trips/allocation-requests')->with('msg',$msg);
+
+    }
+
+
+    //  For Revoke Allocation Request
+    public function revoke_allocation($id)
+    {
+        $allocation = Allocation::find($id);
+        $allocation->status = 0;
+        $allocation->state = 'Revoked';
+        $allocation->update();
+
+        $msg = "Allocation Was Revoked Successfully !";
+        return redirect()->route('allocations.list')->with('msg', $msg);
     }
 }

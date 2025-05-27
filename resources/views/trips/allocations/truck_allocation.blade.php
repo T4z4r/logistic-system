@@ -2665,21 +2665,19 @@ function displayError(errors) {
                                 <textarea name="reason" required placeholder="Please Enter Remarks Here" class="form-control" rows="3"></textarea>
                             </div>
                         </div>
-                        <div class="row ">
-                            <div class="col-sm-4 col-8 mx-auto">
-                                <button type="submit" id="approve_yes"
-                                    class="btn btn-main btn-sm px-4 ">Yes</button>
+                    <div class="row">
+                        <div class="col-sm-4 col-8 mx-auto d-flex justify-content-between">
+                            <button type="submit" id="approve_yes" class="btn btn-primary btn-sm px-4 mx-1">Yes</button>
 
-                                <button type="button" id="approve_no" class="btn btn-danger btn-sm  px-4 text-light"
-                                    data-bs-dismiss="modal">
-                                    No
-                                </button>
-                            </div>
+                            <button type="button" id="approve_no" class="btn btn-danger btn-sm px-4 text-light" data-bs-dismiss="modal">
+                                No
+                            </button>
+                        </div>
+                    </div>
 
                     </form>
 
-
-            </div>
+            {{-- </div> --}}
             </modal-body>
             <modal-footer>
 
