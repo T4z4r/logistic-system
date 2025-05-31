@@ -5,9 +5,10 @@
            <a class="font-semibold text-dual" href="/">
                <span class="smini-visible">
                    <i class="fa fa-circle-notch text-primary"></i>
-               </span>
-               <span class="smini-hide fs-5 tracking-wider">Sud<span class="fw-normal text-danger">Energy</span></span>
-           </a>
+            </span>
+            <span class="smini-hide fs-5 tracking-wider text-main" style="font-family: 'Brush Script MT', cursive, 'Comic Sans MS', fantasy;">
+                LOMIS <span class="fw-normal text-danger" style="font-family: 'Papyrus', fantasy, 'Brush Script MT', cursive;">ERP</span>
+            </span>   </a>
            <!-- END Logo -->
 
            <!-- Extra -->
@@ -28,7 +29,7 @@
             </form>
                <!-- END Dark Mode -->
 
-       
+
            </div>
            <!-- END Extra -->
        </div>

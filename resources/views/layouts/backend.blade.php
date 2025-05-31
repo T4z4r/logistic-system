@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <title>SudEnergy | ERP</title>
+    <title>LOMIS | ERP</title>
 
     <meta name="description" content="Krismo ERP">
     <meta name="author" content="pixelcave">
@@ -16,6 +16,18 @@
     <link rel="icon" sizes="192x192" type="image/png" href="{{ asset('media/favicons/favicon-192x192.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('media/favicons/apple-touch-icon-180x180.png') }}">
     <link rel="stylesheet" href="{{ asset('media/css/custom.css') }}">
+
+    <!-- Phosphor Icons CDN -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css"
+    />
     <!-- Modules -->
     @yield('css')
     @vite(['resources/sass/main.scss', 'resources/js/oneui/app.js'])

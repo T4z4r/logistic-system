@@ -28,20 +28,27 @@
     background-color: #fc1c23 !important;
     border-color: #e61a20 !important;
 }
-.text-purple {
-    color: purple !important;
-}
+
 
 .nav-main-link .nav-main-link-icon {
-    color: #2a3e87 !important ;
+    /* color: #2a3e87 !important ; */
     background: rgb(225, 223, 223) !important;
     padding:  6px !important;
     border-radius: 100% !important;
 }
+
+/* Start of text colors */
 .text-primary {
     color: #2a3e87 !important;
 }
 
+.text-purple{
+    color: purple !important;
+}
+
+.text-green {
+    color: green !important;
+}
 .text-main {
     color: #2a3e87 !important;
 }

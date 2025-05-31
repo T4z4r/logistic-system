@@ -2,7 +2,7 @@
      <ul class="nav-main">
          <li class="nav-main-item">
              <a class="nav-main-link{{ request()->is('dashboard') ? ' active' : '' }}" href="/dashboard">
-                 <i class="nav-main-link-icon text-purple fa fa-home"></i>
+                 <i class="nav-main-link-icon  fa fa-home text-purple"></i>
                  <span class="nav-main-link-name">Dashboard</span>
              </a>
          </li>
