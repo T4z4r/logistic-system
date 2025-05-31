@@ -117,7 +117,7 @@
                                         style="display: inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger"
+                                        <button type="submit" class="btn btn-sm btn-alt-danger"
                                             onclick="return confirm('Are you sure?')">
                                             <i class="fa fa-trash"></i>
                                         </button>
@@ -128,13 +128,13 @@
                                             style="display: inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-warning"
+                                            <button type="submit" class="btn btn-sm btn-alt-warning"
                                                 onclick="return confirm('Are you sure you want to deassign the truck?')">
                                                 <i class="fa fa-minus"></i>
                                             </button>
                                         </form>
                                     @else
-                                        <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-sm btn-alt-success" data-bs-toggle="modal"
                                             data-bs-target="#assignTruckModal{{ $trailer->id }}">
                                             <i class="fa fa-truck"></i>
                                         </button>
