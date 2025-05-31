@@ -26,502 +26,220 @@
 @endsection
 
 @section('content')
-    <!-- Traffic sources -->
-    <div class="card border-0 border-top mt-5  border-top-width-3 border-top-main  rounded-0 d-md-block d-none ">
-        <div class="card-body pb-0">
-            <div class="row">
-                <div class="col-sm-3">
-                    <div class="d-flex align-items-center justify-content-center mb-2">
-                        <a href="#" class="bg-success bg-opacity-10 text-success lh-1 rounded-pill p-2 me-3">
-                            <i class="fa fa-list"></i>
-                        </a>
-                        <div class="text-center">
-                            <div class="fw-semibold">Total Allocations</div>
-                            <span class="text-muted">{{ $total_allocations }}</span>
-                        </div>
-                    </div>
-                    <div class="w-75 mx-auto mb-3" id="new-visitors"></div>
-                </div>
 
-                <div class="col-sm-3">
-                    <div class="d-flex align-items-center justify-content-center mb-2">
-                        <a href="#" class="bg-success bg-opacity-10 text-warning lh-1 rounded-pill p-2 me-3">
-                            <i class="fa fa-minus"></i>
-                        </a>
-                        <div class="text-center">
-                            <div class="fw-semibold">Pending Allocations</div>
-                            <span class="text-muted">{{ $pending_allocations }}</span>
-                        </div>
-                    </div>
-                    <div class="w-75 mx-auto mb-3" id="new-sessions"></div>
+    <!-- Hero -->
+    <div class="bg-body-light ">
+        <div class="content content-full">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+                <div class="flex-grow-1">
+                    <h5 class="h5 fw-bold mb-1">Route Management</h5>
+                    <h2 class="fs-base lh-base fw-medium text-muted mb-0">Manage all routes in the system</h2>
                 </div>
-
-                <div class="col-sm-3">
-                    <div class="d-flex align-items-center justify-content-center mb-2">
-                        <a href="#" class="bg-success bg-opacity-10 text-success lh-1 rounded-pill p-2 me-3">
-                            <i class="fa fa-check"></i>
-                        </a>
-                        <div class="text-center">
-                            <div class="fw-semibold">Approved Allocations</div>
-                            <span class="text-muted">{{ $approved_allocations }}</span>
-                        </div>
-                    </div>
-                    <div class="w-75 mx-auto mb-3" id="total-online"></div>
-                </div>
-
-
-                <div class="col-sm-3">
-                    <div class="d-flex align-items-center justify-content-center mb-2">
-                        <a href="#" class="bg-success bg-opacity-10 text-danger lh-1 rounded-pill p-2 me-3">
-                            <i class="fa fa-times"></i>
-                        </a>
-                        <div class="text-center">
-                            <div class="fw-semibold">Rejected Allocations</div>
-                            <span class="text-muted">{{ $rejected_allocations }}</span>
-                        </div>
-                    </div>
-                    <div class="w-75 mx-auto mb-3" id="new-sessions"></div>
-                </div>
+                <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-alt">
+                        <li class="breadcrumb-item">
+                            <a class="link-fx" href="{{ route('dashboard') }}">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item" aria-current="page">Routes</li>
+                    </ol>
+                </nav>
             </div>
         </div>
-
-
     </div>
-    <!-- /traffic sources -->
+    <!-- END Hero -->
+
+    <!-- Page Content -->
+    <div class="content1 p-2 rounded-0">
+        <!-- Routes Block -->
+        <div class="block block-rounded rounded-0">
+            <!-- Traffic sources -->
+            {{-- <div class="card border-0 border-top mt-5  border-top-width-3 border-top-main  rounded-0 d-md-block d-none ">
+                <div class="card-body pb-0">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="d-flex align-items-center justify-content-center mb-2">
+                                <a href="#" class="bg-success bg-opacity-10 text-success lh-1 rounded-pill p-2 me-3">
+                                    <i class="fa fa-list"></i>
+                                </a>
+                                <div class="text-center">
+                                    <div class="fw-semibold">Total Allocations</div>
+                                    <span class="text-muted">{{ $total_allocations }}</span>
+                                </div>
+                            </div>
+                            <div class="w-75 mx-auto mb-3" id="new-visitors"></div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="d-flex align-items-center justify-content-center mb-2">
+                                <a href="#" class="bg-success bg-opacity-10 text-warning lh-1 rounded-pill p-2 me-3">
+                                    <i class="fa fa-minus"></i>
+                                </a>
+                                <div class="text-center">
+                                    <div class="fw-semibold">Pending Allocations</div>
+                                    <span class="text-muted">{{ $pending_allocations }}</span>
+                                </div>
+                            </div>
+                            <div class="w-75 mx-auto mb-3" id="new-sessions"></div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="d-flex align-items-center justify-content-center mb-2">
+                                <a href="#" class="bg-success bg-opacity-10 text-success lh-1 rounded-pill p-2 me-3">
+                                    <i class="fa fa-check"></i>
+                                </a>
+                                <div class="text-center">
+                                    <div class="fw-semibold">Approved Allocations</div>
+                                    <span class="text-muted">{{ $approved_allocations }}</span>
+                                </div>
+                            </div>
+                            <div class="w-75 mx-auto mb-3" id="total-online"></div>
+                        </div>
+
+
+                        <div class="col-sm-3">
+                            <div class="d-flex align-items-center justify-content-center mb-2">
+                                <a href="#" class="bg-success bg-opacity-10 text-danger lh-1 rounded-pill p-2 me-3">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                                <div class="text-center">
+                                    <div class="fw-semibold">Rejected Allocations</div>
+                                    <span class="text-muted">{{ $rejected_allocations }}</span>
+                                </div>
+                            </div>
+                            <div class="w-75 mx-auto mb-3" id="new-sessions"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div> --}}
+            <!-- /traffic sources -->
 
 
 
-    {{-- Start of Tab Navigation --}}
-    <div class="mt-2 mb-1 card card border-0 border-top  border-top-width-3 border-top-main  rounded-0 p-2 ">
+            {{-- Start of Tab Navigation --}}
+            <div class="mt-2 mb-1 card card border-0 border-top  border-top-width-3 border-top-main  rounded-0 p-2 ">
 
 
 
-        {{-- ./ --}}
+                {{-- ./ --}}
 
 
-        <div class="card-head ">
-            <div class="p-2">
+                <div class="card-header ">
+                    <div class="p-2">
 
-                {{-- For Larger screens --}}
-                <h4 class="lead text-black d-none d-sm-block "><i class="ph-receipt text-brand-secondary "></i>
-                    Allocation Requests</h4>
-                {{-- / --}}
-                {{-- For small Screens --}}
-                <p class="lead text-black d-sm-none d-block "><small> <i
-                            class="ph-calendar-check text-brand-secondary "></i>
-                        Allocation Requests</small></p>
-                {{-- / --}}
+                    
 
-                {{-- @can('create-allocation') --}}
-                    <a href="{{ route('allocations.create') }}" class="btn btn-primary btn-sm float-end">
-                        <i class="ph-plus me-2"></i> New Request
-                    </a>
-                {{-- @endcan --}}
-                <a href="{{ route('flex.print-allocations') }}" class="btn btn-primary btn-sm float-end mx-1"
-                    title="Add New Truck">
-                    <i class="ph-printer me-2"></i> Print Trips
-                </a>
-            </div>
+                        {{-- @can('create-allocation') --}}
+                        <a href="{{ route('allocations.create') }}" class="btn btn-alt-primary btn-sm float-end">
+                            <i class="ph-plus me-2"></i> New Request
+                        </a>
+                        {{-- @endcan --}}
+                        <a href="{{ route('flex.print-allocations') }}" class="btn btn-primary btn-sm float-end mx-1" hidden
+                            title="Add New Truck">
+                            <i class="ph-printer me-2"></i> Print Trips
+                        </a>
+                    </div>
 
 
-        </div>
-        {{-- Start of Tab Navigation --}}
-        <ul class="nav nav-tabs mb-3 px-2" role="tablist">
-            <li class="nav-item" role="presentation">
-                <a href="#incomplete" class="nav-link  @if ($level == null) active @endif" data-bs-toggle="tab"
-                    aria-selected="true" role="tab" tabindex="-1">
-                    Incomplete Allocations
-                    <span class="badge bg-dark rounded-pill text-brand-secondary ms-2">{{ count($incomplete) }}</span>
-                </a>
-            </li>
-            {{-- @if ($level) --}}
-            <li class="nav-item" role="presentation">
-                <a href="#pending" class="nav-link " data-bs-toggle="tab" aria-selected="true" role="tab"
-                    tabindex="-1">
-                    Pending Allocations
-                    <span class="badge bg-dark rounded-pill text-brand-secondary ms-2">{{ count($pending) }}</span>
-                </a>
-            </li>
-            {{-- @else --}}
+                </div>
+                {{-- Start of Tab Navigation --}}
+                <ul class="nav nav-tabs mb-3 px-2" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a href="#incomplete" class="nav-link  @if ($level == null) active @endif"
+                            data-bs-toggle="tab" aria-selected="true" role="tab" tabindex="-1">
+                            Incomplete Allocations
+                            <span
+                                class="badge bg-dark rounded-pill text-brand-secondary ms-2">{{ count($incomplete) }}</span>
+                        </a>
+                    </li>
+                    {{-- @if ($level) --}}
+                    <li class="nav-item" role="presentation">
+                        <a href="#pending" class="nav-link " data-bs-toggle="tab" aria-selected="true" role="tab"
+                            tabindex="-1">
+                            Pending Allocations
+                            <span class="badge bg-dark rounded-pill text-brand-secondary ms-2">{{ count($pending) }}</span>
+                        </a>
+                    </li>
+                    {{-- @else --}}
 
 
-            {{-- @endif --}}
-            @if ($level)
-                <li class="nav-item" role="presentation">
-                    <a href="#approvalTab"
-                        class="nav-link
+                    {{-- @endif --}}
+                    @if ($level)
+                        <li class="nav-item" role="presentation">
+                            <a href="#approvalTab"
+                                class="nav-link
                     @if ($level) active @endif "
-                        data-bs-toggle="tab" aria-selected="true" role="tab" tabindex="-1">
-                        Waiting Approval
-                    </a>
-                </li>
-            @endif
-
-
-
-            {{-- @can('view-approved-allocations') --}}
-            <li class="nav-item" role="presentation">
-                <a href="#approved" class="nav-link " data-bs-toggle="tab" aria-selected="false" role="tab">
-                    Waiting Initiation
-                    <span class="badge bg-dark rounded-pill text-brand-secondary ms-2">{{ count($approved) }}</span>
-                </a>
-            </li>
-            {{-- @endcan --}}
-            {{-- @can('view-completed-allocations') --}}
-            <li class="nav-item" role="presentation">
-                <a href="#completed" class="nav-link " data-bs-toggle="tab" aria-selected="false" role="tab">
-                    Initiated Allocations
-                    <span class="badge bg-dark rounded-pill text-brand-secondary ms-2">{{ count($active) }}</span>
-                </a>
-            </li>
-            {{-- @endcan --}}
-
-        </ul>
-        <div class="tab-content">
-
-
-            {{-- For Incomplete Allocations --}}
-            <div class="tab-pane fade table-responsive @if ($level == null) active show @endif "
-                id="incomplete" role="tabpanel">
-                {{-- @can('view-pending-allocations') --}}
-                <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
-                    <thead class="table-secondary">
-                        <th>No.</th>
-                        <th>Date</th>
-                        <th>Ref No.</th>
-                        <th>Customer Name</th>
-                        <th>Quantity </th>
-                        <th>Trucks</th>
-
-                        <th>Offered Amount</th>
-                        <th>Status</th>
-
-                        <th>Options</th>
-
-                    </thead>
-
-
-                    <tbody>
-                        <?php
-                        $i = 1;
-                        
-                        ?>
-                        @forelse($incomplete as $item)
-                            @php
-                                $estimateRevenue = App\Models\TruckAllocation::where('allocation_id', $item->id)->sum(
-                                    'income',
-                                );
-                                $trucks = App\Models\TruckAllocation::where('allocation_id', $item->id)->count();
-
-                            @endphp
-                            <tr>
-                                <td>{{ $i++ }}</td>
-                                <td>{{ $item->created_at->format('d/m/Y') }} </td>
-                                <td>{{ $item->ref_no }} </td>
-                                <td>{{ $item->customer->company }} </td>
-                                <td>{{ $item->quantity }} <small>{{ $item->unit }} (s)</small> </td>
-                                <td>{{ $trucks }}</td>
-                                <td><small>{{ $item->currency->symbol }}</small>
-                                    {{ number_format($estimateRevenue / $item->currency->rate, 2) }}
-                                </td>
-
-                                <td>
-                                    <span
-                                        class="badge {{ $item->status == '1' ? ' bg-success ' : ' bg-info ' }}  bg-opacity-10 ">
-                                        {{ $item->status == '1' ? 'Pending' : '' }}
-                                        {{ $item->status == '0' ? 'Incomplete' : '' }}
-                                        {{ $item->status == '-1' ? 'Not Approved' : '' }}</span>
-                                </td>
-                                <td>
-                                    @if ($item->status == '1')
-                                        {{-- @can('revoke-allocation') --}}
-                                        <a href="javascript:void(0)" title="Cancel"
-                                            class="icon-2 info-tooltip btn btn-danger btn-sm"
-                                            onclick="revokeAllocation(<?php echo $item->id; ?>)">
-                                            Revoke
-                                        </a>
-                                        {{-- @endcan --}}
-                                    @endif
-
-                                    <a href="{{ url('/trips/truck-allocation/' . base64_encode($item->id)) }}"
-                                        class="btn btn-sm btn-primary">
-                                        <i class="fa fa-list"></i>
-                                    </a>
-                                    {{-- @can('delete-allocation') --}}
-                                    @if ($item->status <= 0)
-                                        <a href="javascript:void(0)" title="Cancel"
-                                            class="icon-2 info-tooltip btn btn-danger btn-sm"
-                                            onclick="cancelAllocation(<?php echo $item->id; ?>)">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    @endif
-                                    {{-- @endcan --}}
-
-                                    @can('notify-allocation')
-                                        <a href="javascript:void(0)" title="Renotify"
-                                            class="icon-2 info-tooltip btn btn-primary btn-sm m-1"
-                                            onclick="renotifyAllocation(<?php echo $item->id; ?>)">
-                                            <i class="fa fa-bell"></i>
-                                            ReNotify
-                                        </a>
-                                    @endcan
-                                    @if ($level && $item->status > 0)
-                                        @if ($level->level_name == $item->approval_status)
-                                            <hr>
-
-                                            <div class="d-none d-sm-block ">
-                                                {{-- Approve Button --}}
-                                                <a href="" class="btn btn-sm btn-success edit-button btn btn-sm "
-                                                    title="Approve Allocation " data-bs-toggle="modal"
-                                                    data-bs-target="#approval" data-id="{{ $item->id }}"
-                                                    data-name="{{ $item->name }}"
-                                                    data-description="{{ $item->amount }}">
-                                                    <i class="ph-check-circle"></i>
-                                                    Approve
-                                                </a>
-                                                {{-- / --}}
-
-
-                                                {{-- start of Disapprove button --}}
-
-                                                <a href="" class="btn btn-sm btn-danger edit-button "
-                                                    title="Dispprove Allocation" data-bs-toggle="modal"
-                                                    data-bs-target="#disapproval" data-id="{{ $item->id }}"
-                                                    data-name="{{ $item->name }}"
-                                                    data-description="{{ $item->amount }}">
-                                                    <i class="ph-x-circle"></i>
-                                                    Disapprove
-                                                </a>
-                                                {{-- ./ --}}
-                                            </div>
-
-
-                                            <button type="button" class="btn btn-success mx-1 btn-sm d-sm-none  "
-                                                data-bs-toggle="collapse" data-bs-target="#myCollapsibleDiv">
-                                                <i class="ph-check-circle"></i>
-
-                                                Approve
-                                            </button>
-
-                                            <div id="myCollapsibleDiv" class="collapse">
-                                                {{-- <p>Approve Allocation</p>
-                                                    <br>
-                                                    <hr> --}}
-                                                <form action="{{ url('trips/approve-allocation') }}"
-                                                    id="change_route_form" method="POST">
-                                                    @csrf
-                                                    <div class="row">
-
-                                                        <input type="hidden" value="{{ $item->id }}"
-                                                            name="id">
-
-                                                        <div class="col-md-12 col-lg-12 mb-1">
-                                                            <label class="form-label ">Remark</label>
-                                                            <textarea name="reason" placeholder="Enter Remark" id="" class="form-control" rows="4"></textarea>
-
-                                                        </div>
-
-
-                                                    </div>
-
-                                                    <button type="submit" class="btn btn-sm btn-primary float-end"
-                                                        id="change_route_btn"> <i class="ph-check-circle"></i>
-                                                        Submit</button>
-
-
-                                                </form>
-                                            </div>
-
-
-
-
-
-                                            <button type="button" class="btn btn-danger mx-1 btn-sm d-sm-none d-block "
-                                                data-bs-toggle="collapse" data-bs-target="#myCollapsibleDiv1">
-                                                <i class="ph-x-circle"></i>
-
-                                                Disapprove
-                                            </button>
-
-                                            <div id="myCollapsibleDiv1" class="collapse">
-                                                {{-- <p>Approve Allocation</p>
-                                                    <br>
-                                                    <hr> --}}
-                                                <form action="{{ url('trips/disapprove-allocation') }}"
-                                                    id="change_route_form" method="POST">
-                                                    @csrf
-                                                    <div class="row">
-
-                                                        <input type="hidden" value="{{ $item->id }}"
-                                                            name="id">
-
-                                                        <div class="col-md-12 col-lg-12 mb-1">
-                                                            <label class="form-label ">Remark</label>
-                                                            <textarea name="reason" placeholder="Enter Remark" id="" class="form-control" rows="4"></textarea>
-
-                                                        </div>
-
-
-                                                    </div>
-
-                                                    <button type="submit" class="btn btn-sm btn-primary float-end"
-                                                        id="change_route_btn"> <i class="ph-check-circle"></i>
-                                                        Submit</button>
-
-
-                                                </form>
-                                            </div>
-                                        @endif
-                                    @endif
-
-
-                                </td>
-                            </tr>
-                        @empty
-                        @endforelse
-
-                    </tbody>
-
-                </table>
-                {{-- @endcan --}}
-            </div>
-
-
-            {{-- For Pending Allocations --}}
-            <div class="tab-pane fade  table-responsive " id="pending" role="tabpanel">
-                {{-- @can('view-pending-allocations') --}}
-                <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
-                    <thead class="table-secondary">
-                        <th>No.</th>
-                        <th>Date</th>
-                        <th>Ref No.</th>
-                        <th>Customer Name</th>
-                        <th>Quantity </th>
-                        <th>Trucks</th>
-
-                        <th>Offered Amount</th>
-                        <th>Status</th>
-
-                        <th>Options</th>
-
-                    </thead>
-
-
-                    <tbody>
-                        <?php
-                        $i = 1;
-                        
-                        ?>
-                        @forelse($pending as $item)
-                            @php
-                                $estimateRevenue = App\Models\TruckAllocation::where('allocation_id', $item->id)->sum(
-                                    'income',
-                                );
-                                $trucks = App\Models\TruckAllocation::where('allocation_id', $item->id)->count();
-
-                            @endphp
-                            <tr>
-                                <td>{{ $i++ }}</td>
-                                <td>{{ $item->created_at->format('d/m/Y') }} </td>
-                                <td>{{ $item->ref_no }} </td>
-                                <td>{{ $item->customer->company }} </td>
-                                <td>{{ $item->quantity }} <small>{{ $item->unit }} (s)</small> </td>
-                                <td>{{ $trucks }}</td>
-                                <td><small>{{ $item->currency->symbol }}</small>
-                                    {{ number_format($estimateRevenue / $item->currency->rate, 2) }}
-                                </td>
-
-                                <td>
-                                    <span
-                                        class="badge {{ $item->status == '1' ? ' bg-success ' : ' bg-info' }}  bg-opacity-10 ">
-                                        {{ $item->status == '1' ? 'Pending' : '' }}
-                                        {{ $item->status == '0' ? 'Incomplete' : '' }}
-                                        {{ $item->status == '-1' ? 'Not Approved' : '' }}</span>
-                                </td>
-                                <td>
-                                    @if ($item->status == '1')
-                                        @can('revoke-allocation')
-                                            <a href="javascript:void(0)" title="Cancel"
-                                                class="icon-2 info-tooltip btn btn-danger btn-sm"
-                                                onclick="revokeAllocation(<?php echo $item->id; ?>)">
-                                                Revoke
-                                            </a>
-                                        @endcan
-                                    @endif
-
-                                    <a href="{{ url('/trips/truck-allocation/' . base64_encode($item->id)) }}"
-                                        class="btn btn-sm btn-primary">
-                                        <i class="fa fa-list"></i>
-                                    </a>
-                                    @can('delete-allocation')
-                                        @if ($item->status <= 0)
-                                            <a href="javascript:void(0)" title="Cancel"
-                                                class="icon-2 info-tooltip btn btn-danger btn-sm"
-                                                onclick="cancelAllocation(<?php echo $item->id; ?>)">
-                                                <i class="ph-trash"></i>
-                                            </a>
-                                        @endif
-                                    @endcan
-                                    @if ($item->status < 4 && $item->status > 1)
-                                        @can('revoke-allocation')
-                                            {{-- <a href="javascript:void(0)" title="Cancel"
-                                                    class="icon-2 info-tooltip btn btn-danger btn-sm"
-                                                    onclick="revokeAllocation(<?php echo $item->id; ?>)">
-                                                    Revoke
-                                                </a> --}}
-                                        @endcan
-                                    @endif
-
-
-
-                                </td>
-                            </tr>
-                        @empty
-                        @endforelse
-
-                    </tbody>
-
-                </table>
-                {{-- @endcan --}}
-            </div>
-            {{-- ./ --}}
-
-            {{-- For Waiting Approval --}}
-            <div class="tab-pane fade table-responsive  @if ($level) active show @endif"
-                id="approvalTab" role="tabpanel">
-                {{-- @can('view-pending-allocations') --}}
-            <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
-                    <thead class="table-secondary">
-                        <th>No.</th>
-                        <th>Date</th>
-                        <th>Ref No.</th>
-                        <th>Customer Name</th>
-                        <th>Quantity </th>
-                        <th>Trucks</th>
-
-                        <th>Offered Amount</th>
-                        <th>Status</th>
-
-                        <th>Options</th>
-
-                    </thead>
-
-
-                    <tbody>
-                        <?php
-                        $i = 1;
-                        
-                        ?>
-                        @forelse($pending as $item)
-                            @php
-                                $estimateRevenue = App\Models\TruckAllocation::where('allocation_id', $item->id)->sum(
-                                    'income',
-                                );
-                                $trucks = App\Models\TruckAllocation::where('allocation_id', $item->id)->count();
-
-                            @endphp
-                            @if ($level && $item->status > 0)
-                                @if ($level->level_name == $item->approval_status)
+                                data-bs-toggle="tab" aria-selected="true" role="tab" tabindex="-1">
+                                Waiting Approval
+                            </a>
+                        </li>
+                    @endif
+
+
+
+                    {{-- @can('view-approved-allocations') --}}
+                    <li class="nav-item" role="presentation">
+                        <a href="#approved" class="nav-link " data-bs-toggle="tab" aria-selected="false"
+                            role="tab">
+                            Waiting Initiation
+                            <span
+                                class="badge bg-dark rounded-pill text-brand-secondary ms-2">{{ count($approved) }}</span>
+                        </a>
+                    </li>
+                    {{-- @endcan --}}
+                    {{-- @can('view-completed-allocations') --}}
+                    <li class="nav-item" role="presentation">
+                        <a href="#completed" class="nav-link " data-bs-toggle="tab" aria-selected="false"
+                            role="tab">
+                            Initiated Allocations
+                            <span class="badge bg-dark rounded-pill text-brand-secondary ms-2">{{ count($active) }}</span>
+                        </a>
+                    </li>
+                    {{-- @endcan --}}
+
+                </ul>
+                <div class="tab-content">
+
+
+                    {{-- For Incomplete Allocations --}}
+                    <div class="tab-pane fade table-responsive @if ($level == null) active show @endif "
+                        id="incomplete" role="tabpanel">
+                        {{-- @can('view-pending-allocations') --}}
+                        <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
+                            <thead class="table-secondary">
+                                <th>No.</th>
+                                <th>Date</th>
+                                <th>Ref No.</th>
+                                <th>Customer Name</th>
+                                <th>Quantity </th>
+                                <th>Trucks</th>
+
+                                <th>Offered Amount</th>
+                                <th>Status</th>
+
+                                <th>Options</th>
+
+                            </thead>
+
+
+                            <tbody>
+                                <?php
+                                $i = 1;
+                                
+                                ?>
+                                @forelse($incomplete as $item)
+                                    @php
+                                        $estimateRevenue = App\Models\TruckAllocation::where(
+                                            'allocation_id',
+                                            $item->id,
+                                        )->sum('income');
+                                        $trucks = App\Models\TruckAllocation::where(
+                                            'allocation_id',
+                                            $item->id,
+                                        )->count();
+
+                                    @endphp
                                     <tr>
                                         <td>{{ $i++ }}</td>
                                         <td>{{ $item->created_at->format('d/m/Y') }} </td>
@@ -535,7 +253,221 @@
 
                                         <td>
                                             <span
-                                                class="badge {{ $item->status == '1' ? ' bg-success' : ' bg-info' }}  bg-opacity-10 ">
+                                                class="badge {{ $item->status == '1' ? ' bg-success ' : ' bg-info ' }}  bg-opacity-10 ">
+                                                {{ $item->status == '1' ? 'Pending' : '' }}
+                                                {{ $item->status == '0' ? 'Incomplete' : '' }}
+                                                {{ $item->status == '-1' ? 'Not Approved' : '' }}</span>
+                                        </td>
+                                        <td>
+                                            @if ($item->status == '1')
+                                                {{-- @can('revoke-allocation') --}}
+                                                <a href="javascript:void(0)" title="Cancel"
+                                                    class="icon-2 info-tooltip btn btn-danger btn-sm"
+                                                    onclick="revokeAllocation(<?php echo $item->id; ?>)">
+                                                    Revoke
+                                                </a>
+                                                {{-- @endcan --}}
+                                            @endif
+
+                                            <a href="{{ url('/trips/truck-allocation/' . base64_encode($item->id)) }}"
+                                                class="btn btn-sm btn-primary">
+                                                <i class="fa fa-list"></i>
+                                            </a>
+                                            {{-- @can('delete-allocation') --}}
+                                            @if ($item->status <= 0)
+                                                <a href="javascript:void(0)" title="Cancel"
+                                                    class="icon-2 info-tooltip btn btn-danger btn-sm"
+                                                    onclick="cancelAllocation(<?php echo $item->id; ?>)">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            @endif
+                                            {{-- @endcan --}}
+
+                                            @can('notify-allocation')
+                                                <a href="javascript:void(0)" title="Renotify"
+                                                    class="icon-2 info-tooltip btn btn-primary btn-sm m-1"
+                                                    onclick="renotifyAllocation(<?php echo $item->id; ?>)">
+                                                    <i class="fa fa-bell"></i>
+                                                    ReNotify
+                                                </a>
+                                            @endcan
+                                            @if ($level && $item->status > 0)
+                                                @if ($level->level_name == $item->approval_status)
+                                                    <hr>
+
+                                                    <div class="d-none d-sm-block ">
+                                                        {{-- Approve Button --}}
+                                                        <a href=""
+                                                            class="btn btn-sm btn-success edit-button btn btn-sm "
+                                                            title="Approve Allocation " data-bs-toggle="modal"
+                                                            data-bs-target="#approval" data-id="{{ $item->id }}"
+                                                            data-name="{{ $item->name }}"
+                                                            data-description="{{ $item->amount }}">
+                                                            <i class="ph-check-circle"></i>
+                                                            Approve
+                                                        </a>
+                                                        {{-- / --}}
+
+
+                                                        {{-- start of Disapprove button --}}
+
+                                                        <a href="" class="btn btn-sm btn-danger edit-button "
+                                                            title="Dispprove Allocation" data-bs-toggle="modal"
+                                                            data-bs-target="#disapproval" data-id="{{ $item->id }}"
+                                                            data-name="{{ $item->name }}"
+                                                            data-description="{{ $item->amount }}">
+                                                            <i class="ph-x-circle"></i>
+                                                            Disapprove
+                                                        </a>
+                                                        {{-- ./ --}}
+                                                    </div>
+
+
+                                                    <button type="button" class="btn btn-success mx-1 btn-sm d-sm-none  "
+                                                        data-bs-toggle="collapse" data-bs-target="#myCollapsibleDiv">
+                                                        <i class="ph-check-circle"></i>
+
+                                                        Approve
+                                                    </button>
+
+                                                    <div id="myCollapsibleDiv" class="collapse">
+                                                        {{-- <p>Approve Allocation</p>
+                                                    <br>
+                                                    <hr> --}}
+                                                        <form action="{{ url('trips/approve-allocation') }}"
+                                                            id="change_route_form" method="POST">
+                                                            @csrf
+                                                            <div class="row">
+
+                                                                <input type="hidden" value="{{ $item->id }}"
+                                                                    name="id">
+
+                                                                <div class="col-md-12 col-lg-12 mb-1">
+                                                                    <label class="form-label ">Remark</label>
+                                                                    <textarea name="reason" placeholder="Enter Remark" id="" class="form-control" rows="4"></textarea>
+
+                                                                </div>
+
+
+                                                            </div>
+
+                                                            <button type="submit"
+                                                                class="btn btn-sm btn-primary float-end"
+                                                                id="change_route_btn"> <i class="ph-check-circle"></i>
+                                                                Submit</button>
+
+
+                                                        </form>
+                                                    </div>
+
+
+
+
+
+                                                    <button type="button"
+                                                        class="btn btn-danger mx-1 btn-sm d-sm-none d-block "
+                                                        data-bs-toggle="collapse" data-bs-target="#myCollapsibleDiv1">
+                                                        <i class="ph-x-circle"></i>
+
+                                                        Disapprove
+                                                    </button>
+
+                                                    <div id="myCollapsibleDiv1" class="collapse">
+                                                        {{-- <p>Approve Allocation</p>
+                                                    <br>
+                                                    <hr> --}}
+                                                        <form action="{{ url('trips/disapprove-allocation') }}"
+                                                            id="change_route_form" method="POST">
+                                                            @csrf
+                                                            <div class="row">
+
+                                                                <input type="hidden" value="{{ $item->id }}"
+                                                                    name="id">
+
+                                                                <div class="col-md-12 col-lg-12 mb-1">
+                                                                    <label class="form-label ">Remark</label>
+                                                                    <textarea name="reason" placeholder="Enter Remark" id="" class="form-control" rows="4"></textarea>
+
+                                                                </div>
+
+
+                                                            </div>
+
+                                                            <button type="submit"
+                                                                class="btn btn-sm btn-primary float-end"
+                                                                id="change_route_btn"> <i class="ph-check-circle"></i>
+                                                                Submit</button>
+
+
+                                                        </form>
+                                                    </div>
+                                                @endif
+                                            @endif
+
+
+                                        </td>
+                                    </tr>
+                                @empty
+                                @endforelse
+
+                            </tbody>
+
+                        </table>
+                        {{-- @endcan --}}
+                    </div>
+
+
+                    {{-- For Pending Allocations --}}
+                    <div class="tab-pane fade  table-responsive " id="pending" role="tabpanel">
+                        {{-- @can('view-pending-allocations') --}}
+                        <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
+                            <thead class="table-secondary">
+                                <th>No.</th>
+                                <th>Date</th>
+                                <th>Ref No.</th>
+                                <th>Customer Name</th>
+                                <th>Quantity </th>
+                                <th>Trucks</th>
+
+                                <th>Offered Amount</th>
+                                <th>Status</th>
+
+                                <th>Options</th>
+
+                            </thead>
+
+
+                            <tbody>
+                                <?php
+                                $i = 1;
+                                
+                                ?>
+                                @forelse($pending as $item)
+                                    @php
+                                        $estimateRevenue = App\Models\TruckAllocation::where(
+                                            'allocation_id',
+                                            $item->id,
+                                        )->sum('income');
+                                        $trucks = App\Models\TruckAllocation::where(
+                                            'allocation_id',
+                                            $item->id,
+                                        )->count();
+
+                                    @endphp
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $item->created_at->format('d/m/Y') }} </td>
+                                        <td>{{ $item->ref_no }} </td>
+                                        <td>{{ $item->customer->company }} </td>
+                                        <td>{{ $item->quantity }} <small>{{ $item->unit }} (s)</small> </td>
+                                        <td>{{ $trucks }}</td>
+                                        <td><small>{{ $item->currency->symbol }}</small>
+                                            {{ number_format($estimateRevenue / $item->currency->rate, 2) }}
+                                        </td>
+
+                                        <td>
+                                            <span
+                                                class="badge {{ $item->status == '1' ? ' bg-success ' : ' bg-info' }}  bg-opacity-10 ">
                                                 {{ $item->status == '1' ? 'Pending' : '' }}
                                                 {{ $item->status == '0' ? 'Incomplete' : '' }}
                                                 {{ $item->status == '-1' ? 'Not Approved' : '' }}</span>
@@ -564,331 +496,454 @@
                                                     </a>
                                                 @endif
                                             @endcan
-                                            {{-- @if ($item->status < 4 && $item->status > 1) --}}
-                                            @can('revoke-allocation')
-                                                <a href="javascript:void(0)" title="Cancel"
+                                            @if ($item->status < 4 && $item->status > 1)
+                                                @can('revoke-allocation')
+                                                    {{-- <a href="javascript:void(0)" title="Cancel"
                                                     class="icon-2 info-tooltip btn btn-danger btn-sm"
                                                     onclick="revokeAllocation(<?php echo $item->id; ?>)">
                                                     Revoke
-                                                </a>
-                                            @endcan
-                                            {{-- @endif --}}
-                                            @can('notify-allocation')
-                                                <a href="javascript:void(0)" title="Renotify"
-                                                    class="icon-2 info-tooltip btn btn-primary btn-sm m-1"
-                                                    onclick="renotifyAllocation(<?php echo $item->id; ?>)">
-                                                    <i class="ph-bell"></i>
-                                                    ReNotify
-                                                </a>
-                                            @endcan
-                                            @if ($level && $item->status > 0)
-                                                @if ($level->level_name == $item->approval_status)
-                                                    <hr>
-
-                                                    {{-- <div class="d-none d-sm-block "> --}}
-                                                    {{-- Approve Button --}}
-                                                    <a href="#"
-                                                        class="btn btn-sm btn-success edit-button btn btn-sm  d-none d-block"
-                                                        title="Approve Allocation " data-bs-toggle="modal"
-                                                        data-bs-target="#approval" data-id="{{ $item->id }}"
-                                                        data-name="{{ $item->name }}"
-                                                        data-description="{{ $item->amount }}">
-                                                        <i class="ph-check-circle"></i>
-                                                        Approve
-                                                    </a>
-                                                    {{-- / --}}
-
-
-                                                    {{-- start of Disapprove button --}}
-
-                                                    <a href=""
-                                                        class="btn btn-sm btn-danger edit-button d-none d-block "
-                                                        title="Dispprove Allocation" data-bs-toggle="modal"
-                                                        data-bs-target="#disapproval" data-id="{{ $item->id }}"
-                                                        data-name="{{ $item->name }}"
-                                                        data-description="{{ $item->amount }}">
-                                                        <i class="ph-x-circle"></i>
-                                                        Disapprove
-                                                    </a>
-                                                    {{-- ./ --}}
-                                                    {{-- </div> --}}
-
-
-                                                    <button type="button"
-                                                        class="btn btn-success mx-1 btn-sm d-sm-none d-block " hidden
-                                                        data-bs-toggle="collapse" data-bs-target="#myCollapsibleDiv">
-                                                        <i class="ph-check-circle"></i>
-
-                                                        Approve
-                                                    </button>
-
-                                                    <div id="myCollapsibleDiv" class="collapse">
-                                                        {{-- <p>Approve Allocation</p>
-                                                    <br>
-                                                    <hr> --}}
-                                                        <form action="{{ url('trips/approve-allocation') }}"
-                                                            id="change_route_form" method="POST">
-                                                            @csrf
-                                                            <div class="row">
-
-                                                                <input type="hidden" value="{{ $item->id }}"
-                                                                    name="allocation_id">
-
-                                                                <div class="col-md-12 col-lg-12 mb-1">
-                                                                    <label class="form-label ">Remark</label>
-                                                                    <textarea name="reason" placeholder="Enter Remark" id="" class="form-control" rows="4"></textarea>
-
-                                                                </div>
-
-
-                                                            </div>
-
-                                                            <button type="submit" class="btn btn-sm btn-primary float-end"
-                                                                id="change_route_btn"> <i class="ph-check-circle"></i>
-                                                                Submit</button>
-
-
-                                                        </form>
-                                                    </div>
-
-
-
-
-
-                                                    <button type="button"
-                                                        class="btn btn-danger mx-1 btn-sm d-sm-none d-block  " hidden
-                                                        data-bs-toggle="collapse" data-bs-target="#myCollapsibleDiv1">
-                                                        <i class="ph-x-circle"></i>
-
-                                                        Disapprove
-                                                    </button>
-
-                                                    <div id="myCollapsibleDiv1" class="collapse">
-                                                        {{-- <p>Approve Allocation</p>
-                                                    <br>
-                                                    <hr> --}}
-                                                        <form action="{{ url('trips/disapprove-allocation') }}"
-                                                            id="change_route_form" method="POST">
-                                                            @csrf
-                                                            <div class="row">
-
-                                                                <input type="hidden" value="{{ $item->id }}"
-                                                                    name="allocation_id">
-
-                                                                <div class="col-md-12 col-lg-12 mb-1">
-                                                                    <label class="form-label ">Remark</label>
-                                                                    <textarea name="reason" placeholder="Enter Remark" id="" class="form-control" rows="4"></textarea>
-
-                                                                </div>
-
-
-                                                            </div>
-
-                                                            <button type="submit" class="btn btn-sm btn-primary float-end"
-                                                                id="change_route_btn"> <i class="ph-check-circle"></i>
-                                                                Submit</button>
-
-
-                                                        </form>
-                                                    </div>
-                                                @endif
+                                                </a> --}}
+                                                @endcan
                                             @endif
+
 
 
                                         </td>
                                     </tr>
-                                @endif
-                            @endif
-                        @empty
-                        @endforelse
+                                @empty
+                                @endforelse
 
-                    </tbody>
+                            </tbody>
 
-                </table>
-                {{-- @endcan --}}
-            </div>
+                        </table>
+                        {{-- @endcan --}}
+                    </div>
+                    {{-- ./ --}}
 
-            {{-- For Approved Allocations --}}
-            <div class="tab-pane fade table-responsive  show" id="approved" role="tabpanel">
-                {{-- @can('view-approved-allocations') --}}
-            <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
-                    <thead class="table-secondary">
-                        <th>SN</th>
-                        <th>Date</th>
-                        <th>Ref No.</th>
-                        <th>Customer Name</th>
-                        <th>Quantity </th>
-                        <th>Trucks</th>
-                        <th>Offered Amount</th>
-                        <th>Status</th>
-                        <th>Options</th>
-                    </thead>
-                    <tbody>
-                        <?php $i = 1; ?>
-                        @forelse($approved as $item)
-                            @php
-                                $trucks = App\Models\TruckAllocation::where('allocation_id', $item->id)->count();
-                                $estimateRevenue = App\Models\TruckAllocation::where('allocation_id', $item->id)->sum(
-                                    'income',
-                                );
-                            @endphp
-                            <tr>
-                                <td width="2%">{{ $i++ }}</td>
-                                <td>{{ $item->created_at->format('d/m/Y') }} </td>
-                                <td>{{ $item->ref_no }}</td>
-                                <td>{{ $item->customer->company }}</td>
-                                <td>{{ $item->quantity }} {{ $item->unit }}</td>
-                                <td>{{ $trucks }} </td>
-                                <td width="18%"> <small>{{ $item->currency->symbol }}</small>
-                                    {{ number_format($estimateRevenue / $item->currency->rate, 2) }}
-                                </td>
-                                <td> <span
-                                        class="badge  bg-opacity-10 @if ($item->status == '3') text-warning bg-info @else  bg-success text-success @endif  ">
-                                        @if ($item->status == '3')
-                                            Not Initiated
-                                        @else
-                                            Trip Initiated
+                    {{-- For Waiting Approval --}}
+                    <div class="tab-pane fade table-responsive  @if ($level) active show @endif"
+                        id="approvalTab" role="tabpanel">
+                        {{-- @can('view-pending-allocations') --}}
+                        <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
+                            <thead class="table-secondary">
+                                <th>No.</th>
+                                <th>Date</th>
+                                <th>Ref No.</th>
+                                <th>Customer Name</th>
+                                <th>Quantity </th>
+                                <th>Trucks</th>
+
+                                <th>Offered Amount</th>
+                                <th>Status</th>
+
+                                <th>Options</th>
+
+                            </thead>
+
+
+                            <tbody>
+                                <?php
+                                $i = 1;
+                                
+                                ?>
+                                @forelse($pending as $item)
+                                    @php
+                                        $estimateRevenue = App\Models\TruckAllocation::where(
+                                            'allocation_id',
+                                            $item->id,
+                                        )->sum('income');
+                                        $trucks = App\Models\TruckAllocation::where(
+                                            'allocation_id',
+                                            $item->id,
+                                        )->count();
+
+                                    @endphp
+                                    @if ($level && $item->status > 0)
+                                        @if ($level->level_name == $item->approval_status)
+                                            <tr>
+                                                <td>{{ $i++ }}</td>
+                                                <td>{{ $item->created_at->format('d/m/Y') }} </td>
+                                                <td>{{ $item->ref_no }} </td>
+                                                <td>{{ $item->customer->company }} </td>
+                                                <td>{{ $item->quantity }} <small>{{ $item->unit }} (s)</small> </td>
+                                                <td>{{ $trucks }}</td>
+                                                <td><small>{{ $item->currency->symbol }}</small>
+                                                    {{ number_format($estimateRevenue / $item->currency->rate, 2) }}
+                                                </td>
+
+                                                <td>
+                                                    <span
+                                                        class="badge {{ $item->status == '1' ? ' bg-success' : ' bg-info' }}  bg-opacity-10 ">
+                                                        {{ $item->status == '1' ? 'Pending' : '' }}
+                                                        {{ $item->status == '0' ? 'Incomplete' : '' }}
+                                                        {{ $item->status == '-1' ? 'Not Approved' : '' }}</span>
+                                                </td>
+                                                <td>
+                                                    @if ($item->status == '1')
+                                                        @can('revoke-allocation')
+                                                            <a href="javascript:void(0)" title="Cancel"
+                                                                class="icon-2 info-tooltip btn btn-danger btn-sm"
+                                                                onclick="revokeAllocation(<?php echo $item->id; ?>)">
+                                                                Revoke
+                                                            </a>
+                                                        @endcan
+                                                    @endif
+
+                                                    <a href="{{ url('/trips/truck-allocation/' . base64_encode($item->id)) }}"
+                                                        class="btn btn-sm btn-primary">
+                                                        <i class="fa fa-list"></i>
+                                                    </a>
+                                                    @can('delete-allocation')
+                                                        @if ($item->status <= 0)
+                                                            <a href="javascript:void(0)" title="Cancel"
+                                                                class="icon-2 info-tooltip btn btn-danger btn-sm"
+                                                                onclick="cancelAllocation(<?php echo $item->id; ?>)">
+                                                                <i class="ph-trash"></i>
+                                                            </a>
+                                                        @endif
+                                                    @endcan
+                                                    {{-- @if ($item->status < 4 && $item->status > 1) --}}
+                                                    @can('revoke-allocation')
+                                                        <a href="javascript:void(0)" title="Cancel"
+                                                            class="icon-2 info-tooltip btn btn-danger btn-sm"
+                                                            onclick="revokeAllocation(<?php echo $item->id; ?>)">
+                                                            Revoke
+                                                        </a>
+                                                    @endcan
+                                                    {{-- @endif --}}
+                                                    @can('notify-allocation')
+                                                        <a href="javascript:void(0)" title="Renotify"
+                                                            class="icon-2 info-tooltip btn btn-primary btn-sm m-1"
+                                                            onclick="renotifyAllocation(<?php echo $item->id; ?>)">
+                                                            <i class="ph-bell"></i>
+                                                            ReNotify
+                                                        </a>
+                                                    @endcan
+                                                    @if ($level && $item->status > 0)
+                                                        @if ($level->level_name == $item->approval_status)
+                                                            <hr>
+
+                                                            {{-- <div class="d-none d-sm-block "> --}}
+                                                            {{-- Approve Button --}}
+                                                            <a href="#"
+                                                                class="btn btn-sm btn-success edit-button btn btn-sm  d-none d-block"
+                                                                title="Approve Allocation " data-bs-toggle="modal"
+                                                                data-bs-target="#approval" data-id="{{ $item->id }}"
+                                                                data-name="{{ $item->name }}"
+                                                                data-description="{{ $item->amount }}">
+                                                                <i class="ph-check-circle"></i>
+                                                                Approve
+                                                            </a>
+                                                            {{-- / --}}
+
+
+                                                            {{-- start of Disapprove button --}}
+
+                                                            <a href=""
+                                                                class="btn btn-sm btn-danger edit-button d-none d-block "
+                                                                title="Dispprove Allocation" data-bs-toggle="modal"
+                                                                data-bs-target="#disapproval"
+                                                                data-id="{{ $item->id }}"
+                                                                data-name="{{ $item->name }}"
+                                                                data-description="{{ $item->amount }}">
+                                                                <i class="ph-x-circle"></i>
+                                                                Disapprove
+                                                            </a>
+                                                            {{-- ./ --}}
+                                                            {{-- </div> --}}
+
+
+                                                            <button type="button"
+                                                                class="btn btn-success mx-1 btn-sm d-sm-none d-block "
+                                                                hidden data-bs-toggle="collapse"
+                                                                data-bs-target="#myCollapsibleDiv">
+                                                                <i class="ph-check-circle"></i>
+
+                                                                Approve
+                                                            </button>
+
+                                                            <div id="myCollapsibleDiv" class="collapse">
+                                                                {{-- <p>Approve Allocation</p>
+                                                    <br>
+                                                    <hr> --}}
+                                                                <form action="{{ url('trips/approve-allocation') }}"
+                                                                    id="change_route_form" method="POST">
+                                                                    @csrf
+                                                                    <div class="row">
+
+                                                                        <input type="hidden" value="{{ $item->id }}"
+                                                                            name="allocation_id">
+
+                                                                        <div class="col-md-12 col-lg-12 mb-1">
+                                                                            <label class="form-label ">Remark</label>
+                                                                            <textarea name="reason" placeholder="Enter Remark" id="" class="form-control" rows="4"></textarea>
+
+                                                                        </div>
+
+
+                                                                    </div>
+
+                                                                    <button type="submit"
+                                                                        class="btn btn-sm btn-primary float-end"
+                                                                        id="change_route_btn"> <i
+                                                                            class="ph-check-circle"></i>
+                                                                        Submit</button>
+
+
+                                                                </form>
+                                                            </div>
+
+
+
+
+
+                                                            <button type="button"
+                                                                class="btn btn-danger mx-1 btn-sm d-sm-none d-block  "
+                                                                hidden data-bs-toggle="collapse"
+                                                                data-bs-target="#myCollapsibleDiv1">
+                                                                <i class="ph-x-circle"></i>
+
+                                                                Disapprove
+                                                            </button>
+
+                                                            <div id="myCollapsibleDiv1" class="collapse">
+                                                                {{-- <p>Approve Allocation</p>
+                                                    <br>
+                                                    <hr> --}}
+                                                                <form action="{{ url('trips/disapprove-allocation') }}"
+                                                                    id="change_route_form" method="POST">
+                                                                    @csrf
+                                                                    <div class="row">
+
+                                                                        <input type="hidden" value="{{ $item->id }}"
+                                                                            name="allocation_id">
+
+                                                                        <div class="col-md-12 col-lg-12 mb-1">
+                                                                            <label class="form-label ">Remark</label>
+                                                                            <textarea name="reason" placeholder="Enter Remark" id="" class="form-control" rows="4"></textarea>
+
+                                                                        </div>
+
+
+                                                                    </div>
+
+                                                                    <button type="submit"
+                                                                        class="btn btn-sm btn-primary float-end"
+                                                                        id="change_route_btn"> <i
+                                                                            class="ph-check-circle"></i>
+                                                                        Submit</button>
+
+
+                                                                </form>
+                                                            </div>
+                                                        @endif
+                                                    @endif
+
+
+                                                </td>
+                                            </tr>
                                         @endif
-                                    </span>
-                                </td>
-                                <td>
+                                    @endif
+                                @empty
+                                @endforelse
 
-                                    @if ($item->status == 3)
-                                        {{-- @can('control-trip')
+                            </tbody>
+
+                        </table>
+                        {{-- @endcan --}}
+                    </div>
+
+                    {{-- For Approved Allocations --}}
+                    <div class="tab-pane fade table-responsive  show" id="approved" role="tabpanel">
+                        {{-- @can('view-approved-allocations') --}}
+                        <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
+                            <thead class="table-secondary">
+                                <th>SN</th>
+                                <th>Date</th>
+                                <th>Ref No.</th>
+                                <th>Customer Name</th>
+                                <th>Quantity </th>
+                                <th>Trucks</th>
+                                <th>Offered Amount</th>
+                                <th>Status</th>
+                                <th>Options</th>
+                            </thead>
+                            <tbody>
+                                <?php $i = 1; ?>
+                                @forelse($approved as $item)
+                                    @php
+                                        $trucks = App\Models\TruckAllocation::where(
+                                            'allocation_id',
+                                            $item->id,
+                                        )->count();
+                                        $estimateRevenue = App\Models\TruckAllocation::where(
+                                            'allocation_id',
+                                            $item->id,
+                                        )->sum('income');
+                                    @endphp
+                                    <tr>
+                                        <td width="2%">{{ $i++ }}</td>
+                                        <td>{{ $item->created_at->format('d/m/Y') }} </td>
+                                        <td>{{ $item->ref_no }}</td>
+                                        <td>{{ $item->customer->company }}</td>
+                                        <td>{{ $item->quantity }} {{ $item->unit }}</td>
+                                        <td>{{ $trucks }} </td>
+                                        <td width="18%"> <small>{{ $item->currency->symbol }}</small>
+                                            {{ number_format($estimateRevenue / $item->currency->rate, 2) }}
+                                        </td>
+                                        <td> <span
+                                                class="badge  bg-opacity-10 @if ($item->status == '3') text-warning bg-info @else  bg-success text-success @endif  ">
+                                                @if ($item->status == '3')
+                                                    Not Initiated
+                                                @else
+                                                    Trip Initiated
+                                                @endif
+                                            </span>
+                                        </td>
+                                        <td>
+
+                                            @if ($item->status == 3)
+                                                {{-- @can('control-trip')
                                                 @can('initiate-trip') --}}
-                                        <a href="{{ url('/trips/request-trip/' . base64_encode($item->id)) }}"
-                                            class="btn btn-sm btn-success">
-                                            <i class="ph-check"></i> Initiate Trip
-                                        </a>
-                                        {{-- @endcan --}}
-                                        @cannot('initiate-trip')
-                                            <a href="{{ url('/trips/request-trip/' . base64_encode($item->id)) }}"
-                                                class="btn btn-sm btn-primary">
-                                                <i class="fa fa-list"></i>
-                                            </a>
-                                        @endcannot
-                                        {{-- @endcan
+                                                <a href="{{ url('/trips/request-trip/' . base64_encode($item->id)) }}"
+                                                    class="btn btn-sm btn-success">
+                                                    <i class="ph-check"></i> Initiate Trip
+                                                </a>
+                                                {{-- @endcan --}}
+                                                @cannot('initiate-trip')
+                                                    <a href="{{ url('/trips/request-trip/' . base64_encode($item->id)) }}"
+                                                        class="btn btn-sm btn-primary">
+                                                        <i class="fa fa-list"></i>
+                                                    </a>
+                                                @endcannot
+                                                {{-- @endcan
                                             @cannot('control-trip')
                                                 <a href="{{ url('/trips/truck-allocation/' . base64_encode($item->id)) }}"
                                                     class="btn btn-sm btn-primary">
                                                     <i class="fa fa-list"></i>
                                                 </a>
                                             @endcannot --}}
-                                    @else
-                                        <a href="{{ url('/trips/truck-allocation/' . base64_encode($item->id)) }}"
-                                            class="btn btn-sm btn-primary">
-                                            <i class="fa fa-list"></i>
-                                        </a>
-                                    @endif
-                                    {{-- @endif --}}
+                                            @else
+                                                <a href="{{ url('/trips/truck-allocation/' . base64_encode($item->id)) }}"
+                                                    class="btn btn-sm btn-primary">
+                                                    <i class="fa fa-list"></i>
+                                                </a>
+                                            @endif
+                                            {{-- @endif --}}
 
 
-                                </td>
-                                {{-- @endif --}}
-                                {{-- <a href="javascript:void(0)" title="Cancel"
+                                        </td>
+                                        {{-- @endif --}}
+                                        {{-- <a href="javascript:void(0)" title="Cancel"
                                     class="icon-2 info-tooltip btn btn-danger btn-sm"
                                     onclick="revokeAllocation(<?php echo $item->id; ?>)">
                                     Revoke
                                 </a> --}}
-                            </tr>
-                        @empty
-                        @endforelse
+                                    </tr>
+                                @empty
+                                @endforelse
 
-                    </tbody>
+                            </tbody>
 
-                </table>
-                {{-- @endcan --}}
-            </div>
-            {{-- ./ --}}
+                        </table>
+                        {{-- @endcan --}}
+                    </div>
+                    {{-- ./ --}}
 
-            {{-- For Completed Allocations  --}}
-            <div class="tab-pane fade table-responsive  show" id="completed" role="tabpanel">
+                    {{-- For Completed Allocations  --}}
+                    <div class="tab-pane fade table-responsive  show" id="completed" role="tabpanel">
 
-                {{-- @can('view-completed-allocations') --}}
-            <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
-                    <thead class="table-secondary">
-                        <th>SN</th>
-                        <th>Date</th>
-                        <th>Ref No.</th>
-                        <th>Customer Name</th>
-                        <th>Quantity </th>
-                        <th>Trucks</th>
-                        <th>Offered Amount</th>
-                        <th>Status</th>
-                        <th>Options</th>
-                    </thead>
-                    <tbody>
-                        <?php $i = 1; ?>
-                        @forelse($active as $item)
-                            @php
-                                $trucks = App\Models\TruckAllocation::where('allocation_id', $item->id)->count();
-                                $estimateRevenue = App\Models\TruckAllocation::where('allocation_id', $item->id)->sum(
-                                    'income',
-                                );
-                            @endphp
-                            @if ($item->status != 3)
-                                <tr>
+                        {{-- @can('view-completed-allocations') --}}
+                        <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
+                            <thead class="table-secondary">
+                                <th>SN</th>
+                                <th>Date</th>
+                                <th>Ref No.</th>
+                                <th>Customer Name</th>
+                                <th>Quantity </th>
+                                <th>Trucks</th>
+                                <th>Offered Amount</th>
+                                <th>Status</th>
+                                <th>Options</th>
+                            </thead>
+                            <tbody>
+                                <?php $i = 1; ?>
+                                @forelse($active as $item)
+                                    @php
+                                        $trucks = App\Models\TruckAllocation::where(
+                                            'allocation_id',
+                                            $item->id,
+                                        )->count();
+                                        $estimateRevenue = App\Models\TruckAllocation::where(
+                                            'allocation_id',
+                                            $item->id,
+                                        )->sum('income');
+                                    @endphp
+                                    @if ($item->status != 3)
+                                        <tr>
 
-                                    <td width="2%">{{ $i++ }}</td>
-                                    <td>{{ $item->created_at }} </td>
-                                    <td>{{ $item->ref_no }}</td>
-                                    <td>{{ $item->customer->company }}</td>
-                                    <td>{{ $item->quantity }} {{ $item->unit }}</td>
-                                    <td>{{ $trucks }} </td>
-                                    <td width="18%"> <small>{{ $item->currency->symbol }}</small>
-                                        {{ number_format($estimateRevenue / $item->currency->rate, 2) }}
-                                    </td>
-                                    <td> <span
-                                            class="badge  bg-opacity-10 @if ($item->status == '3')  bg-info @else  bg-success  @endif  ">
-                                            @if ($item->status == '3')
-                                                Not Initiated
-                                            @else
-                                                Trip Initiated
-                                            @endif
-                                        </span>
-                                    </td>
-                                    <td>
+                                            <td width="2%">{{ $i++ }}</td>
+                                            <td>{{ $item->created_at }} </td>
+                                            <td>{{ $item->ref_no }}</td>
+                                            <td>{{ $item->customer->company }}</td>
+                                            <td>{{ $item->quantity }} {{ $item->unit }}</td>
+                                            <td>{{ $trucks }} </td>
+                                            <td width="18%"> <small>{{ $item->currency->symbol }}</small>
+                                                {{ number_format($estimateRevenue / $item->currency->rate, 2) }}
+                                            </td>
+                                            <td> <span
+                                                    class="badge  bg-opacity-10 @if ($item->status == '3') bg-info @else  bg-success @endif  ">
+                                                    @if ($item->status == '3')
+                                                        Not Initiated
+                                                    @else
+                                                        Trip Initiated
+                                                    @endif
+                                                </span>
+                                            </td>
+                                            <td>
 
 
-                                        <a href="{{ url('/trips/truck-allocation/' . base64_encode($item->id)) }}"
-                                            class="btn btn-sm btn-primary">
-                                            <i class="fa fa-list"></i>
-                                        </a>
-                                        {{-- @can('view-settings') --}}
-                                            <a href="javascript:void(0)" title="Cancel"
-                                                class="icon-2 info-tooltip btn btn-danger btn-sm"
-                                                onclick="revokeAllocation(<?php echo $item->id; ?>)">
-                                                Revoke
-                                            </a>
+                                                <a href="{{ url('/trips/truck-allocation/' . base64_encode($item->id)) }}"
+                                                    class="btn btn-sm btn-primary">
+                                                    <i class="fa fa-list"></i>
+                                                </a>
+                                                {{-- @can('view-settings') --}}
+                                                <a href="javascript:void(0)" title="Cancel"
+                                                    class="icon-2 info-tooltip btn btn-danger btn-sm"
+                                                    onclick="revokeAllocation(<?php echo $item->id; ?>)">
+                                                    Revoke
+                                                </a>
+                                                {{-- @endif --}}
+
+                                                {{-- <br> --}}
+                                                <a href="javascript:void(0)" title="Cancel"
+                                                    class="icon-2 info-tooltip btn btn-danger btn-sm m-1"
+                                                    onclick="cancelTrip(<?php echo $item->id; ?>)">
+                                                    <i class="ph-x"></i>
+
+                                                    Cancel
+                                                </a>
+                                                {{-- @endcan --}}
+
+                                            </td>
                                             {{-- @endif --}}
+                                        </tr>
+                                    @endif
+                                @empty
+                                @endforelse
 
-                                            {{-- <br> --}}
-                                            <a href="javascript:void(0)" title="Cancel"
-                                                class="icon-2 info-tooltip btn btn-danger btn-sm m-1"
-                                                onclick="cancelTrip(<?php echo $item->id; ?>)">
-                                                <i class="ph-x"></i>
+                            </tbody>
 
-                                                Cancel
-                                            </a>
-                                        {{-- @endcan --}}
-
-                                    </td>
-                                    {{-- @endif --}}
-                                </tr>
-                            @endif
-                        @empty
-                        @endforelse
-
-                    </tbody>
-
-                </table>
-                {{-- @endcan --}}
+                        </table>
+                        {{-- @endcan --}}
+                    </div>
+                    {{-- ./ --}}
+                </div>
             </div>
             {{-- ./ --}}
+
         </div>
     </div>
-    {{-- ./ --}}
-
 
 
 

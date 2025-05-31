@@ -2,7 +2,7 @@
      <ul class="nav-main">
          <li class="nav-main-item">
              <a class="nav-main-link{{ request()->is('dashboard') ? ' active' : '' }}" href="/dashboard">
-                 <i class="nav-main-link-icon fa fa-home"></i>
+                 <i class="nav-main-link-icon text-purple fa fa-home"></i>
                  <span class="nav-main-link-name">Dashboard</span>
              </a>
          </li>
@@ -172,7 +172,7 @@
          @endcan
 
 
-         <li class="nav-main-heading">Settings Menu</li>
+         <li class="nav-main-heading">Settings Management</li>
          @can('view-finance-settings')
              <li class="nav-main-item{{ request()->is('finance-settings*') ? ' open' : '' }}">
                  <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
@@ -290,13 +290,13 @@
                  <span class="nav-main-link-name">System Settings</span>
              </a>
              <ul class="nav-main-submenu">
-                 <li class="nav-main-item">
+                 {{-- <li class="nav-main-item">
                      <a class="nav-main-link{{ request()->is('system-configurations/general') ? ' active' : '' }}"
                          href="{{ route('blank') }}">
                          <i class="nav-main-link-icon si si-settings"></i>
                          <span class="nav-main-link-name">General Settings</span>
                      </a>
-                 </li>
+                 </li> --}}
                  <li class="nav-main-item">
                      <a class="nav-main-link{{ request()->is('departments*') ? ' active' : '' }}"
                          href="{{ route('departments.index') }}">
@@ -339,13 +339,13 @@
                          <span class="nav-main-link-name">Approvals</span>
                      </a>
                  </li>
-                 <li class="nav-main-item">
+                 {{-- <li class="nav-main-item">
                      <a class="nav-main-link{{ request()->is('system-configurations/notifications') ? ' active' : '' }}"
                          href="{{ route('blank') }}">
                          <i class="nav-main-link-icon si si-bell"></i>
                          <span class="nav-main-link-name">Notifications</span>
                      </a>
-                 </li>
+                 </li> --}}
              </ul>
          </li>
          <li class="nav-main-item">

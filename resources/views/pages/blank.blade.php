@@ -31,7 +31,7 @@
   <!-- Page Content -->
   <div class="content1 p-2 rounded-0">
     <!-- Coming Soon Block -->
-    <div class="block block-rounded shadow-sm text-center py-5">
+    <div class="block block-rounded shadow-sm text-center py-5 rounded-0">
       <div class="mb-4">
         <!-- Font Awesome Rocket Icon -->
         <i class="fas fa-rocket fa-3x text-primary"></i>
