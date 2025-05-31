@@ -54,7 +54,7 @@
             <div class="block-header block-header-default">
                 <h3 class="block-title">Inactive Users List</h3>
                 <div class="block-options">
-                    <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm">
+                    <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm" hidden>
                         <i class="fa fa-plus"></i>
                         Add New User
                     </a>
