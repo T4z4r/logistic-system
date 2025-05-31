@@ -18,7 +18,7 @@
                      <a
                          class="nav-main-link{{ request()->is('users/active') ? ' active' : '' }}"href="{{ route('users.active') }}">
                          <i class="nav-main-link-icon si si-user"></i>
-                         <span class="nav-main-link-name">Active Staffs</span>
+                         <span class="nav-main-link-name">Active Users</span>
                      </a>
                  </li>
 
@@ -26,7 +26,7 @@
                      <a class="nav-main-link{{ request()->is('users/inactive') ? ' active' : '' }}"
                          href="{{ route('users.inactive') }}">
                          <i class="nav-main-link-icon si si-user-unfollow"></i>
-                         <span class="nav-main-link-name">Blocked Staffs</span>
+                         <span class="nav-main-link-name">Blocked Users</span>
                      </a>
                  </li>
              </ul>
