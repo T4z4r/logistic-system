@@ -20,7 +20,8 @@
 }
 
 .nav-main-item.open>.nav-main-link-submenu .nav-link.active{
-    background-color: #f2bdbfc3 !important;
+    /* background-color: #f2bdbfc3 !important; */
+       background-color: #bfb6b6c3 !important;
     border-left: #2a3e87 solid 4px !important;
 }
 
@@ -32,7 +33,7 @@
 
 .nav-main-link .nav-main-link-icon {
     /* color: #2a3e87 !important ; */
-    background: rgb(225, 223, 223) !important;
+    /* background: rgb(225, 223, 223) !important; */
     padding:  6px !important;
     border-radius: 100% !important;
 }
@@ -44,11 +45,62 @@
 
 .text-purple{
     color: purple !important;
+    background-color: plum !important;
 }
 
 .text-green {
     color: green !important;
+    background-color: lightgreen !important;
 }
+
+.text-orange {
+    color: rgb(255, 77, 0) !important;
+    background-color: rgb(233, 218, 191) !important;
+}
+.text-red {
+    color: red !important;
+    background-color: rgba(253, 158, 158, 0.848) !important;
+}
+.text-gray {
+    color: gray !important;
+    background-color: lightgray !important;
+}
+.text-black {
+    color: black !important;
+    background-color: lightgray !important;
+}
+.text-white {
+    color: white !important;
+    background-color: lightgray !important;
+}
+.text-yellow {
+    color: rgb(255, 174, 0) !important;
+    background-color: rgb(254, 254, 176) !important;
+}
+.text-blue {
+    color: blue !important;
+    background-color: lightblue !important;
+}
+.text-cyan {
+    color: rgb(0, 128, 255) !important;
+    background-color: rgba(188, 212, 212, 0.859) !important;
+}
+.text-brown {
+    color: brown !important;
+    background-color: rgb(222, 175, 175) !important;
+}
+.text-dark {
+    color: #2a3e87 !important;
+    background-color: lightgray !important;
+}
+.text-teal {
+    color: teal !important;
+    background-color: lightcyan !important;
+}
+
+
+/* end of sidebar text-colors */
+
 .text-main {
     color: #2a3e87 !important;
 }
@@ -60,8 +112,9 @@
 }
 
 .nav-main-link.active {
-    background: #f2bdbfe3;
-    border-left: #2a3e87 solid 8px !important;
+    /* background: #f2bdbfe3; */
+      background-color: #b3b0b075 !important;
+    /* border-left: #2a3e87 solid 8px !important; */
     padding-left: 4px !important;
 }
 
@@ -83,11 +136,13 @@
 .nav-main-submenu .nav-main-link.active {
     /* color: #2a3e87 !important; */
     margin-top: 4px !important;
-    background: #c6bfbfc3 !important;
+    /* background: #c6bfbfc3 !important; */
+         background-color: #b3b0b075 !important;
 }
 
 .nav-main-item.open>.nav-main-link-submenu
 {
-    background-color: #f2bdbfc3 !important;
-    border-left: #2a3e87 solid 4px !important;
+    /* background-color: #f2bdbfc3 !important; */
+         background-color: #b3b0b075 !important;
+    /* border-left: #2a3e87 solid 4px !important; */
 }

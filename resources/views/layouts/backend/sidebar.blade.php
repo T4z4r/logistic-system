@@ -10,7 +10,7 @@
          <li class="nav-main-item{{ request()->is('users*') ? ' open' : '' }}">
              <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                  aria-expanded="{{ request()->is('users*') ? 'true active' : 'false' }}" href="#">
-                 <i class="nav-main-link-icon fa fa-users"></i>
+                 <i class="nav-main-link-icon fa fa-users text-green"></i>
                  <span class="nav-main-link-name">Users</span>
              </a>
              <ul class="nav-main-submenu">
@@ -37,14 +37,14 @@
          <li class="nav-main-item{{ request()->is('customers') || request()->is('customers/*') ? ' open' : '' }}">
              <a class="nav-main-link{{ request()->is('customers') || request()->is('customers/*') ? ' active' : '' }}"
                  href="{{ route('customers.index') }}">
-                 <i class="nav-main-link-icon fa fa-user-tie"></i>
+                 <i class="nav-main-link-icon fa fa-user-tie text-orange"></i>
                  <span class="nav-main-link-name">Customers </span>
              </a>
          </li>
          <li class="nav-main-item{{ request()->is('drivers') || request()->is('drivers/*') ? ' open' : '' }}">
              <a class="nav-main-link{{ request()->is('drivers') || request()->is('drivers/*') ? ' active' : '' }}"
                  href="{{ route('drivers.list') }}">
-                 <i class="nav-main-link-icon fa fa-users"></i>
+                 <i class="nav-main-link-icon fa fa-users text-blue"></i>
                  <span class="nav-main-link-name">Drivers </span>
              </a>
          </li>
@@ -59,7 +59,7 @@
              <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                  aria-expanded="{{ request()->is('trucks*') || request()->is('trailers*') ? 'true' : 'false' }}"
                  href="#">
-                 <i class="nav-main-link-icon fa fa-truck"></i>
+                 <i class="nav-main-link-icon fa fa-truck text-cyan"></i>
                  <span class="nav-main-link-name">Trucks Management</span>
              </a>
              <ul class="nav-main-submenu">
@@ -83,7 +83,7 @@
          <li class="nav-main-item{{ request()->is('routes*') ? ' open' : '' }}">
              <a class="nav-main-link{{ request()->is('routes*') ? ' active' : '' }}"
                  href="{{ route('routes.list') }}">
-                 <i class="nav-main-link-icon fa fa-map"></i>
+                 <i class="nav-main-link-icon fa fa-map text-brown"></i>
                  <span class="nav-main-link-name">Routes Master</span>
              </a>
          </li>
@@ -95,7 +95,7 @@
          <li class="nav-main-item{{ $isTrips ? ' open' : '' }}">
              <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                  aria-expanded="{{ $isTrips ? 'true' : 'false' }}" href="#">
-                 <i class="nav-main-link-icon fa fa-location"></i>
+                 <i class="nav-main-link-icon fa fa-location text-purple"></i>
                  <span class="nav-main-link-name">Trips Management</span>
              </a>
              <ul class="nav-main-submenu">
@@ -122,13 +122,13 @@
 
          <li class="nav-main-item{{ request()->routeIs('truck-change-requests.*') ? ' open' : '' }}">
              <a class="nav-main-link{{ request()->routeIs('truck-change-requests.*') ? ' active' : '' }}" href="{{ route('truck-change-requests.index') }}">
-                 <i class="nav-main-link-icon fa fa-recycle"></i>
+                 <i class="nav-main-link-icon fa fa-recycle text-yellow"></i>
                  <span class="nav-main-link-name">Truck Change</span>
              </a>
          </li>
          <li class="nav-main-item{{ request()->is('trips/create') ? ' open' : '' }}">
              <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="{{ route('blank') }}">
-                 <i class="nav-main-link-icon fa fa-database"></i>
+                 <i class="nav-main-link-icon fa fa-database text-teal"></i>
                  <span class="nav-main-link-name">Truck Loading</span>
              </a>
          </li>
@@ -136,13 +136,13 @@
 
          <li class="nav-main-item{{ request()->is('trips/create') ? ' open' : '' }}">
              <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="{{ route('blank') }}">
-                 <i class="nav-main-link-icon fa fa-screwdriver-wrench"></i>
+                 <i class="nav-main-link-icon fa fa-screwdriver-wrench text-orange"></i>
                  <span class="nav-main-link-name">Breakdowns</span>
              </a>
          </li>
          <li class="nav-main-item{{ request()->is('trips/create') ? ' open' : '' }}">
              <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="{{ route('blank') }}">
-                 <i class="nav-main-link-icon fa fa-car-burst"></i>
+                 <i class="nav-main-link-icon fa fa-car-burst text-red"></i>
                  <span class="nav-main-link-name">Accidents</span>
              </a>
          </li>
@@ -150,7 +150,7 @@
          <li class="nav-main-item">
              <a class="nav-main-link{{ request()->is('trip-settings/costs') ? ' active' : '' }}"
                  href="{{ route('blank') }}">
-                 <i class="nav-main-link-icon fa fa-wallet"></i>
+                 <i class="nav-main-link-icon fa fa-wallet text-brown"></i>
                  <span class="nav-main-link-name">
                      Out of Budget
                  </span>
@@ -161,7 +161,7 @@
          <li class="nav-main-item">
              <a class="nav-main-link{{ request()->is('trip-settings/costs') ? ' active' : '' }}"
                  href="{{ route('blank') }}">
-                 <i class="nav-main-link-icon fa fa-file-pdf"></i>
+                 <i class="nav-main-link-icon fa fa-file-pdf text-blue"></i>
                  <span class="nav-main-link-name">
                      Reports
                  </span>
@@ -177,7 +177,7 @@
              <li class="nav-main-item{{ request()->is('finance-settings*') ? ' open' : '' }}">
                  <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                      aria-expanded="{{ request()->is('finance-settings*') ? 'true' : 'false' }}" href="#">
-                     <i class="nav-main-link-icon fa fa-file-pdf"></i>
+                     <i class="nav-main-link-icon fa fa-file-pdf text-purple"></i>
                      <span class="nav-main-link-name">Finance Settings</span>
                  </a>
                  <ul class="nav-main-submenu">
@@ -223,7 +223,7 @@
              <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                  aria-expanded="{{ request()->is('common-costs*', 'fuel-costs*', 'payment-methods*', 'payment-modes*', 'cargo-natures*', 'currencies*') ? 'true' : 'false' }}"
                  href="#">
-                 <i class="nav-main-link-icon fa fa-list"></i>
+                 <i class="nav-main-link-icon fa fa-list text-purple"></i>
                  <span class="nav-main-link-name">Logistics Settings</span>
              </a>
              <ul class="nav-main-submenu">
@@ -286,7 +286,7 @@
          <li class="nav-main-item{{ $isSystemSettings ? ' open' : '' }}">
              <a class="nav-main-link nav-main-link-submenu{{ $isSystemSettings ? ' active' : '' }}" data-toggle="submenu" aria-haspopup="true"
                  aria-expanded="{{ $isSystemSettings ? 'true' : 'false' }}" href="#">
-                 <i class="nav-main-link-icon fa fa-cogs"></i>
+                 <i class="nav-main-link-icon fa fa-cogs text-blue"></i>
                  <span class="nav-main-link-name">System Settings</span>
              </a>
              <ul class="nav-main-submenu">
@@ -353,7 +353,7 @@
                  @csrf
              </form>
              <a href="#" class="nav-main-link" id="logout-link">
-                 <i class="nav-main-link-icon fa fa-sign-out-alt"></i>
+                 <i class="nav-main-link-icon fa fa-sign-out-alt text-red"></i>
                  <span class="nav-main-link-name">{{ __('Log Out') }}</span>
              </a>
          </li>
