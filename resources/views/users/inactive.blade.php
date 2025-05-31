@@ -27,7 +27,7 @@
 
 @section('content')
     <!-- Hero -->
-    <div class="bg-body-light mt-5">
+    <div class="bg-body-light ">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center ">
                 <div class="flex-grow-1">
@@ -48,7 +48,7 @@
     <!-- END Hero -->
 
     <!-- Page Content -->
-    <div class="content p-2">
+    <div class="content1 p-2">
         <!-- Inactive Users Block -->
         <div class="block block-rounded rounded-0">
             <div class="block-header block-header-default">
@@ -58,7 +58,7 @@
                         <i class="fa fa-plus"></i>
                         Add New User
                     </a>
-                    <a href="{{ route('users.active') }}" class="btn btn-secondary btn-sm">View Active Users</a>
+                    <a href="{{ route('users.active') }}" class="btn btn-secondary btn-sm" hidden>View Active Users</a>
                 </div>
             </div>
             <div class="block-content rounded-0">

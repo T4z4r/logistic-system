@@ -53,7 +53,7 @@
     <!-- END Hero -->
 
     <!-- Page Content -->
-    <div class="content1 p-2">
+    <div class="content1 p-2 rounded-0">
         <!-- Active Users Block -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
@@ -66,7 +66,7 @@
                     <a href="{{ route('users.inactive') }}" class="btn btn-secondary btn-sm" hidden>View Inactive Users</a>
                 </div>
             </div>
-            <div class="block-content">
+            <div class="block-content rounded-0">
                 @if (session('success'))
                     <div class="alert alert-success" role="alert">{{ session('success') }}</div>
                 @endif
@@ -94,7 +94,7 @@
                                 <td>{{ $user->status ? 'Active' : 'Inactive' }}</td>
                                 <td>
                                     <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-alt-primary">
-                                        <i class="fa fa-edit"></i>
+                                        <i class="fa fa-edit"></i> Edit
                                     </a>
                                     <form action="{{ route('users.destroy', $user) }}" method="POST"
                                         style="display: inline;">
@@ -102,7 +102,7 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-alt-danger"
                                             onclick="return confirm('Are you sure?')">
-                                            <i class="fa fa-trash"></i>
+                                            <i class="fa fa-trash"></i> Delete
                                         </button>
                                     </form>
                                 </td>

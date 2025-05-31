@@ -68,6 +68,13 @@
 
 
 .nav-main-submenu .nav-main-link.active {
-    color: #2a3e87 !important;
-    background: #f2bdbfc3 !important;
+    /* color: #2a3e87 !important; */
+    margin-top: 4px !important;
+    background: #c6bfbfc3 !important;
+}
+
+.nav-main-item.open>.nav-main-link-submenu
+{
+    background-color: #f2bdbfc3 !important;
+    border-left: #2a3e87 solid 4px !important;
 }
