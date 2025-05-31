@@ -65,3 +65,9 @@
     color: #233781 !important;
     background-color: aliceblue !important;
 }
+
+
+.nav-main-submenu .nav-main-link.active {
+    color: #2a3e87 !important;
+    background: #f2bdbfc3 !important;
+}
