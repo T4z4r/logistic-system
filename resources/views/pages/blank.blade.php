@@ -2,9 +2,9 @@
 
 @section('content')
   <!-- Hero -->
-  <div class="bg-body-light mt-5">
+  <div class="bg-body-light ">
     <div class="content content-full">
-      <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-4">
+      <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0">
         <div class="flex-grow-1 text-center text-sm-start">
           <h1 class="h3 fw-bold mb-1">
             Feature Coming Soon
@@ -29,7 +29,7 @@
   <!-- END Hero -->
 
   <!-- Page Content -->
-  <div class="content content-full p-2">
+  <div class="content1 p-2 rounded-0">
     <!-- Coming Soon Block -->
     <div class="block block-rounded shadow-sm text-center py-5">
       <div class="mb-4">
@@ -40,7 +40,7 @@
       <p class="fs-5 text-muted mb-4">
         This feature is in development and will launch soon. Thank you for your patience!
       </p>
-      <a href="{{ route('dashboard') }}" class="btn btn-primary px-4 py-2">
+      <a href="{{ route('dashboard') }}" class="btn btn-alt-primary px-4 py-2">
         Back to Dashboard
       </a>
     </div>
