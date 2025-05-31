@@ -36,7 +36,7 @@
     color: #2a3e87 !important;
 }
 
-.text-primary {
+.text-main {
     color: #2a3e87 !important;
 }
 
@@ -47,8 +47,9 @@
 }
 
 .nav-main-link.active {
-    background: #f2bdbfc3;
-    border-left: #2a3e87 solid 4px !important;
+    background: #f2bdbfe3;
+    border-left: #2a3e87 solid 8px !important;
+    padding-left: 4px !important;
 }
 
 .rounded-0 {
