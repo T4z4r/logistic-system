@@ -27,7 +27,7 @@
 
 @section('content')
   <!-- Hero -->
-  <div class="bg-body-light mt-5">
+  <div class="bg-body-light">
     <div class="content content-full">
       <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0">
         <div class="flex-grow-1">
@@ -48,13 +48,13 @@
   <!-- END Hero -->
 
   <!-- Page Content -->
-  <div class="content p-2">
+  <div class="content1 p-2 rounded-0">
     <!-- Drivers Block -->
     <div class="block block-rounded rounded-0">
       <div class="block-header block-header-default ">
         <h3 class="block-title">Drivers Overview</h3>
         <div class="block-options">
-          <a href="{{ route('drivers.create') }}" class="btn btn-primary btn-sm">
+          <a href="{{ route('drivers.create') }}" class="btn btn-alt-primary btn-sm">
             <i class="fa fa-plus"></i>
               Add New Driver
             </a>
@@ -91,14 +91,14 @@
                 <td>{{ $driver->createdBy?->name ?? 'N/A' }}</td>
                 <td>{{ $driver->status ? 'Active' : 'Inactive' }}</td>
                 <td>
-                  <a href="{{ route('drivers.edit', $driver->id) }}" class="btn btn-sm btn-primary">
-                    <i class="fa fa-edit"></i>
+                  <a href="{{ route('drivers.edit', $driver->id) }}" class="btn btn-sm btn-alt-primary">
+                    <i class="fa fa-edit"></i> Edit
                   </a>
                   <form action="{{ route('drivers.delete', $driver->id) }}" method="POST" style="display: inline;">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
-                        <i class="fa fa-trash"></i>
+                    <button type="submit" class="btn btn-sm btn-alt-danger" onclick="return confirm('Are you sure?')">
+                        <i class="fa fa-trash"></i> Delete
                     </button>
                   </form>
                 </td>
