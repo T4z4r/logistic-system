@@ -55,7 +55,7 @@
             <div class="block-header block-header-default">
                 <h3 class="block-title">Customers Overview</h3>
                 <div class="block-options">
-                    <a href="{{ route('customers.create') }}" class="btn btn-primary btn-sm">
+                    <a href="{{ route('customers.create') }}" class="btn btn-alt-primary btn-sm">
                         <i class="fa fa-plus"></i>
                         Add New Customer</a>
                     {{-- <a href="{{ route('customers.active') }}" class="btn btn-secondary btn-sm">View Active Customers</a>
@@ -71,6 +71,7 @@
                 <table class="table table-bordered table-striped table-vcenter js-dataTable-full  table-sm">
                     <thead class="table-secondary">
                         <tr>
+                            <th>#</th>
                             <th>Company</th>
                             <th>Contact</th>
                             <th>Email</th>
@@ -85,6 +86,7 @@
                     <tbody>
                         @foreach ($customers as $customer)
                             <tr>
+                                <td> {{ $loop->iteration }}</td>
                                 <td>{{ $customer->company }}</td>
                                 <td>{{ $customer->contact_person }}</td>
                                 <td>{{ $customer->email }}</td>
@@ -93,18 +95,18 @@
                                 <td>{{ $customer->VRN }}</td>
                                 <td>{{ $customer->createdBy?->name ?? 'N/A' }}</td>
                                 <td>{{ $customer->status ? 'Active' : 'Inactive' }}</td>
-                                <td>
+                                <td width="18%">
                                     <a href="{{ route('customers.edit', $customer->id) }}"
-                                        class="btn btn-sm btn-primary">
-                                    <i class="fa fa-edit"></i>
+                                        class="btn btn-sm btn-alt-primary">
+                                        <i class="fa fa-edit"></i> Edit
                                     </a>
                                     <form action="{{ route('customers.delete', $customer->id) }}" method="POST"
                                         style="display: inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger"
+                                        <button type="submit" class="btn btn-sm btn-alt-danger"
                                             onclick="return confirm('Are you sure?')">
-                                            <i class="fa fa-trash"></i>
+                                            <i class="fa fa-trash"></i> Delete
                                         </button>
                                     </form>
                                 </td>
