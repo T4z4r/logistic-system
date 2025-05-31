@@ -59,14 +59,14 @@
             <div class="block-header block-header-default">
                 <h3 class="block-title">Active Users List</h3>
                 <div class="block-options">
-                    <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm">
+                    <a href="{{ route('users.create') }}" class="btn btn-alt-primary btn-sm">
                         <i class="fa fa-plus"></i>
                         Add New User
                     </a>
                     <a href="{{ route('users.inactive') }}" class="btn btn-secondary btn-sm" hidden>View Inactive Users</a>
                 </div>
             </div>
-            <div class="block-content rounded-0">
+            <div class="content1 p-2 rounded-0">
                 @if (session('success'))
                     <div class="alert alert-success" role="alert">{{ session('success') }}</div>
                 @endif
