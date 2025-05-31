@@ -2,14 +2,14 @@
 
 @section('content')
     <!-- Hero -->
-    <div class="bg-body-light mt-5">
+    <div class="bg-body-light ">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0    ">
                 <div class="flex-grow-1">
                     <h5 class="h5 fw-bold mb-1">
                         Dashboard
                     </h5>
-                    <h2 class="fs-base lh-base fw-medium text-muted mb-0">
+                    <h2 class="fs-base lh-base fw-medium text-muted mb-0" >
                         Welcome {{ Auth::user()->name??'--' }}, everything looks great.
                     </h2>
                 </div>
@@ -32,9 +32,9 @@
 
 
     <!-- Page Content -->
-    <div class="content p-2">
+    <div class="content1 p-2">
         <!-- Overview -->
-        <div class="row items-push ">
+        <div class="row items-push p-0 ">
             <div class="col-sm-6 col-xxl-3">
                 <!-- Pending Shipments -->
                 <div class="block block-rounded d-flex flex-column h-100 mb-0">
@@ -45,7 +45,7 @@
                             <dd class="fs-sm fw-medium text-muted mb-0">Total Trucks</dd>
                         </dl>
                         <div class="item item-rounded-lg bg-body-light">
-                            <i class="fas fa-truck fs-3 text-primary"></i>
+                            <i class="fas fa-truck fs-3  text-main"></i>
                         </div>
                     </div>
                     <div class="bg-body-light rounded-bottom">
@@ -60,7 +60,7 @@
             </div>
             <div class="col-sm-6 col-xxl-3">
                 <!-- Active Drivers -->
-                <div class="block block-rounded d-flex flex-column h-100 mb-0">
+                <div class="block block-rounded rounded-0 d-flex flex-column h-100 mb-0">
                     <div
                         class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center">
                         <dl class="mb-0">
@@ -68,11 +68,11 @@
                             <dd class="fs-sm fw-medium text-muted mb-0">Total Trailers</dd>
                         </dl>
                         <div class="item item-rounded-lg bg-body-light">
-                            <i class="fas fa-trailer fs-3 text-primary"></i>
+                            <i class="fas fa-trailer fs-3 text-main"></i>
                         </div>
                     </div>
                     <div class="bg-body-light rounded-bottom">
-                        <a class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
+                        <a class="block-content block-content-full block-content-sm fs-sm fw-medium text-main d-flex align-items-center justify-content-between"
                             href="{{ route('trailers.list') }}">
                             <span>View all Trailers</span>
                             <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"></i>
@@ -91,7 +91,7 @@
                             <dd class="fs-sm fw-medium text-muted mb-0">Total Drivers</dd>
                         </dl>
                         <div class="item item-rounded-lg bg-body-light">
-                            <i class="fas fa-users fs-3 text-primary"></i>
+                            <i class="fas fa-users fs-3 text-main"></i>
                         </div>
                     </div>
                     <div class="bg-body-light rounded-bottom">
@@ -114,7 +114,7 @@
                             <dd class="fs-sm fw-medium text-muted mb-0">Total Customers</dd>
                         </dl>
                         <div class="item item-rounded-lg bg-body-light">
-                            <i class="fas fa-user-tie fs-3 text-primary"></i>
+                            <i class="fas fa-user-tie fs-3 text-main"></i>
                         </div>
                     </div>
                     <div class="bg-body-light rounded-bottom">
@@ -134,7 +134,7 @@
 
 
        <!-- Statistics -->
-          <div class="row">
+          <div class="row p-1">
             <div class="col-xl-8 col-xxl-9 d-flex flex-column">
               <!-- Earnings Summary -->
               <div class="block block-rounded flex-grow-1 d-flex flex-column">
@@ -189,12 +189,12 @@
               </div>
               <!-- END Earnings Summary -->
             </div>
-            <div class="col-xl-4 col-xxl-3 d-flex flex-column">
+            <div class="col-xl-4 col-xxl-3 d-flex flex-column p-2">
               <!-- Last 2 Weeks -->
               <!-- Chart.js Charts is initialized in js/pages/be_pages_dashboard.min.js which was auto compiled from _js/pages/be_pages_dashboard.js -->
               <!-- For more info and examples you can check out http://www.chartjs.org/docs/ -->
-              <div class="row items-push flex-grow-1">
-                <div class="col-md-6 col-xl-12">
+              <div class="row items-push flex-grow-1 p-2">
+                <div class="col-md-6 col-xl-12 mb-1">
                   <div class="block block-rounded d-flex flex-column h-100 mb-0">
                     <div class="block-content flex-grow-1 d-flex justify-content-between">
                       <dl class="mb-0">
@@ -214,7 +214,7 @@
                     </div>
                   </div>
                 </div>
-                 <div class="col-md-6 col-xl-12">
+                 <div class="col-md-6 col-xl-12 mb-1">
                   <div class="block block-rounded d-flex flex-column h-100 mb-0">
                     <div class="block-content flex-grow-1 d-flex justify-content-between">
                       <dl class="mb-0">
@@ -234,7 +234,7 @@
                     </div>
                   </div>
                 </div>
-                     <div class="col-md-6 col-xl-12">
+                     <div class="col-md-6 col-xl-12 mb-1">
                   <div class="block block-rounded d-flex flex-column h-100 mb-0">
                     <div class="block-content flex-grow-1 d-flex justify-content-between">
                       <dl class="mb-0">
@@ -254,7 +254,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6 col-xl-12">
+                <div class="col-md-6 col-xl-12 mb-1">
                   <div class="block block-rounded d-flex flex-column h-100 mb-0">
                     <div class="block-content flex-grow-1 d-flex justify-content-between">
                       <dl class="mb-0">
@@ -274,7 +274,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-xl-12">
+                <div class="col-xl-12 mb-1">
                   <div class="block block-rounded d-flex flex-column h-100 mb-0">
                     <div class="block-content flex-grow-1 d-flex justify-content-between">
                       <dl class="mb-0">

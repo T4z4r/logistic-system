@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <title> SudEnergy | ERP</title>
+    <title>SudEnergy | ERP</title>
 
     <meta name="description" content="Krismo ERP">
     <meta name="author" content="pixelcave">
@@ -27,54 +27,13 @@
 
 <body>
     <!-- Page Container -->
-    <!--
-    Available classes for #page-container:
-
-    GENERIC
-
-      'remember-theme'                            Remembers active color theme and dark mode between pages using localStorage when set through
-                                                  - Theme helper buttons [data-toggle="theme"],
-                                                  - Layout helper buttons [data-toggle="layout" data-action="dark_mode_[on/off/toggle]"]
-                                                  - ..and/or One.layout('dark_mode_[on/off/toggle]')
-
-    SIDEBAR & SIDE OVERLAY
-
-      'sidebar-r'                                 Right Sidebar and left Side Overlay (default is left Sidebar and right Side Overlay)
-      'sidebar-mini'                              Mini hoverable Sidebar (screen width > 991px)
-      'sidebar-o'                                 Visible Sidebar by default (screen width > 991px)
-      'sidebar-o-xs'                              Visible Sidebar by default (screen width < 992px)
-      'sidebar-dark'                              Dark themed sidebar
-
-      'side-overlay-hover'                        Hoverable Side Overlay (screen width > 991px)
-      'side-overlay-o'                            Visible Side Overlay by default
-
-      'enable-page-overlay'                       Enables a visible clickable Page Overlay (closes Side Overlay on click) when Side Overlay opens
-
-      'side-scroll'                               Enables custom scrolling on Sidebar and Side Overlay instead of native scrolling (screen width > 991px)
-
-    HEADER
-
-      ''                                          Static Header if no class is added
-      'page-header-fixed'                         Fixed Header
-
-    HEADER STYLE
-
-      ''                                          Light themed Header
-      'page-header-dark'                          Dark themed Header
-
-    MAIN CONTENT LAYOUT
-
-      ''                                          Full width Main Content if no class is added
-      'main-content-boxed'                        Full width Main Content with a specific maximum width (screen width > 1200px)
-      'main-content-narrow'                       Full width Main Content with a percentage width (screen width > 1200px)
-
-    DARK MODE
-
-      'sidebar-dark page-header-dark dark-mode'   Enable dark mode (light sidebar/header is not supported with dark mode)
-    -->
-
     <div id="page-container"
-        class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow @if (Auth::user()->mode == 'dark') page-header-dark dark-mode @endif">
+        class="sidebar-o enable-page-overlay side-scroll page-header-fixed main-content-narrow @if (Auth::user()->mode == 'dark') page-header-dark dark-mode sidebar-dark @else sidebar-light @endif">
+
+        <!-- Custom Loader -->
+        <div id="custom-loader" class="custom-loader">
+            <div class="spinner"></div>
+        </div>
 
         <!-- Side Overlay-->
         @include('layouts.leftsidebar')
@@ -82,17 +41,6 @@
         <!-- END Side Overlay -->
 
         <!-- Sidebar -->
-        <!--
-        Sidebar Mini Mode - Display Helper classes
-
-        Adding 'smini-hide' class to an element will make it invisible (opacity: 0) when the sidebar is in mini mode
-        Adding 'smini-show' class to an element will make it visible (opacity: 1) when the sidebar is in mini mode
-            If you would like to disable the transition animation, make sure to also add the 'no-transition' class to your element
-
-        Adding 'smini-hidden' to an element will hide it when the sidebar is in mini mode
-        Adding 'smini-visible' to an element will show it (display: inline-block) only when the sidebar is in mini mode
-        Adding 'smini-visible-block' to an element will show it (display: block) only when the sidebar is in mini mode
-    -->
         @include('layouts.leftsidebar-nav')
 
         <!-- END Sidebar -->
@@ -102,17 +50,18 @@
         <!-- END Header -->
 
         <!-- Main Container -->
-        <main id="main-container ">
+        <main id="main-container">
             @yield('content')
         </main>
         <!-- END Main Container -->
 
-        <!-- Noty CDN (keeping your original version) -->
+        <!-- Noty CDN -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/noty@3.2.0-beta-deprecated/lib/noty.css" />
         <script src="https://cdn.jsdelivr.net/npm/noty@3.2.0-beta-deprecated/lib/noty.min.js"></script>
 
         <!-- Consolidated Styles -->
         <style>
+            /* Noty Styles */
             .noty_bar {
                 border-radius: 8px !important;
                 box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12) !important;
@@ -121,7 +70,6 @@
                 display: flex;
                 align-items: center;
                 min-height: 48px;
-                /* Ensure enough height for alignment */
             }
 
             .noty_icon {
@@ -132,18 +80,74 @@
                 font-size: 22px;
                 opacity: 0.85;
                 line-height: 1;
-                /* Prevent icon from affecting line height */
             }
 
             .noty_text {
                 display: inline-block;
                 vertical-align: middle;
                 line-height: 1.5;
-                /* Consistent text line height */
                 margin-left: 32px;
-                /* Space between icon and text */
+            }
+
+            /* Custom Loader Styles */
+            .custom-loader {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(255, 255, 255, 0.9); /* Light background for light mode */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+                transition: opacity 0.3s ease;
+            }
+
+            .dark-mode .custom-loader {
+                background: rgba(0, 0, 0, 0.9); /* Dark background for dark mode */
+            }
+
+            .custom-loader.hidden {
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            .spinner {
+                width: 50px;
+                height: 50px;
+                border: 5px solid #3498db;
+                border-top-color: transparent;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+            }
+
+            .dark-mode .spinner {
+                border-color: #6ab0f3;
+                border-top-color: transparent;
+            }
+
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
             }
         </style>
+
+        <!-- Loader JavaScript -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const loader = document.getElementById('custom-loader');
+                // Hide loader when page is fully loaded
+                window.addEventListener('load', function () {
+                    loader.classList.add('hidden');
+                    // Optional: Remove loader from DOM after transition
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                    }, 300);
+                });
+            });
+        </script>
 
         @if (session('success'))
             <script>
@@ -155,7 +159,7 @@
                     progressBar: true,
                     theme: 'mint',
                     callbacks: {
-                        onTemplate: function() {
+                        onTemplate: function () {
                             this.barDom.style.background = '#28a745';
                             this.barDom.style.color = '#fff';
                         }
@@ -174,7 +178,7 @@
                     progressBar: true,
                     theme: 'mint',
                     callbacks: {
-                        onTemplate: function() {
+                        onTemplate: function () {
                             this.barDom.style.background = '#dc3545';
                             this.barDom.style.color = '#fff';
                         }
@@ -184,7 +188,7 @@
         @endif
 
         <!-- Footer -->
-        <footer id="page-footer" class="bg-body-light " hidden>
+        <footer id="page-footer" class="bg-body-light" hidden>
             <div class="content py-3">
                 <div class="row fs-sm">
                     <div class="col-sm-6 order-sm-2 py-1 text-center text-sm-end">
@@ -193,7 +197,7 @@
                     </div>
                     <div class="col-sm-6 order-sm-1 py-1 text-center text-sm-start">
                         <a class="fw-semibold" href="https://1.envato.market/AVD6j" target="_blank">krismoERP</a>
-                        &copy; <span data-toggle="year-copy"></span>
+                        © <span data-toggle="year-copy"></span>
                     </div>
                 </div>
             </div>

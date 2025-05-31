@@ -9,7 +9,7 @@
          <li class="nav-main-heading">Users Management</li>
          <li class="nav-main-item{{ request()->is('users*') ? ' open' : '' }}">
              <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                 aria-expanded="{{ request()->is('users*') ? 'true' : 'false' }}" href="#">
+                 aria-expanded="{{ request()->is('users*') ? 'true active' : 'false' }}" href="#">
                  <i class="nav-main-link-icon fa fa-users"></i>
                  <span class="nav-main-link-name">Users</span>
              </a>

@@ -28,10 +28,10 @@
 
 @section('content')
     <!-- Hero -->
-    <div class="bg-body-light mt-5">
+    <div class="bg-body-light ">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-                <div class="flex-grow-1">
+                <div class="flex-grow-0">
                     <h5 class="h5 fw-bold mb-1">Customer Management</h5>
                     <h2 class="fs-base lh-base fw-medium text-muted mb-0">Manage all customers in the system</h2>
                 </div>
@@ -49,7 +49,7 @@
     <!-- END Hero -->
 
     <!-- Page Content -->
-    <div class="content p-2">
+    <div class="content1 rounded-0 p-2">
         <!-- Customers Block -->
         <div class="block block-rounded rounded-0">
             <div class="block-header block-header-default">

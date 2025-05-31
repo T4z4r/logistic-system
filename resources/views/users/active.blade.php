@@ -29,12 +29,15 @@
 
 @section('content')
     <!-- Hero -->
-    <div class="bg-body-light mt-5">
+    <div class="bg-body-light ">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center table-sm ">
                 <div class="flex-grow-1">
-                    <h5 class="h5 fw-bold mb-1">Active Users</h5>
-                    <h2 class="fs-base lh-base fw-medium text-muted mb-0">View all active users in the system</h2>
+                    <h5 class="h5 fw-bold mb-1"> <i class="si si-userr"></i> Active Users</h5>
+                    <h2 class="fs-sm lh-base fw-normal text-muted mb-0">
+                        <i class="fa fa-info-circle text-main me-1"></i>
+                        View all active users in the system
+                    </h2>
                 </div>
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
@@ -50,7 +53,7 @@
     <!-- END Hero -->
 
     <!-- Page Content -->
-    <div class="content p-2">
+    <div class="content1 p-2">
         <!-- Active Users Block -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
@@ -60,7 +63,7 @@
                         <i class="fa fa-plus"></i>
                         Add New User
                     </a>
-                    <a href="{{ route('users.inactive') }}" class="btn btn-secondary btn-sm">View Inactive Users</a>
+                    <a href="{{ route('users.inactive') }}" class="btn btn-secondary btn-sm" hidden>View Inactive Users</a>
                 </div>
             </div>
             <div class="block-content">
@@ -90,14 +93,14 @@
                                 <td>{{ $user->lineManager?->name ?? 'N/A' }}</td>
                                 <td>{{ $user->status ? 'Active' : 'Inactive' }}</td>
                                 <td>
-                                    <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-primary">
+                                    <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-alt-primary">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                     <form action="{{ route('users.destroy', $user) }}" method="POST"
                                         style="display: inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger"
+                                        <button type="submit" class="btn btn-sm btn-alt-danger"
                                             onclick="return confirm('Are you sure?')">
                                             <i class="fa fa-trash"></i>
                                         </button>

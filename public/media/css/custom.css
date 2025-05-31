@@ -3,19 +3,25 @@
     border-color: #233781 !important;
 }
 
-
-
 .btn-primary:hover {
     background-color: #233781 !important;
     border-color: #1e2a6d !important;
 }
 
-
-
 .btn-danger {
-
     background-color: #eb1e25 !important;
     border-color: #fc1c23 !important;
+}
+
+
+.lh-base
+{
+    font-size: 10px !important;
+}
+
+.nav-main-item.open>.nav-main-link-submenu .nav-link.active{
+    background-color: #f2bdbfc3 !important;
+    border-left: #2a3e87 solid 4px !important;
 }
 
 .btn-danger:hover {
@@ -23,25 +29,38 @@
     border-color: #e61a20 !important;
 }
 
+.nav-main-link .nav-main-link-icon {
+    color: #2a3e87 !important ;
+}
+.text-primary {
+    color: #2a3e87 !important;
+}
 
 .text-primary {
     color: #2a3e87 !important;
 }
 
 
-.rounded-0
+.nav-main-heading
 {
+    color: rgb(171, 179, 186) !important;
+}
+
+.nav-main-link.active {
+    background: #f2bdbfc3;
+    border-left: #2a3e87 solid 4px !important;
+}
+
+.rounded-0 {
     border-radius: 0% !important;
 }
 
-.nav-link
-{
+.nav-link {
     color: black !important ;
 }
 
-
-.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
-
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
     color: #233781 !important;
     background-color: aliceblue !important;
 }
