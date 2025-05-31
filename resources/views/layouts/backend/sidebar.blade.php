@@ -32,7 +32,7 @@
              </ul>
          </li>
 
-         <li class="nav-main-heading">Logistics Menus</li>
+         <li class="nav-main-heading">Logistics Management</li>
 
          <li class="nav-main-item{{ request()->is('customers') || request()->is('customers/*') ? ' open' : '' }}">
              <a class="nav-main-link{{ request()->is('customers') || request()->is('customers/*') ? ' active' : '' }}"
