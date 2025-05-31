@@ -29,7 +29,7 @@
 
 @section('content')
     <!-- Hero -->
-    <div class="bg-body-light mt-5">
+    <div class="bg-body-light ">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
                 <div class="flex-grow-1">
@@ -50,13 +50,13 @@
     <!-- END Hero -->
 
     <!-- Page Content -->
-    <div class="content p-2">
+    <div class="content1 p-2 rounded-0">
         <!-- Trailers Block -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
                 <h3 class="block-title">Trailers Overview</h3>
                 <div class="block-options">
-                    <a href="{{ route('trailers.create') }}" class="btn btn-primary btn-sm">
+                    <a href="{{ route('trailers.create') }}" class="btn btn-alt-primary btn-sm">
                         <i class="fa fa-plus"></i>
                         Add New Trailer
                     </a>
@@ -64,7 +64,7 @@
                     <a href="{{ route('trailers.inactive') }}" class="btn btn-warning">Inactive</a> --}}
                 </div>
             </div>
-            <div class="block-content">
+            <div class="block-content rounded-none">
 
                 @if ($errors->any())
                     <div class="alert alert-danger" role="alert">
@@ -110,7 +110,7 @@
                                     {{ $assignment ? $assignment->truck?->plate_number : 'None' }}
                                 </td>
                                 <td>
-                                    <a href="{{ route('trailers.edit', $trailer->id) }}" class="btn btn-sm btn-primary">
+                                    <a href="{{ route('trailers.edit', $trailer->id) }}" class="btn btn-sm btn-alt-primary">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                     <form action="{{ route('trailers.delete', $trailer->id) }}" method="POST"

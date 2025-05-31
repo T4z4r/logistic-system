@@ -60,7 +60,7 @@
                  aria-expanded="{{ request()->is('trucks*') || request()->is('trailers*') ? 'true' : 'false' }}"
                  href="#">
                  <i class="nav-main-link-icon fa fa-truck"></i>
-                 <span class="nav-main-link-name">Truck Management</span>
+                 <span class="nav-main-link-name">Trucks Management</span>
              </a>
              <ul class="nav-main-submenu">
                  <li class="nav-main-item">
