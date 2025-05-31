@@ -28,7 +28,7 @@
 
 @section('content')
     <!-- Hero -->
-    <div class="bg-body-light mt-5">
+    <div class="bg-body-light ">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
                 <div class="flex-grow-1">
@@ -49,9 +49,9 @@
     <!-- END Hero -->
 
     <!-- Page Content -->
-    <div class="content p-2 roundness-0">
+    <div class="content1 p-2 rounded-0">
         <!-- Routes Block -->
-        <div class="block block-rounded">
+        <div class="block block-rounded rounded-0">
             <div class="block-header block-header-default">
                 <h3 class="block-title">Routes Overview</h3>
                 <div class="block-options">
