@@ -29,7 +29,7 @@
 
 @section('content')
     <!-- Hero -->
-    <div class="bg-body-light mt-5">
+    <div class="bg-body-light ">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
                 <div class="flex-grow-1">
@@ -50,13 +50,13 @@
     <!-- END Hero -->
 
     <!-- Page Content -->
-    <div class="content p-2">
+    <div class="content1 p-2">
         <!-- Trucks Block -->
         <div class="block block-rounded rounded-0">
             <div class="block-header block-header-default">
                 <h3 class="block-title">Trucks Overview</h3>
                 <div class="block-options">
-                    <a href="{{ route('trucks.create') }}" class="btn btn-primary btn-sm">
+                    <a href="{{ route('trucks.create') }}" class="btn btn-alt-primary btn-sm">
                         <i class="fa fa-plus"></i>
                         Add New Truck
                     </a>
@@ -116,16 +116,16 @@
                                     {{ $truck->created_at->format('d M Y H:i:s') ?? 'N/A' }}
                                 </td>
                                 <td>
-                                    <a href="{{ route('trucks.edit', $truck->id) }}" class="btn btn-sm btn-primary">
-                                        <i class="fa fa-edit"></i>
+                                    <a href="{{ route('trucks.edit', $truck->id) }}" class="btn btn-sm btn-alt-primary">
+                                        <i class="fa fa-edit"></i> Edit
                                     </a>
                                     <form action="{{ route('trucks.delete', $truck->id) }}" method="POST"
                                         style="display: inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger"
+                                        <button type="submit" class="btn btn-sm btn-alt-danger"
                                             onclick="return confirm('Are you sure?')">
-                                            <i class="fa fa-trash"></i>
+                                            <i class="fa fa-trash"></i> Delete
                                         </button>
                                     </form>
 
@@ -134,13 +134,13 @@
                                             style="display: inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger"
+                                            <button type="submit" class="btn btn-sm btn-alt-danger"
                                                 onclick="return confirm('Are you sure you want to deassign the driver?')">
                                                 <i class="fa fa-user-minus"></i>
                                             </button>
                                         </form>
                                     @else
-                                        <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-sm btn-alt-success" data-bs-toggle="modal"
                                             data-bs-target="#assignDriverModal{{ $truck->id }}">
                                             <i class="fa fa-user-plus"></i>
                                         </button>
