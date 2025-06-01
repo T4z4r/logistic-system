@@ -32,13 +32,16 @@
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
                 <div class="flex-grow-0">
-                    <h5 class="h5 fw-bold mb-1">Customer Management</h5>
-                    <h2 class="fs-base lh-base fw-medium text-muted mb-0">Manage all customers in the system</h2>
+                    <h5 class="h5 fw-bold mb-1 text-main">Customer Management</h5>
+                   <h2 class="fs-sm lh-base fw-normal text-muted mb-0">
+                        <i class="fa fa-info-circle text-main me-1"></i>
+                        Manage all customers in the system
+                    </h2>
                 </div>
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
                         <li class="breadcrumb-item">
-                            <a class="link-fx" href="{{ route('dashboard') }}">Dashboard</a>
+                            <a class="link-fx text-main" href="{{ route('dashboard') }}">Dashboard</a>
                         </li>
                         <li class="breadcrumb-item" aria-current="page">Customers</li>
                     </ol>
@@ -53,7 +56,7 @@
         <!-- Customers Block -->
         <div class="block block-rounded rounded-0">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Customers Overview</h3>
+                <h3 class="block-title"> </h3>
                 <div class="block-options">
                     <a href="{{ route('customers.create') }}" class="btn btn-alt-primary btn-sm">
                         <i class="fa fa-plus"></i>
@@ -64,9 +67,9 @@
                 </div>
             </div>
             <div class="block-content">
-                @if (session('success'))
+                {{-- @if (session('success'))
                     <div class="alert alert-success" role="alert">{{ session('success') }}</div>
-                @endif
+                @endif --}}
 
                 <table class="table table-bordered table-striped table-vcenter js-dataTable-full  table-sm">
                     <thead class="table-secondary">
@@ -77,8 +80,8 @@
                             <th>Email</th>
                             <th>Phone</th>
                             <th>TIN</th>
-                            <th>VRN</th>
-                            <th>Created By</th>
+                            {{-- <th>VRN</th> --}}
+                            {{-- <th>Created By</th> --}}
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -92,13 +95,17 @@
                                 <td>{{ $customer->email }}</td>
                                 <td>{{ $customer->phone }}</td>
                                 <td>{{ $customer->TIN }}</td>
-                                <td>{{ $customer->VRN }}</td>
-                                <td>{{ $customer->createdBy?->name ?? 'N/A' }}</td>
+                                {{-- <td>{{ $customer->VRN }}</td> --}}
+                                {{-- <td>{{ $customer->createdBy?->name ?? 'N/A' }}</td> --}}
                                 <td>{{ $customer->status ? 'Active' : 'Inactive' }}</td>
-                                <td width="18%">
+                                <td width="15%">
                                     <a href="{{ route('customers.edit', $customer->id) }}"
                                         class="btn btn-sm btn-alt-primary">
-                                        <i class="fa fa-edit"></i> Edit
+                                        <i class="fa fa-list"></i>
+                                    </a>
+                                    <a href="{{ route('customers.edit', $customer->id) }}"
+                                        class="btn btn-sm btn-alt-primary">
+                                        <i class="fa fa-edit"></i>
                                     </a>
                                     <form action="{{ route('customers.delete', $customer->id) }}" method="POST"
                                         style="display: inline;">
@@ -106,7 +113,7 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-alt-danger"
                                             onclick="return confirm('Are you sure?')">
-                                            <i class="fa fa-trash"></i> Delete
+                                            <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
                                 </td>
