@@ -1181,7 +1181,7 @@
                                                 </a>
                                                 {{-- @endcan --}}
                                             @else
-                                                <span class="badge bg-info  bg-opacity-10 text-danger">Not
+                                                <span class="badge bg-info  bg-opacity-10 ">Not
                                                     Editable</span>
                                             @endif
                                         </td>
@@ -1329,7 +1329,7 @@
                                                     </a>
                                                 @endcan
                                             @else
-                                                <span class="badge bg-info  bg-opacity-10 text-danger">Not
+                                                <span class="badge bg-info  bg-opacity-10 ">Not
                                                     Editable</span>
                                             @endif
                                         </td>
@@ -1475,7 +1475,7 @@
                                                     </a>
                                                 @endcan
                                             @else
-                                                <span class="badge bg-info  bg-opacity-10 text-danger">Not
+                                                <span class="badge bg-info  bg-opacity-10 ">Not
                                                     Editable</span>
                                             @endif
                                         </td>
@@ -1635,7 +1635,7 @@
                                                         </a>
                                                     @endcan
                                                 @else
-                                                    <span class="badge bg-info  bg-opacity-10 text-danger">Not
+                                                    <span class="badge bg-info  bg-opacity-10">Not
                                                         Editable</span>
                                                 @endif
                                             </td>

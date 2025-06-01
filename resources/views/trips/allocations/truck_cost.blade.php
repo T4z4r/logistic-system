@@ -39,7 +39,8 @@
                 <h4 class="lead text-start "> <i class="ph-truck text-brand-secondary"></i> Truck Allocation Details</h4>
 
                 @if ($allocation->status == 3)
-                    <a href="{{ url('/trips/request-trip/' . base64_encode($allocation->id)) }}" class="btn btn-alt-primary btn-sm ">
+                    <a href="{{ url('/trips/request-trip/' . base64_encode($allocation->id)) }}"
+                        class="btn btn-alt-primary btn-sm ">
                         <i class="ph-list me-2"></i> Back
                     </a>
                 @else
@@ -51,8 +52,8 @@
 
 
                 {{-- @if ($allocation->status == 3) --}}
-                <a href="" class="btn btn-alt-primary btn-sm float-end mx-1" data-bs-toggle="modal" title="Assign Driver"
-                    data-bs-target="#approval" hidden>
+                <a href="" class="btn btn-alt-primary btn-sm float-end mx-1" data-bs-toggle="modal"
+                    title="Assign Driver" data-bs-target="#approval" hidden>
                     <i class="ph-envelope me-2"></i>
                     Add Remark
                 </a>
@@ -70,51 +71,44 @@
             <div class="col-12 mx-auto">
                 <hr>
 
-                <div class="row bg-light">
-                    <div class="col-6">
-                        <div class="row">
-                            <div class="col-8">
-                                <p><b class="text-dark">Purchased Date</b> </p>
-                            </div>
-                            <div class="col-4 text-end">
-                                <p>{{ $truck->purchase_date }}</p>
-                            </div>
-
-                            {{--  --}}
-                            <div class="col-8">
-                                <p><b class="text-dark">Manufacturer</b> </p>
-                            </div>
-                            <div class="col-4 text-end">
-                                <p>{{ $truck->manufacturer }}</p>
-                            </div>
-                            {{--  --}}
-                            {{--  --}}
-                            <div class="col-8">
-                                <p><b class="text-dark">Truck Type</b> </p>
-                            </div>
-                            <div class="col-4 text-end">
-                                <p>{{ $truck->type->name }}</p>
-                            </div>
-                            {{--  --}}
-                            <div class="col-4">
-                                <p><b class="text-dark">Assigned Driver</b> </p>
-                            </div>
-                            <div class="col-8 text-end">
+                <table class="table table-bordered table-striped table-sm">
+                    <tbody>
+                        <tr>
+                            <th>Purchased Date</th>
+                            <td>{{ $truck->purchase_date }}</td>
+                            <th>Plate Number</th>
+                            <td>{{ $truck->plate_number }}</td>
+                        </tr>
+                        <tr>
+                            <th>Manufacturer</th>
+                            <td>{{ $truck->manufacturer }}</td>
+                            <th>Truck Model</th>
+                            <td>{{ $truck->vehicle_model }}</td>
+                        </tr>
+                        <tr>
+                            <th>Truck Type</th>
+                            <td>{{ $truck->type->name }}</td>
+                            <th>Transmission</th>
+                            <td>{{ $truck->transimission }}</td>
+                        </tr>
+                        <tr>
+                            <th>Assigned Driver</th>
+                            <td>
                                 @php
                                     $drivers = App\Models\DriverAssignment::where('truck_id', $truck->id)
                                         ->latest()
                                         ->first();
                                 @endphp
                                 @if ($drivers)
-                                    <p>{{ $drivers->driver->fname . ' ' . $drivers->driver->lname }}</p>
+                                    {{ $drivers->driver->fname . ' ' . $drivers->driver->lname }}
                                 @endif
-
-                            </div>
-                            {{--  --}}
-                            <div class="col-8">
-                                <p><b class="text-dark">Assigned Trailer (s)</b> </p>
-                            </div>
-                            <div class="col-4 text-end">
+                            </td>
+                            <th>Trailer Capacity</th>
+                            <td>{{ $truck->trailer_capacity }}</td>
+                        </tr>
+                        <tr>
+                            <th>Assigned Trailer(s)</th>
+                            <td colspan="3">
                                 @php
                                     $trailers = App\Models\TrailerAssignment::where('truck_id', $truck->id)
                                         ->latest()
@@ -122,49 +116,18 @@
                                 @endphp
                                 @if ($trailers->count() > 0)
                                     @foreach ($trailers as $item)
-                                        {{ $item->trailer->plate_number }} ,
+                                        {{ $item->trailer->plate_number }}@if (!$loop->last)
+                                            ,
+                                        @endif
                                     @endforeach
+                                @else
+                                    No trailer assigned.
                                 @endif
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-                            </div>
-                            {{--  --}}
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="row">
-
-                            {{--  --}}
-                            <div class="col-8">
-                                <p><b class="text-dark">Plate Number</b> </p>
-                            </div>
-                            <div class="col-4 text-end">
-                                <p>{{ $truck->plate_number }}</p>
-                            </div>
-                            {{--  --}}
-                            <div class="col-8">
-                                <p><b class="text-dark">Truck Model</b> </p>
-                            </div>
-                            <div class="col-4 text-end">
-                                <p>{{ $truck->vehicle_model }}</p>
-                            </div>
-                            {{--  --}}
-                            <div class="col-8">
-                                <p><b class="text-dark">Transimission</b> </p>
-                            </div>
-                            <div class="col-4 text-end">
-                                <p>{{ $truck->transimission }}</p>
-                            </div>
-                            {{--  --}}
-                            <div class="col-8">
-                                <p><b class="text-dark">Trailer Capacity</b> </p>
-                            </div>
-                            <div class="col-4 text-end">
-                                <p>{{ $truck->trailer_capacity }}</p>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
 
                 <hr>
                 {{-- For Truck Allocation Costs --}}
@@ -194,8 +157,9 @@
                             </b></small>
                         <hr> --}}
                         <div class="col-12">
-                            <table id="" class="table table-striped table-bordered datatable-basic">
-                                <thead>
+                            <table
+                                class="table table-bordered table-striped table-vcenter js-dataTable-full1 fs-sm table-sm">
+                                <thead class="table-secondary">
                                     <th>
                                         No.
                                     </th>
@@ -203,6 +167,7 @@
                                     <th>Amount</th>
                                     <th>Status</th>
 
+                                    <th hidden></th>
                                     <th hidden></th>
                                 </thead>
 
@@ -322,7 +287,7 @@
                         {{-- ./ --}}
 
                     </div>
-                    <div class="tab-pane fade active show" id="additional" role="tabpanel">
+                    <div class="tab-pane fade  show" id="additional" role="tabpanel">
 
                         {{-- Trip Costs --}}
                         <div class="p-2">
@@ -334,8 +299,9 @@
                             </div> --}}
 
                             <div class="">
-                                <table id="" class="table table-striped table-bordered datatable-basic">
-                                    <thead>
+                                <table
+                                    class="table table-bordered table-striped table-vcenter js-dataTable-full1 fs-sm table-sm">
+                                    <thead class="table-secondary">
                                         <th>No.</th>
                                         <th>Expense Name</th>
                                         <th>Amount</th>
@@ -372,7 +338,8 @@
                                                     {{ strtoupper($item->name) }}
                                                 </td>
                                                 <td>
-                                                    {{ $item->currency->symbol }} {{ number_format($item->amount, 2) }}
+                                                    {{ $item->currency?->symbol ?? '--' }}
+                                                    {{ number_format($item->amount, 2) }}
                                                     @if ($item->quantity > 0)
                                                         <br>
                                                         <small><b>Litres:</b>
@@ -390,10 +357,10 @@
                                                             data-quantity="{{ $item->quantity }}"
                                                             data-name="{{ $item->name }}"
                                                             data-description="{{ $item->amount }}">
-                                                            <i class="ph-note-pencil"></i>
+                                                            <i class="fa fa-edit"></i>
                                                         </button>
                                                         <a href="javascript:void(0)" title="Delete Cost"
-                                                            class="icon-2 info-tooltip btn btn-danger btn-sm"
+                                                            class="icon-2 info-tooltip btn btn-alt-danger btn-sm"
                                                             onclick="deleteCost(<?php echo $item->id; ?>)"> <i
                                                                 class="ph-trash"></i>
                                                             Remove
@@ -664,7 +631,8 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" id="edit_truck_cost_btn1" class="btn btn-alt-primary">Update Remark</button>
+                            <button type="submit" id="edit_truck_cost_btn1" class="btn btn-alt-primary">Update
+                                Remark</button>
                         </div>
                 </form>
             </div>
