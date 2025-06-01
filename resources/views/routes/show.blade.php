@@ -73,10 +73,10 @@
                         <i class="fa fa-plus"></i> Add Route Cost
                     </button>
                     {{-- @endcan --}}
-                    <a href="{{ url('routes/print-route-costs/' . $route->id) }}" class="btn btn-alt-primary btn-sm"
+                    {{-- <a href="{{ url('routes/print-route-costs/' . $route->id) }}" class="btn btn-alt-primary btn-sm"
                         title="Print Route Costs">
                         <i class="fa fa-printer me-2"></i> Print Route Costs
-                    </a>
+                    </a> --}}
                 </div>
             </div>
             <div class="block-content">
