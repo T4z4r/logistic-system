@@ -28,11 +28,11 @@
 
 @section('content')
   <!-- Hero -->
-  <div class="bg-body-light mt-5">
+  <div class="bg-body-light ">
     <div class="content content-full">
-      <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+      <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0">
         <div class="flex-grow-1">
-          <h5 class="h5 fw-bold mb-1">
+          <h5 class="h5 fw-bold mb-1 text-main">
             Roles Management
           </h5>
           <h2 class="fs-base lh-base fw-medium text-muted mb-0">
@@ -42,7 +42,7 @@
         <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
           <ol class="breadcrumb breadcrumb-alt">
             <li class="breadcrumb-item">
-              <a class="link-fx" href="{{ route('dashboard') }}">Dashboard</a>
+              <a class="link-fx text-main" href="{{ route('dashboard') }}">Dashboard</a>
             </li>
             <li class="breadcrumb-item" aria-current="page">
               Roles
@@ -55,9 +55,9 @@
   <!-- END Hero -->
 
   <!-- Page Content -->
-  <div class="content p-2">
+  <div class="content1 p-2 rounded-0">
     <!-- Roles Block -->
-    <div class="block block-rounded">
+    <div class="block block-rounded rounded-0">
       <div class="block-header block-header-default">
         <h3 class="block-title">
           Roles List
@@ -95,25 +95,31 @@
                     <td>{{ $count++ }}</td>
                     <td>{{ $role->name }}</td>
                     <td>
-                      {{ $role->permissions->pluck('name')->implode(', ') }}
+                      @php
+                        $permissions = $role->permissions->pluck('name');
+                        $displayCount = 3;
+                      @endphp
+                      {{ $permissions->take($displayCount)->implode(', ') }}
+                      @if ($permissions->count() > $displayCount)
+                        ...
+                      @endif
                     </td>
                     <td>{{ \Carbon\Carbon::parse($role->created_at)->format('d M, Y') }}</td>
                     <td class="text-center">
-                      <a href="{{ route('roles.edit', $role->id) }}" 
-                         class="btn btn-sm btn-alt-primary me-1" 
+                      <a href="{{ route('roles.edit', $role->id) }}"
+                         class="btn btn-sm btn-alt-primary me-1"
                          title="Edit Role">
-                        <i class="fa fa-fw fa-pencil-alt"></i> Edit
+                        <i class="fa fa-fw fa-pencil-alt"></i>
                       </a>
-                      <form action="{{ route('roles.destroy', $role->id) }}" 
-                            method="POST" 
+                      <form action="{{ route('roles.destroy', $role->id) }}"
+                            method="POST"
                             class="d-inline-block"
-                            onsubmit="return confirm('Are you sure you want to delete this role?')">
+                            {{-- onsubmit="return confirm('Are you sure you want to delete this role?')" --}}
+                            >
                         @csrf
                         @method('DELETE')
-                        <button type="submit" 
-                                class="btn btn-sm btn-alt-danger" 
-                                title="Delete Role">
-                          <i class="fa fa-fw fa-trash"></i> Delete
+                        <button type="submit" class="btn btn-sm btn-alt-danger swal-confirm-btn">
+                          <i class="fa fa-fw fa-trash"></i>
                         </button>
                       </form>
                     </td>
