@@ -6,9 +6,9 @@
     <div class="content content-full">
       <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0">
         <div class="flex-grow-1 text-center text-sm-start">
-          <h1 class="h3 fw-bold mb-1">
+          <h5 class="h5 text-main fw-bold mb-1">
             Feature Coming Soon
-          </h1>
+          </h5>
           <h2 class="fs-base lh-base fw-medium text-muted mb-0">
             Get ready for an exciting update!
           </h2>
