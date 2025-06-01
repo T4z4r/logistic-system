@@ -29,7 +29,7 @@ class PermissionSeeder extends Seeder
             'accidents',
             'out-of-budget',
             'reports',
-            'view-finance-modules',
+            'finance-modules',
             'accounts-modules',
             'tally-modules',
             'finance-settings',
