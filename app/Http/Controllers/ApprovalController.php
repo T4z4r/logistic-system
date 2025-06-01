@@ -101,7 +101,7 @@ class ApprovalController extends Controller
     public function storeLevel(Request $request, $approval_id)
     {
         $approval = Approval::findOrFail($approval_id);
-        dd($approval);
+        // dd($approval);
 
         $validator = Validator::make($request->all(), [
             'role_id' => 'required|exists:roles,id',
@@ -117,14 +117,19 @@ class ApprovalController extends Controller
 
         if (ApprovalLevel::where('approval_id', $approval_id)
             ->where('level_name', $request->level_name)
-            ->exists()) {
+            ->exists()
+        ) {
             return redirect()->back()->withErrors(['level_name' => 'This level name already exists for this approval.'])->withInput();
         }
 
-        ApprovalLevel::create(array_merge(
+        $level = ApprovalLevel::create(array_merge(
             $request->only(['role_id', 'level_name', 'rank', 'label_name', 'status']),
             ['approval_id' => $approval_id]
         ));
+
+        $approval = $level->approval;
+        $approval->levels = $approval->levels + 1;
+        $approval->save();
 
         return redirect()->route('approvals.list')->with('success', 'Approval level created successfully.');
     }
@@ -157,7 +162,8 @@ class ApprovalController extends Controller
         if (ApprovalLevel::where('approval_id', $approval_id)
             ->where('level_name', $request->level_name)
             ->where('id', '!=', $id)
-            ->exists()) {
+            ->exists()
+        ) {
             return redirect()->back()->withErrors(['level_name' => 'This level name already exists for this approval.'])->withInput();
         }
 
@@ -174,9 +180,22 @@ class ApprovalController extends Controller
 
     public function destroyLevel($approval_id, $id)
     {
-        $approval = Approval::findOrFail($approval_id);
-        $approvalLevel = ApprovalLevel::findOrFail($id);
-        $approvalLevel->delete();
+        // $approval = Approval::findOrFail($approval_id);
+        // $approvalLevel = ApprovalLevel::findOrFail($id);
+        // $approvalLevel->delete();
+
+        $level = ApprovalLevel::where('id', $id)->first();
+
+        // for changing approval level
+
+        $appID = $level->approval_id;
+        $approval = Approval::where('id', $appID)->first();
+        $approval->levels = $approval->levels - 1;
+        $approval->update();
+
+        $level->delete();
+
+
         return redirect()->route('approvals.list')->with('success', 'Approval level deleted successfully.');
     }
 }

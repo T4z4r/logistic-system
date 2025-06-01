@@ -563,27 +563,9 @@ class AllocationController extends Controller
         // For User Log
         SystemLogHelper::logSystemActivity('Allocation Submission', auth()->user()->id, auth()->user()->fname . ' ' . auth()->user()->lname . ' has Submitted an Allocation');
 
-        // Start Of Approval Email Alert
-        // $process = Approval::where('process_name', 'Allocation Approval')->first();
-        // $level = ApprovalLevel::where('approval_id', $process->id)->first();
-        // $employees = User::where('position_id', $level->role_id)->get(); //To be Modified
 
-        // $email_data = array(
-        //     'subject' => $allocation->ref_no . ' Allocation Request Approval',
-        //     'view' => 'emails.allocations.fleet-approval',
-        //     'allocation' => $allocation,
-        // );
 
-        // $job = (new \App\Jobs\SendEmail($email_data, $employees));
-        // dispatch($job);
-        // end of Approval Email Alert
-
-        return response()->json([
-            'status' => 200,
-            'errors' => 'Updated',
-            'route_truck' => route('allocations.list'),
-
-        ]);
+        return redirect()->route('allocations.list')->with('success', 'Allocation submitted successfully.');
     }
 
 

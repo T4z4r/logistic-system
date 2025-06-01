@@ -2,17 +2,17 @@
 
 @section('content')
     <!-- Hero -->
-    <div class="bg-body-light mt-5">
+    <div class="bg-body-light ">
         <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0">
                 <div class="flex-grow-1">
-                    <h1 class="h3 fw-bold mb-1">View Approval Process</h1>
+                    <h5 class="h5 fw-bold text-main mb-1">View Approval Process</h5>
                     <h2 class="fs-base lh-base fw-medium text-muted mb-0">Details for {{ $approval->process_name }}</h2>
                 </div>
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
                         <li class="breadcrumb-item">
-                            <a class="link-fx" href="{{ route('approvals.list') }}">Approvals</a>
+                            <a class="link-fx text-main" href="{{ route('approvals.list') }}">Approvals</a>
                         </li>
                         <li class="breadcrumb-item" aria-current="page">View</li>
                     </ol>
@@ -23,17 +23,17 @@
     <!-- END Hero -->
 
     <!-- Page Content -->
-    <div class="content p-2">
+    <div class="content1 rounded-0 p-2">
         <!-- Approval Details Block -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
                 <h3 class="block-title">Approval Process Details</h3>
                 <div class="block-options">
-                    <a href="{{ route('approvals.edit', $approval->id) }}" class="btn btn-primary">Edit Approval</a>
+                    <a href="{{ route('approvals.edit', $approval->id) }}" class="btn btn-alt-primary">Edit Approval</a>
                     <a href="{{ route('approvals.list') }}" class="btn btn-secondary">Back to List</a>
                 </div>
             </div>
-            <div class="block-content">
+            <div class="block-content rounded-0">
                 @if (session('success'))
                     <div class="alert alert-success" role="alert">{{ session('success') }}</div>
                 @endif
@@ -53,11 +53,11 @@
         <!-- END Approval Details Block -->
 
         <!-- Approval Levels Block -->
-        <div class="block block-rounded">
+        <div class="block block-rounded rounded-0">
             <div class="block-header block-header-default">
                 <h3 class="block-title">Approval Levels</h3>
                 <div class="block-options">
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-alt-success" data-bs-toggle="modal"
                         data-bs-target="#createLevelModal">Add New Level</button>
                 </div>
             </div>
@@ -72,8 +72,8 @@
                     </div>
                 @endif
 
-                <table class="table table-bordered table-striped">
-                    <thead>
+                <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
+                    <thead class="table-secondary">
                         <tr>
                             <th>Level Name</th>
                             <th>Role</th>
@@ -92,14 +92,15 @@
                                 <td>{{ $level->label_name }}</td>
                                 <td>{{ $level->status ? 'Active' : 'Inactive' }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                    <button type="button" class="btn btn-sm btn-alt-primary" data-bs-toggle="modal"
                                         data-bs-target="#editLevelModal{{ $level->id }}">Edit</button>
                                     <form action="{{ route('approvals.levels.delete', [$approval->id, $level->id]) }}"
                                         method="POST" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger"
-                                            onclick="return confirm('Are you sure?')">Delete</button>
+                                        <button type="submit" class="btn btn-sm btn-alt-danger swal-confirm-btn">
+                                            Delete
+                                        </button>
                                     </form>
                                 </td>
                             </tr>
@@ -137,15 +138,15 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="level_name">Level Name</label>
-                            <input type="text" name="level_name" id="level_name"
-                                class="form-control @error('level_name') is-invalid @enderror"
-                                value="{{ old('level_name') }}">
-                            @error('level_name')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                     <div class="form-group mb-3">
+                        <label class="col-form-label col-sm-3">Level: </label>
+                            <input type="number" disabled  name="level_name"  value="{{ $approval->levels+1 }}" class="form-control @error('process_name') is-invalid @enderror">
+                            <input type="number"  name="level_name"  value="{{ $approval->levels+1 }}" class="form-control @error('process_name') is-invalid @enderror" hidden>
+                            <input type="hidden" name="approval_id" value="{{ $approval->id }}">
+                            @error('process_name')
+                                <p class="text-danger mt-1"> Field Process Name has an error </p>
                             @enderror
-                        </div>
+                    </div>
                         <div class="mb-3">
                             <label class="form-label" for="rank">Rank</label>
                             <input type="text" name="rank" id="rank"
@@ -156,11 +157,16 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="label_name">Label Name</label>
-                            <input type="text" name="label_name" id="label_name"
-                                class="form-control @error('label_name') is-invalid @endmodule
-              @enderror
-            </div>
-            <div class="mb-3">
+                            <select name="label_name" id="label_name" class="form-control @error('label_name') is-invalid @enderror">
+                                <option value="">Select Label</option>
+                                <option value="Approver" {{ old('label_name') == 'Approver' ? 'selected' : '' }}>Approver</option>
+                                <option value="Reviewer" {{ old('label_name') == 'Reviewer' ? 'selected' : '' }}>Reviewer</option>
+                            </select>
+                            @error('label_name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                           <div class="mb-3">
                             <label class="form-label" for="status">Status</label>
                             <select name="status" id="status"
                                 class="form-control @error('status') is-invalid @enderror">
@@ -171,7 +177,7 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        <button type="submit" class="btn btn-primary">Create Level</button>
+                        <button type="submit" class="btn btn-alt-primary">Create Level</button>
                     </form>
                 </div>
             </div>
@@ -249,7 +255,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <button type="submit" class="btn btn-primary">Update Level</button>
+                            <button type="submit" class="btn btn-alt-primary">Update Level</button>
                         </form>
                     </div>
                 </div>
