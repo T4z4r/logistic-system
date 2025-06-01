@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionController;
 
 /*
@@ -32,9 +33,10 @@ Route::view('/', 'landing');
 require __DIR__ . '/auth.php';
 
 Route::middleware('auth')->group(function () {
-    Route::match(['get', 'post'], '/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+    Route::match(['get', 'post'], '/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
+
 Route::view('/pages/slick', 'pages.slick');
 Route::view('/pages/datatables', 'pages.datatables');
 Route::view('/pages/blank', 'pages.blank')->name('blank');
@@ -70,4 +72,5 @@ Route::view('/pages/blank', 'pages.blank')->name('blank');
     require __DIR__ . '/position.php';
     require __DIR__ . '/approvals.php';
     require __DIR__ . '/settings.php';
+
 });

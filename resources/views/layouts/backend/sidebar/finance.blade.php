@@ -4,7 +4,7 @@
     <a class="nav-main-link{{ request()->is('trip-settings/costs') ? ' active' : '' }}" href="/trip-settings/costs">
         <i class="nav-main-link-icon fa fa-truck text-blue"></i>
         <span class="nav-main-link-name">
-            Trips
+            Trips Management
         </span>
     </a>
 </li>

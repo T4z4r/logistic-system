@@ -73,7 +73,7 @@
                          href="{{ route('trucks.list') }}">
                          <i class="nav-main-link-icon fa fa-truck"></i>
                          <span class="nav-main-link-name">Trucks</span>
-                     </a>
+                     </a>p
                  </li>
                  <li class="nav-main-item">
                      <a class="nav-main-link{{ request()->is('trailers') || request()->is('trailers/*') ? ' active' : '' }}"
