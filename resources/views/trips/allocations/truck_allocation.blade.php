@@ -55,7 +55,7 @@
 
                         <div class="d-none d-sm-block m-2  col-12">
                             {{-- start of Approve button --}}
-                            <button class="btn btn-sm btn-success edit-button" title="Approve Allocation "
+                            <button class="btn btn-sm btn-alt-success edit-button" title="Approve Allocation "
                                 data-bs-toggle="modal" data-bs-target="#approval" data-id="{{ $allocation->id }}"
                                 data-name="{{ $allocation->name }}" data-description="{{ $allocation->amount }}">
                                 <i class="fa fa-check"></i>
@@ -76,7 +76,7 @@
                         </div>
 
                         <div class="d-sm-none   col-12">
-                            <button type="button" class="btn btn-success mx-1 btn-sm  " data-bs-toggle="collapse"
+                            <button type="button" class="btn btn-alt-success mx-1 btn-sm  " data-bs-toggle="collapse"
                                 data-bs-target="#approveDiv">
                                 <i class="fa fa-check"></i>
                                 Approve
@@ -147,107 +147,18 @@
                     @endphp
                     @if ($trucks > 0)
                         {{-- @can('create-allocation') --}}
-                        <button id="submit_allocation" class="btn btn-alt-primary btn-sm float-end" type="button">
-                            <i class="ph-paper-plane-tilt"></i> Submit Request
-                        </button>
-
-                        {{-- Submit Allocation Script --}}
+                        <form action="{{ url('/trips/submit-allocation/' . $allocation->id) }}" method="POST" class="d-inline" id="submit_allocation_form">
+                            @csrf
+                            <button class="btn btn-alt-primary btn-sm float-end" type="submit" id="submit_allocation_btn">
+                                <i class="ph-paper-plane-tilt"></i> Submit Request
+                            </button>
+                        </form>
                         <script>
-                            $(document).on('click', '#submit_allocation', function(e) {
-                                e.preventDefault();
-
-                                const $button = $(this);
-                                const originalContent = $button.html();
-                                const allocationId = '{{ $allocation->id ?? 0 }}'; // Ensure fallback
-
-                                if (!allocationId || allocationId == 0) {
-                                    new Noty({
-                                        text: 'Allocation ID is missing or invalid.',
-                                        type: 'error',
-                                        timeout: 3000
-                                    }).show();
-                                    return;
-                                }
-
-                                // Show loading state
-                                $button
-                                    .html("<i class='ph-spinner spinner me-2'></i> Submitting...")
-                                    .prop('disabled', true)
+                            $("#submit_allocation_form").submit(function(e) {
+                                $("#submit_allocation_btn").html("<i class='ph-spinner spinner me-2'></i> Submitting...")
                                     .addClass('disabled');
-
-                                $.ajax({
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    url: `/trips/submit-allocation/${allocationId}`,
-                                    type: 'POST',
-                                    data: {},
-
-                                    success: function(response) {
-                                        $button.html(originalContent).prop('disabled', false).removeClass('disabled');
-
-                                        if (response.status === 200) {
-                                            new Noty({
-                                                text: 'Allocation submitted successfully!',
-                                                type: 'success',
-                                                timeout: 3000
-                                            }).show();
-
-                                            setTimeout(() => {
-                                                window.location.href = response.route_truck;
-                                            }, 1000);
-                                        } else {
-                                            handleError(response);
-                                        }
-                                    },
-
-                                    error: function(xhr) {
-                                        $button.html(originalContent).prop('disabled', false).removeClass('disabled');
-
-                                        const errorMessage = xhr.responseJSON?.message || 'An unexpected error occurred.';
-                                        displayError([errorMessage]);
-
-                                        new Noty({
-                                            text: 'Error submitting allocation.',
-                                            type: 'error',
-                                            timeout: 3000
-                                        }).show();
-                                    }
-                                });
                             });
-
-                            function handleError(response) {
-                                const $errorMessage = $('#error_message');
-                                $errorMessage.hide();
-
-                                let errorsHtml = '<div class="alert alert-danger"><ul>';
-
-                                if (response.errors) {
-                                    $.each(response.errors, (key, value) => {
-                                        errorsHtml += `<li>${value}</li>`;
-                                    });
-                                } else {
-                                    errorsHtml += '<li>An unexpected error occurred.</li>';
-                                }
-
-                                errorsHtml += '</ul></div>';
-                                $errorMessage.html(errorsHtml).show();
-                            }
-
-                            function displayError(errors) {
-                                const $errorMessage = $('#error_message');
-                                let errorsHtml = '<div class="alert alert-danger"><ul>';
-
-                                errors.forEach(error => {
-                                    errorsHtml += `<li>${error}</li>`;
-                                });
-
-                                errorsHtml += '</ul></div>';
-                                $errorMessage.html(errorsHtml).show();
-                            }
                         </script>
-
-                        {{--  --}}
                         {{-- @endcan --}}
                     @else
                         <small class="text-danger float-end">please Select Trucks</small>
@@ -293,7 +204,7 @@
                 @foreach ($remarks as $remark)
                     @if ($level)
                         @if ($level->level_name >= $remark->status)
-                            <p><span class="badge bg-primary bg-opacity-10 text-warning">
+                            <p><span class="badge bg-primary bg-opacity-10 ">
                                     {{ $remark->remarked_by }} :</span> <code>{{ $remark->user?->name ?? '--' }}</code> -
                                 {{ $remark->remark }}
                                 <br>
@@ -301,7 +212,7 @@
                             </p>
                         @endif
                     @elseif ($remark->status == 0)
-                        <p><span class="badge bg-primary bg-opacity-10 text-warning">
+                        <p><span class="badge bg-primary bg-opacity-10 ">
                                 {{ $remark->remarked_by }} : </span><br> <code>{{ $remark->user?->name ?? '--' }}</code> -
                             {{ $remark->remark }}
                         </p>

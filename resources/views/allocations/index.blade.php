@@ -30,17 +30,17 @@
     <!-- Hero -->
     <div class="bg-body-light ">
         <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0">
                 <div class="flex-grow-1">
-                    <h5 class="h5 fw-bold mb-1">Route Management</h5>
-                    <h2 class="fs-base lh-base fw-medium text-muted mb-0">Manage all routes in the system</h2>
+                    <h5 class="h5 fw-bold mb-1">Allocation Requests</h5>
+                    <h2 class="fs-base lh-base fw-medium text-muted mb-0">Manage allocations in the system</h2>
                 </div>
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
                         <li class="breadcrumb-item">
-                            <a class="link-fx" href="{{ route('dashboard') }}">Dashboard</a>
+                            <a class="link-fx text-main" href="{{ route('dashboard') }}">Dashboard</a>
                         </li>
-                        <li class="breadcrumb-item" aria-current="page">Routes</li>
+                        <li class="breadcrumb-item" aria-current="page">Allocations</li>
                     </ol>
                 </nav>
             </div>
@@ -128,14 +128,14 @@
                 <div class="card-header ">
                     <div class="p-2">
 
-                    
+
 
                         {{-- @can('create-allocation') --}}
                         <a href="{{ route('allocations.create') }}" class="btn btn-alt-primary btn-sm float-end">
                             <i class="ph-plus me-2"></i> New Request
                         </a>
                         {{-- @endcan --}}
-                        <a href="{{ route('flex.print-allocations') }}" class="btn btn-primary btn-sm float-end mx-1" hidden
+                        <a href="{{ route('flex.print-allocations') }}" class="btn btn-alt-primary btn-sm float-end mx-1" hidden
                             title="Add New Truck">
                             <i class="ph-printer me-2"></i> Print Trips
                         </a>
@@ -226,7 +226,7 @@
                             <tbody>
                                 <?php
                                 $i = 1;
-                                
+
                                 ?>
                                 @forelse($incomplete as $item)
                                     @php
@@ -270,7 +270,7 @@
                                             @endif
 
                                             <a href="{{ url('/trips/truck-allocation/' . base64_encode($item->id)) }}"
-                                                class="btn btn-sm btn-primary">
+                                                class="btn btn-sm btn-alt-primary">
                                                 <i class="fa fa-list"></i>
                                             </a>
                                             {{-- @can('delete-allocation') --}}
@@ -285,7 +285,7 @@
 
                                             @can('notify-allocation')
                                                 <a href="javascript:void(0)" title="Renotify"
-                                                    class="icon-2 info-tooltip btn btn-primary btn-sm m-1"
+                                                    class="icon-2 info-tooltip btn btn-alt-primary btn-sm m-1"
                                                     onclick="renotifyAllocation(<?php echo $item->id; ?>)">
                                                     <i class="fa fa-bell"></i>
                                                     ReNotify
@@ -352,7 +352,7 @@
                                                             </div>
 
                                                             <button type="submit"
-                                                                class="btn btn-sm btn-primary float-end"
+                                                                class="btn btn-sm btn-alt-primary float-end"
                                                                 id="change_route_btn"> <i class="ph-check-circle"></i>
                                                                 Submit</button>
 
@@ -394,7 +394,7 @@
                                                             </div>
 
                                                             <button type="submit"
-                                                                class="btn btn-sm btn-primary float-end"
+                                                                class="btn btn-sm btn-alt-primary float-end"
                                                                 id="change_route_btn"> <i class="ph-check-circle"></i>
                                                                 Submit</button>
 
@@ -440,7 +440,7 @@
                             <tbody>
                                 <?php
                                 $i = 1;
-                                
+
                                 ?>
                                 @forelse($pending as $item)
                                     @php
@@ -484,7 +484,7 @@
                                             @endif
 
                                             <a href="{{ url('/trips/truck-allocation/' . base64_encode($item->id)) }}"
-                                                class="btn btn-sm btn-primary">
+                                                class="btn btn-sm btn-alt-primary">
                                                 <i class="fa fa-list"></i>
                                             </a>
                                             @can('delete-allocation')
@@ -544,7 +544,7 @@
                             <tbody>
                                 <?php
                                 $i = 1;
-                                
+
                                 ?>
                                 @forelse($pending as $item)
                                     @php
@@ -590,7 +590,7 @@
                                                     @endif
 
                                                     <a href="{{ url('/trips/truck-allocation/' . base64_encode($item->id)) }}"
-                                                        class="btn btn-sm btn-primary">
+                                                        class="btn btn-sm btn-alt-primary">
                                                         <i class="fa fa-list"></i>
                                                     </a>
                                                     @can('delete-allocation')
@@ -613,7 +613,7 @@
                                                     {{-- @endif --}}
                                                     @can('notify-allocation')
                                                         <a href="javascript:void(0)" title="Renotify"
-                                                            class="icon-2 info-tooltip btn btn-primary btn-sm m-1"
+                                                            class="icon-2 info-tooltip btn btn-alt-primary btn-sm m-1"
                                                             onclick="renotifyAllocation(<?php echo $item->id; ?>)">
                                                             <i class="ph-bell"></i>
                                                             ReNotify
@@ -684,7 +684,7 @@
                                                                     </div>
 
                                                                     <button type="submit"
-                                                                        class="btn btn-sm btn-primary float-end"
+                                                                        class="btn btn-sm btn-alt-primary float-end"
                                                                         id="change_route_btn"> <i
                                                                             class="ph-check-circle"></i>
                                                                         Submit</button>
@@ -728,7 +728,7 @@
                                                                     </div>
 
                                                                     <button type="submit"
-                                                                        class="btn btn-sm btn-primary float-end"
+                                                                        class="btn btn-sm btn-alt-primary float-end"
                                                                         id="change_route_btn"> <i
                                                                             class="ph-check-circle"></i>
                                                                         Submit</button>
@@ -812,20 +812,20 @@
                                                 {{-- @endcan --}}
                                                 @cannot('initiate-trip')
                                                     <a href="{{ url('/trips/request-trip/' . base64_encode($item->id)) }}"
-                                                        class="btn btn-sm btn-primary">
+                                                        class="btn btn-sm btn-alt-primary">
                                                         <i class="fa fa-list"></i>
                                                     </a>
                                                 @endcannot
                                                 {{-- @endcan
                                             @cannot('control-trip')
                                                 <a href="{{ url('/trips/truck-allocation/' . base64_encode($item->id)) }}"
-                                                    class="btn btn-sm btn-primary">
+                                                    class="btn btn-sm btn-alt-primary">
                                                     <i class="fa fa-list"></i>
                                                 </a>
                                             @endcannot --}}
                                             @else
                                                 <a href="{{ url('/trips/truck-allocation/' . base64_encode($item->id)) }}"
-                                                    class="btn btn-sm btn-primary">
+                                                    class="btn btn-sm btn-alt-primary">
                                                     <i class="fa fa-list"></i>
                                                 </a>
                                             @endif
@@ -904,7 +904,7 @@
 
 
                                                 <a href="{{ url('/trips/truck-allocation/' . base64_encode($item->id)) }}"
-                                                    class="btn btn-sm btn-primary">
+                                                    class="btn btn-sm btn-alt-primary">
                                                     <i class="fa fa-list"></i>
                                                 </a>
                                                 {{-- @can('view-settings') --}}
@@ -974,7 +974,7 @@
                             <div class="row ">
                                 <div class="col-4 mx-auto">
                                     <button type="submit" id="approve_yes"
-                                        class="btn btn-primary btn-sm px-4 ">Yes</button>
+                                        class="btn btn-alt-primary btn-sm px-4 ">Yes</button>
 
                                     <button type="button" id="approve_no" class="btn btn-danger btn-sm  px-4 text-light"
                                         data-bs-dismiss="modal">
@@ -1023,7 +1023,7 @@
                             <div class="row ">
                                 <div class="col-4 mx-auto">
                                     <button type="submit" id="disapprove_yes"
-                                        class="btn btn-primary btn-sm px-4 ">Yes</button>
+                                        class="btn btn-alt-primary btn-sm px-4 ">Yes</button>
 
                                     <button type="button" id="disapprove_no"
                                         class="btn btn-danger btn-sm  px-4 text-light" data-bs-dismiss="modal">

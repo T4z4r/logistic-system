@@ -724,7 +724,7 @@ class AllocationController extends Controller
     // For New  Disapproval Allocation By Level
     public function disapproveAllocation(Request $request)
     {
-        
+
         $allocation = Allocation::where('id', $request->allocation_id)->first();
 
          $role_id = Auth::user()->roles->first()?->id;
@@ -981,7 +981,7 @@ class AllocationController extends Controller
             // Return a success message
             return back()->with('success', 'Truck Cost Added Successfully!');
         } catch (\Exception $e) {
-            dd($e);
+            // dd($e);
             // Rollback transaction if something goes wrong
             DB::rollBack();
 
