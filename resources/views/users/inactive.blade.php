@@ -31,13 +31,16 @@
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center ">
                 <div class="flex-grow-1">
-                    <h5 class="h5 fw-bold mb-1">Inactive Users</h5>
-                    <h2 class="fs-base lh-base fw-medium text-muted mb-0">View all inactive users in the system</h2>
+                    <h5 class="h5 fw-bold mb-1 text-main">Blocked Users</h5>
+                  <h2 class="fs-sm lh-base fw-normal text-muted mb-0">
+                        <i class="fa fa-info-circle text-main me-1"></i>
+                        View all blocked or inactive users in the system
+                    </h2>
                 </div>
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
                         <li class="breadcrumb-item">
-                            <a class="link-fx" href="{{ route('users.index') }}">Users</a>
+                            <a class="link-fx text-main" href="{{ route('users.index') }}">Users</a>
                         </li>
                         <li class="breadcrumb-item" aria-current="page">Inactive</li>
                     </ol>
@@ -48,11 +51,11 @@
     <!-- END Hero -->
 
     <!-- Page Content -->
-    <div class="content1 p-2">
+    <div class="content1 p-2 rounded-0" >
         <!-- Inactive Users Block -->
         <div class="block block-rounded rounded-0">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Inactive Users List</h3>
+                <h3 class="block-title"></h3>
                 <div class="block-options">
                     <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm" hidden>
                         <i class="fa fa-plus"></i>
@@ -69,6 +72,7 @@
                 <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
                     <thead class="table-secondary">
                         <tr>
+                            <th>#</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Department</th>
@@ -81,6 +85,7 @@
                     <tbody>
                         @foreach ($users as $user)
                             <tr>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->department?->name ?? 'N/A' }}</td>
@@ -88,14 +93,14 @@
                                 <td>{{ $user->lineManager?->name ?? 'N/A' }}</td>
                                 <td>{{ $user->status ? 'Active' : 'Inactive' }}</td>
                                 <td>
-                                    <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-primary">
+                                    <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-alt-primary">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                     <form action="{{ route('users.destroy', $user) }}" method="POST"
                                         style="display: inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger"
+                                        <button type="submit" class="btn btn-sm btn-alt-danger"
                                             onclick="return confirm('Are you sure?')">
                                             <i class="fa fa-trash"></i>
                                         </button>

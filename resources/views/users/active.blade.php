@@ -63,17 +63,20 @@
                         <i class="fa fa-plus"></i>
                         Add New User
                     </a>
+                      <a href="{{ route('users.reset') }}" class="btn btn-alt-warning btn-sm">
+                        <i class="fa fa-key"></i>
+                        Reset Password
+                    </a>
                     <a href="{{ route('users.inactive') }}" class="btn btn-secondary btn-sm" hidden>View Inactive Users</a>
                 </div>
             </div>
-            <div class="content1 p-2 rounded-0">
-                @if (session('success'))
-                    <div class="alert alert-success" role="alert">{{ session('success') }}</div>
-                @endif
+            <div class="content1 p-2 rounded-0 table-responsive">
 
-                <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
+
+                <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm ">
                     <thead class="table-secondary">
                         <tr>
+                            <th>#</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Department</th>
@@ -86,6 +89,7 @@
                     <tbody>
                         @foreach ($users as $user)
                             <tr>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->department?->name ?? 'N/A' }}</td>

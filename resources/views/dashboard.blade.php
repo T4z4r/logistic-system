@@ -6,7 +6,7 @@
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0    ">
                 <div class="flex-grow-1">
-                    <h5 class="h5 fw-bold mb-1">
+                    <h5 class="h5 text-main fw-bold mb-1">
                         Dashboard
                     </h5>
                     <h2 class="fs-base lh-base fw-medium text-muted mb-0" >
@@ -16,7 +16,7 @@
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
                         <li class="breadcrumb-item">
-                            <a class="link-fx" href="javascript:void(0)">App</a>
+                            <a class="link-fx text-main" href="javascript:void(0)">App</a>
                         </li>
                         <li class="breadcrumb-item" aria-current="page">
                             Dashboard
@@ -37,7 +37,7 @@
         <div class="row items-push p-0 ">
             <div class="col-sm-6 col-xxl-3">
                 <!-- Pending Shipments -->
-                <div class="block block-rounded d-flex flex-column h-100 mb-0">
+                <div class="block block-rounded d-flex flex-column h-100 mb-0 rounded-0">
                     <div
                         class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center">
                         <dl class="mb-0">
@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <div class="bg-body-light rounded-bottom">
-                        <a class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
+                        <a class="block-content block-content-full block-content-sm text-main fs-sm fw-medium d-flex align-items-center justify-content-between"
                             href="{{ url('trucks.index') }}">
                             <span>View all Trucks</span>
                             <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"></i>
@@ -60,7 +60,7 @@
             </div>
             <div class="col-sm-6 col-xxl-3">
                 <!-- Active Drivers -->
-                <div class="block block-rounded rounded-0 d-flex flex-column h-100 mb-0">
+                <div class="block block-rounded rounded-0 d-flex flex-column h-100 mb-0 rounded-0">
                     <div
                         class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center">
                         <dl class="mb-0">
@@ -72,7 +72,7 @@
                         </div>
                     </div>
                     <div class="bg-body-light rounded-bottom">
-                        <a class="block-content block-content-full block-content-sm fs-sm fw-medium text-main d-flex align-items-center justify-content-between"
+                        <a class="block-content block-content-full block-content-sm text-main fs-sm fw-medium text-main d-flex align-items-center justify-content-between"
                             href="{{ route('trailers.list') }}">
                             <span>View all Trailers</span>
                             <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"></i>
@@ -83,7 +83,7 @@
             </div>
             <div class="col-sm-6 col-xxl-3">
                 <!-- Warehouses -->
-                <div class="block block-rounded d-flex flex-column h-100 mb-0">
+                <div class="block block-rounded d-flex flex-column h-100 mb-0 rounded-0">
                     <div
                         class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center">
                         <dl class="mb-0">
@@ -95,7 +95,7 @@
                         </div>
                     </div>
                     <div class="bg-body-light rounded-bottom">
-                        <a class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
+                        <a class="block-content block-content-full block-content-sm text-main fs-sm fw-medium d-flex align-items-center justify-content-between"
                             href="{{ url('warehouses.index') }}">
                             <span>View all Drivers</span>
                             <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"></i>
@@ -106,7 +106,7 @@
             </div>
             <div class="col-sm-6 col-xxl-3">
                 <!-- Delivery Success Rate -->
-                <div class="block block-rounded d-flex flex-column h-100 mb-0">
+                <div class="block block-rounded d-flex flex-column h-100 mb-0 rounded-0">
                     <div
                         class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center">
                         <dl class="mb-0">
@@ -118,7 +118,7 @@
                         </div>
                     </div>
                     <div class="bg-body-light rounded-bottom">
-                        <a class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
+                        <a class="block-content block-content-full block-content-sm fs-sm text-main fw-medium d-flex align-items-center justify-content-between"
                             href="{{ route('customers.index') }}">
                             <span>View Customers</span>
                             <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"></i>
