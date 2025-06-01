@@ -38,7 +38,7 @@
 
          <li class="nav-main-heading">Logistics Management</li>
 
-         @can('customers')
+         @can('view-customers')
              <li class="nav-main-item{{ request()->is('customers') || request()->is('customers/*') ? ' open' : '' }}">
                  <a class="nav-main-link{{ request()->is('customers') || request()->is('customers/*') ? ' active' : '' }}"
                      href="{{ route('customers.index') }}">
@@ -182,7 +182,7 @@
                  </span>
              </a>
          </li>
-         @can('view-finance-menu')
+         @can('view-accounts-modules')
              @include('layouts.backend.sidebar.finance')
          @endcan
 

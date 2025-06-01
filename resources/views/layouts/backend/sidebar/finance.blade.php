@@ -1,4 +1,5 @@
-  <li class="nav-main-heading">Finance Menu</li>
+<li class="nav-main-heading">Accounts Management</li>
+  
          <li class="nav-main-item">
              <a class="nav-main-link{{ request()->is('trip-settings/costs') ? ' active' : '' }}"
                  href="/trip-settings/costs">
