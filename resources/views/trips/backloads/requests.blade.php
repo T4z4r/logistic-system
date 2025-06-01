@@ -132,7 +132,7 @@
                                 $trucks = App\Models\TruckAllocation::where('allocation_id', $item->allocation_id)->count();
                                 $costs = App\Models\TripCost::where('trip_id', $item->id)->sum('amount');
 
-                                if ($item->allocation->goingload_id != null) {
+                                if ($item->allocation?->goingload_id != null) {
                                     $linked = App\Models\Allocation::where('id', $item->allocation->goingload_id)->first();
                                 } else {
                                     $linked = null;

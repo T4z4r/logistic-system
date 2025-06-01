@@ -45,9 +45,12 @@
                     @if ($allocation->status < 4)
                         {{-- <hr> --}}
                         {{-- @can('initiate-trip') --}}
-                            <button id="request_expenses" class="btn btn-primary btn-sm">
-                                Initiate Trip
-                            </button>
+                            <form id="initiate-trip-form" action="{{ url('/trips/submit-trip/' . base64_encode($allocation->id)) }}" method="POST" style="display: inline;">
+                                @csrf
+                                <button id="request_expenses" class="btn btn-primary btn-sm">
+                                    Initiate Trip
+                                </button>
+                            </form>
                         {{-- @endcan --}}
                     @elseif($allocation->status == 4)
                         @php
@@ -627,54 +630,11 @@
         });
     </script>
     {{-- For Submit Allocation --}}
-    <script>
-        $(document).on('click', '#request_expenses', function() {
-            // e.preventDefault();
-            $("#request_expenses").html("<i class='ph-spinner spinner me-2'></i> Initiating Trip ...").addClass(
-                'disabled');
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: "{{ url('/trips/submit-trip/' . base64_encode($allocation->id)) }}",
-                type: "POST",
-                data: $(this).serialize(),
-                success: function(response) {
-                    $("#request_expenses").html("Initiate Trip").removeClass('disabled');
-                    // Basic initialization
-                    if (response.status == 200) {
-                        // $("#add_allocation_form")[0].reset();
-                        new Noty({
-                            text: 'Trip Initiation was Requested Successfully!',
-                            type: 'success'
-                        }).show();
-                        setTimeout(function() {
-                            window.location = response.route_truck;
-                        }, 1000);
-                    } else {
-                        if (response.status == 400) {
-                            document.getElementById('error_message').style.display = 'block';
-                            errorsHtml = '<div class="alert alert-danger"><ul>';
-                            $.each(response.errors, function(key, value) {
-                                errorsHtml += '<li>' + value + '</li>';
-                            });
-                            errorsHtml += '</ul></di>';
-                            $('#error_message').html(errorsHtml);
-                        } else if (response.status == 401) {
-                            document.getElementById('error_message').style.display = 'block';
-                            errorsHtml = '<div class="alert alert-danger"><ul>';
-                            errorsHtml += '<li>' + response.errors + '</li>';
-                            errorsHtml += '</ul></di>';
-                            $('#error_message').html(errorsHtml);
-                        }
-                        new Noty({
-                            text: 'Whoops!! Trip Expense Request Was Not Submitted.',
-                            type: 'error'
-                        }).show();
-                    }
-                }
 
-            });
+    <script>
+        $(document).on('click', '#request_expenses', function(e) {
+            e.preventDefault();
+            $("#initiate-trip-form").submit();
         });
     </script>
 

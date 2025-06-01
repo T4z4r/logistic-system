@@ -792,7 +792,7 @@
                                             {{ number_format($estimateRevenue / $item->currency->rate, 2) }}
                                         </td>
                                         <td> <span
-                                                class="badge  bg-opacity-10 @if ($item->status == '3') text-warning bg-info @else  bg-success text-success @endif  ">
+                                                class="badge  bg-opacity-10 @if ($item->status == '3')  bg-info @else  bg-success  @endif  ">
                                                 @if ($item->status == '3')
                                                     Not Initiated
                                                 @else
