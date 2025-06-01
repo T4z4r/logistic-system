@@ -34,7 +34,7 @@
   <!-- Page Content -->
   <div class="content1 rounded-0 p-2">
     <!-- Edit User Block -->
-    <div class="block block-rounded">
+    <div class="block block-rounded rounded-0">
       <div class="block-header block-header-default">
         <h3 class="block-title">
           Edit User: {{ $user->name }}
@@ -56,48 +56,53 @@
         <form action="{{ route('users-roles.update', $user->id) }}" method="POST">
           @csrf
           @method('PUT')
-          <div class="mb-4">
+          <div class="row">
+              <div class="mb-4 col-md-6">
             <label for="name" class="form-label fw-medium">Name</label>
             <input type="text" 
                    name="name" 
                    id="name" 
                    value="{{ old('name', $user->name) }}" 
                    placeholder="Enter name" 
-                   class="form-control form-control-lg w-50 {{ $errors->has('name') ? 'is-invalid' : '' }}">
+                   class="form-control form-control-lg w-100 {{ $errors->has('name') ? 'is-invalid' : '' }}">
             @error('name')
               <div class="invalid-feedback">{{ $message }}</div>
             @enderror
           </div>
 
-          <div class="mb-4">
+          <div class="mb-4 col-md-6">
             <label for="email" class="form-label fw-medium">Email</label>
             <input type="email" 
                    name="email" 
                    id="email" 
                    value="{{ old('email', $user->email) }}" 
                    placeholder="Enter email" 
-                   class="form-control form-control-lg w-50 {{ $errors->has('email') ? 'is-invalid' : '' }}">
+                   class="form-control form-control-lg w-100 {{ $errors->has('email') ? 'is-invalid' : '' }}">
             @error('email')
               <div class="invalid-feedback">{{ $message }}</div>
             @enderror
           </div>
 
-          <div class="mb-4">
+          <div class="mb-4 col-md-6">
             <h4 class="h5 fw-medium mb-3">Roles</h4>
             @if ($roles->isNotEmpty())
-              <div class="row row-cols-1 row-cols-md-4 g-3">
+              <div class="row row-cols-1 row-cols-md-12 ">
                 <div class="col-12">
-                  <select name="role" id="role" class="form-select form-select-lg w-50">
+                  <select name="role" id="role" class="form-select form-select-lg w-100">
                     <option value="">Select a role</option>
                     @foreach ($roles as $role)
                       <option value="{{ $role->name }}"
-                        {{ (old('role', $hasRoles->first() ? $hasRoles->first()->name : '') == $role->name) ? 'selected' : '' }}>
+                        {{ (old('role', (is_object($hasRoles->first()) ? $hasRoles->first()->name : '')) == $role->name) ? 'selected' : '' }}>
                         {{ $role->name }}
                       </option>
                     @endforeach
                   </select>
                   @error('role')
-                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    </div>
+                </div>
                   @enderror
                 </div>
               </div>
@@ -107,8 +112,10 @@
               </div>
             @endif
           </div>
+          </div>
+        
           <hr>
-          <div class="mb-4 text-end">
+          <div class="mb-4  text-end">
             <button type="submit" class="btn btn-alt-primary px-4 py-2">
               <i class="fa fa-save me-1"></i> Update User
             </button>

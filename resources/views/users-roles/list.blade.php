@@ -62,18 +62,18 @@
                     Users List
                 </h3>
                 <div class="block-options">
-                    <a href="{{ route('users-roles.create') }}" class="btn btn-sm btn-primary">
+                    {{-- <a href="{{ route('users-roles.create') }}" class="btn btn-sm btn-primary">
                         <i class="fa fa-plus me-1"></i> Create User
-                    </a>
+                    </a> --}}
                 </div>
             </div>
             <div class="block-content">
-                @if (session('status'))
+                {{-- @if (session('status'))
                     <div class="alert alert-success alert-dismissible" role="alert">
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         {{ session('status') }}
                     </div>
-                @endif
+                @endif --}}
 
                 @if ($users->isNotEmpty())
                     <div class="table-responsive">
@@ -100,7 +100,7 @@
                                         <td class="text-center">
                                             <a href="{{ route('users-roles.edit', $user->id) }}"
                                                 class="btn btn-sm btn-alt-primary me-1" title="Edit User">
-                                                <i class="fa fa-fw fa-pencil-alt"></i> Edit
+                                                <i class="fa fa-fw fa-pencil-alt"></i> 
                                             </a>
                                             <form action="{{ route('users.destroy', $user->id) }}" method="POST"
                                                 class="d-inline-block"
@@ -109,7 +109,7 @@
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-alt-danger"
                                                     title="Delete User">
-                                                    <i class="fa fa-fw fa-trash"></i> Delete
+                                                    <i class="fa fa-fw fa-trash"></i> 
                                                 </button>
                                             </form>
                                         </td>
