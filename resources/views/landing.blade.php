@@ -8,7 +8,7 @@
             <div class="row justify-content-center ">
                      <div class="col-md-7 col-lg-7 col-xl-7" style="opacity: 0.95;">
                     <!-- Sign In Block -->
-                    <div class="block block-rounded mb-0" style="opacity: 0.96;">
+                    <div class="block block-rounded rounded-0 mb-0" style="opacity: 0.96;">
                         <div class="block-header block-header-default" style="opacity: 0.96;">
                             <h3 class="block-title text-primary">Sign In</h3>
                             <div class="block-options">
@@ -19,20 +19,20 @@
                         </div>
                         <div class="block-content" style="opacity: 0.93;">
                             <div class="p-1 px-lg-1 px-xxl-1 py-lg-1">
-                                <div class="text-center mb-3">
+                                {{-- <div class="text-center mb-3">
                                     <img src="{{ asset('media/logo.jpeg') }}" alt="SudEnergy Logo" class="img-fluid"
                                         style="max-height: 80px;">
-                                </div>
-                                <p class="fw-medium text-muted text-center">
+                                </div> --}}
+                                {{-- <p class="fw-medium text-muted text-center">
                                     Welcome, please login.
-                                </p>
+                                </p> --}}
 
                                 <!-- Sign In Form -->
                                 <form method="POST" action="{{ route('login') }}">
                                     @csrf
 
                                     <!-- Email Address -->
-                                    <div class="mb-3">
+                                    <div class="mb-2">
                                         <label for="email" class="form-label">{{ __('Email') }}</label>
                                         <div class="input-group input-group-lg mt-1">
                                             <span class="input-group-text bg-white border-end-0">
@@ -48,7 +48,7 @@
                                     </div>
 
                                     <!-- Password -->
-                                    <div class="mb-3">
+                                    <div class="mb-2">
                                         <label for="password" class="form-label">{{ __('Password') }}</label>
                                         <div class="input-group input-group-lg mt-1">
                                             <span class="input-group-text bg-white border-end-0">
