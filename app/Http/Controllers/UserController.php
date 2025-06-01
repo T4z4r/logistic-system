@@ -14,7 +14,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::with(['department', 'lineManager', 'position'])->paginate(10);
-        return view('users.index', compact('users'));
+        return view('users.active', compact('users'));
     }
 
     public function active()
@@ -67,8 +67,19 @@ class UserController extends Controller
             'status' => $request->status,
         ]);
 
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
+        return redirect()->route('users.active')->with('success', 'User created successfully.');
     }
+
+
+    public function show( $id)
+    {
+        $user=User::where('id',$id)->first();
+        $departments = Department::all();
+        $positions = Position::all();
+        $managers = User::where('status', 1)->where('id', '!=', $user->id)->get();
+        return view('users.show', compact('user', 'departments', 'positions', 'managers'));
+    }
+
 
     public function edit( $id)
     {
@@ -111,12 +122,12 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return redirect()->route('users.index')->with('success', 'User updated successfully.');
+        return redirect()->route('users.active')->with('success', 'User updated successfully.');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
+        return redirect()->route('users.active')->with('success', 'User deleted successfully.');
     }
 }

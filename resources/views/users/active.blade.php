@@ -93,7 +93,7 @@
                                 <td>{{ $user->lineManager?->name ?? 'N/A' }}</td>
                                 <td>{{ $user->status ? 'Active' : 'Inactive' }}</td>
                                 <td>
-                                    <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-alt-primary">
+                                    <a href="{{ route('users.show', $user) }}" class="btn btn-sm btn-alt-primary">
                                         <i class="fa fa-list"></i>
                                     </a>
                                     <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-alt-primary">

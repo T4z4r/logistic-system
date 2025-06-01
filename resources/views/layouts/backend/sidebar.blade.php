@@ -16,7 +16,7 @@
              <ul class="nav-main-submenu">
                  <li class="nav-main-item">
                      <a
-                         class="nav-main-link{{ request()->is('users/active') ? ' active' : '' }}"href="{{ route('users.active') }}">
+                         class="nav-main-link{{ request()->routeIs('users.active','users.edit','users.create') ? ' active' : '' }}"href="{{ route('users.active') }}">
                          <i class="nav-main-link-icon si si-user"></i>
                          <span class="nav-main-link-name">Active Users</span>
                      </a>
