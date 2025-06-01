@@ -60,35 +60,22 @@
                     <div class="p-3 text-center bg-body-light border-bottom rounded-top">
                         <img class="img-avatar img-avatar48 img-avatar-thumb"
                             src="{{ asset('media/avatars/avatar10.jpg') }}" alt="">
-                        <p class="mt-2 mb-0 fw-medium">John Smith</p>
-                        <p class="mb-0 text-muted fs-sm fw-medium">Web Developer</p>
+                        <p class="mt-2 mb-0 fw-medium">{{ Auth::user()->name ?? '--' }}</p>
+                        <p class="mb-0 text-muted fs-sm fw-medium">{{ Auth::user()->email ?? '' }}</p>
                     </div>
-                    <div class="p-2">
-                        <a class="dropdown-item d-flex align-items-center justify-content-between"
-                            href="javascript:void(0)">
-                            <span class="fs-sm fw-medium">Inbox</span>
-                            <span class="badge rounded-pill bg-primary ms-2">3</span>
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center justify-content-between"
-                            href="javascript:void(0)">
-                            <span class="fs-sm fw-medium">Profile</span>
-                            <span class="badge rounded-pill bg-primary ms-2">1</span>
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center justify-content-between"
-                            href="javascript:void(0)">
-                            <span class="fs-sm fw-medium">Settings</span>
-                        </a>
-                    </div>
+
                     <div role="separator" class="dropdown-divider m-0"></div>
                     <div class="p-2">
-                        <a class="dropdown-item d-flex align-items-center justify-content-between"
-                            href="javascript:void(0)">
-                            <span class="fs-sm fw-medium">Lock Account</span>
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center justify-content-between"
-                            href="javascript:void(0)">
+                        {{-- <a class="dropdown-item d-flex align-items-center justify-content-between"
+                            href="{{ route('profile') }}">
+                            <span class="fs-sm fw-medium">Profile</span>
+                        </a> --}}
+                        <!-- Logout Button triggers modal -->
+                        <button type="button" class="dropdown-item d-flex align-items-center justify-content-between"
+                            data-bs-toggle="modal" data-bs-target="#logoutModal">
                             <span class="fs-sm fw-medium">Log Out</span>
-                        </a>
+                        </button>
+
                     </div>
                 </div>
             </div>
@@ -221,3 +208,25 @@
     </div>
     <!-- END Header Loader -->
 </header>
+
+<!-- Logout Confirmation Modal -->
+<div class="modal " id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to log out?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-danger">Log Out</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

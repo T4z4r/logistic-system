@@ -81,9 +81,27 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <button type="submit" class="btn btn-primary btn-block w-100">
-                                            <i class="fa fa-fw fa-sign-in-alt me-1 opacity-80"></i> {{ __('Sign In') }}
+                                        <button type="submit" class="btn btn-primary btn-block w-100" id="signInBtn">
+                                            <span id="signInBtnSpinner" class="spinner-border spinner-border-sm me-2 d-none" role="status" aria-hidden="true"></span>
+                                            <span id="signInBtnText"><i class="fa fa-fw fa-sign-in-alt me-1 opacity-80"></i> {{ __('Sign In') }}</span>
                                         </button>
+
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function () {
+                                                const form = document.querySelector('form[action="{{ route('login') }}"]');
+                                                const btn = document.getElementById('signInBtn');
+                                                const spinner = document.getElementById('signInBtnSpinner');
+                                                const btnText = document.getElementById('signInBtnText');
+
+                                                if(form) {
+                                                    form.addEventListener('submit', function () {
+                                                        btn.disabled = true;
+                                                        spinner.classList.remove('d-none');
+                                                        btnText.innerHTML = '<i class="fa fa-fw fa-sign-in-alt me-1 opacity-80"></i> Signing In...';
+                                                    });
+                                                }
+                                            });
+                                        </script>
                                     </div>
                                 </form>
                                 <!-- END Sign In Form -->
