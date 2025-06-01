@@ -70,21 +70,23 @@ class UserRoleController extends Controller
     public function update(Request $request, string $id)
     {
 
-        $user=User::findOrFail($id);
+        $user=User::where('id',$id)->first();
+        // dd($user);
         $validator=Validator::make($request->all(),[
             'name'=>'required|min:3',
-            'email'=>'required|email|unique:users,email,'.$id.',id',
+            'email'=>'required',
         ]);
 
+        // dd($request->role);
 
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInput();
         }
         else
         {
-            $user->name=$request->name;
-            $user->email=$request->email;
-            $user->save();
+            // $user->name=$request->name;
+            // $user->email=$request->email;
+            // $user->save();
 
             $user->syncRoles($request->role);
 
