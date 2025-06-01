@@ -30,7 +30,7 @@
     <!-- Hero -->
     <div class="bg-body-light ">
         <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0">
                 <div class="flex-grow-0">
                     <h5 class="h5 fw-bold mb-1 text-main">Customer Management</h5>
                    <h2 class="fs-sm lh-base fw-normal text-muted mb-0">
@@ -38,7 +38,7 @@
                         Manage all customers in the system
                     </h2>
                 </div>
-                <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
+                <nav class="flex-shrink-0 mt-0 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
                         <li class="breadcrumb-item">
                             <a class="link-fx text-main" href="{{ route('dashboard') }}">Dashboard</a>
