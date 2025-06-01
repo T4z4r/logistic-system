@@ -15,9 +15,13 @@ class DashboardController extends Controller
      if($role=='admin'  ){
            return view('dashboard.admin');
      }
-     elseif( $role=='accountant')
+     if( $role=='accountant')
      {
         return view('dashboard.accountant');
+     }
+     if($role=='operation-manager'|| $role=='dispatcher')
+     {
+         return view('dashboard.fleet');
      }
      else
      {
