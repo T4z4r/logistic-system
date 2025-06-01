@@ -38,9 +38,6 @@
                     Allocation
                     Details</h4>
 
-                <a href="{{ route('allocations.list') }}" class="btn btn-alt-danger btn-sm">
-                    <i class="ph-list me-2"></i> All Requests
-                </a>
 
                 @can('print-allocation')
                     <a href="{{ url('/trips/print-allocation/' . base64_encode($allocation->id)) }}"
@@ -51,14 +48,14 @@
                 @endcan
 
 
-               {{-- @include( 'allocations.create.approvals') --}}
+                {{-- @include( 'allocations.create.approvals') --}}
                 @if ($level && $allocation->status > 0 && $allocation->status != 4)
                     @if ($level->level_name == $allocation->approval_status)
                         {{-- @if ($allocation->state) --}}
 
                         <div class="d-none d-sm-block m-2  col-12">
                             {{-- start of Approve button --}}
-                            <button class="btn btn-sm btn-alt-success edit-button" title="Approve Allocation "
+                            <button class="btn btn-sm btn-success edit-button" title="Approve Allocation "
                                 data-bs-toggle="modal" data-bs-target="#approval" data-id="{{ $allocation->id }}"
                                 data-name="{{ $allocation->name }}" data-description="{{ $allocation->amount }}">
                                 <i class="fa fa-check"></i>
@@ -79,7 +76,7 @@
                         </div>
 
                         <div class="d-sm-none   col-12">
-                            <button type="button" class="btn btn-alt-success mx-1 btn-sm  " data-bs-toggle="collapse"
+                            <button type="button" class="btn btn-success mx-1 btn-sm  " data-bs-toggle="collapse"
                                 data-bs-target="#approveDiv">
                                 <i class="fa fa-check"></i>
                                 Approve
@@ -109,7 +106,7 @@
                             </button>
 
                             <div id="disapproveDiv" class="collapse col-12  mb-2">
-                         
+
                                 <form action="{{ url('trips/disapprove-allocation') }}" id="change_route_form1"
                                     method="POST">
                                     @csrf
@@ -137,6 +134,9 @@
                     @endif
                 @endif
 
+                <a href="{{ route('allocations.list') }}" class="btn btn-alt-danger float-end btn-sm  mx-2">
+                    <i class="ph-list me-2 "></i> All Requests
+                </a>
 
 
                 @if ($allocation->status <= 0)
@@ -148,19 +148,28 @@
                     @if ($trucks > 0)
                         {{-- @can('create-allocation') --}}
                         <button id="submit_allocation" class="btn btn-alt-primary btn-sm float-end" type="button">
-                            <i class="ph-paper-plane-tilt"></i>
-                            Submit Request
+                            <i class="ph-paper-plane-tilt"></i> Submit Request
                         </button>
-                        {{-- For Submit Allocation --}}
+
+                        {{-- Submit Allocation Script --}}
                         <script>
                             $(document).on('click', '#submit_allocation', function(e) {
-                                e.preventDefault(); // Prevent default button behavior
+                                e.preventDefault();
 
                                 const $button = $(this);
                                 const originalContent = $button.html();
-                                const allocationId = '{{ $allocation->id }}'; // Ensure this is properly sanitized
+                                const allocationId = '{{ $allocation->id ?? 0 }}'; // Ensure fallback
 
-                                // Disable button and show loading state
+                                if (!allocationId || allocationId == 0) {
+                                    new Noty({
+                                        text: 'Allocation ID is missing or invalid.',
+                                        type: 'error',
+                                        timeout: 3000
+                                    }).show();
+                                    return;
+                                }
+
+                                // Show loading state
                                 $button
                                     .html("<i class='ph-spinner spinner me-2'></i> Submitting...")
                                     .prop('disabled', true)
@@ -172,9 +181,9 @@
                                     },
                                     url: `/trips/submit-allocation/${allocationId}`,
                                     type: 'POST',
-                                    data: {}, // Add necessary data if needed
+                                    data: {},
+
                                     success: function(response) {
-                                        // Restore button state
                                         $button.html(originalContent).prop('disabled', false).removeClass('disabled');
 
                                         if (response.status === 200) {
@@ -184,67 +193,47 @@
                                                 timeout: 3000
                                             }).show();
 
-                                            // Redirect after success
                                             setTimeout(() => {
-                                                window.location = response.route_truck;
+                                                window.location.href = response.route_truck;
                                             }, 1000);
                                         } else {
                                             handleError(response);
                                         }
                                     },
+
                                     error: function(xhr) {
-                                        // Restore button state
                                         $button.html(originalContent).prop('disabled', false).removeClass('disabled');
 
-                                        // Handle server errors
+                                        const errorMessage = xhr.responseJSON?.message || 'An unexpected error occurred.';
+                                        displayError([errorMessage]);
+
                                         new Noty({
-                                            text: 'An error occurred while submitting the allocation.',
+                                            text: 'Error submitting allocation.',
                                             type: 'error',
                                             timeout: 3000
                                         }).show();
-
-                                        // Display server error message if available
-                                        const errorMessage = xhr.responseJSON?.message || 'Please try again later.';
-                                        displayError([errorMessage]);
                                     }
                                 });
                             });
 
-                            // Helper function to handle error responses
                             function handleError(response) {
                                 const $errorMessage = $('#error_message');
-                                $errorMessage.hide(); // Hide initially
+                                $errorMessage.hide();
 
                                 let errorsHtml = '<div class="alert alert-danger"><ul>';
 
-                                if (response.status === 400 || response.status === 401) {
-                                    const errors = response.errors;
-
-                                    if (Array.isArray(errors) || typeof errors === 'object') {
-                                        $.each(errors, (key, value) => {
-                                            errorsHtml += `<li>${value}</li>`;
-                                        });
-                                    } else {
-                                        errorsHtml += `<li>${errors}</li>`;
-                                    }
+                                if (response.errors) {
+                                    $.each(response.errors, (key, value) => {
+                                        errorsHtml += `<li>${value}</li>`;
+                                    });
                                 } else {
                                     errorsHtml += '<li>An unexpected error occurred.</li>';
                                 }
 
                                 errorsHtml += '</ul></div>';
-
-                                $errorMessage
-                                    .html(errorsHtml)
-                                    .show();
-
-                                new Noty({
-                                    text: 'Failed to submit allocation.',
-                                    type: 'error',
-                                    timeout: 3000
-                                }).show();
+                                $errorMessage.html(errorsHtml).show();
                             }
 
-                            // Helper function to display error messages
                             function displayError(errors) {
                                 const $errorMessage = $('#error_message');
                                 let errorsHtml = '<div class="alert alert-danger"><ul>';
@@ -254,12 +243,10 @@
                                 });
 
                                 errorsHtml += '</ul></div>';
-
-                                $errorMessage
-                                    .html(errorsHtml)
-                                    .show();
+                                $errorMessage.html(errorsHtml).show();
                             }
                         </script>
+
                         {{--  --}}
                         {{-- @endcan --}}
                     @else
@@ -408,7 +395,8 @@
                                 <tr>
                                     <th>Estimated Quantity</th>
                                     <td>{{ number_format($allocation->quantity, 2) }}
-                                        <small>{{ $allocation->unit }}</small></td>
+                                        <small>{{ $allocation->unit }}</small>
+                                    </td>
                                     <th>{{ $allocation->mode?->name ?? '--' }} Rate</th>
                                     <td>{{ $allocation->currency->symbol }} {{ number_format($allocation->amount, 2) }}
                                     </td>

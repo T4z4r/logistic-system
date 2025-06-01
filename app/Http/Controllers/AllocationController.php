@@ -11,6 +11,7 @@ use App\Models\Currency;
 use App\Models\Customer;
 use App\Models\Position;
 use App\Models\RouteCost;
+use App\Models\TruckCost;
 use App\Models\Allocation;
 use App\Models\CargoNature;
 use App\Models\CurrencyLog;
@@ -723,12 +724,16 @@ class AllocationController extends Controller
     // For New  Disapproval Allocation By Level
     public function disapproveAllocation(Request $request)
     {
-        $role_id = Auth::User()->position;
-        $process = Approval::where('process_name', 'Allocation Approval')->first();
-        $roles = Position::where('id', $role_id)->first();
+        
         $allocation = Allocation::where('id', $request->allocation_id)->first();
 
-        $level = ApprovalLevel::where('role_id', $role_id)->where('approval_id', $process->id)->first();
+         $role_id = Auth::user()->roles->first()?->id;
+        $positionId = Auth::user()->position_id;
+        $position = Position::where('id', $positionId)->first();
+        $approval = Approval::where('process_name', 'Allocation Approval')->first();
+
+        $level = ApprovalLevel::where('role_id', $role_id)->where('approval_id', $approval->id)->first();
+
         if ($level) {
             // if ($allocation->disapprover_id == Auth::user()->id) {
             //     return back()->with('error', 'Sorry,You have already Disapproved this allocation');
@@ -761,15 +766,15 @@ class AllocationController extends Controller
 
 
                 // Start Of Approval Email Alert
-                $employees = User::where('id', $allocation->created_by)->get();
-                $email_data = array(
-                    'subject' => $allocation->ref_no . ' Allocation Request Disapproval',
-                    'view' => 'emails.allocations.fleet-disapproval',
-                    'allocation' => $allocation,
+                // $employees = User::where('id', $allocation->created_by)->get();
+                // $email_data = array(
+                //     'subject' => $allocation->ref_no . ' Allocation Request Disapproval',
+                //     'view' => 'emails.allocations.fleet-disapproval',
+                //     'allocation' => $allocation,
 
-                );
-                $job = (new \App\Jobs\SendEmail($email_data, $employees));
-                dispatch($job);
+                // );
+                // $job = (new \App\Jobs\SendEmail($email_data, $employees));
+                // dispatch($job);
                 // end of Approval Email Alert
 
 
@@ -799,14 +804,14 @@ class AllocationController extends Controller
                 $employees = User::where('position', $level->role_id)->get();
 
 
-                $email_data = array(
-                    'subject' => $allocation->ref_no . ' Allocation Request Disapproval',
-                    'view' => 'emails.allocations.fleet-disapproval',
-                    'allocation' => $allocation,
+                // $email_data = array(
+                //     'subject' => $allocation->ref_no . ' Allocation Request Disapproval',
+                //     'view' => 'emails.allocations.fleet-disapproval',
+                //     'allocation' => $allocation,
 
-                );
-                $job = (new \App\Jobs\SendEmail($email_data, $employees));
-                dispatch($job);
+                // );
+                // $job = (new \App\Jobs\SendEmail($email_data, $employees));
+                // dispatch($job);
                 // end of Approval Email Alert
 
                 return back()->with('msg', 'Allocation has been Disapproved Successfully !');
@@ -855,4 +860,141 @@ class AllocationController extends Controller
         $msg = "Allocation Was Revoked Successfully !";
         return redirect()->route('allocations.list')->with('msg', $msg);
     }
+
+
+
+     // For Truck cost Details
+    public function viewTruckCostDetails($id)
+    {
+        // Start a database transaction
+        DB::beginTransaction();
+
+        try {
+            // Decode the ID from base64
+            $id = base64_decode($id);
+
+            // Find the truck allocation record
+            $allocation = TruckAllocation::find($id);
+
+            if (!$allocation) {
+                throw new \Exception("Truck Allocation not found for ID: $id");
+            }
+
+            // Fetch the associated data
+            $data['common'] = RouteCost::where('route_id', $allocation->allocation->route_id)->latest()->get();
+            // $data['accounts'] = AccountingCodes::get();
+            $data['currencies'] = Currency::latest()->get();
+            $data['truck'] = Truck::find($allocation->truck_id);
+            $data['trips'] = TruckAllocation::where('id', $id)->latest()->get();
+            $data['allocation'] = Allocation::find($allocation->allocation_id);
+
+            // Commit the transaction
+            DB::commit();
+
+            // Return the view with the data
+            return view('trips.allocations.truck_cost', $data);
+        } catch (\Exception $e) {
+            // Rollback transaction if something goes wrong
+            DB::rollBack();
+
+            // Log the error for debugging
+            Log::error('Error fetching truck cost details: ' . $e->getMessage());
+
+            // Return error message to the user
+            return response()->json([
+                'status' => 500,
+                'error' => 'An error occurred while fetching truck cost details. Please try again.',
+            ]);
+        }
+    }
+
+
+
+    // For Save Allocation Truck Cost
+    public function addAllocationTruckCost(Request $request)
+    {
+        // Start a database transaction
+        DB::beginTransaction();
+
+        try {
+            // Validate the incoming request
+            $request->validate(
+                [
+                    'currency_id' => 'required',
+                    'amount' => 'required',
+                    'cost_id' => 'required',
+                ]
+            );
+
+            // Find the related RouteCost record
+            $common = RouteCost::find($request->cost_id);
+            if (!$common) {
+                throw new \Exception("RouteCost not found for ID: {$request->cost_id}");
+            }
+
+            // Find the TruckAllocation record
+            $allocation = TruckAllocation::where('truck_id', $request->truck_id)
+                ->where('allocation_id', $request->allocation_id)
+                ->with('truck')
+                ->first();
+            if (!$allocation) {
+                throw new \Exception("TruckAllocation not found for Truck ID: {$request->truck_id} and Allocation ID: {$request->allocation_id}");
+            }
+
+            // Create a new TruckCost record
+            $cost = new TruckCost();
+            $cost->allocation_id = $allocation->id;
+            $cost->truck_id = $request->truck_id;
+            $cost->name = $common->name;
+            $cost->type = $common->type;
+            $cost->return = $common->return;
+            $cost->route_id = $allocation->allocation->route_id;
+            $cost->account_code = $common->account?->code??0000;
+            $cost->advancable = $common->advancable;
+            $cost->amount = $request->amount;
+
+            // Find the currency record
+            $currency = Currency::find($request->currency_id);
+            if (!$currency) {
+                throw new \Exception("Currency not found for ID: {$request->currency_id}");
+            }
+
+            // Calculate real_amount based on quantity
+            if ($request->quantity > 0 || $common->quantity != null) {
+                $cost->quantity = $request->quantity;
+                $cost->real_amount = ($currency->rate * $request->amount) * $request->quantity;
+            } else {
+                $cost->real_amount = $currency->rate * $request->amount;
+            }
+
+            // Assign the remaining cost attributes
+            $cost->currency_id = $request->currency_id;
+            $cost->created_by = Auth::user()->id;
+            $cost->rate = $currency->rate;
+
+            // Save the new TruckCost record
+            $cost->save();
+
+            // Commit the transaction
+            DB::commit();
+
+            // Return a success message
+            return back()->with('success', 'Truck Cost Added Successfully!');
+        } catch (\Exception $e) {
+            dd($e);
+            // Rollback transaction if something goes wrong
+            DB::rollBack();
+
+            // Log the error for debugging
+            Log::error('Error adding truck cost: ' . $e->getMessage());
+
+            // Return error message to the user
+            return response()->json([
+                'status' => 500,
+                'error' => 'An error occurred while adding the truck cost. Please try again.',
+            ]);
+        }
+    }
+
+
 }

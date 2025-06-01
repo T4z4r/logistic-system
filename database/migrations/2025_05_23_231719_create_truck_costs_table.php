@@ -13,7 +13,7 @@ return new class extends Migration
     {
        Schema::create('truck_costs', function (Blueprint $table) {
     $table->id();
-    $table->foreignId('allocation_id')->constrained()->onDelete('cascade');
+    $table->bigInteger('allocation_id');
     $table->foreignId('truck_id')->constrained()->onDelete('cascade');
     $table->string('name');
     $table->double('amount');

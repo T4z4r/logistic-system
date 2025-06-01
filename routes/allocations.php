@@ -22,9 +22,9 @@ Route::delete('/allocations/{id}', [AllocationController::class, 'destroy'])->na
         Route::any('print-allocation/{id}', 'print_allocation')->name('flex.print-allocation');
 
         Route::any('add_truck', 'add_truck')->name('flex.add_truck');
-        Route::any('/truck-cost/{id}', 'truck_cost')->name('flex.truck_cost');
-        Route::any('add-truck-cost', 'add_truck_cost')->name('flex.add-truck-cost');
-        Route::any('update-truck-cost', 'update_truck_cost')->name('flex.update-truck-cost');
+        // Route::any('/truck-cost/{id}', 'truck_cost')->name('flex.truck_cost');
+        // Route::any('add-truck-cost', 'add_truck_cost')->name('flex.add-truck-cost');
+        // Route::any('update-truck-cost', 'update_truck_cost')->name('flex.update-truck-cost');
         Route::any('update-request', 'update_allocation')->name('flex.update-allocation');
         Route::any('submit-allocation/{id}', 'submit_allocation')->name('flex.submit-allocation');
         Route::any('delete-allocation/{id}', 'delete_allocation')->name('flex.deleteAllocation');
@@ -33,9 +33,15 @@ Route::delete('/allocations/{id}', [AllocationController::class, 'destroy'])->na
         Route::any('renotify-allocation/{id}', 'renotify_allocation')->name('flex.renotify-allocation');
 
         Route::any('change-allocation-route', 'change_allocation_route')->name('flex.change-allocation-route');
+       Route::any('/truck-cost/{id}', 'viewTruckCostDetails')->name('flex.truck_cost');
+        // Adds a cost entry for a truck in an allocation
+        Route::any('add-truck-cost', 'addAllocationTruckCost')->name('flex.add-truck-cost');
+        // Deletes a specific truck cost entry from an allocation by ID
+        Route::any('delete-allocation-truck-cost/{id}', 'deleteAllocationTruckCost')->name('flex.delete-allocation-truck-cost');
+        // Updates an existing truck cost entry for an allocation
+        Route::any('update-truck-cost', 'updateAllocationTruckCost')->name('flex.update-truck-cost');
 
-
-        Route::any('revoke-trip/{id}', 'revoke_trip')ftruck-allocation->name('flex.revoke-trip');
+        Route::any('revoke-trip/{id}', 'revoke_trip')->name('flex.revoke-trip');
         // start of approvals route
         Route::any('approve-allocation', 'approveAllocation')->name('flex.approveAllocation');
         Route::any('disapprove-allocation', 'disapproveAllocation')->name('flex.disapproveAllocation');
