@@ -97,7 +97,13 @@
                                 <td>{{ $customer->TIN }}</td>
                                 {{-- <td>{{ $customer->VRN }}</td> --}}
                                 {{-- <td>{{ $customer->createdBy?->name ?? 'N/A' }}</td> --}}
-                                <td>{{ $customer->status ? 'Active' : 'Inactive' }}</td>
+                                <td>
+                                    @if($customer->status == 'Active')
+                                      <span class="badge bg-success">Active</span>
+                                    @else
+                                        <span class="badge bg-danger">Inactive</span>
+                                    @endif
+                                </td>
                                 <td width="15%">
                                     <a href="{{ route('customers.edit', $customer->id) }}"
                                         class="btn btn-sm btn-alt-primary">
