@@ -140,20 +140,27 @@
          </li>
 
 
-         <li class="nav-main-item{{ request()->is('trips/create') ? ' open' : '' }}">
-             <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="{{ route('blank') }}">
-                 <i class="nav-main-link-icon fa fa-screwdriver-wrench text-orange"></i>
-                 <span class="nav-main-link-name">Breakdowns</span>
-             </a>
-         </li>
-         <li class="nav-main-item{{ request()->is('trips/create') ? ' open' : '' }}">
-             <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="{{ route('blank') }}">
-                 <i class="nav-main-link-icon fa fa-car-burst text-red"></i>
-                 <span class="nav-main-link-name">Accidents</span>
-             </a>
-         </li>
+         @can('view-breakdowns')
+             <li class="nav-main-item{{ request()->is('trips/create') ? ' open' : '' }}">
+                 <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="{{ route('blank') }}">
+                     <i class="nav-main-link-icon fa fa-screwdriver-wrench text-orange"></i>
+                     <span class="nav-main-link-name">Breakdowns</span>
+                 </a>
+             </li>
+         @endcan
 
-         <li class="nav-main-item">
+         @can('view-accidents')
+             <li class="nav-main-item{{ request()->is('trips/create') ? ' open' : '' }}">
+                 <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="{{ route('blank') }}">
+                     <i class="nav-main-link-icon fa fa-car-burst text-red"></i>
+                     <span class="nav-main-link-name">Accidents</span>
+                 </a>
+             </li>
+         @endcan
+
+
+         @can('view-out-of-budget')
+             <li class="nav-main-item">
              <a class="nav-main-link{{ request()->is('trip-settings/costs') ? ' active' : '' }}"
                  href="{{ route('blank') }}">
                  <i class="nav-main-link-icon fa fa-wallet text-brown"></i>
@@ -162,6 +169,8 @@
                  </span>
              </a>
          </li>
+             
+         @endcan
 
 
          <li class="nav-main-item">

@@ -16,6 +16,7 @@ class PermissionSeeder extends Seeder
         $modules = [
             'dashboard',
             'users',
+            'logistics-modules',
             'customers',
             'drivers',
             'trucks',
@@ -28,6 +29,7 @@ class PermissionSeeder extends Seeder
             'accidents',
             'out-of-budget',
             'reports',
+            'accounts-modules',
             'finance-settings',
             'logistics-settings',
             'system-settings',
@@ -35,6 +37,7 @@ class PermissionSeeder extends Seeder
             'taxes',
             'banks',
             'payment-methods',
+
         ];
 
         $actions = ['view', 'create', 'edit', 'delete'];
