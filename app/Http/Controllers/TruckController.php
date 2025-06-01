@@ -31,6 +31,26 @@ class TruckController extends Controller
         return view('trucks.inactive', compact('trucks'));
     }
 
+    public function trashed()
+    {
+        $trucks = Truck::onlyTrashed()->with('addedBy')->paginate(10);
+        return view('trucks.trashed', compact('trucks'));
+    }
+
+    public function restore($id)
+    {
+        $truck = Truck::onlyTrashed()->findOrFail($id);
+        $truck->restore();
+        return redirect()->route('trucks.trashed')->with('success', 'Truck restored successfully.');
+    }
+
+    public function forceDelete($id)
+    {
+        $truck = Truck::onlyTrashed()->findOrFail($id);
+        $truck->forceDelete();
+        return redirect()->route('trucks.trashed')->with('success', 'Truck permanently deleted.');
+    }
+
     public function create()
     {
         $users = User::where('status', 1)->get();

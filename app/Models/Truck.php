@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Truck extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'purchase_date',
         'plate_number',
@@ -36,6 +39,7 @@ class Truck extends Model
         'purchase_date' => 'date',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     public function type()
@@ -47,7 +51,6 @@ class Truck extends Model
     {
         return $this->belongsTo(User::class, 'added_by');
     }
-
 
     public function assignments()
     {
