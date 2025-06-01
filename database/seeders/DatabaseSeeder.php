@@ -6,6 +6,10 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Database\Seeders\CurrencySeeder;
 use Database\Seeders\TruckTypeSeeder;
+use Database\Seeders\CommonCostsSeeder;
+use Database\Seeders\FuelCostsTableSeeder;
+use Database\Seeders\CargoNaturesTableSeeder;
+use Database\Seeders\PaymentModesTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,8 +27,8 @@ class DatabaseSeeder extends Seeder
             CommonCostsSeeder::class,
             PaymentModesTableSeeder::class,
             CargoNaturesTableSeeder::class,
-            TruckTypeSeeder::class;
-s
+            TruckTypeSeeder::class,
+            FuelCostsTableSeeder::class,
         ]);
     }
 }

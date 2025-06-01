@@ -38,7 +38,15 @@ class AllocationController extends Controller
         //     ->paginate(10);
 
         $uid = Auth::user()->position;
-        $process = Approval::where('process_name', 'Allocation Approval')->first();
+        // $process = Approval::where('process_name', operator: 'Allocation Approval')->first();
+            $process = Approval::firstOrCreate(
+            ['process_name' => 'Allocation Approval'],
+            [
+                'levels' => 0,
+                'escallation' => false, // or true, depending on your logic
+                'escallation_time' => null
+            ]
+        );
         $data['level'] = ApprovalLevel::where('role_id', $uid)->where('approval_id', $process->id)->first();
         $data['final'] = $process->levels;
         $data['tab'] = 'pending';

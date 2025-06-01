@@ -32,8 +32,11 @@
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0">
                 <div class="flex-grow-1">
-                    <h5 class="h5 fw-bold mb-1">Allocation Requests</h5>
-                    <h2 class="fs-base lh-base fw-medium text-muted mb-0">Manage allocations in the system</h2>
+                    <h5 class="h5 fw-bold mb-1 text-main">Allocation Requests</h5>
+                      <h2 class="fs-sm lh-base fw-normal text-muted mb-0">
+                        <i class="fa fa-info-circle text-main me-1"></i>
+                        Manage allocations in the system
+                    </h2>
                 </div>
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
@@ -52,68 +55,6 @@
     <div class="content1 p-2 rounded-0">
         <!-- Routes Block -->
         <div class="block block-rounded rounded-0">
-            <!-- Traffic sources -->
-            {{-- <div class="card border-0 border-top mt-5  border-top-width-3 border-top-main  rounded-0 d-md-block d-none ">
-                <div class="card-body pb-0">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <div class="d-flex align-items-center justify-content-center mb-2">
-                                <a href="#" class="bg-success bg-opacity-10 text-success lh-1 rounded-pill p-2 me-3">
-                                    <i class="fa fa-list"></i>
-                                </a>
-                                <div class="text-center">
-                                    <div class="fw-semibold">Total Allocations</div>
-                                    <span class="text-muted">{{ $total_allocations }}</span>
-                                </div>
-                            </div>
-                            <div class="w-75 mx-auto mb-3" id="new-visitors"></div>
-                        </div>
-
-                        <div class="col-sm-3">
-                            <div class="d-flex align-items-center justify-content-center mb-2">
-                                <a href="#" class="bg-success bg-opacity-10 text-warning lh-1 rounded-pill p-2 me-3">
-                                    <i class="fa fa-minus"></i>
-                                </a>
-                                <div class="text-center">
-                                    <div class="fw-semibold">Pending Allocations</div>
-                                    <span class="text-muted">{{ $pending_allocations }}</span>
-                                </div>
-                            </div>
-                            <div class="w-75 mx-auto mb-3" id="new-sessions"></div>
-                        </div>
-
-                        <div class="col-sm-3">
-                            <div class="d-flex align-items-center justify-content-center mb-2">
-                                <a href="#" class="bg-success bg-opacity-10 text-success lh-1 rounded-pill p-2 me-3">
-                                    <i class="fa fa-check"></i>
-                                </a>
-                                <div class="text-center">
-                                    <div class="fw-semibold">Approved Allocations</div>
-                                    <span class="text-muted">{{ $approved_allocations }}</span>
-                                </div>
-                            </div>
-                            <div class="w-75 mx-auto mb-3" id="total-online"></div>
-                        </div>
-
-
-                        <div class="col-sm-3">
-                            <div class="d-flex align-items-center justify-content-center mb-2">
-                                <a href="#" class="bg-success bg-opacity-10 text-danger lh-1 rounded-pill p-2 me-3">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                                <div class="text-center">
-                                    <div class="fw-semibold">Rejected Allocations</div>
-                                    <span class="text-muted">{{ $rejected_allocations }}</span>
-                                </div>
-                            </div>
-                            <div class="w-75 mx-auto mb-3" id="new-sessions"></div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div> --}}
-            <!-- /traffic sources -->
 
 
 
