@@ -3,7 +3,7 @@
 @section('content')
     <!-- Page Content -->
     <div class="hero-static d-flex align-items-center"
-        style="background-image: url('{{ asset('media/backgrounds/bg.jpeg') }}'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
+        style="background-image: url('{{ asset('media/backgrounds/bg1.jpg') }}'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
         <div class="content w-50">
             <div class="row justify-content-center ">
                      <div class="col-md-7 col-lg-7 col-xl-7" style="opacity: 0.95;">
