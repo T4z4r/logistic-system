@@ -40,8 +40,12 @@
                  @include('layouts.backend.sidebar.logistics')
          @endcan
 
-         @can('view-accounts-modules')
+         @can('view-finance-modules')
              @include('layouts.backend.sidebar.finance')
+         @endcan
+
+         @can('view-tally-modules')
+             @include('layouts.backend.sidebar.tally-accounting')
          @endcan
 
 

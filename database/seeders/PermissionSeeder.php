@@ -30,6 +30,7 @@ class PermissionSeeder extends Seeder
             'out-of-budget',
             'reports',
             'accounts-modules',
+            'tally-modules',
             'finance-settings',
             'logistics-settings',
             'system-settings',
