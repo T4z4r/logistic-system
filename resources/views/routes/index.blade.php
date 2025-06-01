@@ -25,25 +25,24 @@
     @vite(['resources/js/pages/datatables.js'])
 @endsection
 
-
 @section('content')
     <!-- Hero -->
-    <div class="bg-body-light ">
+    <div class="bg-body-light">
         <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0">
                 <div class="flex-grow-1">
-                    <h5 class="h5 fw-bold mb-1 text-main">Route Management</h5>
-                    <h2 class="fs-sm lh-base fw-normal text-muted mb-0">
+                    <h5 class="h5 fw-bold mb-1 text-main">Route Master</h5>
+                    <h2 class="fs-base lh-base fw-medium text-muted mb-0">
                         <i class="fa fa-info-circle text-main me-1"></i>
-                        Manage all routes in the system
+                        View all routes
                     </h2>
                 </div>
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
                         <li class="breadcrumb-item">
-                            <a class="link-fx text-main" href="{{ route('dashboard') }}">Dashboard</a>
+                            <a class="link-fx text-main" href="{{ route('routes.list') }}">Routes</a>
                         </li>
-                        <li class="breadcrumb-item" aria-current="page">Routes</li>
+                        <li class="breadcrumb-item" aria-current="page">All Routes</li>
                     </ol>
                 </nav>
             </div>
@@ -56,72 +55,315 @@
         <!-- Routes Block -->
         <div class="block block-rounded rounded-0">
             <div class="block-header block-header-default">
-                <h3 class="block-title"></h3>
+                <h3 class="block-title">All Routes</h3>
                 <div class="block-options">
+                    {{-- @can('add-route') --}}
                     <a href="{{ route('routes.create') }}" class="btn btn-alt-primary btn-sm">
-                        <i class="fa fa-plus"></i>
-                        Add New Route</a>
-                    {{-- <a href="{{ route('routes.active') }}" class="btn btn-secondary">View Active Routes</a>
-                    <a href="{{ route('routes.inactive') }}" class="btn btn-secondary">View Inactive Routes</a> --}}
+                        <i class="fa fa-plus me-2"></i> Create Route
+                    </a>
+                    {{-- @endcan --}}
                 </div>
             </div>
             <div class="block-content">
-                @if (session('success'))
-                    <div class="alert alert-success" role="alert">{{ session('success') }}</div>
-                @endif
+                <!-- Import/Export Section -->
+                <div class="row mb-0" hidden>
+                    <div class="col-sm-9">
+                        <form action="{{ route('routes.import') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <div class="col-sm-9">
+                                    <input type="file" name="file" class="form-control" accept=".xlsx, .xls, .csv">
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="submit" class="btn btn-alt-primary btn-sm">Import Routes</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-sm-3">
+                        <a href="{{ route('routes.export') }}" class="btn btn-sm btn-success">Export Routes</a>
+                        <a href="{{ route('routes.downloadTemplate') }}" class="btn btn-sm btn-alt-primary">Download Template</a>
+                    </div>
+                </div>
 
-                <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
-                    <thead class="table-secondary">
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Start Point</th>
-                            <th>Destination</th>
-                            <th>Created By</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($routes as $route)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $route->name }}</td>
-                                <td>{{ $route->start_point }}</td>
-                                <td>{{ $route->destination }}</td>
-                                <td>{{ $route->createdBy?->name ?? 'N/A' }}</td>
-                                <td>
-                                    @if ($route->status)
-                                        <span class="badge bg-success">Active</span>
-                                    @else
-                                        <span class="badge bg-danger">Inactive</span>
-                                    @endif
-                                </td>
+                <!-- Tab Navigation -->
+                <ul class="nav nav-tabs mb-3 px-2" role="tablist">
+                    {{-- @can('view-active-routes') --}}
+                    <li class="nav-item" role="presentation">
+                        <a href="#active" class="nav-link active" data-bs-toggle="tab" aria-selected="true" role="tab">
+                            Activated Routes
+                        </a>
+                    </li>
+                    {{-- @endcan --}}
+                    {{-- @can('view-inactive-route') --}}
+                    <li class="nav-item" role="presentation">
+                        <a href="#deactive" class="nav-link" data-bs-toggle="tab" aria-selected="false" role="tab">
+                            Deactivated Routes
+                        </a>
+                    </li>
+                    {{-- @endcan --}}
+                </ul>
 
-                                <td>
-                                    <a href="{{ route('routes.show', $route->id) }}" class="btn btn-sm btn-alt-primary">
-                                        <i class="fa fa-list"></i>
-                                    </a>
-                                    <a href="{{ route('routes.edit', $route->id) }}" class="btn btn-sm btn-alt-primary">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <form action="{{ route('routes.delete', $route->id) }}" method="POST"
-                                        style="display: inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                         <button type="submit" class="btn btn-sm btn-alt-danger swal-confirm-btn">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                {{ $routes->links() }}
+                <!-- Tab Content -->
+                <div class="tab-content">
+                    <!-- Active Routes Tab -->
+                    <div class="tab-pane fade active show" id="active" role="tabpanel">
+                        @if (session('msg'))
+                            <div class="alert alert-success mt-1 mb-1 col-10 mx-auto" role="alert">
+                                {{ session('msg') }}
+                            </div>
+                        @endif
+                        <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
+                            <thead class="table-secondary">
+                                <th>No.</th>
+                                <th>Route Name</th>
+                                <th>Start Point</th>
+                                <th>Destination</th>
+                                <th>Distance <small>(Km)</small></th>
+                                <th>Planned TT <small>(Days)</small></th>
+                                <th>Options</th>
+                            </thead>
+                            <tbody>
+                                <?php $i = 1; ?>
+                                @foreach ($active as $item)
+                                    @php
+                                        $costs = App\Models\RouteCost::where('route_id', $item->id)
+                                            ->get()
+                                            ->sum('real_amount');
+                                    @endphp
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td width="20%">{{ strtoupper($item->name) }}</td>
+                                        <td width="15%">{{ strtoupper($item->start_point) }}</td>
+                                        <td width="15%">{{ strtoupper($item->destination) }}</td>
+                                        <td width="14%">{{ strtoupper($item->estimated_distance) }}</td>
+                                        <td width="18%">{{ strtoupper($item->estimated_days) }}</td>
+                                        <td width="18%">
+                                            {{-- @can('view-route') --}}
+                                            <a href="{{ route('routes.show' , $item->id) }}"
+                                                title="View Route Details" class="btn btn-sm btn-alt-primary">
+                                                <i class="fa fa-list"></i>
+                                            </a>
+                                            {{-- @endcan
+                                            @can('edit-route') --}}
+                                            <a href="{{ route('routes.edit' , $item->id) }}" title="Edit Route"
+                                                class="btn btn-sm btn-alt-primary">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            {{-- @endcan --}}
+                                            {{-- @can('deactivate-route') --}}
+                                            <a href="javascript:void(0)" title="Deactivate Route"
+                                                class="icon-2 info-tooltip btn btn-alt-danger btn-sm"
+                                                onclick="deactivateRoute(<?php echo $item->id; ?>)">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                            {{-- @endcan --}}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Deactivated Routes Tab -->
+                    {{-- @can('view-inactive-route') --}}
+                    <div class="tab-pane fade" id="deactive" role="tabpanel">
+                        @if (session('msg1'))
+                            <div class="alert alert-success mt-1 mb-1 col-10 mx-auto" role="alert">
+                                {{ session('msg1') }}
+                            </div>
+                        @endif
+                        <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
+                            <thead class="table-secondary">
+                                <th>No.</th>
+                                <th>Route Name</th>
+                                <th>Start Point</th>
+                                <th>Destination</th>
+                                <th>Distance <small>(Km)</small></th>
+                                <th>Planned TT <small>(Days)</small></th>
+                                <th>Options</th>
+                            </thead>
+                            <tbody>
+                                <?php $i = 1; ?>
+                                @foreach ($inactive as $item)
+                                    @php
+                                        $costs = App\Models\RouteCost::where('route_id', $item->id)
+                                            ->get()
+                                            ->sum('real_amount');
+                                    @endphp
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td width="20%">{{ strtoupper($item->name) }}</td>
+                                        <td width="15%">{{ strtoupper($item->start_point) }}</td>
+                                        <td width="15%">{{ strtoupper($item->destination) }}</td>
+                                        <td width="14%">{{ strtoupper($item->estimated_distance) }}</td>
+                                        <td width="18%">{{ strtoupper($item->estimated_days) }}</td>
+                                        <td width="18%">
+                                            {{-- @can('view-route') --}}
+                                            <a href="{{ route('routes.show' ,$item->id) }}"
+                                                class="btn btn-sm btn-alt-primary">
+                                                <i class="fa fa-list"></i>
+                                            </a>
+                                            {{-- @endcan --}}
+                                            {{-- @can('activate-route') --}}
+                                            <a href="javascript:void(0)" title="Activate Route"
+                                                class="icon-2 info-tooltip btn btn-alt-success btn-sm"
+                                                onclick="activateRoute(<?php echo $item->id; ?>)">
+                                                <i class="fa fa-check"></i>
+                                            </a>
+                                            {{-- @endcan --}}
+                                            {{-- @can('delete-route') --}}
+                                            <a href="javascript:void(0)" title="Delete Route"
+                                                class="icon-2 info-tooltip btn btn-alt-danger btn-sm"
+                                                onclick="deleteRoute(<?php echo $item->id; ?>)">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                            {{-- @endcan --}}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    {{-- @endcan --}}
+                </div>
             </div>
         </div>
         <!-- END Routes Block -->
     </div>
     <!-- END Page Content -->
+
+    <script>
+        function deleteRoute(id) {
+            Swal.fire({
+                text: 'Are You Sure You Want to Delete This Route ?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes,Delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var terminationid = id;
+                    $.ajax({
+                            url: "{{ url('routes/delete-route') }}/" + terminationid
+                        })
+                        .done(function(data) {
+                            $('#resultfeedOvertime').fadeOut('fast', function() {
+                                $('#resultfeedOvertime').fadeIn('fast').html(data);
+                            });
+                            $('#status' + id).fadeOut('fast', function() {
+                                $('#status' + id).fadeIn('fast').html(
+                                    '<div class="col-md-12"><span class="label label-warning">CANCELLED</span></div>'
+                                );
+                            });
+                            Swal.fire(
+                                'Deleted!',
+                                'Route was deleted Successfully!!.',
+                                'success'
+                            )
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000);
+                        })
+                        .fail(function() {
+                            Swal.fire(
+                                'Failed!',
+                                'Route Deletion Failed!! ....',
+                                'success'
+                            )
+                            alert('Route Deletion Failed!! ...');
+                        });
+                }
+            });
+        }
+
+        function activateRoute(id) {
+            Swal.fire({
+                text: 'Are You Sure You Want to Activate This Route ?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes,Activate it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var terminationid = id;
+                    $.ajax({
+                            url: "{{ url('routes/activate-route') }}/" + terminationid
+                        })
+                        .done(function(data) {
+                            $('#resultfeedOvertime').fadeOut('fast', function() {
+                                $('#resultfeedOvertime').fadeIn('fast').html(data);
+                            });
+                            $('#status' + id).fadeOut('fast', function() {
+                                $('#status' + id).fadeIn('fast').html(
+                                    '<div class="col-md-12"><span class="label label-warning">CANCELLED</span></div>'
+                                );
+                            });
+                            Swal.fire(
+                                'Activated !',
+                                'Route was activated Successfully!!.',
+                                'success'
+                            )
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000);
+                        })
+                        .fail(function() {
+                            Swal.fire(
+                                'Failed!',
+                                'Route Activation Failed!! ....',
+                                'success'
+                            )
+                            alert('Route Activation Failed!! ...');
+                        });
+                }
+            });
+        }
+
+        function deactivateRoute(id) {
+            Swal.fire({
+                text: 'Are You Sure You Want to Deactivate This Route ?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes,Deactivate it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var terminationid = id;
+                    $.ajax({
+                            url: "{{ url('routes/deactivate-route') }}/" + terminationid
+                        })
+                        .done(function(data) {
+                            $('#resultfeedOvertime').fadeOut('fast', function() {
+                                $('#resultfeedOvertime').fadeIn('fast').html(data);
+                            });
+                            $('#status' + id).fadeOut('fast', function() {
+                                $('#status' + id).fadeIn('fast').html(
+                                    '<div class="col-md-12"><span class="label label-warning">CANCELLED</span></div>'
+                                );
+                            });
+                            Swal.fire(
+                                'Deactivated !',
+                                'Route was deactivated Successfully!!.',
+                                'success'
+                            )
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000);
+                        })
+                        .fail(function() {
+                            Swal.fire(
+                                'Failed!',
+                                'Route Deactivation Failed!! ....',
+                                'success'
+                            )
+                            alert('Route Deactivation Failed!! ...');
+                        });
+                }
+            });
+        }
+    </script>
 @endsection

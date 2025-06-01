@@ -31,4 +31,9 @@ class Route extends Model
     {
         return $this->hasMany(RouteCost::class, 'route_id');
     }
+
+       public function allocation_costs()
+    {
+        return $this->hasMany(AllocationCost::class, 'route_id', 'id');
+    }
 }
