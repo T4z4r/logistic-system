@@ -113,7 +113,7 @@
 
 .nav-main-link.active {
     /* background: #f2bdbfe3; */
-      background-color: #b3b0b075 !important;
+      background-color: #c9c5c575 !important;
     /* border-left: #2a3e87 solid 8px !important; */
     padding-left: 4px !important;
 }
@@ -137,12 +137,12 @@
     /* color: #2a3e87 !important; */
     margin-top: 4px !important;
     /* background: #c6bfbfc3 !important; */
-         background-color: #b3b0b075 !important;
+         background-color: #cfcccc75 !important;
 }
 
 .nav-main-item.open>.nav-main-link-submenu
 {
     /* background-color: #f2bdbfc3 !important; */
-         background-color: #b3b0b075 !important;
+         background-color: #dedbdb75 !important;
     /* border-left: #2a3e87 solid 4px !important; */
 }

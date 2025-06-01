@@ -33,7 +33,7 @@
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center table-sm ">
                 <div class="flex-grow-1">
-                    <h5 class="h5 fw-bold mb-1"> <i class="si si-userr"></i> Active Users</h5>
+                    <h5 class="h5 fw-bold text-main mb-1"> <i class="si si-users"></i> Active Users</h5>
                     <h2 class="fs-sm lh-base fw-normal text-muted mb-0">
                         <i class="fa fa-info-circle text-main me-1"></i>
                         View all active users in the system
@@ -42,7 +42,7 @@
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
                         <li class="breadcrumb-item">
-                            <a class="link-fx" href="{{ route('users.index') }}">Users</a>
+                            <a class="link-fx text-main" href="{{ route('users.index') }}">Users</a>
                         </li>
                         <li class="breadcrumb-item" aria-current="page">Active</li>
                     </ol>
@@ -55,9 +55,9 @@
     <!-- Page Content -->
     <div class="content1 p-2 rounded-0">
         <!-- Active Users Block -->
-        <div class="block block-rounded">
+        <div class="block block-rounded rounded-0">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Active Users List</h3>
+                <h3 class="block-title"></h3>
                 <div class="block-options">
                     <a href="{{ route('users.create') }}" class="btn btn-alt-primary btn-sm">
                         <i class="fa fa-plus"></i>
@@ -94,7 +94,10 @@
                                 <td>{{ $user->status ? 'Active' : 'Inactive' }}</td>
                                 <td>
                                     <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-alt-primary">
-                                        <i class="fa fa-edit"></i> Edit
+                                        <i class="fa fa-list"></i>
+                                    </a>
+                                    <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-alt-primary">
+                                        <i class="fa fa-edit"></i>
                                     </a>
                                     <form action="{{ route('users.destroy', $user) }}" method="POST"
                                         style="display: inline;">
@@ -102,7 +105,7 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-alt-danger"
                                             onclick="return confirm('Are you sure?')">
-                                            <i class="fa fa-trash"></i> Delete
+                                            <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
                                 </td>
