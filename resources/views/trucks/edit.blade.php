@@ -214,7 +214,7 @@
                                         value="{{ old('capacity', $truck->capacity) }}">
 
                                 </div>
-                                     <div class="mb-4">
+                                <div class="mb-4">
                                     <label class="form-label" for="manufacturer">Manufacturer</label>
                                     <input type="text" name="manufacturer" id="manufacturer"
                                         class="form-control @error('manufacturer') is-invalid @enderror"
@@ -225,12 +225,12 @@
 
 
                         </div>
-   <hr>
-                    <div class="text-end mb-3">
-                        <button type="submit" class="btn btn-alt-primary">
-                            <i class="fa fa-save"></i> Update Truck
-                        </button>
-                    </div>
+                        <hr>
+                        <div class="text-end mb-3">
+                            <button type="submit" class="btn btn-alt-primary">
+                                <i class="fa fa-save"></i> Update Truck
+                            </button>
+                        </div>
                     </form>
                 @else
                     <div class="alert alert-danger" role="alert">Truck not found.</div>

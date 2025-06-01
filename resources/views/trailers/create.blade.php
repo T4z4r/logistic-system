@@ -126,25 +126,19 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="mb-4">
-                                <label class="form-label" for="added_by">Added By</label>
-                                <select name="added_by" id="added_by"
-                                    class="form-control @error('added_by') is-invalid @enderror">
-                                    <option value="">Select User</option>
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->id }}"
-                                            {{ old('added_by') == $user->id ? 'selected' : '' }}>{{ $user->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('added_by')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
+                        <div class="col-md-6" hidden>
+
+                            <input type="hidden" name="added_by" id="added_by" value="{{ auth()->user()->id }}">
+
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Create Trailer</button>
+                    {{-- <button type="submit" class="btn btn-primary">Create Trailer</button> --}}
+                    <hr>
+                    <div class="text-end mb-3">
+                        <button type="submit" class="btn btn-alt-primary">
+                            <i class="fa fa-save"></i> Save Trailer
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

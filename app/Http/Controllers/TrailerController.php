@@ -11,7 +11,7 @@ class TrailerController extends Controller
 {
     public function index()
     {
-        $trailers = Trailer::with('addedBy')->paginate(10);
+        $trailers = Trailer::with('addedBy')->latest()->paginate(10);
         return view('trailers.index', compact('trailers'));
     }
 
