@@ -14,22 +14,46 @@ class UserSeeder extends Seeder
         // Sample users
         $users = [
             [
-                'name' => 'Admin User',
-                'email' => 'admin@logistics.com',
-                'role' => 'admin',
-                'department' => 'Administration',
+            'name' => 'Admin User',
+            'email' => 'admin@logistics.com',
+            'role' => 'admin',
+            'department' => 'Administration',
             ],
             [
-                'name' => 'Dispatcher One',
-                'email' => 'dispatcher@logistics.com',
-                'role' => 'dispatcher',
-                'department' => 'Dispatch',
+            'name' => 'Dispatcher One',
+            'email' => 'dispatcher@logistics.com',
+            'role' => 'dispatcher',
+            'department' => 'Dispatch',
             ],
             [
-                'name' => 'Driver One',
-                'email' => 'driver@logistics.com',
-                'role' => 'driver',
-                'department' => 'Drivers',
+            'name' => 'Driver One',
+            'email' => 'driver@logistics.com',
+            'role' => 'driver',
+            'department' => 'Drivers',
+            ],
+            [
+            'name' => 'Operation Manager',
+            'email' => 'manager@logistics.com',
+            'role' => 'operation-manager',
+            'department' => 'Operations',
+            ],
+            [
+            'name' => 'Managing Director',
+            'email' => 'director@logistics.com',
+            'role' => 'managing-director',
+            'department' => 'Management',
+            ],
+            [
+            'name' => 'Accountant User',
+            'email' => 'accountant@logistics.com',
+            'role' => 'accountant',
+            'department' => 'Accounts',
+            ],
+            [
+            'name' => 'Customer Service',
+            'email' => 'service@logistics.com',
+            'role' => 'customer-service',
+            'department' => 'Customer Service',
             ],
         ];
 
