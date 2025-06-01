@@ -246,7 +246,7 @@
                 if (result.isConfirmed) {
                     var terminationid = id;
                     $.ajax({
-                            url: "{{ url('routes/delete-route') }}/" + terminationid
+                            url: "{{ url('routes/delete') }}/" + terminationid
                         })
                         .done(function(data) {
                             $('#resultfeedOvertime').fadeOut('fast', function() {

@@ -100,7 +100,7 @@
              </a>
              <ul class="nav-main-submenu">
                  <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('allocations*') ? ' active' : '' }}"
+                     <a class="nav-main-link{{ request()->routeIs('allocations*','flex.truck-allocation') ? ' active' : '' }}"
                          href="{{ route('allocations.list') }}">
                          <span class="nav-main-link-name">Allocations</span>
                      </a>

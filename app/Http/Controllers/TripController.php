@@ -7,6 +7,7 @@ use App\Models\Route;
 use App\Models\Approval;
 use App\Models\Currency;
 use App\Models\Position;
+use App\Models\TripCost;
 use App\Models\RouteCost;
 use App\Models\Allocation;
 use App\Models\CargoNature;
@@ -245,25 +246,26 @@ class TripController extends Controller
             $trip->total_payment = $allocation->amount;
             $trip->initiated_date = date('Y-m-d');
             $trip->type = $allocation->type;
-            $trip->status = 1;
-            $trip->state = '0';
+        
+            $trip->status = 0;
+            $trip->state = 2;
             $trip->created_by = Auth::user()->id;
             $trip->approval_status = 1;
             $trip->save();
             // $ref='GL-'.$allocation->customer->abbreviation. date('y', strtotime(date('Y-m-d'))).date('m', strtotime(date('Y-m-d'))).'-'.$allocation->id;
             $trip = Trip::where('ref_no', $allocation->ref_no)->first();
             $costs = AllocationCost::where('allocation_id', $allocation->id)->get();
-            // foreach ($costs as $item) {
-            //     $tripcost = new TripCost();
-            //     $tripcost->trip_id = $trip->id;
-            //     $tripcost->cost_id = $item->id;
-            //     $tripcost->name = $item->name;
-            //     $tripcost->amount = $item->real_amount;
+            foreach ($costs as $item) {
+                $tripcost = new TripCost();
+                $tripcost->trip_id = $trip->id;
+                $tripcost->cost_id = $item->id;
+                $tripcost->name = $item->name;
+                $tripcost->amount = $item->real_amount;
 
-            //     $tripcost->status = 1;
-            //     $tripcost->created_by = Auth::user()->id;
-            //     $tripcost->save();
-            // }
+                $tripcost->status = 1;
+                $tripcost->created_by = Auth::user()->id;
+                $tripcost->save();
+            }
 
 
 
@@ -275,25 +277,6 @@ class TripController extends Controller
         $allocation->update();
 
 
-        // For Notification
-        // Start Of Approval Email Alert
-        // $process = Approval::where('process_name', 'Trip Approval')->first();
-        // $level = ApprovalLevel::where('approval_id', $process->id)->first();
-        // $employees = User::where('position', $level->role_id)->limit(1)->get(); //To be Modified
-        // foreach ($employees as $item) {
-
-        //     $fullname = $item->name;
-        //     $email_data = array(
-        //         'subject' => $allocation->ref_no . ' Trip Initiation Request Approval',
-        //         'view' => 'emails.trips.fleet-approval',
-        //         'email' => $item->email,
-        //         'allocation' => $allocation,
-        //         'trip' => $trip,
-        //         'full_name' => $fullname,
-        //     );
-        //     Notification::route('mail', $email_data['email'])->notify(new EmailRequests($email_data));
-        // }
-        // end of Approval Email Alert
 
         if ($allocation->type == 2) {
 

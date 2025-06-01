@@ -13,7 +13,7 @@ Route::post('/routes', [RouteController::class, 'store'])->name('routes.store');
 Route::get('/routes/{id}', [RouteController::class, 'show'])->name('routes.show');
 Route::get('/routes/{id}/edit', [RouteController::class, 'edit'])->name('routes.edit');
 Route::put('/routes/{id}', [RouteController::class, 'update'])->name('routes.update');
-Route::delete('/routes/{id}', [RouteController::class, 'destroy'])->name('routes.delete');
+Route::any('/routes/delete/{id}', [RouteController::class, 'destroy'])->name('routes.delete');
 Route::any('routes/activate-route/{id}', [RouteController::class, 'activateRoute'])->name('flex.activate-route');
 Route::any('routes/deactivate-route/{id}', [RouteController::class, 'deactivateRoute'])->name('flex.deactivate-route');
 

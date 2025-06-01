@@ -35,7 +35,7 @@ Route::delete('/allocations/{id}', [AllocationController::class, 'destroy'])->na
         Route::any('change-allocation-route', 'change_allocation_route')->name('flex.change-allocation-route');
 
 
-        Route::any('revoke-trip/{id}', 'revoke_trip')->name('flex.revoke-trip');
+        Route::any('revoke-trip/{id}', 'revoke_trip')ftruck-allocation->name('flex.revoke-trip');
         // start of approvals route
         Route::any('approve-allocation', 'approveAllocation')->name('flex.approveAllocation');
         Route::any('disapprove-allocation', 'disapproveAllocation')->name('flex.disapproveAllocation');

@@ -94,13 +94,13 @@ class RouteController extends Controller
             'destination' => 'required|string|max:255',
             'estimated_distance' => 'required|numeric|min:0',
             'estimated_days' => 'required|integer|min:1',
-            'status' => 'required|boolean',
-            'created_by' => 'required|exists:users,id',
+            // 'status' => 'required|boolean',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
+        $request['created_by'] = Auth::id();
 
         Route::create($request->only([
             'name',
@@ -108,7 +108,7 @@ class RouteController extends Controller
             'destination',
             'estimated_distance',
             'estimated_days',
-            'status',
+            // 'status',
             'created_by',
         ]));
 
@@ -156,9 +156,25 @@ class RouteController extends Controller
 
     public function destroy($id)
     {
-        $route = Route::findOrFail($id);
-        $route->delete();
-        return redirect()->route('routes.list')->with('success', 'Route deleted successfully.');
+        DB::beginTransaction();
+
+        try {
+            $route = Route::where('id', $id)->first();
+
+            if (!$route) {
+                return redirect()->route('routes.list')->withErrors(['error' => 'Route not found.']);
+            }
+
+            $route->delete();
+
+            DB::commit();
+
+            return redirect()->route('routes.list')->with('success', 'Route deleted successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error deleting route: ' . $e->getMessage());
+            return redirect()->route('routes.list')->withErrors(['error' => 'An error occurred while deleting the route. Please try again later.']);
+        }
     }
 
 

@@ -130,6 +130,7 @@
 .nav-tabs .nav-item.show .nav-link {
     color: #233781 !important;
     background-color: aliceblue !important;
+    margin: 2px !important;
 }
 
 
