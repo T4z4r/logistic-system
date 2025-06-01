@@ -34,7 +34,7 @@
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0">
                 <div class="flex-grow-1">
                     <h5 class="h5 fw-bold mb-1 text-main">Trucks</h5>
-                     <h2 class="fs-sm lh-base fw-normal text-muted mb-0">
+                    <h2 class="fs-sm lh-base fw-normal text-muted mb-0">
                         <i class="fa fa-info-circle text-main me-1"></i>
                         Manage all trucks
                     </h2>
@@ -119,7 +119,7 @@
                                     {{ $truck->created_at->format('d M Y ') ?? 'N/A' }}
                                 </td>
                                 <td>
-                                       <a href="{{ route('trucks.show', $truck->id) }}" class="btn btn-sm btn-alt-primary">
+                                    <a href="{{ route('trucks.show', $truck->id) }}" class="btn btn-sm btn-alt-primary">
                                         <i class="fa fa-list"></i>
                                     </a>
                                     <a href="{{ route('trucks.edit', $truck->id) }}" class="btn btn-sm btn-alt-primary">
@@ -129,8 +129,7 @@
                                         style="display: inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-alt-danger"
-                                            onclick="return confirm('Are you sure?')">
+                                        <button type="submit" class="btn btn-sm btn-alt-danger swal-confirm-btn">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
@@ -140,10 +139,10 @@
                                             style="display: inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-alt-warning"
-                                                onclick="return confirm('Are you sure you want to deassign the driver?')">
+                                            <button type="submit" class="btn btn-sm btn-alt-warning swal-confirm-btn">
                                                 <i class="fa fa-user-minus"></i>
                                             </button>
+
                                         </form>
                                     @else
                                         <button type="button" class="btn btn-sm btn-alt-success" data-bs-toggle="modal"
@@ -167,7 +166,7 @@
     @foreach ($trucks as $truck)
         <div class="modal fade" id="assignDriverModal{{ $truck->id }}" tabindex="-1"
             aria-labelledby="assignDriverModalLabel{{ $truck->id }}" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="assignDriverModalLabel{{ $truck->id }}">Assign Driver to Truck:
@@ -192,7 +191,8 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <button type="submit" class="btn btn-primary">Assign Driver</button>
+                            <hr>
+                            <button type="submit" class="btn btn-alt-primary">Assign Driver</button>
                         </form>
                     </div>
                 </div>
