@@ -119,7 +119,7 @@
                                     {{ $truck->created_at->format('d M Y ') ?? 'N/A' }}
                                 </td>
                                 <td>
-                                       <a href="{{ route('trucks.edit', $truck->id) }}" class="btn btn-sm btn-alt-primary">
+                                       <a href="{{ route('trucks.show', $truck->id) }}" class="btn btn-sm btn-alt-primary">
                                         <i class="fa fa-list"></i>
                                     </a>
                                     <a href="{{ route('trucks.edit', $truck->id) }}" class="btn btn-sm btn-alt-primary">

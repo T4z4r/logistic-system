@@ -11,7 +11,7 @@ class TruckController extends Controller
 {
     public function index()
     {
-        $trucks = Truck::with('addedBy')->paginate(10);
+        $trucks = Truck::with('addedBy')->latest()->paginate(10);
         return view('trucks.index', compact('trucks'));
     }
 
@@ -101,6 +101,13 @@ class TruckController extends Controller
         $truck = Truck::findOrFail($id);
         $users = User::where('status', 1)->get();
         return view('trucks.edit', compact('truck', 'users'));
+    }
+
+    public function show($id)
+    {
+        $truck = Truck::findOrFail($id);
+        $users = User::where('status', 1)->get();
+        return view('trucks.show', compact('truck', 'users'));
     }
 
     public function update(Request $request, $id)

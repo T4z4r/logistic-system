@@ -11,5 +11,6 @@ Route::get('/trucks/inactive', [TruckController::class, 'inactive'])->name('truc
 Route::get('/trucks/create', [TruckController::class, 'create'])->name('trucks.create');
 Route::post('/trucks', [TruckController::class, 'store'])->name('trucks.store');
 Route::get('/trucks/{id}/edit', [TruckController::class, 'edit'])->name('trucks.edit');
+Route::get('/trucks/{id}/show', [TruckController::class, 'show'])->name('trucks.show');
 Route::put('/trucks/{id}', [TruckController::class, 'update'])->name('trucks.update');
 Route::delete('/trucks/{id}', [TruckController::class, 'destroy'])->name('trucks.delete');
