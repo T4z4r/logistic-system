@@ -11,5 +11,6 @@ Route::get('/drivers/inactive', [DriverController::class, 'inactive'])->name('dr
 Route::get('/drivers/create', [DriverController::class, 'create'])->name('drivers.create');
 Route::post('/drivers', [DriverController::class, 'store'])->name('drivers.store');
 Route::get('/drivers/{id}/edit', [DriverController::class, 'edit'])->name('drivers.edit');
+Route::get('/drivers/{id}/show', [DriverController::class, 'show'])->name('drivers.show');
 Route::put('/drivers/{id}', [DriverController::class, 'update'])->name('drivers.update');
 Route::delete('/drivers/{id}', [DriverController::class, 'destroy'])->name('drivers.delete');

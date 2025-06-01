@@ -50,7 +50,7 @@
                 <option value="">Select Department</option>
                 @foreach ($departments as $department)
                   <option value="{{ $department->id }}"
-                          {{ old('department_id') == $department->id ? 'selected' : '' }}>
+                          {{ old('department_id', '') === '' && $department->name === 'Drivers' ? 'selected' : (old('department_id') == $department->id ? 'selected' : '') }}>
                           {{ htmlspecialchars($department->name) }}
                   </option>
                 @endforeach
@@ -92,7 +92,9 @@
           <hr>
           <div class="row">
             <div class="col-12 text-end">
-              <button type="submit" class="btn btn-primary mb-3">Create Driver</button>
+              <button type="submit" class="btn btn-alt-primary mb-3">
+               <i class="fa fa-save"></i>
+                Create Driver</button>
             </div>
           </div>
         </form>

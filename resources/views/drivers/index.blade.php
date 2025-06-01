@@ -66,10 +66,7 @@
                 </div>
             </div>
             <div class="block-content rounded-0">
-                @if (session('success'))
-                    <div class="alert alert-success" role="alert">{{ session('success') }}</div>
-                @endif
-
+          
                 <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
                     <thead class="table-secondary">
                         <tr>
@@ -94,9 +91,16 @@
                                 <td>{{ $driver->position?->name ?? 'N/A' }}</td>
                                 <td>{{ $driver->lineManager?->name ?? 'N/A' }}</td>
                                  <td>{{  number_format(0,2) }}</td>
-                                <td>{{ $driver->status ? 'Active' : 'Inactive' }}</td>
                                 <td>
-                                    <a href="{{ route('drivers.edit', $driver->id) }}" class="btn btn-sm btn-alt-primary">
+                                    
+                                      @if ($driver->status)
+                                        <span class="badge bg-success">Active</span>
+                                    @else
+                                        <span class="badge bg-danger">Inactive</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('drivers.show', $driver->id) }}" class="btn btn-sm btn-alt-primary">
                                         <i class="fa fa-list"></i>
                                     </a>
                                     <a href="{{ route('drivers.edit', $driver->id) }}" class="btn btn-sm btn-alt-primary">
@@ -106,8 +110,8 @@
                                         style="display: inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-alt-danger"
-                                            onclick="return confirm('Are you sure?')">
+                                           @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-alt-danger swal-confirm-btn">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>

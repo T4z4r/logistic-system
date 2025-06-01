@@ -16,6 +16,7 @@ class DriverController extends Controller
     {
         $drivers = User::with(['department', 'lineManager', 'position'])
             ->where('position_id', 1)
+            ->latest()
             ->paginate(10);
         return view('drivers.index', compact('drivers'));
     }
@@ -88,16 +89,26 @@ class DriverController extends Controller
     }
     public function edit($id)
     {
-        $driver = User::where('position_id', 5)->findOrFail($id);
+        $driver = User::where('position_id', 1)->findOrFail($id);
         $departments = Department::all();
         $managers = User::where('status', 1)->where('id', '!=', $driver->id)->get();
         $users = User::where('status', 1)->get(); // For created_by
         return view('drivers.edit', compact('driver', 'departments', 'managers', 'users'));
     }
 
+    public function show($id)
+    {
+      
+        $driver = User::where('position_id', 1)->findOrFail($id);
+        $departments = Department::all();
+        $managers = User::where('status', 1)->where('id', '!=', $driver->id)->get();
+        $users = User::where('status', 1)->get(); // For created_by
+        return view('drivers.show', compact('driver', 'departments', 'managers', 'users'));
+    }
+
     public function update(Request $request, $id)
     {
-        $driver = User::where('position_id', 5)->findOrFail($id);
+        $driver = User::where('position_id', 1)->findOrFail($id);
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/', // Allow only letters and spaces
@@ -130,7 +141,7 @@ class DriverController extends Controller
             'email' => $email,
             'department_id' => $request->department_id,
             'line_manager_id' => $request->line_manager_id,
-            'position_id' => 5, // Ensure remains Driver
+            // 'position_id' => 5, // Ensure remains Driver
             'status' => $request->status,
         ]);
 
@@ -138,7 +149,7 @@ class DriverController extends Controller
     }
     public function destroy($id)
     {
-        $driver = User::where('position_id', 5)->findOrFail($id);
+        $driver = User::where('position_id', 1)->findOrFail($id);
         $driver->delete();
         return redirect()->route('drivers.list')->with('success', 'Driver deleted successfully.');
     }
