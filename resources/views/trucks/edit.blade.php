@@ -2,12 +2,16 @@
 
 @section('content')
     <!-- Hero -->
-    <div class="bg-body-light mt-5">
+    <div class="bg-body-light ">
         <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0">
                 <div class="flex-grow-1">
-                    <h1 class="h3 fw-bold mb-1">Edit Truck</h1>
-                    <h2 class="fs-base lh-base fw-medium text-muted mb-0">Update truck details</h2>
+                    <h5 class="h5 text-main fw-bold mb-1">Edit Truck</h1>
+
+                        <h2 class="fs-sm lh-base fw-normal text-muted mb-0">
+                            <i class="fa fa-info-circle text-main me-1"></i>
+                            Update truck details
+                        </h2>
                 </div>
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
@@ -23,11 +27,11 @@
     <!-- END Hero -->
 
     <!-- Page Content -->
-    <div class="content p-2">
+    <div class="content1 rounded-0 p-2">
         <!-- Edit Truck Block -->
-        <div class="block block-rounded">
+        <div class="block block-rounded rounded-0">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Edit Truck Form</h3>
+                <h3 class="block-title"></h3>
             </div>
             <div class="block-content">
                 @if (isset($truck) && $truck->id)
@@ -85,7 +89,7 @@
                                         value="{{ old('fuel_type', $truck->fuel_type) }}">
 
                                 </div>
-                            <div class="mb-4">
+                                <div class="mb-4">
                                     <label class="form-label" for="fuel_capacity">Fuel Capacity</label>
                                     <input type="text" name="fuel_capacity" id="fuel_capacity"
                                         class="form-control @error('fuel_capacity') is-invalid @enderror"
@@ -127,13 +131,7 @@
                                         value="{{ old('vehicle_model', $truck->vehicle_model) }}">
 
                                 </div>
-                                <div class="mb-4">
-                                    <label class="form-label" for="manufacturer">Manufacturer</label>
-                                    <input type="text" name="manufacturer" id="manufacturer"
-                                        class="form-control @error('manufacturer') is-invalid @enderror"
-                                        value="{{ old('manufacturer', $truck->manufacturer) }}">
 
-                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-4">
@@ -216,9 +214,23 @@
                                         value="{{ old('capacity', $truck->capacity) }}">
 
                                 </div>
+                                     <div class="mb-4">
+                                    <label class="form-label" for="manufacturer">Manufacturer</label>
+                                    <input type="text" name="manufacturer" id="manufacturer"
+                                        class="form-control @error('manufacturer') is-invalid @enderror"
+                                        value="{{ old('manufacturer', $truck->manufacturer) }}">
+
+                                </div>
                             </div>
+
+
                         </div>
-                        <button type="submit" class="btn btn-primary">Update Truck</button>
+   <hr>
+                    <div class="text-end mb-3">
+                        <button type="submit" class="btn btn-alt-primary">
+                            <i class="fa fa-save"></i> Update Truck
+                        </button>
+                    </div>
                     </form>
                 @else
                     <div class="alert alert-danger" role="alert">Truck not found.</div>
