@@ -34,7 +34,10 @@
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0">
                 <div class="flex-grow-1">
                     <h5 class="h5 text-main fw-bold mb-1">Trailers</h1>
-                    <h2 class="fs-base lh-base fw-medium text-muted mb-0">Manage all trailers</h2>
+                        <h2 class="fs-sm lh-base fw-normal text-muted mb-0">
+                            <i class="fa fa-info-circle text-main me-1"></i>
+                            Manage all trailers
+                        </h2>
                 </div>
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
@@ -54,7 +57,7 @@
         <!-- Trailers Block -->
         <div class="block block-rounded rounded-0 ">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Trailers Overview</h3>
+                <h3 class="block-title"></h3>
                 <div class="block-options">
                     <a href="{{ route('trailers.create') }}" class="btn btn-alt-primary btn-sm">
                         <i class="fa fa-plus"></i>
@@ -110,15 +113,15 @@
                                     {{ $assignment ? $assignment->truck?->plate_number : 'None' }}
                                 </td>
                                 <td>
-                                    <a href="{{ route('trailers.edit', $trailer->id) }}" class="btn btn-sm btn-alt-primary">
+                                    <a href="{{ route('trailers.edit', $trailer->id) }}"
+                                        class="btn btn-sm btn-alt-primary">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                     <form action="{{ route('trailers.delete', $trailer->id) }}" method="POST"
                                         style="display: inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-alt-danger"
-                                            onclick="return confirm('Are you sure?')">
+                                        <button type="submit" class="btn btn-sm btn-alt-danger swal-confirm-btn">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
@@ -128,8 +131,8 @@
                                             style="display: inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-alt-warning"
-                                                onclick="return confirm('Are you sure you want to deassign the truck?')">
+                                            <button type="submit" class="btn btn-sm btn-alt-warning swal-confirm-btn">
+
                                                 <i class="fa fa-minus"></i>
                                             </button>
                                         </form>
@@ -180,7 +183,8 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <button type="submit" class="btn btn-primary">Assign Truck</button>
+                            <hr>
+                            <button type="submit" class="btn btn-alt-primary">Assign Truck</button>
                         </form>
                     </div>
                 </div>
