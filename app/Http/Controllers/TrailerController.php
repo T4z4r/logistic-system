@@ -90,7 +90,6 @@ class TrailerController extends Controller
             'length' => 'required|numeric|min:0',
             'trailer_type' => 'required|string|max:255',
             'status' => 'required|boolean',
-            'added_by' => 'required|exists:users,id',
         ]);
 
         if ($validator->fails()) {
@@ -106,7 +105,6 @@ class TrailerController extends Controller
             'length',
             'trailer_type',
             'status',
-            'added_by',
         ]));
 
         return redirect()->route('trailers.list')->with('success', 'Trailer updated successfully.');
