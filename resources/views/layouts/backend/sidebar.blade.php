@@ -6,55 +6,60 @@
                  <span class="nav-main-link-name">Dashboard</span>
              </a>
          </li>
-         <li class="nav-main-heading">Users Management</li>
-         <li class="nav-main-item{{ request()->is('users*') ? ' open' : '' }}">
-             <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                 aria-expanded="{{ request()->is('users*') ? 'true active' : 'false' }}" href="#">
-                 <i class="nav-main-link-icon fa fa-users text-green"></i>
-                 <span class="nav-main-link-name">Users</span>
-             </a>
-             <ul class="nav-main-submenu">
-                 <li class="nav-main-item">
-                     <a
-                         class="nav-main-link{{ request()->routeIs('users.active','users.edit','users.create') ? ' active' : '' }}"href="{{ route('users.active') }}">
-                         <i class="nav-main-link-icon si si-user"></i>
-                         <span class="nav-main-link-name">Active Users</span>
-                     </a>
-                 </li>
 
-                 <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('users/inactive') ? ' active' : '' }}"
-                         href="{{ route('users.inactive') }}">
-                         <i class="nav-main-link-icon si si-user-unfollow"></i>
-                         <span class="nav-main-link-name">Blocked Users</span>
-                     </a>
-                 </li>
-             </ul>
-         </li>
+         @can('view-users')
+             <li class="nav-main-heading">Users Management</li>
+             <li class="nav-main-item{{ request()->is('users*') ? ' open' : '' }}">
+                 <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                     aria-expanded="{{ request()->is('users*') ? 'true active' : 'false' }}" href="#">
+                     <i class="nav-main-link-icon fa fa-users text-green"></i>
+                     <span class="nav-main-link-name">Users</span>
+                 </a>
+                 <ul class="nav-main-submenu">
+                     <li class="nav-main-item">
+                         <a
+                             class="nav-main-link{{ request()->routeIs('users.active', 'users.edit', 'users.create') ? ' active' : '' }}"href="{{ route('users.active') }}">
+                             <i class="nav-main-link-icon si si-user"></i>
+                             <span class="nav-main-link-name">Active Users</span>
+                         </a>
+                     </li>
+
+                     <li class="nav-main-item">
+                         <a class="nav-main-link{{ request()->is('users/inactive') ? ' active' : '' }}"
+                             href="{{ route('users.inactive') }}">
+                             <i class="nav-main-link-icon si si-user-unfollow"></i>
+                             <span class="nav-main-link-name">Blocked Users</span>
+                         </a>
+                     </li>
+                 </ul>
+             </li>
+         @endcan
+
 
          <li class="nav-main-heading">Logistics Management</li>
 
-         <li class="nav-main-item{{ request()->is('customers') || request()->is('customers/*') ? ' open' : '' }}">
-             <a class="nav-main-link{{ request()->is('customers') || request()->is('customers/*') ? ' active' : '' }}"
-                 href="{{ route('customers.index') }}">
-                 <i class="nav-main-link-icon fa fa-user-tie text-orange"></i>
-                 <span class="nav-main-link-name">Customers </span>
-             </a>
-         </li>
-         <li class="nav-main-item{{ request()->is('drivers') || request()->is('drivers/*') ? ' open' : '' }}">
-             <a class="nav-main-link{{ request()->is('drivers') || request()->is('drivers/*') ? ' active' : '' }}"
-                 href="{{ route('drivers.list') }}">
-                 <i class="nav-main-link-icon fa fa-users text-blue"></i>
-                 <span class="nav-main-link-name">Drivers </span>
-             </a>
-         </li>
-         {{-- <li class="nav-main-item">
-             <a class="nav-main-link{{ request()->is('trip-settings/costs') ? ' active' : '' }}"
-                 href="/trip-settings/costs">
-                 <i class="nav-main-link-icon fa fa-file"></i>
-                 <span class="nav-main-link-name">
-                     Driver Debts
-                 </span> --}}
+         @can('customers')
+             <li class="nav-main-item{{ request()->is('customers') || request()->is('customers/*') ? ' open' : '' }}">
+                 <a class="nav-main-link{{ request()->is('customers') || request()->is('customers/*') ? ' active' : '' }}"
+                     href="{{ route('customers.index') }}">
+                     <i class="nav-main-link-icon fa fa-user-tie text-orange"></i>
+                     <span class="nav-main-link-name">Customers </span>
+                 </a>
+             </li>
+         @endcan
+
+
+         @can('drivers')
+             <li class="nav-main-item{{ request()->is('drivers') || request()->is('drivers/*') ? ' open' : '' }}">
+                 <a class="nav-main-link{{ request()->is('drivers') || request()->is('drivers/*') ? ' active' : '' }}"
+                     href="{{ route('drivers.list') }}">
+                     <i class="nav-main-link-icon fa fa-users text-blue"></i>
+                     <span class="nav-main-link-name">Drivers </span>
+                 </a>
+             </li>
+         @endcan
+
+
          <li class="nav-main-item{{ request()->is('trucks*') || request()->is('trailers*') ? ' open' : '' }}">
              <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                  aria-expanded="{{ request()->is('trucks*') || request()->is('trailers*') ? 'true' : 'false' }}"
@@ -100,7 +105,7 @@
              </a>
              <ul class="nav-main-submenu">
                  <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->routeIs('allocations*','flex.truck-allocation') ? ' active' : '' }}"
+                     <a class="nav-main-link{{ request()->routeIs('allocations*', 'flex.truck-allocation') ? ' active' : '' }}"
                          href="{{ route('allocations.list') }}">
                          <span class="nav-main-link-name">Allocations</span>
                      </a>
@@ -121,7 +126,8 @@
          </li>
 
          <li class="nav-main-item{{ request()->routeIs('truck-change-requests.*') ? ' open' : '' }}">
-             <a class="nav-main-link{{ request()->routeIs('truck-change-requests.*') ? ' active' : '' }}" href="{{ route('truck-change-requests.index') }}">
+             <a class="nav-main-link{{ request()->routeIs('truck-change-requests.*') ? ' active' : '' }}"
+                 href="{{ route('truck-change-requests.index') }}">
                  <i class="nav-main-link-icon fa fa-recycle text-yellow"></i>
                  <span class="nav-main-link-name">Truck Change</span>
              </a>
@@ -172,12 +178,14 @@
          @endcan
 
 
-         <li class="nav-main-heading">Settings Management</li>
+         @can('view-system-settings')
+             <li class="nav-main-heading">Settings Management</li>
+         @endcan
          @can('view-finance-settings')
              <li class="nav-main-item{{ request()->is('finance-settings*') ? ' open' : '' }}">
                  <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                      aria-expanded="{{ request()->is('finance-settings*') ? 'true' : 'false' }}" href="#">
-                     <i class="nav-main-link-icon fa fa-file-pdf text-purple"></i>
+                     <i class="nav-main-link-icon fa fa-calculator text-green"></i>
                      <span class="nav-main-link-name">Finance Settings</span>
                  </a>
                  <ul class="nav-main-submenu">
@@ -208,8 +216,8 @@
 
                      <li class="nav-main-item">
                          <a class="nav-main-link{{ request()->is('payment-methods*') ? ' active' : '' }}"
-                             href="{{ route('Pagament-methods.list') }}">
-                             <i class="nav-main-link-icon fa fa-credit-card"></i>
+                             href="{{ route('payment-methods.list') }}">
+                             {{-- <i class="nav-main-link-icon fa fa-credit-card"></i> --}}
                              <span class="nav-main-link-name">Payment Methods</span>
                          </a>
                      </li>
@@ -218,136 +226,142 @@
              </li>
          @endcan
 
-         <li
-             class="nav-main-item{{ request()->is('common-costs*', 'fuel-costs*', 'payment-methods*', 'payment-modes*', 'cargo-natures*', 'currencies*') ? ' open' : '' }}">
-             <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                 aria-expanded="{{ request()->is('common-costs*', 'fuel-costs*', 'payment-methods*', 'payment-modes*', 'cargo-natures*', 'currencies*') ? 'true' : 'false' }}"
-                 href="#">
-                 <i class="nav-main-link-icon fa fa-list text-purple"></i>
-                 <span class="nav-main-link-name">Logistics Settings</span>
-             </a>
-             <ul class="nav-main-submenu">
-                 <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('common-costs*') ? ' active' : '' }}"
-                         href="{{ route('common-costs.list') }}">
-                         <i class="nav-main-link-icon fa fa-calculator"></i>
-                         <span class="nav-main-link-name">Common Costs</span>
-                     </a>
-                 </li>
-                 <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('fuel-costs*') ? ' active' : '' }}"
-                         href="{{ route('fuel-costs.list') }}">
-                         <i class="nav-main-link-icon fa fa-gas-pump"></i>
-                         <span class="nav-main-link-name">Fuel Costs</span>
-                     </a>
-                 </li>
-                 <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('payment-methods*') ? ' active' : '' }}"
-                         href="{{ route('payment-methods.list') }}">
-                         <i class="nav-main-link-icon fa fa-credit-card"></i>
-                         <span class="nav-main-link-name">Payment Methods</span>
-                     </a>
-                 </li>
-                 <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('payment-modes*') ? ' active' : '' }}"
-                         href="{{ route('payment-modes.list') }}">
-                         <i class="nav-main-link-icon fa fa-money-check-alt"></i>
-                         <span class="nav-main-link-name">Payment Modes</span>
-                     </a>
-                 </li>
+         @can('view-logistics-settings')
+             <li
+                 class="nav-main-item{{ request()->is('common-costs*', 'fuel-costs*', 'payment-methods*', 'payment-modes*', 'cargo-natures*', 'currencies*') ? ' open' : '' }}">
+                 <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                     aria-expanded="{{ request()->is('common-costs*', 'fuel-costs*', 'payment-methods*', 'payment-modes*', 'cargo-natures*', 'currencies*') ? 'true' : 'false' }}"
+                     href="#">
+                     <i class="nav-main-link-icon fa fa-list text-purple"></i>
+                     <span class="nav-main-link-name">Logistics Settings</span>
+                 </a>
+                 <ul class="nav-main-submenu">
+                     <li class="nav-main-item">
+                         <a class="nav-main-link{{ request()->is('common-costs*') ? ' active' : '' }}"
+                             href="{{ route('common-costs.list') }}">
+                             <i class="nav-main-link-icon fa fa-calculator"></i>
+                             <span class="nav-main-link-name">Common Costs</span>
+                         </a>
+                     </li>
+                     <li class="nav-main-item">
+                         <a class="nav-main-link{{ request()->is('fuel-costs*') ? ' active' : '' }}"
+                             href="{{ route('fuel-costs.list') }}">
+                             <i class="nav-main-link-icon fa fa-gas-pump"></i>
+                             <span class="nav-main-link-name">Fuel Costs</span>
+                         </a>
+                     </li>
+                     <li class="nav-main-item">
+                         <a class="nav-main-link{{ request()->is('payment-methods*') ? ' active' : '' }}"
+                             href="{{ route('payment-methods.list') }}">
+                             <i class="nav-main-link-icon fa fa-credit-card"></i>
+                             <span class="nav-main-link-name">Payment Methods</span>
+                         </a>
+                     </li>
+                     <li class="nav-main-item">
+                         <a class="nav-main-link{{ request()->is('payment-modes*') ? ' active' : '' }}"
+                             href="{{ route('payment-modes.list') }}">
+                             <i class="nav-main-link-icon fa fa-money-check-alt"></i>
+                             <span class="nav-main-link-name">Payment Modes</span>
+                         </a>
+                     </li>
 
 
-                 <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('cargo-natures*') ? ' active' : '' }}"
-                         href="{{ route('cargo-natures.list') }}">
-                         <i class="nav-main-link-icon fa fa-boxes"></i>
-                         <span class="nav-main-link-name">Cargo Natures</span>
-                     </a>
-                 </li>
+                     <li class="nav-main-item">
+                         <a class="nav-main-link{{ request()->is('cargo-natures*') ? ' active' : '' }}"
+                             href="{{ route('cargo-natures.list') }}">
+                             <i class="nav-main-link-icon fa fa-boxes"></i>
+                             <span class="nav-main-link-name">Cargo Natures</span>
+                         </a>
+                     </li>
 
-                 <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('currencies*') ? ' active' : '' }}"
-                         href="{{ route('currencies.index') }}">
-                         <i class="nav-main-link-icon fa fa-coins"></i>
-                         <span class="nav-main-link-name">Currencies</span>
-                     </a>
-                 </li>
-             </ul>
-         </li>
-         @php
-             $isSystemSettings = request()->is('system-configurations*') ||
-                                 request()->is('departments*') ||
-                                 request()->is('positions*') ||
-                                 request()->is('user-roles*') ||
-                                 request()->is('roles*') ||
-                                 request()->is('permissions*') ||
-                                 request()->is('approvals*');
-         @endphp
-         <li class="nav-main-item{{ $isSystemSettings ? ' open' : '' }}">
-             <a class="nav-main-link nav-main-link-submenu{{ $isSystemSettings ? ' active' : '' }}" data-toggle="submenu" aria-haspopup="true"
-                 aria-expanded="{{ $isSystemSettings ? 'true' : 'false' }}" href="#">
-                 <i class="nav-main-link-icon fa fa-cogs text-blue"></i>
-                 <span class="nav-main-link-name">System Settings</span>
-             </a>
-             <ul class="nav-main-submenu">
-                 {{-- <li class="nav-main-item">
+                     <li class="nav-main-item">
+                         <a class="nav-main-link{{ request()->is('currencies*') ? ' active' : '' }}"
+                             href="{{ route('currencies.index') }}">
+                             <i class="nav-main-link-icon fa fa-coins"></i>
+                             <span class="nav-main-link-name">Currencies</span>
+                         </a>
+                     </li>
+                 </ul>
+             </li>
+         @endcan
+         @can('view-system-settings')
+             @php
+                 $isSystemSettings =
+                     request()->is('system-configurations*') ||
+                     request()->is('departments*') ||
+                     request()->is('positions*') ||
+                     request()->is('user-roles*') ||
+                     request()->is('roles*') ||
+                     request()->is('permissions*') ||
+                     request()->is('approvals*');
+             @endphp
+             <li class="nav-main-item{{ $isSystemSettings ? ' open' : '' }}">
+                 <a class="nav-main-link nav-main-link-submenu{{ $isSystemSettings ? ' active' : '' }}"
+                     data-toggle="submenu" aria-haspopup="true"
+                     aria-expanded="{{ $isSystemSettings ? 'true' : 'false' }}" href="#">
+                     <i class="nav-main-link-icon fa fa-cogs text-blue"></i>
+                     <span class="nav-main-link-name">System Settings</span>
+                 </a>
+                 <ul class="nav-main-submenu">
+                     {{-- <li class="nav-main-item">
                      <a class="nav-main-link{{ request()->is('system-configurations/general') ? ' active' : '' }}"
                          href="{{ route('blank') }}">
                          <i class="nav-main-link-icon si si-settings"></i>
                          <span class="nav-main-link-name">General Settings</span>
                      </a>
                  </li> --}}
-                 <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('departments*') ? ' active' : '' }}"
-                         href="{{ route('departments.index') }}">
-                         <i class="nav-main-link-icon si si-settings"></i>
-                         <span class="nav-main-link-name">Departments</span>
-                     </a>
-                 </li>
-                 <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('positions*') ? ' active' : '' }}"
-                         href="{{ route('positions.index') }}">
-                         <i class="nav-main-link-icon si si-settings"></i>
-                         <span class="nav-main-link-name">Positions</span>
-                     </a>
-                 </li>
-                 <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('user-roles*') ? ' active' : '' }}"
-                         href="{{ route('users-roles.index') }}">
-                         <i class="nav-main-link-icon si si-users"></i>
-                         <span class="nav-main-link-name">User Roles</span>
-                     </a>
-                 </li>
-                 <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('roles*') ? ' active' : '' }}"
-                         href="{{ route('roles.index') }}">
-                         <i class="nav-main-link-icon si si-user-following"></i>
-                         <span class="nav-main-link-name">Roles</span>
-                     </a>
-                 </li>
-                 <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('permissions*') ? ' active' : '' }}"
-                         href="{{ route('permissions.index') }}">
-                         <i class="nav-main-link-icon si si-lock"></i>
-                         <span class="nav-main-link-name">Permissions</span>
-                     </a>
-                 </li>
-                 <li class="nav-main-item">
-                     <a class="nav-main-link{{ request()->is('approvals*') ? ' active' : '' }}"
-                         href="{{ route('approvals.list') }}">
-                         <i class="nav-main-link-icon fa fa-check-circle"></i>
-                         <span class="nav-main-link-name">Approvals</span>
-                     </a>
-                 </li>
-                 {{-- <li class="nav-main-item">
+                     <li class="nav-main-item">
+                         <a class="nav-main-link{{ request()->is('departments*') ? ' active' : '' }}"
+                             href="{{ route('departments.index') }}">
+                             <i class="nav-main-link-icon si si-settings"></i>
+                             <span class="nav-main-link-name">Departments</span>
+                         </a>
+                     </li>
+                     <li class="nav-main-item">
+                         <a class="nav-main-link{{ request()->is('positions*') ? ' active' : '' }}"
+                             href="{{ route('positions.index') }}">
+                             <i class="nav-main-link-icon si si-settings"></i>
+                             <span class="nav-main-link-name">Positions</span>
+                         </a>
+                     </li>
+                     <li class="nav-main-item">
+                         <a class="nav-main-link{{ request()->is('user-roles*') ? ' active' : '' }}"
+                             href="{{ route('users-roles.index') }}">
+                             <i class="nav-main-link-icon si si-users"></i>
+                             <span class="nav-main-link-name">User Roles</span>
+                         </a>
+                     </li>
+                     <li class="nav-main-item">
+                         <a class="nav-main-link{{ request()->is('roles*') ? ' active' : '' }}"
+                             href="{{ route('roles.index') }}">
+                             <i class="nav-main-link-icon si si-user-following"></i>
+                             <span class="nav-main-link-name">Roles</span>
+                         </a>
+                     </li>
+                     <li class="nav-main-item">
+                         <a class="nav-main-link{{ request()->is('permissions*') ? ' active' : '' }}"
+                             href="{{ route('permissions.index') }}">
+                             <i class="nav-main-link-icon si si-lock"></i>
+                             <span class="nav-main-link-name">Permissions</span>
+                         </a>
+                     </li>
+                     <li class="nav-main-item">
+                         <a class="nav-main-link{{ request()->is('approvals*') ? ' active' : '' }}"
+                             href="{{ route('approvals.list') }}">
+                             <i class="nav-main-link-icon fa fa-check-circle"></i>
+                             <span class="nav-main-link-name">Approvals</span>
+                         </a>
+                     </li>
+                     {{-- <li class="nav-main-item">
                      <a class="nav-main-link{{ request()->is('system-configurations/notifications') ? ' active' : '' }}"
                          href="{{ route('blank') }}">
                          <i class="nav-main-link-icon si si-bell"></i>
                          <span class="nav-main-link-name">Notifications</span>
                      </a>
                  </li> --}}
-             </ul>
-         </li>
+                 </ul>
+             </li>
+         @endcan
          <li class="nav-main-item">
              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                  @csrf
