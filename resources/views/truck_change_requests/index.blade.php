@@ -29,7 +29,7 @@
     <!-- Hero -->
     <div class="bg-body-light">
         <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
                 <div class="flex-grow-1 text-center text-sm-start">
                     <h5 class="h5 text-main fw-bold mb-1">Truck Change Requests</h5>
                     <h2 class="fs-base lh-base fw-medium text-muted mb-0">View and manage all truck change requests</h2>
@@ -48,12 +48,12 @@
     <!-- END Hero -->
 
     <!-- Page Content -->
-    <div class="content1 p-2 rounded-0">
+    <div class="content1 p-2">
         <div class="block block-rounded rounded-0 shadow-sm">
             <div class="block-header block-header-default">
                 <h3 class="block-title"><i class="ph-truck text-brand-secondary me-2"></i>All Requests</h3>
                 <div class="block-options">
-                    <a href="{{ route('truck-change-requests.create') }}" class="btn btn-sm btn-primary" title="New Request">
+                    <a href="{{ route('truck-change-requests.create') }}" class="btn btn-sm btn-alt-primary" title="New Request">
                         <i class="ph-plus me-1"></i> New Request
                     </a>
                 </div>
