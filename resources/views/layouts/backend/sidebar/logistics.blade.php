@@ -113,7 +113,7 @@
     </li>
 @endcan
 
-@can('view-accidents')
+@can('view-accidents1')
     <li class="nav-main-item{{ request()->is('trips/create') ? ' open' : '' }}">
         <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="{{ route('blank') }}">
             <i class="nav-main-link-icon fa fa-car-burst text-red"></i>
