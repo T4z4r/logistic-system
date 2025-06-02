@@ -65,6 +65,21 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/noty@3.2.0-beta-deprecated/lib/noty.css" />
         <script src="https://cdn.jsdelivr.net/npm/noty@3.2.0-beta-deprecated/lib/noty.min.js"></script>
 
+
+            <script>
+                    $(document).ready(function() {
+                        $('.js-dataTable-full1').DataTable({
+                            responsive: true,
+                            pageLength: 10,
+                            lengthChange: true,
+                            autoWidth: false,
+                            buttons: [
+                                'copy', 'csv', 'excel', 'pdf', 'print'
+                            ],
+                            dom: 'Bfrtip'
+                        });
+                    });
+                </script>
         <!-- Consolidated Styles -->
         <style>
             /* Noty Styles */

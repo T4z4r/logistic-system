@@ -3,6 +3,7 @@
 // app/Http/Controllers/OffBudgetCategoryController.php
 namespace App\Http\Controllers;
 
+use App\Models\CommonCost;
 use App\Models\OffBudgetCategory;
 use App\Models\TruckCost;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class OffBudgetCategoryController extends Controller
     public function index()
     {
         $categories = OffBudgetCategory::with(['creator', 'cost'])->get();
-        $costs = TruckCost::all();
+        $costs = CommonCost::all();
         return view('off_budget_categories.index', compact('categories', 'costs'));
     }
 

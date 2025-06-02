@@ -64,12 +64,14 @@
                 <h3 class="block-title"><i class="ph-tag text-brand-secondary me-2"></i>Categories</h3>
                 <div class="block-options">
                     <button class="btn btn-sm btn-alt-primary" data-bs-toggle="modal" data-bs-target="#createModal" title="Add New Category">
-                        <i class="ph-plus me-1"></i> Add New
+                        <i class="fa fa-plus me-1"></i> Add New
                     </button>
                 </div>
             </div>
             <div class="block-content block-content-full">
-                <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
+                <table id="offBudgetCategoriesTable" class="table table-bordered table-striped table-vcenter js-dataTable-full1 fs-sm table-sm">
+
+            
                     <thead class="table-secondary">
                         <tr>
                             <th>Name</th>
@@ -85,17 +87,17 @@
                                 <td>{{ $category->cost->name ?? '-' }}</td>
                                 <td>{{ $category->creator->name ?? '-' }}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-warning me-1" data-bs-toggle="modal"
+                                    <button class="btn btn-sm btn-alt-primary me-1" data-bs-toggle="modal"
                                         data-bs-target="#editModal{{ $category->id }}" title="Edit Category">
-                                        <i class="ph-pencil-simple"></i>
+                                        <i class="fa fa-edit"></i>
                                     </button>
                                     <form action="{{ route('off_budget_categories.destroy', $category->id) }}" method="POST"
                                         class="d-inline-block"
                                         onsubmit="return confirm('Are you sure you want to delete this category?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-sm btn-danger" title="Delete Category">
-                                            <i class="ph-trash"></i>
+                                        <button class="btn btn-sm btn-alt-danger" title="Delete Category">
+                                            <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
                                 </td>
@@ -146,7 +148,7 @@
     <!-- END Page Content -->
 
     <!-- Create Modal -->
-    <div class="modal modal-lg fade" id="createModal" tabindex="-1">
+    <div class="modal fade" id="createModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <form method="POST" action="{{ route('off_budget_categories.store') }}">
                 @csrf
