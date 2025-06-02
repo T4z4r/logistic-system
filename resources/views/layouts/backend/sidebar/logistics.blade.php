@@ -1,3 +1,4 @@
+use App\Http\Controllers\LoadingController;
 <li class="nav-main-heading">Logistics Management</li>
 
 @can('view-customers')
@@ -95,8 +96,8 @@
         <span class="nav-main-link-name">Truck Change</span>
     </a>
 </li>
-<li class="nav-main-item{{ request()->is('trips/create') ? ' open' : '' }}">
-    <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="{{ route('blank') }}">
+<li class="nav-main-item{{ request()->routeIs('flex.loading-trucks') ? ' open' : '' }}">
+    <a class="nav-main-link{{ request()->routeIs('flex.loading-trucks') ? ' active' : '' }}" href="{{ route('flex.loading-trucks') }}">
         <i class="nav-main-link-icon fa fa-database text-teal"></i>
         <span class="nav-main-link-name">Truck Loading</span>
     </a>
