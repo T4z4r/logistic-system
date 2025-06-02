@@ -15,7 +15,10 @@ class DepartmentSeeder extends Seeder
             'IT Support',
             'Dispatch',
             'Drivers',
-            'Administration'
+            'Administration',
+            'Operations',
+            'Management',
+            'Accounts'
         ];
 
         foreach ($departments as $name) {
