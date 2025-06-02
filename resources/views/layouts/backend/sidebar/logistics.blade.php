@@ -12,7 +12,7 @@
 @endcan
 
 
-@can('drivers')
+@can('view-drivers')
     <li class="nav-main-item{{ request()->is('drivers') || request()->is('drivers/*') ? ' open' : '' }}">
         <a class="nav-main-link{{ request()->is('drivers') || request()->is('drivers/*') ? ' active' : '' }}"
             href="{{ route('drivers.list') }}">
