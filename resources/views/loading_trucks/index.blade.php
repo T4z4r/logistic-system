@@ -269,7 +269,7 @@
     <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label">
         <div class="modal-dialog modal-dialog-centered modal-md" role="document">
             <div class="modal-content">
-                <form id="loading_form" method="POST" action="{{ route('flex.load-truck-allocation') }}">
+                <form id="loading_form" method="POST" action="{{ route('flex.load-truck') }}">
                     @csrf
                     @method('PUT')
                     <div class="modal-header">
@@ -306,7 +306,7 @@
     <div class="modal fade" id="offload-modal" tabindex="-1" role="dialog" aria-labelledby="offload-modal-label">
         <div class="modal-dialog modal-dialog-centered modal-md" role="document">
             <div class="modal-content">
-                <form method="POST" id="offloading_form" action="{{ route('flex.offload-truck-allocation') }}"
+                <form method="POST" id="offloading_form" action="{{ route('flex.offload-truck') }}"
                     onsubmit="return validateForm()" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
