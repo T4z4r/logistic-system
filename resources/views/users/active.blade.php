@@ -63,7 +63,7 @@
                         <i class="fa fa-plus"></i>
                         Add New User
                     </a>
-                      <a href="{{ route('users.reset') }}" class="btn btn-alt-warning btn-sm">
+                      <a href="{{ route('blank') }}" class="btn btn-alt-warning btn-sm">
                         <i class="fa fa-key"></i>
                         Reset Password
                     </a>
