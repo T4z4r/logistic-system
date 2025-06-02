@@ -61,11 +61,11 @@
                  </a>
                  <ul class="nav-main-submenu">
                      <li class="nav-main-item">
-                         <a class="nav-main-link{{ request()->is('finance-settings/general') ? ' active' : '' }}"
+                         {{-- <a class="nav-main-link{{ request()->is('finance-settings/general') ? ' active' : '' }}"
                              href="{{ route('blank') }}">
                              <span class="nav-main-link-name">General</span>
                          </a>
-                     </li>
+                     </li> --}}
                      <li class="nav-main-item">
                          <a class="nav-main-link{{ request()->is('currencies.*') ? ' active' : '' }}"
                              href="{{ route('currencies.index') }}">

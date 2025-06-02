@@ -57,7 +57,7 @@
 </li>
 
 @php
-    $isTrips = request()->is('trips*') || request()->is('allocations*');
+    $isTrips = request()->is('trips*') || request()->routeIs('allocations*','flex.trip-requests');
 @endphp
 
 <li class="nav-main-item{{ $isTrips ? ' open' : '' }}">
@@ -74,13 +74,13 @@
             </a>
         </li>
         <li class="nav-main-item">
-            <a class="nav-main-link{{ request()->is('trips/active') ? ' active' : '' }}"
+            <a class="nav-main-link{{ request()->routeIs('flex.trip-requests') ? ' active' : '' }}"
                 href="{{ route('flex.trip-requests') }}">
                 <span class="nav-main-link-name">Going Load</span>
             </a>
         </li>
         <li class="nav-main-item">
-            <a class="nav-main-link{{ request()->is('trips/inactive') ? ' active' : '' }}"
+            <a class="nav-main-link{{ request()->routeIs('flex.backload-requests') ? ' active' : '' }}"
                 href="{{ route('flex.backload-requests') }}">
                 <span class="nav-main-link-name">Back Load</span>
             </a>
