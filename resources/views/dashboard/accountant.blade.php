@@ -62,7 +62,7 @@
                 <div class="block block-rounded rounded-0 h-100 mb-3">
                     <div class="block-content text-center p-4">
                         <div class="mb-3">
-                            <i class="fa fa-dollar-sign fa-2x text-primary"></i>
+                            <i class="fa fa-calculator fa-2x text-primary"></i>
                         </div>
                         <h4 class="fs-3 fw-bold mb-1">$250,000</h4>
                         <p class="fs-sm text-muted mb-2">Total Revenue</p>
