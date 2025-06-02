@@ -105,8 +105,8 @@
 
 
 @can('view-breakdowns')
-    <li class="nav-main-item{{ request()->is('trips/create') ? ' open' : '' }}">
-        <a class="nav-main-link{{ request()->is('trips/create') ? ' active' : '' }}" href="{{ route('blank') }}">
+    <li class="nav-main-item{{ request()->routeIs('breakdowns.*') ? ' open' : '' }}">
+        <a class="nav-main-link{{ request()->routeIs('breakdowns.*') ? ' active' : '' }}" href="{{ route('breakdowns.index') }}">
             <i class="nav-main-link-icon fa fa-screwdriver-wrench text-orange"></i>
             <span class="nav-main-link-name">Breakdowns</span>
         </a>
