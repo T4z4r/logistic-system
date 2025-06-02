@@ -144,7 +144,7 @@
                          <a class="nav-main-link{{ request()->is('fuel-costs*') ? ' active' : '' }}"
                              href="{{ route('fuel-costs.list') }}">
                              <i class="nav-main-link-icon fa fa-gas-pump"></i>
-                             <span class="nav-main-link-name">Fuel Costs</span>
+                             <span class="nav-main-link-name">Fuel Stations</span>
                          </a>
                      </li>
                      <li class="nav-main-item">

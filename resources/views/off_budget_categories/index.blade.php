@@ -70,8 +70,6 @@
             </div>
             <div class="block-content block-content-full">
                 <table id="offBudgetCategoriesTable" class="table table-bordered table-striped table-vcenter js-dataTable-full1 fs-sm table-sm">
-
-            
                     <thead class="table-secondary">
                         <tr>
                             <th>Name</th>
