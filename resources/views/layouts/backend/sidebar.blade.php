@@ -37,7 +37,7 @@
 
 
          @can('view-logistics-modules')
-                 @include('layouts.backend.sidebar.logistics')
+             @include('layouts.backend.sidebar.logistics')
          @endcan
 
          @can('view-finance-modules')
@@ -99,7 +99,7 @@
 
          @can('view-logistics-settings')
              <li
-                 class="nav-main-item{{ request()->is('common-costs*', 'fuel-costs*', 'payment-methods*', 'payment-modes*', 'cargo-natures*', 'currencies*') ? ' open' : '' }}">
+                 class="nav-main-item{{ request()->is('common-costs*', 'off_budget_categories.*', 'fuel-costs*', 'payment-methods*', 'payment-modes*', 'cargo-natures*', 'currencies*') ? ' open' : '' }}">
                  <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                      aria-expanded="{{ request()->is('common-costs*', 'fuel-costs*', 'payment-methods*', 'payment-modes*', 'cargo-natures*', 'currencies*') ? 'true' : 'false' }}"
                      href="#">
@@ -111,9 +111,15 @@
                          <a class="nav-main-link{{ request()->is('common-costs*') ? ' active' : '' }}"
                              href="{{ route('common-costs.list') }}">
                              <i class="nav-main-link-icon fa fa-calculator"></i>
-                             <span class="nav-main-link-name">Common Costs</span>
+                             <span class="nav-main-link-name">Common Route Costs</span>
                          </a>
-                     </li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{ request()->is('off_budget_categories.index.*') ? ' active' : '' }}"
+                            href="{{ route('off_budget_categories.index') }}">
+                            <i class="nav-main-link-icon fa fa-tags"></i>
+                            <span class="nav-main-link-name">Offbudget Categories</span>
+                        </a>
+                    </li>
                      <li class="nav-main-item">
                          <a class="nav-main-link{{ request()->is('fuel-costs*') ? ' active' : '' }}"
                              href="{{ route('fuel-costs.list') }}">

@@ -18,16 +18,10 @@
     <link rel="stylesheet" href="{{ asset('media/css/custom.css') }}">
 
     <!-- Phosphor Icons CDN -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css"
-    />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" />
     <!-- Modules -->
     @yield('css')
     @vite(['resources/sass/main.scss', 'resources/js/oneui/app.js'])
@@ -108,7 +102,8 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background: rgba(255, 255, 255, 0.9); /* Light background for light mode */
+                background: rgba(255, 255, 255, 0.9);
+                /* Light background for light mode */
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -117,7 +112,8 @@
             }
 
             .dark-mode .custom-loader {
-                background: rgba(0, 0, 0, 0.9); /* Dark background for dark mode */
+                background: rgba(0, 0, 0, 0.9);
+                /* Dark background for dark mode */
             }
 
             .custom-loader.hidden {
@@ -148,10 +144,10 @@
 
         <!-- Loader JavaScript -->
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('DOMContentLoaded', function() {
                 const loader = document.getElementById('custom-loader');
                 // Hide loader when page is fully loaded
-                window.addEventListener('load', function () {
+                window.addEventListener('load', function() {
                     loader.classList.add('hidden');
                     // Optional: Remove loader from DOM after transition
                     setTimeout(() => {
@@ -161,6 +157,15 @@
             });
         </script>
 
+        <!-- Page JS Code -->
+        <script>
+            $(document).ready(function() {
+                $('.select').select2({
+                    placeholder: "Select an option",
+                    allowClear: true
+                });
+            });
+        </script>
         @if (session('success'))
             <script>
                 new Noty({
@@ -171,7 +176,7 @@
                     progressBar: true,
                     theme: 'mint',
                     callbacks: {
-                        onTemplate: function () {
+                        onTemplate: function() {
                             this.barDom.style.background = '#28a745';
                             this.barDom.style.color = '#fff';
                         }
@@ -190,7 +195,7 @@
                     progressBar: true,
                     theme: 'mint',
                     callbacks: {
-                        onTemplate: function () {
+                        onTemplate: function() {
                             this.barDom.style.background = '#dc3545';
                             this.barDom.style.color = '#fff';
                         }
@@ -218,29 +223,29 @@
     </div>
     <!-- END Page Container -->
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('.swal-confirm-btn').forEach(button => {
-            button.addEventListener('click', function (e) {
-                e.preventDefault();
-                const form = this.closest('form');
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: 'This action cannot be undone!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#6c757d',
-                    confirmButtonText: 'Yes, proceed!',
-                    reverseButtons: true
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        form.submit();
-                    }
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.swal-confirm-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const form = this.closest('form');
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'This action cannot be undone!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Yes, proceed!',
+                        reverseButtons: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
                 });
             });
         });
-    });
-</script>
+    </script>
 
 </body>
 
