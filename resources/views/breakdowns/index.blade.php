@@ -48,7 +48,7 @@
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
                         <li class="breadcrumb-item">
-                            <a class="link-fx" href="{{ route('dashboard') }}">Dashboard</a>
+                            <a class="link-fx text-main" href="{{ route('dashboard') }}">Dashboard</a>
                         </li>
                         <li class="breadcrumb-item" aria-current="page">Breakdowns</li>
                     </ol>
@@ -70,8 +70,8 @@
                 <h3 class="block-title"><i class="ph-circle-wavy-warning text-brand-secondary me-2"></i>All Breakdowns</h3>
                 <div class="block-options">
                     {{-- @can('add-breakdown') --}}
-                        <a href="{{ url('/workshop/breakdown/create') }}" class="btn btn-sm btn-alt-primary" title="Add Breakdown">
-                            <i class="ph-plus me-1"></i> Add Breakdown
+                        <a href="{{ route('breakdowns.create') }}" class="btn btn-sm btn-alt-primary" title="Add Breakdown">
+                            <i class="fa fa-plus me-1"></i> Add Breakdown
                         </a>
                     {{-- @endcan --}}
                 </div>
