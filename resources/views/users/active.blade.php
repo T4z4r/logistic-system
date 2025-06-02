@@ -117,7 +117,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $users->links() }}
+                {{-- {{ $users->links() }} --}}
             </div>
         </div>
         <!-- END Active Users Block -->

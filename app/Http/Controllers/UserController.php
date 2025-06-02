@@ -21,7 +21,8 @@ class UserController extends Controller
     {
         $users = User::with(['department', 'lineManager', 'position'])
             ->where('status', 1)
-            ->paginate(10);
+            ->latest()
+            ->get();
         return view('users.active', compact('users'));
     }
 
