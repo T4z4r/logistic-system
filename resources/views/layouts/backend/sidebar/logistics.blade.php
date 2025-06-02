@@ -1,4 +1,4 @@
-use App\Http\Controllers\LoadingController;
+
 <li class="nav-main-heading">Logistics Management</li>
 
 @can('view-customers')
