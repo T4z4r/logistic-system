@@ -246,7 +246,7 @@ class TripController extends Controller
             $trip->total_payment = $allocation->amount;
             $trip->initiated_date = date('Y-m-d');
             $trip->type = $allocation->type;
-        
+
             $trip->status = 0;
             $trip->state = 2;
             $trip->created_by = Auth::user()->id;
@@ -296,5 +296,28 @@ class TripController extends Controller
             ]);
             // return redirect('/trips/trip-requests')->with('msg','Trip Request has been Submitted Successfully !');
         }
+    }
+
+
+
+      // For all Finance trips Trips
+    public function finance_trips()
+    {
+        $uid = Auth::user()->position;
+        $process = Approval::where('process_name', 'Trip Approval')->first();
+        $data['tab'] = 'pending';
+        $data['level'] = ApprovalLevel::where('role_id', $uid)->where('approval_id', $process->id)->first();
+        $data['pending'] = Trip::latest()->whereNot('status', 0)->where('approval_status', 3)->get();
+        $data['approved'] = Trip::latest()->where('state', 2)->where('approval_status', 4)->where('status', 0)->get();
+        $data['completed'] = Trip::latest()->where('state', 4)->get();
+
+        $data['pending_trips'] = Trip::where('state', 0)->where('approval_status', 3)->latest()->count();
+        $data['unpaid_trips'] = Trip::where('state', 2)->where('approval_status', 4)->latest()->count();
+        $data['rejected_trips'] = Trip::where('state', -1)->latest()->count();
+        $data['paid_trips'] = Trip::where('state', 4)->latest()->count();
+
+        $position = Position::where('id', $uid)->first();
+        $data['check'] = 'Approved By ' . $position;
+        return view('trips.finance_trips', $data);
     }
 }

@@ -42,7 +42,24 @@ Route::prefix('trips/')->controller(TripController::class)->group(function () {
 });
 
 
- Route::any('/trips/submit-trip/{id}', [TripController::class, 'submit_trip'])->name('flex.submit-trip');
+Route::any('/trips/allocation-quotation', [TripController::class, 'view_allocation'])->name('flex.allocation-quotation');
+Route::any('/trips/trips', [TripController::class, 'management_trips'])->name('flex.trips'); //for management
+
+Route::any('/trips/initiate-truck/{id}', [TripController::class, 'initiate_truck'])->name('flex.initiate-truck');
+Route::any('/trips/approve_truck/{id}', [TripController::class, 'approve_truck'])->name('flex.approve-truck');
+Route::any('/trips/disapprove_truck/{id}', [TripController::class, 'disapprove_truck'])->name('flex.disapprove-truck');
+
+Route::any('/trips/submit-trip/{id}', [TripController::class, 'submit_trip'])->name('flex.submit-trip');
+Route::any('/trips/finance-trips', [TripController::class, 'finance_trips'])->name('flex.finance_trips');
+Route::any('/trips/procurement-trips', [TripController::class, 'procurement_trips'])->name('flex.procurement_trips');
+Route::any('trips/procurement-detail/{id}', [TripController::class, 'procurement_detail'])->name('flex.procurementDetails');
+
+Route::get('/trips/finance-trips/{tab}', [TripController::class, 'tab_index'])->name('finance_trips.tab_index');
+Route::any('/trips/issue-cost/{id}', [TripController::class, 'issue_cost'])->name('flex.issue_cost');
+Route::any('trips/bulk-truck-payments/{id}', [TripController::class, 'bulk_cost_payment'])->name('flex.bulk_cost_payment');
+
+
+Route::any('/trips/submit-trip/{id}', [TripController::class, 'submit_trip'])->name('flex.submit-trip');
 Route::any('/trips/delete-truck-cost/{id}', [TripController::class, 'delete_truck_cost'])->name('flex.delete_truck_cost');
 Route::any('/trips/delete-cost/{id}', [TripController::class, 'delete_cost'])->name('flex.delete_cost');
 
