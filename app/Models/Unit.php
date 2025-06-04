@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ledger extends Model
+class Unit extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'group_id', 'company_id', 'opening_balance', 'contact_details'];
+    protected $fillable = ['name', 'company_id', 'symbol', 'is_compound', 'base_unit_id', 'conversion_factor'];
 
     public function company()
     {
         return $this->belongsTo(Company::class);
     }
 
-    public function group()
+    public function baseUnit()
     {
-        return $this->belongsTo(AccountGroup::class, 'group_id');
+        return $this->belongsTo(Unit::class, 'base_unit_id');
     }
 }

@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-           Schema::create('ledgers', function (Blueprint $table) {
+             Schema::create('godown_stocks', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('company_id');
-            $table->bigInteger('group_id');
-            $table->string('name');
-            $table->decimal('opening_balance', 15, 2)->default(0);
-            $table->text('contact_details')->nullable();
+            $table->foreignId('company_id')->constrained()->onDelete('cascade');
+            $table->foreignId('stock_item_id')->constrained()->onDelete('cascade');
+            $table->foreignId('godown_id')->constrained()->onDelete('restrict');
+            $table->decimal('quantity', 15, 2);
             $table->timestamps();
         });
 
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ledgers');
+        Schema::dropIfExists('godown_stocks');
     }
 };

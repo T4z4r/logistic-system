@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ledger extends Model
+class CostCategory extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'group_id', 'company_id', 'opening_balance', 'contact_details'];
+    protected $fillable = ['name', 'company_id'];
 
     public function company()
     {
         return $this->belongsTo(Company::class);
     }
 
-    public function group()
+    public function costCenters()
     {
-        return $this->belongsTo(AccountGroup::class, 'group_id');
+        return $this->hasMany(CostCenter::class);
     }
 }

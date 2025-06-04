@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-           Schema::create('ledgers', function (Blueprint $table) {
+            Schema::create('godowns', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('company_id');
-            $table->bigInteger('group_id');
+            $table->foreignId('company_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->decimal('opening_balance', 15, 2)->default(0);
-            $table->text('contact_details')->nullable();
+            $table->text('address')->nullable();
             $table->timestamps();
         });
 
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ledgers');
+        Schema::dropIfExists('godowns');
     }
 };

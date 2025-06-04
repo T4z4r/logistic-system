@@ -79,4 +79,10 @@ Route::view('/pages/blank', 'pages.blank')->name('blank');
 
     // Tall Routes
     require __DIR__ . '/company_management.php';
+    require __DIR__ . '/chart_of_accounts.php';
+    require __DIR__ . '/stocks_management.php';
+    require __DIR__ . '/vouchers.php';
+    require __DIR__ . '/reports.php';
+    require __DIR__ . '/tally.php';
+
 });

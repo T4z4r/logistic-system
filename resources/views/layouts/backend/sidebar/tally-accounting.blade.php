@@ -1,12 +1,15 @@
 <li class="nav-main-heading">Accounting Management</li>
 
+{{-- start of company management part --}}
 <li class="nav-main-item">
     <a class="nav-main-link{{ request()->is('company-management') ? ' active' : '' }}" href="{{ route('company.management.index') }}">
         <i class="nav-main-link-icon fa fa-house text-blue"></i>
         <span class="nav-main-link-name">Company Management</span>
     </a>
 </li>
+{{-- ./ end of company management part --}}
 
+{{-- start of charts of accounts configurations part --}}
 <li class="nav-main-item{{ request()->is('chart-of-accounts*') ? ' open' : '' }}">
     <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" href="#">
         <i class="nav-main-link-icon fa fa-book text-orange"></i>
@@ -56,14 +59,16 @@
             </a>
         </li>
         <li class="nav-main-item">
-            <a class="nav-main-link{{ request()->is('chart-of-accounts/currencies') ? ' active' : '' }}" href="{{ route('chart.currencies.index') }}">
+            <a class="nav-main-link{{ request()->is('chart-of-accounts/currencies') ? ' active' : '' }}" href="{{ url('chart.currencies.index') }}">
                 <i class="nav-main-link-icon fa fa-coins"></i>
                 <span class="nav-main-link-name">Currencies</span>
             </a>
         </li>
     </ul>
 </li>
+{{-- ./ end of charts of accunts configurations part --}}
 
+{{-- start of stock management part --}}
 <li class="nav-main-item{{ request()->is('stock*') ? ' open' : '' }}">
     <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" href="#">
         <i class="nav-main-link-icon fa fa-boxes text-purple"></i>
@@ -84,6 +89,7 @@
         </li>
     </ul>
 </li>
+{{-- ./ end of stock management part --}}
 
 <li class="nav-main-item{{ request()->is('vouchers*') ? ' open' : '' }}">
     <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" href="#">
