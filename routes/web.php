@@ -76,4 +76,7 @@ Route::view('/pages/blank', 'pages.blank')->name('blank');
     require __DIR__ . '/approvals.php';
     require __DIR__ . '/settings.php';
 
+
+    // Tall Routes
+    require __DIR__ . '/company_management.php';
 });
