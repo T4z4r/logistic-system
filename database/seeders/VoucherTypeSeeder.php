@@ -22,7 +22,10 @@ class VoucherTypeSeeder extends Seeder
         ];
 
         foreach ($voucherTypes as $voucherType) {
-            VoucherType::create(array_merge($voucherType, ['company_id' => $company->id]));
+            VoucherType::updateOrCreate(
+                ['name' => $voucherType['name'], 'company_id' => $company->id],
+                array_merge($voucherType, ['company_id' => $company->id])
+            );
         }
     }
 }
