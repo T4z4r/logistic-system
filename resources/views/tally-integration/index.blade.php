@@ -24,7 +24,7 @@
 
   <!-- Page Content -->
   <div class="content1 p-2 rounded-0">
-    <div class="block block-rounded shadow-sm py-5 rounded-0">
+    <div class="block block-rounded shadow-sm py-5 px-2 rounded-0">
       @if (session('success'))
         <div class="alert alert-success text-center">{{ session('success') }}</div>
       @endif
@@ -37,6 +37,7 @@
           Tally Server: {{ $connectionStatus ? 'Connected' : 'Not Connected' }}
         </p>
       </div>
+      <hr>
       <div class="row">
         <div class="col-md-6">
           <h5>Ledger Integration</h5>
@@ -69,6 +70,7 @@
           </form>
         </div>
       </div>
+      <hr>
       <div class="row mt-4">
         <div class="col-md-6">
           <h5>Stock Item Integration</h5>
