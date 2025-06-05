@@ -12,7 +12,7 @@ class CompanyManagementController extends Controller
 {
     public function index()
     {
-        $companies = Company::where('company_id', auth()->user()->company_id)->get();
+        $companies = Company::where('id', auth()->user()->company_id)->get();
         $currencies = Currency::all();
         return view('company-management.index', compact('companies', 'currencies'));
     }
