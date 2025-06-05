@@ -63,6 +63,7 @@
                 <table class="table table-bordered table-striped table-vcenter js-dataTable-full1 fs-sm table-sm ">
                     <thead class="table-secondary">
                         <tr>
+                            <th>#</th>
                             <th>Voucher Number</th>
                             <th>Date</th>
                             <th>Amount</th>
@@ -74,6 +75,7 @@
                     <tbody>
                         @foreach ($vouchers as $voucher)
                             <tr>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $voucher->voucher_number }}</td>
                                 <td>{{ $voucher->date->format('Y-m-d') }}</td>
                                 <td>{{ number_format($voucher->amount, 2) }}</td>
@@ -82,14 +84,14 @@
                                 <td>
                                     <button type="button" class="btn btn-sm btn-alt-primary" data-bs-toggle="modal"
                                         data-bs-target="#editContraVoucherModal{{ $voucher->id }}">
-                                        <i class="fa fa-edit"></i> 
+                                        <i class="fa fa-edit"></i>
                                     </button>
                                     <form action="{{ route('vouchers.contra.destroy', $voucher->id) }}" method="POST"
                                         style="display:inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-alt-danger swal-confirm-btn">
-                                            <i class="fa fa-trash"></i> 
+                                            <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
                                 </td>
