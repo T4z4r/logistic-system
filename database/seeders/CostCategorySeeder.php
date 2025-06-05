@@ -19,7 +19,10 @@ class CostCategorySeeder extends Seeder
         ];
 
         foreach ($categories as $category) {
-            CostCategory::create(array_merge($category, ['company_id' => $company->id]));
+            CostCategory::updateOrCreate(
+                ['name' => $category['name'], 'company_id' => $company->id],
+                []
+            );
         }
     }
 }
