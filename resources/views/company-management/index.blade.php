@@ -49,16 +49,16 @@
 
     <!-- Page Content -->
     <div class="content1 p-2 rounded-0">
-            <div class="block-header block-header-default">
+        <div class="block-header block-header-default">
 
-                <h3 class="block-title"></h3>
-                <div class="block-options">
-                    <button type="button" class="btn btn-alt-primary btn-sm" data-bs-toggle="modal"
-                        data-bs-target="#createCompanyModal">
-                        <i class="fa fa-plus me-1"></i> Create Company
-                    </button>
-                </div>
+            <h3 class="block-title"></h3>
+            <div class="block-options">
+                <button type="button" class="btn btn-alt-primary btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#createCompanyModal">
+                    <i class="fa fa-plus me-1"></i> Create Company
+                </button>
             </div>
+        </div>
         <div class="block block-rounded shadow-sm py-5 rounded-0">
 
             <div class="content1 p-2 rounded-0 table-responsive">
@@ -75,7 +75,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($companies as $company)
+                        @foreach ($companies as $company)
                             <tr>
                                 <td>{{ $company->name }}</td>
                                 <td>{{ $company->tax_number ?? 'N/A' }}</td>
@@ -90,7 +90,7 @@
                                         style="display:inline;">
                                         @csrf
                                         @method('DELETE')
-                                       <button type="submit" class="btn btn-sm btn-alt-danger swal-confirm-btn">
+                                        <button type="submit" class="btn btn-sm btn-alt-danger swal-confirm-btn">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
