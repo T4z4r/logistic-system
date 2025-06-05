@@ -86,10 +86,10 @@
                                         <i class="fa fa-edit"></i>
                                     </button>
                                     <form action="{{ route('company.management.destroy', $company->id) }}" method="POST"
-                                        style="display:inline;">
+                                        style="display:inline;" aria-disabled="true">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-alt-danger swal-confirm-btn">
+                                        <button type="submit" class="btn btn-sm btn-alt-danger swal-confirm-btn" disabled>
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
