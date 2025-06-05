@@ -64,6 +64,7 @@
                 <table class="table table-bordered table-striped table-vcenter js-dataTable-full1 fs-sm table-sm ">
                     <thead class="table-secondary">
                         <tr>
+                            <th>#</th>
                             <th>Name</th>
                             <th>Tax Number</th>
                             <th>Currency</th>
@@ -74,6 +75,7 @@
                     <tbody>
                         @foreach ($companies as $company)
                             <tr>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $company->name }}</td>
                                 <td>{{ $company->tax_number ?? 'N/A' }}</td>
                                 <td>{{ $company->currency->name }} ({{ $company->currency->symbol }})</td>
