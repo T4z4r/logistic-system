@@ -50,7 +50,6 @@
     <!-- Page Content -->
     <div class="content1 p-2 rounded-0">
         <div class="block-header block-header-default">
-
             <h3 class="block-title"></h3>
             <div class="block-options">
                 <button type="button" class="btn btn-alt-primary btn-sm" data-bs-toggle="modal"
