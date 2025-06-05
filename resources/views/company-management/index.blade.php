@@ -62,8 +62,6 @@
         <div class="block block-rounded shadow-sm py-5 rounded-0">
 
             <div class="content1 p-2 rounded-0 table-responsive">
-
-
                 <table class="table table-bordered table-striped table-vcenter js-dataTable-full1 fs-sm table-sm ">
                     <thead class="table-secondary">
                         <tr>
