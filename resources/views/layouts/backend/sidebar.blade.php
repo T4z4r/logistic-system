@@ -105,7 +105,7 @@
                      'payment-methods*',
                      'payment-modes*',
                      'cargo-natures*',
-                     'currencies*',
+                    //  'currencies*',
                      'off_budget_categories.*',
                  ) || request()->routeIs('off_budget_categories.*')
                      ? ' open'
@@ -117,7 +117,7 @@
                          'payment-methods*',
                          'payment-modes*',
                          'cargo-natures*',
-                         'currencies*',
+                        //  'currencies*',
                          'off_budget_categories.*',
                      ) || request()->routeIs('off_budget_categories.*')
                          ? 'true'
@@ -171,13 +171,7 @@
                          </a>
                      </li>
 
-                     <li class="nav-main-item">
-                         <a class="nav-main-link{{ request()->is('currencies*') ? ' active' : '' }}"
-                             href="{{ route('currencies.index') }}">
-                             <i class="nav-main-link-icon fa fa-coins"></i>
-                             <span class="nav-main-link-name">Currencies</span>
-                         </a>
-                     </li>
+
                  </ul>
              </li>
          @endcan
