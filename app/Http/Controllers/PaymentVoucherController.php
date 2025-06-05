@@ -43,7 +43,7 @@ class PaymentVoucherController extends Controller
             'date' => $validated['date'],
             'narration' => $validated['narration'],
             'amount' => $validated['amount'],
-            'currency_id' => auth()->user()->company->currency_id,
+            'currency_id' => auth()->user()->company->currency_id??1,
         ]);
 
         // Debit party ledger
