@@ -23,7 +23,7 @@ class ChartLedgersController extends Controller
             'opening_balance' => 'nullable|numeric|min:0',
             'contact_details' => 'nullable|string',
         ]);
-        $validated['company_id'] = auth()->user()->company_id??1;
+        // $validated['company_id'] = auth()->user()->company_id??1;
         Ledger::create(array_merge($validated, ['company_id' => auth()->user()->company_id]));
         return redirect()->route('chart.ledgers.index')->with('success', 'Ledger created successfully.');
     }

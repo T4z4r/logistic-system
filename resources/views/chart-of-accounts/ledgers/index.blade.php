@@ -63,6 +63,7 @@
                  <table class="table table-bordered table-striped table-vcenter js-dataTable-full1 fs-sm table-sm ">
                     <thead class="table-secondary">
                         <tr>
+                            <th>#</th>
                             <th>Name</th>
                             <th>Group</th>
                             <th>Opening Balance</th>
@@ -72,20 +73,21 @@
                     <tbody>
                         @foreach($ledgers as $ledger)
                             <tr>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $ledger->name }}</td>
                                 <td>{{ $ledger->group->name }}</td>
                                 <td>{{ number_format($ledger->opening_balance, 2) }}</td>
                                 <td>
                                     <button type="button" class="btn btn-sm btn-alt-primary" data-bs-toggle="modal"
                                         data-bs-target="#editLedgerModal{{ $ledger->id }}">
-                                        <i class="fa fa-edit"></i> 
+                                        <i class="fa fa-edit"></i>
                                     </button>
                                     <form action="{{ route('chart.ledgers.destroy', $ledger->id) }}" method="POST"
                                         style="display:inline;">
                                         @csrf
                                         @method('DELETE')
                                          <button type="submit" class="btn btn-sm btn-alt-danger swal-confirm-btn">
-                                            <i class="fa fa-trash"></i> 
+                                            <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
                                 </td>

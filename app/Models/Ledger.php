@@ -30,5 +30,5 @@ class Ledger extends Model
         return $this->hasMany(StockEntry::class);
     }
 
-    
+
 }
