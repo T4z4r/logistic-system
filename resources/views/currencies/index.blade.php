@@ -87,7 +87,7 @@
                                 <td>{{ $currency->status ? 'Active' : 'Inactive' }}</td>
                                 <td>{{ $currency->createdBy?->name ?? 'N/A' }}</td>
                                 <td>
-                                    <a href="{{ route('currencies.edit', $currency->id) }}" class="btn btn-sm btn-primary">
+                                    <a href="{{ route('currencies.edit', $currency->id) }}" class="btn btn-sm btn-alt-primary">
                                         <i class="fa fa-list"></i>
                                     </a>
                                     <form action="{{ route('currencies.delete', $currency->id) }}" method="POST"

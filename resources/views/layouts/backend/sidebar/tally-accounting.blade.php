@@ -11,7 +11,7 @@
 {{-- ./ end of company management part --}}
 
 {{-- start of charts of accounts configurations part --}}
-<li class="nav-main-item{{ request()->is('chart-of-accounts*','currencies.*') ? ' open' : '' }}">
+<li class="nav-main-item{{ request()->is('chart-of-accounts*','currencies*') ? ' open' : '' }}">
     <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" href="#">
         <i class="nav-main-link-icon fa fa-book text-orange"></i>
         <span class="nav-main-link-name">Chart of Accounts</span>
