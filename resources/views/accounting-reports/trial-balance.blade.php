@@ -24,7 +24,7 @@
 
   <!-- Page Content -->
   <div class="content1 p-2 rounded-0">
-    <div class="block block-rounded shadow-sm py-5 rounded-0">
+    <div class="block block-rounded shadow-sm py-5 px-2 rounded-0">
       <form method="GET" action="{{ route('reports.trial-balance') }}" class="mb-4">
         <div class="row">
           <div class="col-md-4">
@@ -40,9 +40,10 @@
           </div>
         </div>
       </form>
+      <hr>
       <div class="table-responsive">
-        <table class="table table-bordered">
-          <thead>
+        <table class="table table-bordered table-sm">
+          <thead class="table-secondary">
             <tr>
               <th>Ledger</th>
               <th>Opening Balance</th>

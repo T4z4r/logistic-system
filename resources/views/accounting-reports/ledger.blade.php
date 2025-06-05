@@ -24,7 +24,7 @@
 
   <!-- Page Content -->
   <div class="content1 p-2 rounded-0">
-    <div class="block block-rounded shadow-sm py-5 rounded-0">
+    <div class="block block-rounded shadow-sm py-5 px-2 rounded-0">
       <form method="GET" action="{{ route('reports.ledger') }}" class="mb-4">
         <div class="row">
           <div class="col-md-4">
@@ -49,11 +49,12 @@
           </div>
         </div>
       </form>
+      <hr>
       @if ($ledger)
         <h5>Ledger: {{ $ledger->name }}</h5>
         <div class="table-responsive">
-          <table class="table table-bordered">
-            <thead>
+          <table class="table table-bordered table-sm">
+            <thead class="table-secondary">
               <tr>
                 <th>Date</th>
                 <th>Voucher Number</th>
@@ -98,8 +99,8 @@
       @endif
       @if ($ledger)
         <div class="text-end mt-3">
-          <button class="btn btn-outline-primary" onclick="alert('Export to PDF functionality to be implemented.')">Export to PDF</button>
-          <button class="btn btn-outline-primary ms-2" onclick="alert('Export to Excel functionality to be implemented.')">Export to Excel</button>
+          <button class="btn btn-alt-primary" onclick="alert('Export to PDF functionality to be implemented.')">Export to PDF</button>
+          <button class="btn btn-alt-primary ms-2" onclick="alert('Export to Excel functionality to be implemented.')">Export to Excel</button>
         </div>
       @endif
     </div>
