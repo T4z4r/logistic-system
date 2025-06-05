@@ -64,13 +64,11 @@
                 <a href="{{ route('users.inactive') }}" class="btn btn-secondary btn-sm">Inactive Users</a>
             </div>
         </div>
-        <div class="block-content">
-            @if (session('success'))
-                <div class="alert alert-success" role="alert">{{ session('success') }}</div>
-            @endif
+       <div class="content1 p-2 rounded-0 table-responsive">
 
-            <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm">
-                <thead>
+
+                <table class="table table-bordered table-striped table-vcenter js-dataTable-full1 fs-sm table-sm ">
+                    <thead class="table-secondary">
                     <tr>
                         <th>Name</th>
                         <th>Email</th>

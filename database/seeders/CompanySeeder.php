@@ -11,16 +11,20 @@ class CompanySeeder extends Seeder
 {
     public function run(): void
     {
-        $user = User::factory()->create();
+        $user = User::first();
         $currency = Currency::first();
 
-        Company::factory()->create([
+        Company::updateOrCreate(
+            [
             'user_id' => $user->id,
             'name' => 'SudEnery Logistics',
+            ],
+            [
             'address' => '123 Main St, City',
             'tax_number' => 'TAX123456',
             'currency_id' => $currency->id,
             'financial_year_start' => '2025-01-01',
-        ]);
+            ]
+        );
     }
 }
