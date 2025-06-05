@@ -64,6 +64,7 @@
                     <table class="table table-bordered table-striped table-vcenter js-dataTable-full1 fs-sm table-sm ">
                         <thead class="table-secondary">
                             <tr>
+                                <th>#</th>
                                 <th>Name</th>
                                 <th>Type</th>
                                 <th>Parent Group</th>
@@ -73,21 +74,21 @@
                         <tbody>
                             @foreach ($groups as $group)
                                 <tr>
+                                    <td> {{ $loop->iteration }} </td>
                                     <td>{{ $group->name }}</td>
                                     <td>{{ ucfirst($group->type) }}</td>
                                     <td>{{ $group->parent ? $group->parent->name : 'None' }}</td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-alt-primary" data-bs-toggle="modal"
                                             data-bs-target="#editGroupModal{{ $group->id }}">
-                                            <i class="fa fa-edit"></i> Edit
+                                            <i class="fa fa-edit"></i> 
                                         </button>
                                         <form action="{{ route('chart.groups.destroy', $group->id) }}" method="POST"
                                             style="display:inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger"
-                                                onclick="return confirm('Are you sure?')">
-                                                <i class="fa fa-trash"></i> Delete
+                                              <button type="submit" class="btn btn-sm btn-alt-danger swal-confirm-btn">
+                                                <i class="fa fa-trash"></i> 
                                             </button>
                                         </form>
                                     </td>
