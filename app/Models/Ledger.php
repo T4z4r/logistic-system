@@ -20,4 +20,15 @@ class Ledger extends Model
     {
         return $this->belongsTo(AccountGroup::class, 'group_id');
     }
+    public function entries()
+    {
+        return $this->hasMany(VoucherEntry::class);
+    }
+
+    public function stockEntries()
+    {
+        return $this->hasMany(StockEntry::class);
+    }
+
+    
 }
