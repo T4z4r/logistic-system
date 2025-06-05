@@ -12,7 +12,7 @@ class CompanyManagementController extends Controller
 {
     public function index()
     {
-        $companies = Company::latest()->where()->get();
+        $companies = Company::latest()->get();
         $currencies = Currency::all();
         return view('company-management.index', compact('companies', 'currencies'));
     }
