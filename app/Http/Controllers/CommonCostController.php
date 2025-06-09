@@ -11,7 +11,7 @@ class CommonCostController extends Controller
 {
     public function index()
     {
-        $commonCosts = CommonCost::with(['ledger', 'createdBy'])->latest(100);
+        $commonCosts = CommonCost::with(['ledger', 'createdBy'])->paginate(100);
         return view('common-costs.index', compact('commonCosts'));
     }
 
