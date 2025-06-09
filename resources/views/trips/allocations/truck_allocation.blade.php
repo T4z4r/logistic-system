@@ -538,7 +538,7 @@
 
 
                                 <table
-                                    class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
+                                    class="table table-bordered table-striped table-vcenter js-dataTable-full2 fs-sm table-sm">
                                     <thead class="table-secondary">
                                         <th>
                                             <input type="checkbox"
@@ -676,7 +676,7 @@
                             </p>
                             <hr>
                             <table
-                                class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
+                                class="table table-bordered table-striped table-vcenter js-dataTable-full2 fs-sm table-sm">
                                 <thead class="table-secondary">
                                     <th>
                                         <input type="checkbox" class="form-check-input form-check-input-warning checkAll2"
@@ -846,7 +846,7 @@
         {{-- For Submitted Allocation Requests --}}
         <div class="col-12">
 
-            <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
+            <table class="table table-bordered table-striped table-vcenter js-dataTable-full2 fs-sm table-sm">
                 <thead class="table-secondary">
                     <th>No.</th>
                     <th>Truck</th>
@@ -1001,7 +1001,7 @@
                     {{-- <h6> <b>Total:</b> {{ number_format($total_all_costs,2)}} </h6> --}}
                     <hr>
 
-                    <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
+                    <table class="table table-bordered table-striped table-vcenter js-dataTable-full2 fs-sm table-sm">
                         <thead class="table-secondary">
                             <th>No.</th>
                             <th>Expense Name</th>
@@ -1151,7 +1151,7 @@
                 </div>
                 {{-- For Pulling Trucks Costs --}}
                 <div class="tab-pane fade  show" id="pulling" role="tabpanel">
-                    <table class="table table-bordered table-striped table-vcenter js-dataTable-full1 fs-sm table-sm">
+                    <table class="table table-bordered table-striped table-vcenter js-dataTable-full21 fs-sm table-sm">
                         <thead class="table-secondary">
                             <th>No.</th>
                             <th>Expense Name</th>
