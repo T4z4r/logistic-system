@@ -29,6 +29,8 @@ class DatabaseSeeder extends Seeder
             CargoNaturesTableSeeder::class,
             TruckTypeSeeder::class,
             FuelCostsTableSeeder::class,
+            PermissionSeeder::class,
+            RoleSeeder::class,
         ]);
     }
 }
