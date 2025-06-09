@@ -987,4 +987,89 @@ class AllocationController extends Controller
     }
 
 
+    // For Update Allocation
+    public function update_allocation(Request $request)
+    {
+        request()->validate(
+            [
+                'cargo' => 'required',
+                'cargo_ref' => 'required',
+                'cargo_nature' => 'required',
+                'amount' => 'required',
+                'payment_mode' => 'required',
+                'payment_curency' => 'required',
+
+
+            ]
+        );
+
+        $allocation = Allocation::where('id', $request->id)->first();
+        $allocation->cargo = $request->cargo;
+        $allocation->cargo_ref = $request->cargo_ref;
+        $allocation->cargo_nature = $request->cargo_nature;
+        $allocation->amount = $request->amount;
+        $allocation->quantity = $request->quantity;
+        $allocation->payment_mode = $request->payment_mode;
+        $allocation->start_date = $request->start_date;
+        $allocation->end_date = $request->end_date;
+        $allocation->loading_site = $request->loading_point;
+        $allocation->offloading_site = $request->offloading_point;
+        $allocation->payment_currency = $request->payment_curency;
+        $allocation->container_type = $request->container_type;
+        $allocation->estimated_pay = 0;
+        $allocation->real_amount = 0;
+        $allocation->unit = $request->unit;
+
+
+        $allocation->update();
+
+        // For Truck Allocations
+        $trucks = TruckAllocation::where('allocation_id', $request->id)->get();
+
+        foreach ($trucks as $item) {
+
+            if ($allocation->payment_mode == 1) {
+                $current_amount = $allocation->estimated_pay;
+                $new_amount = $current_amount + $allocation->amount;
+                $new_real_amount = $new_amount * $allocation->currency->rate;
+                $item->income = $allocation->amount * $allocation->currency->rate;
+                $item->usd_income = $allocation->amount;
+                $allocation->estimated_pay = $new_amount;
+                $allocation->usd_income = $new_amount;
+                $allocation->real_amount = $new_real_amount;
+                $allocation->rate = $allocation->currency->rate;
+
+                $allocation->update();
+                $item->update();
+            } else {
+                $truck = Truck::find($item->truck_id);
+                $trailers = TrailerAssignment::where('truck_id', $truck->id)->get();
+                $capacity = 0;
+                foreach ($trailers as $item2) {
+                    $capacity += $item2->trailer->capacity;
+                }
+
+                $current_amount = $allocation->estimated_pay;
+                $new_amount = $current_amount + ($capacity * $allocation->amount);
+                $new_real_amount = $new_amount * $allocation->currency->rate;
+                $allocation->estimated_pay = $new_amount;
+                $allocation->usd_income = $new_amount;
+                $allocation->real_amount = $new_real_amount;
+                $item->income = $capacity * $allocation->amount * $allocation->currency->rate;
+                $item->usd_income = $capacity * $allocation->amount;
+                $allocation->rate = $allocation->currency->rate;
+
+                $allocation->update();
+                $item->update();
+            }
+        }
+        // End Of Truck Allocations
+        // For User Log
+        SystemLogHelper::logSystemActivity('Allocation Update', auth()->user()->id, auth()->user()->fname . ' ' . auth()->user()->lname . ' has Updated an Allocation');
+
+        $msg = 'Allocation Updated Successfully !';
+
+        return back()->with('msg', $msg);
+    }
+
 }
