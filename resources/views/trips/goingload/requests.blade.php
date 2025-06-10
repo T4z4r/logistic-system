@@ -109,10 +109,10 @@
         <!-- Trip Requests -->
         <div class="block block-rounded rounded-0 shadow-sm">
             <div class="block-header block-header-default">
-                <h3 class="block-title"><i class="ph-truck text-brand-secondary me-2"></i>Goingload Trips</h3>
+                <h3 class="block-title"><i class="fa fa-truck text-brand-secondary me-2"></i>Goingload Trips</h3>
                 <div class="block-options">
-                    {{-- <a href="#" class="btn btn-sm btn-primary" title="Print Trips">
-                        <i class="ph-printer me-1"></i> Print Trips
+                    {{-- <a href="#" class="btn btn-sm btn-alt-primary" title="Print Trips">
+                        <i class="fa fa-printer me-1"></i> Print Trips
                     </a> --}}
                 </div>
             </div>
@@ -210,17 +210,17 @@
                                             @if ($item->status == -1)
                                                 <a href="{{ url('trips/resubmit-trip/' . base64_encode($item->allocation_id)) }}"
                                                     class="btn btn-sm btn-success me-1" title="Resubmit">
-                                                    <i class="ph-arrow-counter-clockwise"></i>
+                                                    <i class="fa fa-arrow-counter-clockwise"></i>
                                                 </a>
                                             @endif
                                             <a href="{{ url('/trips/goingload-trip/' . base64_encode($item->allocation_id)) }}"
-                                                class="btn btn-sm btn-primary me-1" title="View Details">
-                                                <i class="ph-info"></i>
+                                                class="btn btn-sm btn-alt-primary me-1" title="View Details">
+                                                <i class="fa fa-info"></i>
                                             </a>
                                             @can('view-settings-menu')
                                                 <a href="{{ url('/trips/delete-trip/' . $item->id) }}"
                                                     class="btn btn-sm btn-danger me-1" title="Delete">
-                                                    <i class="ph-trash"></i>
+                                                    <i class="fa fa-trash"></i>
                                                 </a>
                                             @endcan
                                             @if ($level && $level->level_name == $item->approval_status)
@@ -228,12 +228,12 @@
                                                 <a href="#" class="btn btn-sm btn-success edit-button me-1" title="Approve Trip"
                                                     data-bs-toggle="modal" data-bs-target="#approval" data-id="{{ $item->id }}"
                                                     data-name="{{ $item->name }}">
-                                                    <i class="ph-check-circle"></i>
+                                                    <i class="fa fa-check-circle"></i>
                                                 </a>
                                                 <a href="#" class="btn btn-sm btn-danger edit-button" title="Disapprove Trip"
                                                     data-bs-toggle="modal" data-bs-target="#disapproval" data-id="{{ $item->id }}"
                                                     data-name="{{ $item->name }}">
-                                                    <i class="ph-x-circle"></i>
+                                                    <i class="fa fa-x-circle"></i>
                                                 </a>
                                             @endif
                                         </td>
@@ -302,19 +302,19 @@
                                             {{ number_format($item->allocation->usd_income, 2) }}
                                         </td>
                                         <td>
-                                            <span class="badge {{ $item->state == 4 ? 'bg-success text-success' : 'bg-info text-info' }} bg-opacity-10">
+                                            <span class="badge {{ $item->state == 4 ? 'bg-success text-success' : 'bg-info' }} bg-opacity-10">
                                                 {{ $item->state == 4 ? 'Completed' : 'On Progress' }}
                                             </span>
                                         </td>
                                         <td>
                                             <a href="{{ url('/trips/goingload-trip/' . base64_encode($item->allocation_id)) }}"
-                                                class="btn btn-sm btn-primary me-1" title="View Details">
-                                                <i class="ph-info"></i>
+                                                class="btn btn-sm btn-alt-primary me-1" title="View Details">
+                                                <i class="fa fa-list"></i>
                                             </a>
                                             @can('view-settings-menu')
                                                 <a href="{{ url('/trips/delete-trip/' . $item->id) }}"
                                                     class="btn btn-sm btn-danger me-1" title="Delete">
-                                                    <i class="ph-trash"></i>
+                                                    <i class="fa fa-trash"></i>
                                                 </a>
                                             @endcan
                                         </td>
@@ -389,20 +389,20 @@
                                         </td>
                                         <td>
                                             <a href="{{ url('/trips/goingload-trip/' . base64_encode($item->allocation_id)) }}"
-                                                class="btn btn-sm btn-primary me-1" title="View Details">
-                                                <i class="ph-info"></i>
+                                                class="btn btn-sm btn-alt-primary me-1" title="View Details">
+                                                <i class="fa fa-info"></i>
                                             </a>
                                             @if ($level1 && $level1->level_name == $item->completion_approval_status)
                                                 <hr class="my-2">
                                                 <a href="#" class="btn btn-sm btn-success edit-button me-1" title="Approve Trip"
                                                     data-bs-toggle="modal" data-bs-target="#approval" data-id="{{ $item->id }}"
                                                     data-name="{{ $item->name }}">
-                                                    <i class="ph-check-circle"></i>
+                                                    <i class="fa fa-check-circle"></i>
                                                 </a>
                                                 <a href="#" class="btn btn-sm btn-danger edit-button" title="Disapprove Trip"
                                                     data-bs-toggle="modal" data-bs-target="#disapproval" data-id="{{ $item->id }}"
                                                     data-name="{{ $item->name }}">
-                                                    <i class="ph-x-circle"></i>
+                                                    <i class="fa fa-x-circle"></i>
                                                 </a>
                                             @endif
                                         </td>
@@ -477,8 +477,8 @@
                                         </td>
                                         <td>
                                             <a href="{{ url('/trips/goingload-trip/' . base64_encode($item->allocation_id)) }}"
-                                                class="btn btn-sm btn-primary me-1" title="View Details">
-                                                <i class="ph-info"></i>
+                                                class="btn btn-sm btn-alt-primary me-1" title="View Details">
+                                                <i class="fa fa-info"></i>
                                             </a>
                                         </td>
                                     </tr>
@@ -511,7 +511,7 @@
                             <textarea name="reason" placeholder="Please enter remarks here" class="form-control" rows="3"></textarea>
                         </div>
                         <div class="text-center">
-                            <button type="submit" id="approve_yes" class="btn btn-primary btn-sm px-4 me-2">Yes</button>
+                            <button type="submit" id="approve_yes" class="btn btn-alt-primary btn-sm px-4 me-2">Yes</button>
                             <button type="button" id="approve_no" class="btn btn-danger btn-sm px-4" data-bs-dismiss="modal">No</button>
                         </div>
                     </form>
@@ -539,7 +539,7 @@
                             <textarea name="reason" required placeholder="Please enter remarks here" class="form-control" rows="3"></textarea>
                         </div>
                         <div class="text-center">
-                            <button type="submit" id="disapprove_yes" class="btn btn-primary btn-sm px-4 me-2">Yes</button>
+                            <button type="submit" id="disapprove_yes" class="btn btn-alt-primary btn-sm px-4 me-2">Yes</button>
                             <button type="button" id="disapprove_no" class="btn btn-danger btn-sm px-4" data-bs-dismiss="modal">No</button>
                         </div>
                     </form>
@@ -558,12 +558,12 @@
         });
 
         $("#approve_form").submit(function(e) {
-            $("#approve_yes").html("<i class='ph-spinner spinner me-2'></i> Approving").addClass('disabled');
+            $("#approve_yes").html("<i class='fa fa-spinner spinner me-2'></i> Approving").addClass('disabled');
             $("#approve_no").hide();
         });
 
         $("#disapprove_form").submit(function(e) {
-            $("#disapprove_yes").html("<i class='ph-spinner spinner me-2'></i> Disapproving").addClass('disabled');
+            $("#disapprove_yes").html("<i class='fa fa-spinner spinner me-2'></i> Disapproving").addClass('disabled');
             $("#disapprove_no").hide();
         });
     </script>
