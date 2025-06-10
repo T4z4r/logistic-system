@@ -279,22 +279,9 @@ class TripController extends Controller
 
 
         if ($allocation->type == 2) {
-
-            return response()->json([
-                'status' => 200,
-                'errors' => 'Updated',
-                'route_truck' => route('flex.backload-requests'),
-
-            ]);
-            // return redirect('trips/backload-requests')->with('msg','Trip Request has been Submitted Successfully !');
+            return redirect('trips/backload-requests')->with('msg', 'Trip Request has been Submitted Successfully !');
         } else {
-            return response()->json([
-                'status' => 200,
-                'errors' => 'Updated',
-                'route_truck' => route('flex.trip-requests'),
-
-            ]);
-            // return redirect('/trips/trip-requests')->with('msg','Trip Request has been Submitted Successfully !');
+            return redirect('trips/trip-requests')->with('msg', 'Trip Request has been Submitted Successfully !');
         }
     }
 
@@ -304,7 +291,14 @@ class TripController extends Controller
     public function finance_trips()
     {
         $uid = Auth::user()->position;
-        $process = Approval::where('process_name', 'Trip Approval')->first();
+             $process = Approval::firstOrCreate(
+            ['process_name' => 'Trip Approval'],
+            [
+                'levels' => 0,
+                'escallation' => false, // or true, depending on your logic
+                'escallation_time' => null
+            ]
+        );
         $data['tab'] = 'pending';
         $data['level'] = ApprovalLevel::where('role_id', $uid)->where('approval_id', $process->id)->first();
         $data['pending'] = Trip::latest()->whereNot('status', 0)->where('approval_status', 3)->get();
