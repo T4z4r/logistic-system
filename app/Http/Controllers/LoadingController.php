@@ -78,7 +78,7 @@ class LoadingController extends Controller
             } else {
                 $error = 'Sorry, the Loaded amount is greater than the truck_capacity';
 
-                return back()->with('error', $error);
+                return redirect()->back()->with('error', $error);
             }
 
 
@@ -141,6 +141,6 @@ class LoadingController extends Controller
 
         $msg = 'Truck Load Has been Offloaded Successfully';
 
-        return back()->with('msg', $msg);
+        return  redirect()->back()->with('msg', $msg);
     }
 }

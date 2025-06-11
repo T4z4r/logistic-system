@@ -15,6 +15,8 @@ use App\Models\PaymentMode;
 use Illuminate\Http\Request;
 use App\Models\ApprovalLevel;
 use App\Models\AllocationCost;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 class TripController extends Controller
@@ -105,7 +107,7 @@ class TripController extends Controller
     //For Backload Trips
     public function backload_requests()
     {
-      $uid = Auth::user()->roles->first()?->id;
+        $uid = Auth::user()->roles->first()?->id;
         $positionId = Auth::user()->position_id;
         $position = Position::where('id', $positionId)->first();
         // For Trip Requests
@@ -152,6 +154,78 @@ class TripController extends Controller
         return view('trips.backloads.requests', $data);
     }
 
+    // For Backload Trip Details
+    public function backload_trip($id)
+    {
+        // Start transaction
+        DB::beginTransaction();
+
+        try {
+            // Decode the base64 ID and retrieve the user's position
+            $id = base64_decode($id);
+            $uid = Auth::user()->position;
+
+            // Get approval process for Trip Approval
+            // $process = Approval::where('process_name', 'Trip Approval')->first();
+
+            $process = Approval::firstOrCreate(
+                ['process_name' => 'Trip Approval'],
+                [
+                    'levels' => 0,
+                    'escallation' => false, // or true, depending on your logic
+                    'escallation_time' => null
+                ]
+            );
+
+            // Retrieve allocation and trip details
+            $allocation = Allocation::findOrFail($id); // Using findOrFail to throw an exception if not found
+            $trip = Trip::where('allocation_id', $allocation->id)->first();
+
+            // Get the latest approval status and corresponding role
+            $latest_status = $trip->approval_status;
+            $current = ApprovalLevel::where('level_name', $latest_status)
+                ->where('approval_id', $process->id)
+                ->first();
+
+            // Determine current person based on approval status
+            if ($current) {
+                $data['current_person'] = $current->roles?->name??'--';
+            } else {
+                $data['current_person'] = ($latest_status <= 0) ? 'Assistant Fleet Controller' : 'Completed';
+            }
+
+            // Retrieve the approval level for the current user
+            $data['level'] = ApprovalLevel::where('role_id', $uid)
+                ->where('approval_id', $process->id)
+                ->first();
+
+            // Other necessary data to be passed to the view
+            $data['check'] = 'Approved By ' . Auth()->user()->positions?->name??'--';
+            $data['allocation'] = $allocation;
+            $data['trip'] = $trip;
+            $data['routes'] = Route::where('status', 1)->latest()->get();
+            $data['nature'] = CargoNature::where('status', 0)->latest()->get();
+            $data['mode'] = PaymentMode::where('status', 0)->latest()->get();
+            $data['currency'] = Currency::where('status', 1)->latest()->get();
+
+            // Commit the transaction
+            DB::commit();
+
+            // Return the view with the data
+            return view('trips.backloads.detail', $data);
+        } catch (\Exception $e) {
+
+            dd($e);
+            // Rollback the transaction in case of error
+            DB::rollBack();
+
+            // Log the error
+            Log::error('Error in backloadTripDetail: ' . $e->getMessage());
+
+            // Return an error message to the user
+            return back()->withErrors('An error occurred while fetching trip details.');
+        }
+    }
 
     // For Add Allocation cost
     public function add_cost(Request $request)
@@ -266,9 +340,6 @@ class TripController extends Controller
                 $tripcost->created_by = Auth::user()->id;
                 $tripcost->save();
             }
-
-
-
         } else {
             $trip->approval_status = 1;
             $trip->update();
@@ -287,11 +358,11 @@ class TripController extends Controller
 
 
 
-      // For all Finance trips Trips
+    // For all Finance trips Trips
     public function finance_trips()
     {
         $uid = Auth::user()->position;
-             $process = Approval::firstOrCreate(
+        $process = Approval::firstOrCreate(
             ['process_name' => 'Trip Approval'],
             [
                 'levels' => 0,
