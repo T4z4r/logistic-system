@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             FuelCostsTableSeeder::class,
             PermissionSeeder::class,
             RoleSeeder::class,
+            OrgRegionsTableSeeder::class,
             CompanySeeder::class,
             AccountGroupSeeder::class,
             LedgerSeeder::class,
@@ -45,4 +46,3 @@ class DatabaseSeeder extends Seeder
         ]);
     }
 }
-

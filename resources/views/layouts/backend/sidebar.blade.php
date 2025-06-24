@@ -35,6 +35,10 @@
              </li>
          @endcan
 
+          @can('view-logistics-modules')
+           <li class="nav-main-heading">Vendors Management</li>
+               @include('layouts.backend.sidebar.vendors')
+           @endcan
 
          @can('view-logistics-modules')
              @include('layouts.backend.sidebar.logistics')

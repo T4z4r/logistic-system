@@ -1,15 +1,14 @@
-
 <li class="nav-main-heading">Logistics Management</li>
 
-@can('view-customers')
-    <li class="nav-main-item{{ request()->is('customers') || request()->is('customers/*') ? ' open' : '' }}">
-        <a class="nav-main-link{{ request()->is('customers') || request()->is('customers/*') ? ' active' : '' }}"
-            href="{{ route('customers.index') }}">
-            <i class="nav-main-link-icon fa fa-user-tie text-orange"></i>
-            <span class="nav-main-link-name">Customers </span>
-        </a>
-    </li>
-@endcan
+
+
+<li class="nav-main-item{{ request()->is('customers') || request()->is('customers/*') ? ' open' : '' }}">
+    <a class="nav-main-link{{ request()->is('customers') || request()->is('customers/*') ? ' active' : '' }}"
+        href="{{ route('customers.index') }}">
+        <i class="nav-main-link-icon fa fa-users text-orange"></i>
+        <span class="nav-main-link-name">Suppliers </span>
+    </a>
+</li>
 
 
 @can('view-drivers')
@@ -58,7 +57,7 @@
 </li>
 
 @php
-    $isTrips = request()->is('trips*') || request()->routeIs('allocations*','flex.trip-requests');
+    $isTrips = request()->is('trips*') || request()->routeIs('allocations*', 'flex.trip-requests');
 @endphp
 
 <li class="nav-main-item{{ $isTrips ? ' open' : '' }}">
@@ -97,7 +96,8 @@
     </a>
 </li>
 <li class="nav-main-item{{ request()->routeIs('flex.loading-trucks') ? ' open' : '' }}">
-    <a class="nav-main-link{{ request()->routeIs('flex.loading-trucks') ? ' active' : '' }}" href="{{ route('flex.loading-trucks') }}">
+    <a class="nav-main-link{{ request()->routeIs('flex.loading-trucks') ? ' active' : '' }}"
+        href="{{ route('flex.loading-trucks') }}">
         <i class="nav-main-link-icon fa fa-database text-teal"></i>
         <span class="nav-main-link-name">Truck Loading</span>
     </a>
@@ -106,7 +106,8 @@
 
 @can('view-breakdowns')
     <li class="nav-main-item{{ request()->routeIs('breakdowns.*') ? ' open' : '' }}">
-        <a class="nav-main-link{{ request()->routeIs('breakdowns.*') ? ' active' : '' }}" href="{{ route('breakdowns.index') }}">
+        <a class="nav-main-link{{ request()->routeIs('breakdowns.*') ? ' active' : '' }}"
+            href="{{ route('breakdowns.index') }}">
             <i class="nav-main-link-icon fa fa-screwdriver-wrench text-orange"></i>
             <span class="nav-main-link-name">Breakdowns</span>
         </a>
