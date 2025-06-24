@@ -127,11 +127,11 @@
                                                 <div class="mb-3">
                                                     <label>Status</label>
                                                     <select name="status" class="form-control" required>
-                                                        <option value="active"
-                                                            {{ $supplier->status == 'active' ? 'selected' : '' }}>Active
+                                                        <option value="1"
+                                                            {{ $supplier->status ==1  ? 'selected' : '' }}>Active
                                                         </option>
-                                                        <option value="inactive"
-                                                            {{ $supplier->status == 'inactive' ? 'selected' : '' }}>
+                                                        <option value="0"
+                                                            {{ $supplier->status == 0 ? 'selected' : '' }}>
                                                             Inactive</option>
                                                     </select>
                                                 </div>
