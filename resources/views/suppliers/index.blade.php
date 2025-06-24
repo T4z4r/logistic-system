@@ -89,7 +89,8 @@
                             <div class="modal fade" id="editSupplierModal{{ $supplier->id }}" tabindex="-1"
                                 aria-labelledby="editSupplierModalLabel{{ $supplier->id }}" aria-hidden="true">
                                 <div class="modal-dialog">
-                                    <form action="{{ route('suppliers.store') }}" method="POST">
+                                    <form action="{{ route('suppliers.update',$supplier->id) }}" method="POST">
+                                        @method('put')
                                         @csrf
                                         <input type="hidden" name="id" value="{{ $supplier->id }}">
                                         <div class="modal-content">
