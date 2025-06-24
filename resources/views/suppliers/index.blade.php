@@ -75,13 +75,13 @@
                                         <i class="fa fa-edit"></i>
                                     </button>
                                     <form action="{{ route('suppliers.destroy', $supplier->id) }}" method="POST"
-                                        style="display:inline;">
+                                        class="deleteForm" style="display:inline;">
                                         @csrf
-                                        <button type="submit" class="btn btn-sm btn-danger"
-                                            onclick="return confirm('Are you sure?');">
+                                        <button type="button" class="btn btn-sm btn-danger deleteBtn">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
+
                                 </td>
                             </tr>
 
@@ -89,7 +89,7 @@
                             <div class="modal fade" id="editSupplierModal{{ $supplier->id }}" tabindex="-1"
                                 aria-labelledby="editSupplierModalLabel{{ $supplier->id }}" aria-hidden="true">
                                 <div class="modal-dialog">
-                                    <form action="{{ route('suppliers.update',$supplier->id) }}" method="POST">
+                                    <form action="{{ route('suppliers.update', $supplier->id) }}" method="POST">
                                         @method('put')
                                         @csrf
                                         <input type="hidden" name="id" value="{{ $supplier->id }}">
@@ -129,7 +129,7 @@
                                                     <label>Status</label>
                                                     <select name="status" class="form-control" required>
                                                         <option value="1"
-                                                            {{ $supplier->status ==1  ? 'selected' : '' }}>Active
+                                                            {{ $supplier->status == 1 ? 'selected' : '' }}>Active
                                                         </option>
                                                         <option value="0"
                                                             {{ $supplier->status == 0 ? 'selected' : '' }}>
@@ -212,6 +212,36 @@
 @endsection
 
 @push('scripts')
+<!-- SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const deleteButtons = document.querySelectorAll('.deleteBtn');
+
+    deleteButtons.forEach(button => {
+      button.addEventListener('click', function (e) {
+        e.preventDefault();
+        const form = this.closest('form');
+
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "This supplier will be permanently deleted!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            form.submit();
+          }
+        });
+      });
+    });
+  });
+</script>
+
     <script>
         $(document).ready(function() {
             $('.editBtn').click(function() {
