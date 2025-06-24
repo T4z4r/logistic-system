@@ -51,6 +51,7 @@ Route::view('/pages/blank', 'pages.blank')->name('blank');
 
     require __DIR__ . '/users.php';
     require __DIR__ . '/customers.php';
+    require __DIR__ . '/suppliers.php';
     require __DIR__ . '/drivers.php';
     require __DIR__ . '/trucks.php';
     require __DIR__ . '/trailers.php';

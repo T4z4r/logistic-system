@@ -2,13 +2,13 @@
 
 
 
-<li class="nav-main-item{{ request()->is('customers') || request()->is('customers/*') ? ' open' : '' }}">
+{{-- <li class="nav-main-item{{ request()->is('customers') || request()->is('customers/*') ? ' open' : '' }}">
     <a class="nav-main-link{{ request()->is('customers') || request()->is('customers/*') ? ' active' : '' }}"
         href="{{ route('customers.index') }}">
         <i class="nav-main-link-icon fa fa-users text-orange"></i>
         <span class="nav-main-link-name">Suppliers </span>
     </a>
-</li>
+</li> --}}
 
 
 @can('view-drivers')
