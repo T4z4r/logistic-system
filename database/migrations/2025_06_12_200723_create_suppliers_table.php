@@ -28,7 +28,7 @@ return new class extends Migration
             $table->foreignId('created_by');
             $table->timestamps();
             $table->integer('balance_ledger')->nullable();
-            $table->foreignId('region_id')->nullable()->constrained('org_regions');
+            $table->bigInteger('region_id')->nullable();
         });
     }
 
