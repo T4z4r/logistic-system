@@ -211,63 +211,109 @@
     </div>
 @endsection
 
+<!-- Keep all existing HTML/Blade code except update the scripts section -->
+
 @push('scripts')
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const deleteButtons = document.querySelectorAll('.deleteBtn');
-
-            deleteButtons.forEach(button => {
-                button.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const form = button.closest('form');
-
+        document.addEventListener('DOMContentLoaded', function() {
+    const deleteButtons = document.querySelectorAll('.deleteBtn');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const form = this.closest('form');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'This supplier will be recovered!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel',
+                showLoaderOnConfirm: true,
+                preConfirm: async () => {
+                    try {
+                        // Simulate form submission
+                        form.submit();
+                        return true;
+                    } catch (error) {
+                        Swal.showValidationMessage(`Request failed: ${error}`);
+                        return false;
+                    }
+                },
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
                     Swal.fire({
-                        title: 'Are you sure?',
-                        text: 'This supplier will be permanently deleted!',
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#dc3545',
-                        cancelButtonColor: '#6c757d',
-                        confirmButtonText: 'Yes, delete it!',
-                        cancelButtonText: 'Cancel'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            form.submit();
-                        }
+                        title: 'Deleted!',
+                        text: 'The supplier has been deleted.',
+                        icon: 'success',
+                        timer: 2000,
+                        showConfirmButton: false
                     });
+                }
+            }).catch((error) => {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Something went wrong while deleting.',
+                    icon: 'error',
+                    confirmButtonColor: '#dc3545'
                 });
             });
         });
-    </script>
+    });
 
-    <script>
-        $(document).ready(function() {
-            $('.editBtn').click(function() {
-                var id = $(this).data('id');
-                $.get("{{ url('/suppliers/edit') }}/" + id, function(data) {
-                    $('#supplier_id').val(data.id);
-                    $('#name').val(data.name);
-                    $('#email').val(data.email);
-                    $('#phone').val(data.phone);
-                    $('#address').val(data.address);
-                    $('#status').val(data.status);
-                    $('#addSupplierModalLabel').text('Edit Supplier');
-                    $('#addSupplierModal').modal('show');
+    // Edit supplier functionality
+    $('.editBtn').on('click', function(e) {
+        e.preventDefault();
+        const id = $(this).data('id');
+
+        $.ajax({
+            url: "{{ route('suppliers.edit') }}/" + id,
+            method: 'GET',
+            beforeSend: function() {
+                // Show loading state
+                Swal.fire({
+                    title: 'Loading...',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading()
+                    }
                 });
-            });
-
-            $('#addSupplierModal').on('hidden.bs.modal', function() {
-                $('#supplier_id').val('');
-                $('#name').val('');
-                $('#email').val('');
-                $('#phone').val('');
-                $('#address').val('');
-                $('#status').val('active');
-                $('#addSupplierModalLabel').text('Add Supplier');
-            });
+            },
+            success: function(data) {
+                Swal.close();
+                $('#supplier_id').val(data.id);
+                $('#name').val(data.name);
+                $('#email').val(data.email);
+                $('#phone').val(data.phone);
+                $('#address').val(data.address);
+                $('#status').val(data.status === 'active' ? '1' : '0');
+                $('#addSupplierModalLabel').text('Edit Supplier');
+                $('#addSupplierModal').modal('show');
+            },
+            error: function(xhr) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Failed to load supplier data.',
+                    icon: 'error',
+                    confirmButtonColor: '#dc3545'
+                });
+            }
         });
+    });
+
+    // Reset modal on close
+    $('#addSupplierModal').on('hidden.bs.modal', function() {
+        $(this).find('form')[0].reset();
+        $('#supplier_id').val('');
+        $('#status').val('1');
+        $('#addSupplierModalLabel').text('Add Supplier');
+    });
+});
     </script>
 @endpush
