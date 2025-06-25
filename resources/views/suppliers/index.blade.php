@@ -70,8 +70,9 @@
                                     @endif
                                 </td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#editSupplierModal{{ $supplier->id }}">
+                                    <button class="btn btn-sm btn-primary editBtn" data-bs-toggle="modal"
+                                        data-bs-target="#editSupplierModal-{{ $supplier->id }}"
+                                        data-id="{{ $supplier->id }}">
                                         <i class="fa fa-edit"></i>
                                     </button>
                                     <form action="{{ route('suppliers.destroy', $supplier->id) }}" method="POST"
@@ -86,8 +87,8 @@
                             </tr>
 
                             <!-- Edit Modal -->
-                            <div class="modal fade" id="editSupplierModal{{ $supplier->id }}" tabindex="-1"
-                                aria-labelledby="editSupplierModalLabel{{ $supplier->id }}" aria-hidden="true">
+                            <div class="modal fade" id="editSupplierModal-{{ $supplier->id }}" tabindex="-1"
+                                aria-labelledby="editSupplierModalLabel-{{ $supplier->id }}" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <form action="{{ route('suppliers.update', $supplier->id) }}" method="POST">
                                         @method('put')
@@ -220,100 +221,62 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-    const deleteButtons = document.querySelectorAll('.deleteBtn');
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const form = this.closest('form');
-            Swal.fire({
-                title: 'Are you sure?',
-                text: 'This supplier will be recovered!',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#dc3545',
-                cancelButtonColor: '#6c757d',
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'Cancel',
-                showLoaderOnConfirm: true,
-                preConfirm: async () => {
-                    try {
-                        // Simulate form submission
-                        form.submit();
-                        return true;
-                    } catch (error) {
-                        Swal.showValidationMessage(`Request failed: ${error}`);
-                        return false;
-                    }
-                },
-                allowOutsideClick: false
-            }).then((result) => {
-                if (result.isConfirmed) {
+            const deleteButtons = document.querySelectorAll('.deleteBtn');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const form = this.closest('form');
                     Swal.fire({
-                        title: 'Deleted!',
-                        text: 'The supplier has been deleted.',
-                        icon: 'success',
-                        timer: 2000,
-                        showConfirmButton: false
+                        title: 'Are you sure?',
+                        text: 'This supplier will be recovered!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#dc3545',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Yes, delete it!',
+                        cancelButtonText: 'Cancel',
+                        showLoaderOnConfirm: true,
+                        preConfirm: async () => {
+                            try {
+                                // Simulate form submission
+                                form.submit();
+                                return true;
+                            } catch (error) {
+                                Swal.showValidationMessage(`Request failed: ${error}`);
+                                return false;
+                            }
+                        },
+                        allowOutsideClick: false
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                title: 'Deleted!',
+                                text: 'The supplier has been deleted.',
+                                icon: 'success',
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+                        }
+                    }).catch((error) => {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Something went wrong while deleting.',
+                            icon: 'error',
+                            confirmButtonColor: '#dc3545'
+                        });
                     });
-                }
-            }).catch((error) => {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Something went wrong while deleting.',
-                    icon: 'error',
-                    confirmButtonColor: '#dc3545'
                 });
             });
+
+            // Edit supplier functionality
+
+            // Reset modal on close
+            $('#addSupplierModal').on('hidden.bs.modal', function() {
+                $(this).find('form')[0].reset();
+                $('#supplier_id').val('');
+                $('#status').val('1');
+                $('#addSupplierModalLabel').text('Add Supplier');
+            });
         });
-    });
-
-    // Edit supplier functionality
-    $('.editBtn').on('click', function(e) {
-        e.preventDefault();
-        const id = $(this).data('id');
-
-        $.ajax({
-            url: "{{ route('suppliers.edit') }}/" + id,
-            method: 'GET',
-            beforeSend: function() {
-                // Show loading state
-                Swal.fire({
-                    title: 'Loading...',
-                    allowOutsideClick: false,
-                    didOpen: () => {
-                        Swal.showLoading()
-                    }
-                });
-            },
-            success: function(data) {
-                Swal.close();
-                $('#supplier_id').val(data.id);
-                $('#name').val(data.name);
-                $('#email').val(data.email);
-                $('#phone').val(data.phone);
-                $('#address').val(data.address);
-                $('#status').val(data.status === 'active' ? '1' : '0');
-                $('#addSupplierModalLabel').text('Edit Supplier');
-                $('#addSupplierModal').modal('show');
-            },
-            error: function(xhr) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Failed to load supplier data.',
-                    icon: 'error',
-                    confirmButtonColor: '#dc3545'
-                });
-            }
-        });
-    });
-
-    // Reset modal on close
-    $('#addSupplierModal').on('hidden.bs.modal', function() {
-        $(this).find('form')[0].reset();
-        $('#supplier_id').val('');
-        $('#status').val('1');
-        $('#addSupplierModalLabel').text('Add Supplier');
-    });
-});
     </script>
 @endpush
