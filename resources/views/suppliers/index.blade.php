@@ -75,13 +75,13 @@
                                         <i class="fa fa-edit"></i>
                                     </button>
                                     <form action="{{ route('suppliers.destroy', $supplier->id) }}" method="POST"
-                                        class="deleteForm" style="display:inline;">
+                                        class="deleteForm d-inline">
                                         @csrf
+                                        @method('DELETE')
                                         <button type="button" class="btn btn-sm btn-danger deleteBtn">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
-
                                 </td>
                             </tr>
 
@@ -212,35 +212,36 @@
 @endsection
 
 @push('scripts')
-<!-- SweetAlert -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const deleteButtons = document.querySelectorAll('.deleteBtn');
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const deleteButtons = document.querySelectorAll('.deleteBtn');
 
-    deleteButtons.forEach(button => {
-      button.addEventListener('click', function (e) {
-        e.preventDefault();
-        const form = this.closest('form');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const form = button.closest('form');
 
-        Swal.fire({
-          title: 'Are you sure?',
-          text: "This supplier will be permanently deleted!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#d33',
-          cancelButtonColor: '#3085d6',
-          confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            form.submit();
-          }
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'This supplier will be permanently deleted!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#dc3545',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Yes, delete it!',
+                        cancelButtonText: 'Cancel'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
         });
-      });
-    });
-  });
-</script>
+    </script>
 
     <script>
         $(document).ready(function() {
