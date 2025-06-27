@@ -54,6 +54,10 @@ Route::any('/trips/finance-trips', [TripController::class, 'finance_trips'])->na
 Route::any('/trips/procurement-trips', [TripController::class, 'procurement_trips'])->name('flex.procurement_trips');
 Route::any('trips/procurement-detail/{id}', [TripController::class, 'procurement_detail'])->name('flex.procurementDetails');
 
+Route::any('trips/trip-detail/{id}', [TripController::class, 'trip_detail'])->name('flex.tripDetails');
+Route::any('trips/trip-truck/{id}', [TripController::class, 'trip_truck'])->name('flex.tripTruck');
+Route::any('trips/procurement-trip-truck/{id}', [TripController::class, 'procurement_trip_truck'])->name('flex.procurementtripTruck');
+
 Route::get('/trips/finance-trips/{tab}', [TripController::class, 'tab_index'])->name('finance_trips.tab_index');
 Route::any('/trips/issue-cost/{id}', [TripController::class, 'issue_cost'])->name('flex.issue_cost');
 Route::any('trips/bulk-truck-payments/{id}', [TripController::class, 'bulk_cost_payment'])->name('flex.bulk_cost_payment');
