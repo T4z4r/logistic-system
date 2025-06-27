@@ -253,9 +253,9 @@
                                         <th>To</th>
                                         <th>Finance</th>
                                         <th>Status</th>
-                                        @can('view-trip-trucks')
+                                        {{-- @can('view-trip-trucks') --}}
                                             <th>Options</th>
-                                        @endcan
+                                        {{-- @endcan --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -309,7 +309,7 @@
                                             <td>
                                                 @can('pay-trip-expenses')
                                                     @if ($paid == 0)
-                                                        <span class="badge bg-info bg-opacity-10 text-warning">
+                                                        <span class="badge bg-info bg-opacity-10 ">
                                                             {{ $item->state != 'N/L' ? 'Ready To Pay' : 'Waiting Approval' }}
                                                         </span>
                                                     @else
@@ -323,7 +323,7 @@
                                                     </span>
                                                 @endcan
                                             </td>
-                                            @can('view-trip-trucks')
+                                            {{-- @can('view-trip-trucks') --}}
                                                 <td>
                                                     <a href="{{ url('trips/trip-detail/' . $item->allocation_id) }}"
                                                         class="btn btn-sm btn-primary me-1" title="View Details">
@@ -342,7 +342,7 @@
                                                         </a>
                                                     @endif
                                                 </td>
-                                            @endcan
+                                            {{-- @endcan --}}
                                         </tr>
                                     @endforeach
                                 </tbody>
