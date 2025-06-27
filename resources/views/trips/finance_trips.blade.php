@@ -327,18 +327,18 @@
                                                 <td>
                                                     <a href="{{ url('trips/trip-detail/' . $item->allocation_id) }}"
                                                         class="btn btn-sm btn-primary me-1" title="View Details">
-                                                        <i class="ph-info"></i>
+                                                        <i class="fa fa-list"></i>
                                                     </a>
                                                     @if ($level && $item->status == '1' && $item->state != $check)
                                                         <a href="#" class="btn btn-sm btn-success edit-button me-1" title="Confirm Trip"
                                                             data-bs-toggle="modal" data-bs-target="#approval" data-id="{{ $item->id }}"
                                                             data-name="{{ $item->name }}" data-description="{{ $item->amount }}">
-                                                            <i class="ph-check"></i>
+                                                            <i class="fa fa-check"></i>
                                                         </a>
                                                         <a href="#" class="btn btn-sm btn-danger edit-button" title="Cancel Trip"
                                                             data-bs-toggle="modal" data-bs-target="#disapproval" data-id="{{ $item->id }}"
                                                             data-name="{{ $item->name }}" data-description="{{ $item->amount }}">
-                                                            <i class="ph-x"></i>
+                                                            <i class="fa fa-times"></i>
                                                         </a>
                                                     @endif
                                                 </td>
