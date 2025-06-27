@@ -372,12 +372,12 @@ class TripController extends Controller
         );
         $data['tab'] = 'pending';
         $data['level'] = ApprovalLevel::where('role_id', $uid)->where('approval_id', $process->id)->first();
-        $data['pending'] = Trip::latest()->whereNot('status', 0)->where('approval_status', 3)->get();
-        $data['approved'] = Trip::latest()->where('state', 2)->where('approval_status', 4)->where('status', 0)->get();
+        $data['pending'] = Trip::latest()->whereNot('status', 0)->get();
+        $data['approved'] = Trip::latest()->where('state', 2)->where('status', 0)->get();
         $data['completed'] = Trip::latest()->where('state', 4)->get();
 
-        $data['pending_trips'] = Trip::where('state', 0)->where('approval_status', 3)->latest()->count();
-        $data['unpaid_trips'] = Trip::where('state', 2)->where('approval_status', 4)->latest()->count();
+        $data['pending_trips'] = Trip::where('state', 0)->latest()->count();
+        $data['unpaid_trips'] = Trip::where('state', 2)->latest()->count();
         $data['rejected_trips'] = Trip::where('state', -1)->latest()->count();
         $data['paid_trips'] = Trip::where('state', 4)->latest()->count();
 
