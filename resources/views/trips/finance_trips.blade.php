@@ -157,9 +157,9 @@
                                     <th>To</th>
                                     <th>Finance</th>
                                     <th>Status</th>
-                                    @can('view-trip-trucks')
+                                    {{-- @can('view-trip-trucks') --}}
                                         <th>Options</th>
-                                    @endcan
+                                    {{-- @endcan --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -214,7 +214,7 @@
                                                 {{ $item->status == -1 ? 'Disapproved' : 'Pending' }}
                                             </span>
                                         </td>
-                                        @can('view-trip-trucks')
+                                        {{-- @can('view-trip-trucks') --}}
                                             <td>
                                                 <a href="{{ url('trips/trip-detail/' . $item->allocation_id) }}"
                                                     class="btn btn-sm btn-primary me-1" title="View Details">
@@ -233,7 +233,7 @@
                                                     </a>
                                                 @endif
                                             </td>
-                                        @endcan
+                                        {{-- @endcan --}}
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -242,7 +242,7 @@
 
                     <!-- Active Trips Tab -->
                     <div class="tab-pane fade" id="active" role="tabpanel">
-                        @can('view-finance-trips')
+                        {{-- @can('view-finance-trips') --}}
                             <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm table-sm">
                                 <thead class="table-secondary">
                                     <tr>
@@ -347,7 +347,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                        @endcan
+                        {{-- @endcan --}}
                     </div>
 
                     <!-- Completed Trips Tab -->
@@ -362,9 +362,9 @@
                                     <th>To</th>
                                     <th>Finance</th>
                                     <th>Status</th>
-                                    @can('view-trip-trucks')
+                                    {{-- @can('view-trip-trucks') --}}
                                         <th>Options</th>
-                                    @endcan
+                                    {{-- @endcan --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -418,14 +418,14 @@
                                                 {{ $item->state != 'N/L' ? 'Completed' : 'Waiting' }}
                                             </span>
                                         </td>
-                                        @can('view-trip-trucks')
+                                        {{-- @can('view-trip-trucks') --}}
                                             <td>
                                                 <a href="{{ url('trips/trip-detail/' . $item->allocation_id) }}"
                                                     class="btn btn-sm btn-primary me-1" title="View Details">
                                                     <i class="ph-info"></i>
                                                 </a>
                                             </td>
-                                        @endcan
+                                        {{-- @endcan --}}
                                     </tr>
                                 @endforeach
                             </tbody>
