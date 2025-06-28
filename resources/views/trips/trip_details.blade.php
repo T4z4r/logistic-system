@@ -353,13 +353,13 @@
                                             @if ($cost1->status == 1)
                                                 <a href="{{ url('trips/trip-truck/' . $item->id) }}"
                                                     class="btn btn-sm btn-alt-primary">
-                                                    <i class="ph-info"></i>
+                                                    <i class="fa fa-list"></i>
                                                 </a>
                                             @else
                                                 {{-- @can('view-truck-expenses') --}}
                                                 <a href="{{ url('trips/trip-truck/' . $item->id) }}"
                                                     class="btn btn-sm btn-alt-primary">
-                                                    <i class="ph-info"></i>
+                                                    <i class="fa fa-list"></i>
                                                 </a>
                                                 {{-- @endcan --}}
                                             @endif
@@ -450,7 +450,7 @@
                                         @if ($service->status == 1 || $service->status == 4)
                                             <a href="{{ route('service-purchases.edit', base64_encode($service->id)) }}"
                                                 class="btn btn-sm btn-alt-primary">
-                                                <i class="ph-note-pencil"></i>
+                                                <i class="fa fa-edit"></i>
                                             </a>
                                         @endif
                                         {{-- @endcan --}}
