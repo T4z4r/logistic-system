@@ -78,42 +78,47 @@
                             <div class="modal fade" id="editTaxModal{{ $tax->id }}" tabindex="-1"
                                 aria-labelledby="editTaxModalLabel{{ $tax->id }}" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
-                                    <form method="POST" action="{{ route('taxes.update', $tax->id) }}"
-                                        class="modal-content">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="editTaxModalLabel{{ $tax->id }}">Edit Tax</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="mb-3">
-                                                <label class="form-label">Name</label>
-                                                <input type="text" name="name" value="{{ $tax->name }}"
-                                                    class="form-control" required>
+                                    <div class="modal-content">
+                                        <form method="POST" action="{{ route('taxes.update', $tax->id) }}"
+                                            class="modal-content">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editTaxModalLabel{{ $tax->id }}">Edit Tax
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
                                             </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Rate (%)</label>
-                                                <input type="number" step="0.01" name="rate"
-                                                    value="{{ $tax->rate }}" class="form-control" required>
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Name</label>
+                                                    <input type="text" name="name" value="{{ $tax->name }}"
+                                                        class="form-control" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Rate (%)</label>
+                                                    <input type="number" step="0.01" name="rate"
+                                                        value="{{ $tax->rate }}" class="form-control" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Status</label>
+                                                    <select name="status" class="form-select">
+                                                        <option value="1" {{ $tax->status == 1 ? 'selected' : '' }}>
+                                                            Active
+                                                        </option>
+                                                        <option value="0" {{ $tax->status == 0 ? 'selected' : '' }}>
+                                                            Inactive</option>
+                                                    </select>
+                                                </div>
                                             </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Status</label>
-                                                <select name="status" class="form-select">
-                                                    <option value="1" {{ $tax->status == 1 ? 'selected' : '' }}>Active
-                                                    </option>
-                                                    <option value="0" {{ $tax->status == 0 ? 'selected' : '' }}>
-                                                        Inactive</option>
-                                                </select>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-alt-primary">Update</button>
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Cancel</button>
                                             </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-alt-primary">Update</button>
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Cancel</button>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    </div>
+
                                 </div>
                             </div>
                         @endforeach
