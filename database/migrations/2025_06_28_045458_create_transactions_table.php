@@ -22,7 +22,7 @@ return new class extends Migration
             $table->softDeletes();
             $table->string('process')->nullable();
             $table->bigInteger('process_id')->nullable();
-            $table->foreignId('driver_id')->nullable()->constrained()->onDelete('set null');
+            $table->bigInteger('driver_id')->nullable();
             $table->bigInteger('created_by')->nullable();
             $table->string('category', 20)->default('General Expense');
             $table->integer('currency_id')->nullable();
