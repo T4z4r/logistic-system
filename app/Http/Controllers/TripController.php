@@ -398,7 +398,7 @@ class TripController extends Controller
         $process = Approval::where('process_name', 'Trip Approval')->first();
         $data['level'] = ApprovalLevel::where('role_id', $uid)->where('approval_id', $process->id)->first();
         $data['allocation'] = Allocation::find($id);
-        $data['check'] = 'Approved By ' . Auth()->user()->positions->name;
+        $data['check'] = 'Approved By ' . Auth()->user()->position?->name??'--';
         $allocation = Allocation::find($id);
         $data['service_purchases'] = ServicePurchase::latest()->where('subject', 'LIKE', '%' . $allocation->ref_no)->with('supplier')->get();
         // dd($data['service_purchases']);
