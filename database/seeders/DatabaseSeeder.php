@@ -43,6 +43,8 @@ class DatabaseSeeder extends Seeder
             VoucherTypeSeeder::class,
             UnitSeeder::class,
             StockGroupSeeder::class,
+            ProcessLedgerSeeder::class,
+
         ]);
     }
 }
