@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Trip;
 use App\Models\Route;
+use App\Models\Truck;
 use App\Models\Approval;
 use App\Models\Currency;
 use App\Models\Position;
 use App\Models\TripCost;
 use App\Models\RouteCost;
+use App\Models\TruckCost;
 use App\Models\Allocation;
 use App\Models\CargoNature;
 use App\Models\PaymentMode;
@@ -18,6 +20,7 @@ use App\Models\PaymentMethod;
 use App\Models\AllocationCost;
 use App\Models\ServicePurchase;
 use App\Models\TruckAllocation;
+use App\Models\DriverAssignment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -398,7 +401,7 @@ class TripController extends Controller
         $process = Approval::where('process_name', 'Trip Approval')->first();
         $data['level'] = ApprovalLevel::where('role_id', $uid)->where('approval_id', $process->id)->first();
         $data['allocation'] = Allocation::find($id);
-        $data['check'] = 'Approved By ' . Auth()->user()->position?->name??'--';
+        $data['check'] = 'Approved By ' . Auth()->user()->position?->name ?? '--';
         $allocation = Allocation::find($id);
         $data['service_purchases'] = ServicePurchase::latest()->where('subject', 'LIKE', '%' . $allocation->ref_no)->with('supplier')->get();
         // dd($data['service_purchases']);
@@ -409,5 +412,26 @@ class TripController extends Controller
         $data['trucks'] = TruckAllocation::where('allocation_id', $id)->latest()->get();
 
         return view('trips.trip_details', $data);
+    }
+
+
+
+    // For Trip Truck
+    public function trip_truck($id)
+    {
+        $truck_allocation = TruckAllocation::where('id', $id)->latest()->first();
+        $data['truck'] = Truck::find($truck_allocation->truck_id);
+        $truck = Truck::find($truck_allocation->truck_id);
+        $data['payment_methods'] = PaymentMethod::orderBy('id', 'desc')->get();
+        $data['drivers'] = DriverAssignment::where('truck_id', $truck_allocation->truck_id)->latest()->first();
+        $allocation = TruckAllocation::where('id', $id)->with('allocation')->first();
+
+        $data['allocation'] = Allocation::find($allocation->allocation_id);
+
+        $data['tripo'] = Trip::where('allocation_id', $allocation->allocation_id)->first();
+        $data['costs'] = AllocationCost::where('allocation_id', $allocation->allocation_id)->orderBy('currency_id', 'asc')->get();
+        $data['truck_costs'] = TruckCost::where('allocation_id', $allocation->id)->where('truck_id', $truck->id)->get();
+
+        return view('trips.trip_truck', $data);
     }
 }
