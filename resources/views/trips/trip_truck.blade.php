@@ -161,28 +161,28 @@
                             </div>
                         @endif
                         {{-- @can('pay-trip-expenses') --}}
-                            @if ($trip->state == 2)
-                                <div class="row mb-3">
-                                    <div class="col-md-6 col-12"></div>
-                                    <div class="col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label for="">Choose Payment Method</label>
-                                            <select name="credit_ledger" class="select form-control">
-                                                @foreach ($payment_methods as $item)
-                                                    <option value="{{ $item->account->id }}">{{ $item->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            <input type="hidden" name="trip_id" value="{{ $trip->id }}">
-                                        </div>
-                                        <div class="form-group mt-2">
-                                            <button type="submit" id="pay_allocation_btn"
-                                                class="btn btn-sm btn-success float-end">
-                                                <i class="ph-check me-1"></i> Pay Checked Expenses
-                                            </button>
-                                        </div>
+                        @if ($trip->state == 2)
+                            <div class="row mb-3">
+                                <div class="col-md-6 col-12"></div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="">Choose Payment Method</label>
+                                        <select name="credit_ledger" class="select form-control">
+                                            @foreach ($payment_methods as $item)
+                                                <option value="{{ $item->account->id }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <input type="hidden" name="trip_id" value="{{ $trip->id }}">
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <button type="submit" id="pay_allocation_btn"
+                                            class="btn btn-sm btn-success float-end">
+                                            <i class="ph-check me-1"></i> Pay Checked Expenses
+                                        </button>
                                     </div>
                                 </div>
-                            @endif
+                            </div>
+                        @endif
                         {{-- @endcan --}}
                         <table class="table table-striped table-bordered datatable-basic">
                             <thead>
@@ -195,7 +195,7 @@
                                     <th>Amount</th>
                                     <th>Status</th>
                                     {{-- @can('pay-trip-expenses') --}}
-                                        <th>Option</th>
+                                    <th>Option</th>
                                     {{-- @else
                                         <th hidden></th>
                                     @endcan --}}
@@ -266,66 +266,66 @@
                                                     @endif
                                                 </td>
                                                 {{-- @can('pay-trip-expenses') --}}
-                                                    <td>
-                                                        @if ($item->quantity > 0)
-                                                            @if ($item->route_cost != null)
-                                                                @php
-                                                                    $id = App\Models\RouteCost::where(
-                                                                        'id',
-                                                                        $item->route_cost->id,
-                                                                    )->first();
-                                                                    $cost = App\Models\FuelCost::where(
-                                                                        'id',
-                                                                        $id->cost_id,
-                                                                    )->first();
-                                                                @endphp
-                                                                <a href="{{ url('/trips/issue-cost/' . $item->id) }}"
-                                                                    class="btn btn-sm btn-warning disabled">
-                                                                    <i class="ph-prohibit"></i> Wait
-                                                                </a>
-                                                            @else
-                                                                <a href="{{ url('/trips/issue-cost/' . $item->id) }}"
-                                                                    class="btn btn-sm btn-danger disabled">
-                                                                    <i class="ph-prohibit"></i> Deleted Cost
-                                                                </a>
-                                                            @endif
+                                                <td>
+                                                    @if ($item->quantity > 0)
+                                                        @if ($item->route_cost != null)
+                                                            @php
+                                                                $id = App\Models\RouteCost::where(
+                                                                    'id',
+                                                                    $item->route_cost->id,
+                                                                )->first();
+                                                                $cost = App\Models\FuelCost::where(
+                                                                    'id',
+                                                                    $id->cost_id,
+                                                                )->first();
+                                                            @endphp
+                                                            <a href="{{ url('/trips/issue-cost/' . $item->id) }}"
+                                                                class="btn btn-sm btn-warning disabled">
+                                                                <i class="ph-prohibit"></i> Wait
+                                                            </a>
                                                         @else
-                                                            @if ($trip->state == 2 && $paid == 0)
-                                                                <a href="#" class="btn btn-sm btn-success edit-button"
-                                                                    title="Pay Expense" data-bs-toggle="modal"
-                                                                    data-bs-target="#approval" data-id="{{ $item->id }}"
-                                                                    data-truck="{{ $truck->id }}"
-                                                                    data-cost="{{ $item->id }}"
-                                                                    data-name="{{ $item->name }}"
-                                                                    data-amount="{{ $item->amount * $item->currency->rate }}">
-                                                                    <i class="ph-check"></i> Pay
-                                                                </a>
-                                                            @else
-                                                                @if ($trip->status == 0)
-                                                                    @if ($paid > 0)
-                                                                        <a href="#"
-                                                                            class="btn btn-sm btn-info disabled">Already
-                                                                            Paid</a>
-                                                                    @else
-                                                                        <a href="{{ url('/trips/issue-cost/' . $item->id) }}"
-                                                                            class="btn btn-sm btn-warning disabled">Not
-                                                                            Paid</a>
-                                                                    @endif
+                                                            <a href="{{ url('/trips/issue-cost/' . $item->id) }}"
+                                                                class="btn btn-sm btn-danger disabled">
+                                                                <i class="ph-prohibit"></i> Deleted Cost
+                                                            </a>
+                                                        @endif
+                                                    @else
+                                                        @if ($trip->state == 2 && $paid == 0)
+                                                            <a href="#" class="btn btn-sm btn-success edit-button"
+                                                                title="Pay Expense" data-bs-toggle="modal"
+                                                                data-bs-target="#approval" data-id="{{ $item->id }}"
+                                                                data-truck="{{ $truck->id }}"
+                                                                data-cost="{{ $item->id }}"
+                                                                data-name="{{ $item->name }}"
+                                                                data-amount="{{ $item->amount * $item->currency->rate }}">
+                                                                <i class="ph-check"></i> Pay
+                                                            </a>
+                                                        @else
+                                                            @if ($trip->status == 0)
+                                                                @if ($paid > 0)
+                                                                    <a href="#"
+                                                                        class="btn btn-sm btn-info disabled">Already
+                                                                        Paid</a>
                                                                 @else
-                                                                    @if ($paid > 0)
-                                                                        <a href="#"
-                                                                            class="btn btn-sm btn-info disabled">Already
-                                                                            Paid</a>
-                                                                    @else
-                                                                        <a href="{{ url('/trips/issue-cost/' . $item->id) }}"
-                                                                            class="btn btn-sm btn-warning disabled">
-                                                                            <i class="ph-prohibit"></i> Wait
-                                                                        </a>
-                                                                    @endif
+                                                                    <a href="{{ url('/trips/issue-cost/' . $item->id) }}"
+                                                                        class="btn btn-sm btn-warning disabled">Not
+                                                                        Paid</a>
+                                                                @endif
+                                                            @else
+                                                                @if ($paid > 0)
+                                                                    <a href="#"
+                                                                        class="btn btn-sm btn-info disabled">Already
+                                                                        Paid</a>
+                                                                @else
+                                                                    <a href="{{ url('/trips/issue-cost/' . $item->id) }}"
+                                                                        class="btn btn-sm btn-warning disabled">
+                                                                        <i class="ph-prohibit"></i> Wait
+                                                                    </a>
                                                                 @endif
                                                             @endif
                                                         @endif
-                                                    </td>
+                                                    @endif
+                                                </td>
                                                 {{-- @else
                                                     <td hidden></td>
                                                 @endcan --}}
@@ -350,7 +350,7 @@
                                 <th>Amount</th>
                                 <th>Status</th>
                                 {{-- @can('pay-trip-expenses') --}}
-                                    <th>Option</th>
+                                <th>Option</th>
                                 {{-- @else
                                     <th hidden></th>
                                 @endcan --}}
@@ -415,63 +415,63 @@
                                             @endif
                                         </td>
                                         {{-- @can('pay-trip-expenses') --}}
-                                            <td>
-                                                @if ($trip->state == 2 && $paid == 0)
-                                                    <a href="#" class="btn btn-sm btn-success edit-button"
-                                                        title="Pay Expense" data-bs-toggle="modal" data-bs-target="#approval"
-                                                        data-id="{{ $item->id }}" data-truck="{{ $truck->id }}"
-                                                        data-cost="{{ $item->id }}" data-name="{{ $item->name }}"
-                                                        data-amount="{{ $item->amount * $item->currency->rate }}">
-                                                        <i class="ph-check"></i> Pay
-                                                    </a>
-                                                @else
-                                                    @if ($trip->status == 0)
-                                                        @if ($paid > 0)
-                                                            @if ($item->quantity > 0)
-                                                                @php
-                                                                    $subject =
-                                                                        $truck->plate_number .
-                                                                        ' Fuel Purchase in Trip ' .
-                                                                        $trip->ref_no .
-                                                                        '-' .
-                                                                        $item->name;
-                                                                    $lpo = App\Models\Store\ServicePurchase::where(
-                                                                        'subject',
-                                                                        $subject,
-                                                                    )->first();
-                                                                @endphp
-                                                                @if ($lpo)
-                                                                    <a href="{{ route('print-service-purchase', $lpo->id) }}"
-                                                                        class="btn btn-sm btn-alt-primary">
-                                                                        <i class="ph-printer"></i> Print LPO
-                                                                    </a>
-                                                                @else
-                                                                    <a href="{{ url('/trips/issue-cost/' . $item->id) }}"
-                                                                        class="btn btn-sm btn-warning disabled">
-                                                                        Bulk LPO Generated
-                                                                    </a>
-                                                                @endif
+                                        <td>
+                                            @if ($trip->state == 2 && $paid == 0)
+                                                <a href="#" class="btn btn-sm btn-success edit-button"
+                                                    title="Pay Expense" data-bs-toggle="modal" data-bs-target="#approval"
+                                                    data-id="{{ $item->id }}" data-truck="{{ $truck->id }}"
+                                                    data-cost="{{ $item->id }}" data-name="{{ $item->name }}"
+                                                    data-amount="{{ $item->amount * $item->currency->rate }}">
+                                                    <i class="ph-check"></i> Pay
+                                                </a>
+                                            @else
+                                                @if ($trip->status == 0)
+                                                    @if ($paid > 0)
+                                                        @if ($item->quantity > 0)
+                                                            @php
+                                                                $subject =
+                                                                    $truck->plate_number .
+                                                                    ' Fuel Purchase in Trip ' .
+                                                                    $trip->ref_no .
+                                                                    '-' .
+                                                                    $item->name;
+                                                                $lpo = App\Models\Store\ServicePurchase::where(
+                                                                    'subject',
+                                                                    $subject,
+                                                                )->first();
+                                                            @endphp
+                                                            @if ($lpo)
+                                                                <a href="{{ route('print-service-purchase', $lpo->id) }}"
+                                                                    class="btn btn-sm btn-alt-primary">
+                                                                    <i class="ph-printer"></i> Print LPO
+                                                                </a>
                                                             @else
-                                                                <a href="#" class="btn btn-sm btn-info disabled">Already
-                                                                    Paid</a>
+                                                                <a href="{{ url('/trips/issue-cost/' . $item->id) }}"
+                                                                    class="btn btn-sm btn-warning disabled">
+                                                                    Bulk LPO Generated
+                                                                </a>
                                                             @endif
                                                         @else
-                                                            <a href="{{ url('/trips/issue-cost/' . $item->id) }}"
-                                                                class="btn btn-sm btn-warning disabled">Not Paid</a>
-                                                        @endif
-                                                    @else
-                                                        @if ($paid > 0)
                                                             <a href="#" class="btn btn-sm btn-info disabled">Already
                                                                 Paid</a>
-                                                        @else
-                                                            <a href="{{ url('/trips/issue-cost/' . $item->id) }}"
-                                                                class="btn btn-sm btn-warning disabled">
-                                                                <i class="ph-prohibit"></i> Wait
-                                                            </a>
                                                         @endif
+                                                    @else
+                                                        <a href="{{ url('/trips/issue-cost/' . $item->id) }}"
+                                                            class="btn btn-sm btn-warning disabled">Not Paid</a>
+                                                    @endif
+                                                @else
+                                                    @if ($paid > 0)
+                                                        <a href="#" class="btn btn-sm btn-info disabled">Already
+                                                            Paid</a>
+                                                    @else
+                                                        <a href="{{ url('/trips/issue-cost/' . $item->id) }}"
+                                                            class="btn btn-sm btn-warning disabled">
+                                                            <i class="ph-prohibit"></i> Wait
+                                                        </a>
                                                     @endif
                                                 @endif
-                                            </td>
+                                            @endif
+                                        </td>
                                         {{-- @else
                                             <td hidden></td>
                                         @endcan --}}
@@ -507,7 +507,7 @@
                                 <th>Amount</th>
                                 <th>Status</th>
                                 {{-- @can('pay-truck-expenses') --}}
-                                    <th>Option</th>
+                                <th>Option</th>
                                 {{-- @else
                                     <td hidden></td>
                                 @endcan --}}
@@ -556,79 +556,79 @@
                                         @endif
                                     </td>
                                     {{-- @can('pay-truck-expenses') --}}
-                                        <td>
-                                            @if ($trip->state == 2 && $paid == 0)
+                                    <td>
+                                        @if ($trip->state == 2 && $paid == 0)
+                                            @if ($item->quantity > 0)
+                                                @php
+                                                    $total = $item->amount * $item->quantity;
+                                                    $vat = $total * 0.18;
+                                                    $grand = $total + $vat;
+                                                    $id = App\Models\RouteCost::where(
+                                                        'id',
+                                                        $item->route_cost->id,
+                                                    )->first();
+                                                    $cost = App\Models\FuelCost::where('id', $id->cost_id)->first();
+                                                @endphp
+                                                <a href="#" class="btn btn-sm btn-success edit-button2"
+                                                    title="Generate LPO" data-bs-toggle="modal" data-bs-target="#invoice"
+                                                    data-id="{{ $item->id }}" data-truck="{{ $truck->id }}"
+                                                    data-cost="{{ $item->id }}" data-name="{{ $item->name }}"
+                                                    data-type="2" data-supplier="{{ $cost->account->name ?? '' }}"
+                                                    data-suppid="{{ $cost->account->supplier_id ?? '' }}"
+                                                    data-quantity="{{ $item->quantity }}"
+                                                    data-total="{{ $total }}" data-vat="{{ $vat }}"
+                                                    data-grand="{{ $grand }}"
+                                                    data-amount="{{ $item->amount * $item->currency->rate }}">
+                                                    <i class="ph-receipt"></i> Generate LPO
+                                                </a>
+                                            @else
+                                                <a href="#" class="btn btn-sm btn-success edit-button1"
+                                                    title="Pay Additional Expense" data-bs-toggle="modal"
+                                                    data-bs-target="#approval1" data-id="{{ $item->id }}"
+                                                    data-truck="{{ $truck->id }}" data-cost="{{ $item->id }}"
+                                                    data-name="{{ $item->name }}"
+                                                    data-amount="{{ $item->amount * $item->currency->rate }}">
+                                                    <i class="ph-check"></i> Pay
+                                                </a>
+                                            @endif
+                                        @else
+                                            @if ($paid > 0)
                                                 @if ($item->quantity > 0)
                                                     @php
-                                                        $total = $item->amount * $item->quantity;
-                                                        $vat = $total * 0.18;
-                                                        $grand = $total + $vat;
-                                                        $id = App\Models\RouteCost::where(
-                                                            'id',
-                                                            $item->route_cost->id,
+                                                        $subject =
+                                                            $truck->plate_number .
+                                                            ' Fuel Purchase in Trip ' .
+                                                            $trip->ref_no .
+                                                            '-' .
+                                                            $item->name;
+                                                        $lpo = App\Models\ServicePurchase::where(
+                                                            'subject',
+                                                            $subject,
                                                         )->first();
-                                                        $cost = App\Models\FuelCost::where('id', $id->cost_id)->first();
                                                     @endphp
-                                                    <a href="#" class="btn btn-sm btn-success edit-button2"
-                                                        title="Generate LPO" data-bs-toggle="modal" data-bs-target="#invoice"
-                                                        data-id="{{ $item->id }}" data-truck="{{ $truck->id }}"
-                                                        data-cost="{{ $item->id }}" data-name="{{ $item->name }}"
-                                                        data-type="2" data-supplier="{{ $cost->account->name ?? '' }}"
-                                                        data-suppid="{{ $cost->account->supplier_id ?? '' }}"
-                                                        data-quantity="{{ $item->quantity }}"
-                                                        data-total="{{ $total }}" data-vat="{{ $vat }}"
-                                                        data-grand="{{ $grand }}"
-                                                        data-amount="{{ $item->amount * $item->currency->rate }}">
-                                                        <i class="ph-receipt"></i> Generate LPO
-                                                    </a>
-                                                @else
-                                                    <a href="#" class="btn btn-sm btn-success edit-button1"
-                                                        title="Pay Additional Expense" data-bs-toggle="modal"
-                                                        data-bs-target="#approval1" data-id="{{ $item->id }}"
-                                                        data-truck="{{ $truck->id }}" data-cost="{{ $item->id }}"
-                                                        data-name="{{ $item->name }}"
-                                                        data-amount="{{ $item->amount * $item->currency->rate }}">
-                                                        <i class="ph-check"></i> Pay
-                                                    </a>
-                                                @endif
-                                            @else
-                                                @if ($paid > 0)
-                                                    @if ($item->quantity > 0)
-                                                        @php
-                                                            $subject =
-                                                                $truck->plate_number .
-                                                                ' Fuel Purchase in Trip ' .
-                                                                $trip->ref_no .
-                                                                '-' .
-                                                                $item->name;
-                                                            $lpo = App\Models\ServicePurchase::where(
-                                                                'subject',
-                                                                $subject,
-                                                            )->first();
-                                                        @endphp
-                                                        @if ($lpo)
-                                                            <a href="{{ route('print-service-purchase', $lpo->id) }}"
-                                                                class="btn btn-sm btn-alt-primary">
-                                                                <i class="ph-printer"></i> Print LPO
-                                                            </a>
-                                                        @else
-                                                            <a href="{{ url('/trips/issue-cost/' . $item->id) }}"
-                                                                class="btn btn-sm btn-warning disabled">
-                                                                No LPO Generated
-                                                            </a>
-                                                        @endif
+                                                    @if ($lpo)
+                                                        <a href="{{ route('print-service-purchase', $lpo->id) }}"
+                                                            class="btn btn-sm btn-alt-primary">
+                                                            <i class="ph-printer"></i> Print LPO
+                                                        </a>
                                                     @else
-                                                        <a href="#" class="btn btn-sm btn-info disabled">Already
-                                                            Paid</a>
+                                                        <a href="{{ url('/trips/issue-cost/' . $item->id) }}"
+                                                            class="btn btn-sm btn-warning disabled">
+                                                            No LPO Generated
+                                                        </a>
                                                     @endif
                                                 @else
-                                                    <a href="{{ url('/trips/issue-cost/' . $item->id) }}"
-                                                        class="btn btn-sm btn-warning disabled">
-                                                        <i class="ph-prohibit"></i> Wait
-                                                    </a>
+                                                    <a href="#" class="btn btn-sm btn-info disabled">Already
+                                                        Paid</a>
                                                 @endif
+                                            @else
+                                                <a href="{{ url('/trips/issue-cost/' . $item->id) }}"
+                                                    class="btn btn-sm btn-warning disabled">
+                                                    <i class="ph-prohibit"></i> Wait
+                                                </a>
                                             @endif
-                                        </td>
+                                        @endif
+                                    </td>
                                     {{-- @else
                                         <td hidden></td>
                                     @endcan --}}
@@ -641,11 +641,11 @@
                                 <td><b>TOTAL</b></td>
                                 <td><b>Tsh {{ number_format($total_paid, 2) }}</b></td>
                                 <td><b>$ {{ number_format($total_paid / $allocation->currency->rate, 2) }}</b></td>
-                                @can('pay-truck-expenses')
-                                    <td></td>
-                                @else
+                                {{-- @can('pay-truck-expenses') --}}
+                                <td></td>
+                                {{-- @else
                                     <td hidden></td>
-                                @endcan
+                                @endcan --}}
                             </tr>
                         </tfoot>
                     </table>
