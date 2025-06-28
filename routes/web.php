@@ -78,7 +78,7 @@ Route::middleware('auth')->group(function () {
     require __DIR__ . '/settings.php';
 
     // Accounting Routes
-    require __DIR__. '/finance_trips.php',
+    require __DIR__ . '/finance_trips.php';
     require __DIR__ . '/accounts_settings.php';
     require __DIR__ . '/fuel_lpos.php';
 
