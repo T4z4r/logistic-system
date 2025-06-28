@@ -676,7 +676,7 @@
                                 <label for="">Choose Payment Method</label>
                                 <select name="credit_ledger" class="select form-control">
                                     @foreach ($payment_methods as $item)
-                                        <option value="{{ $item->account->id }}">{{ $item->name }}</option>
+                                        <option value="{{ $item->account?->id ?? 0 }}">{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -1097,7 +1097,7 @@
                         lineTotalWithoutTax = lineTotal;
                         lineTotalTax = (lineTotal * c_tax) + lineTotal;
                         $(this).closest('.row').find('.service_purchase_total').val(lineTotalTax.toFixed(
-                        2));
+                            2));
                         totalLineTotalWithoutTax += lineTotalWithoutTax;
                         totalLineTotalTax += lineTotalTax;
                     });
