@@ -1,7 +1,8 @@
 <li class="nav-main-heading">Finance Management</li>
 
 <li class="nav-main-item">
-    <a class="nav-main-link{{ request()->routeIs('flex.finance_trips') ? ' active' : '' }}" href="{{ route('flex.finance_trips') }}">
+    <a class="nav-main-link{{ request()->routeIs('flex.finance_trips') ? ' active' : '' }}"
+        href="{{ route('flex.finance_trips') }}">
         <i class="nav-main-link-icon fa fa-truck text-blue"></i>
         <span class="nav-main-link-name">
             Trips Management
@@ -9,7 +10,8 @@
     </a>
 </li>
 <li class="nav-main-item">
-    <a class="nav-main-link{{ request()->is('trip-settings/costs') ? ' active' : '' }}" href="{{ route('blank') }}">
+    <a class="nav-main-link{{ request()->routeIs('flex.all_trip_expenses') ? ' active' : '' }}"
+        href="{{ route('flex.all_trip_expenses') }}">
         <i class="nav-main-link-icon fa fa-calculator text-orange"></i>
         <span class="nav-main-link-name">
             Trip Expenses
