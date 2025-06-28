@@ -37,7 +37,7 @@
     <!-- END Hero -->
 
     <!-- Page Content -->
-    <div class="content p-2 rounded-0">
+    <div class=" p-2 rounded-0">
         <!-- Trip Details Block -->
         <div class="block block-rounded shadow-sm py-5 rounded-0">
             <div class="block-header">
@@ -64,18 +64,18 @@
                         @endif
                     @endif
                     @if ($trip->state == 2)
-                        @can('pay-trip-expenses')
-                            <a href="#" class="btn btn-sm btn-alt-primary mx-1" data-bs-toggle="modal"
-                                data-bs-target="#fuelLPO" title="Generate Fuel LPO" data-id="{{ $trip->id }}"
-                                data-name="{{ $trip->name }}" data-description="{{ $trip->amount }}">
-                                <i class="ph-receipt me-1"></i> Generate Fuel LPO
-                            </a>
-                            <a href="#" class="btn btn-sm btn-alt-primary mx-1" data-bs-toggle="modal"
-                                data-bs-target="#advance" title="Pay Advance" data-id="{{ $trip->id }}"
-                                data-name="{{ $trip->name }}" data-description="{{ $trip->amount }}">
-                                <i class="ph-money me-1"></i> Deduction Payment
-                            </a>
-                        @endcan
+                        {{-- @can('pay-trip-expenses') --}}
+                        <a href="#" class="btn btn-sm btn-alt-primary mx-1" data-bs-toggle="modal"
+                            data-bs-target="#fuelLPO" title="Generate Fuel LPO" data-id="{{ $trip->id }}"
+                            data-name="{{ $trip->name }}" data-description="{{ $trip->amount }}">
+                            <i class="ph-receipt me-1"></i> Generate Fuel LPO
+                        </a>
+                        <a href="#" class="btn btn-sm btn-alt-primary mx-1" data-bs-toggle="modal"
+                            data-bs-target="#advance" title="Pay Advance" data-id="{{ $trip->id }}"
+                            data-name="{{ $trip->name }}" data-description="{{ $trip->amount }}">
+                            <i class="ph-money me-1"></i> Deduction Payment
+                        </a>
+                        {{-- @endcan --}}
                     @endif
                 </div>
             </div>
@@ -446,14 +446,14 @@
                                             class="btn btn-sm btn-alt-primary">
                                             <i class="ph-info"></i>
                                         </a>
-                                        @can('edit-purchase')
-                                            @if ($service->status == 1 || $service->status == 4)
-                                                <a href="{{ route('service-purchases.edit', base64_encode($service->id)) }}"
-                                                    class="btn btn-sm btn-alt-primary">
-                                                    <i class="ph-note-pencil"></i>
-                                                </a>
-                                            @endif
-                                        @endcan
+                                        {{-- @can('edit-purchase') --}}
+                                        @if ($service->status == 1 || $service->status == 4)
+                                            <a href="{{ route('service-purchases.edit', base64_encode($service->id)) }}"
+                                                class="btn btn-sm btn-alt-primary">
+                                                <i class="ph-note-pencil"></i>
+                                            </a>
+                                        @endif
+                                        {{-- @endcan --}}
                                     </td>
                                 </tr>
                             @endforeach
@@ -527,9 +527,9 @@
                                             <th>Expense Name</th>
                                             <th>Amount</th>
                                             @if ($allocation->status <= 0)
-                                                @can('edit-trip-cost')
-                                                    <th>Option</th>
-                                                @endcan
+                                                {{-- @can('edit-trip-cost') --}}
+                                                <th>Option</th>
+                                                {{-- @endcan --}}
                                             @else
                                                 <th hidden></th>
                                             @endif
@@ -573,32 +573,32 @@
                                                     @endif
                                                 </td>
                                                 @if ($allocation->status <= 0)
-                                                    @can('edit-trip-cost')
-                                                        <td>
-                                                            @if ($item->editable == 1)
-                                                                @can('edit-trip-cost')
-                                                                    <button class="btn btn-alt-primary btn-sm edit-button1"
-                                                                        data-bs-toggle="modal" data-bs-target="#edit-cost"
-                                                                        data-id1="{{ $item->id }}"
-                                                                        data-name="{{ $item->name }}"
-                                                                        data-description="{{ $item->amount }}"
-                                                                        data-litre="{{ $item->quantity }}">
-                                                                        <i class="ph-note-pencil"></i>
-                                                                    </button>
-                                                                @endcan
-                                                                @can('delete-trip-cost')
-                                                                    <a href="javascript:void(0)" title="Remove Cost"
-                                                                        class="btn btn-danger btn-sm {{ $item->status == '0' ? '' : 'disabled' }}"
-                                                                        onclick="removeCost({{ $item->id }})">
-                                                                        <i class="ph-trash"></i>
-                                                                    </a>
-                                                                @endcan
-                                                            @else
-                                                                <span class="badge bg-info bg-opacity-10 text-danger">Not
-                                                                    Editable</span>
-                                                            @endif
-                                                        </td>
-                                                    @endcan
+                                                    {{-- @can('edit-trip-cost') --}}
+                                                    <td>
+                                                        @if ($item->editable == 1)
+                                                            @can('edit-trip-cost')
+                                                                <button class="btn btn-alt-primary btn-sm edit-button1"
+                                                                    data-bs-toggle="modal" data-bs-target="#edit-cost"
+                                                                    data-id1="{{ $item->id }}"
+                                                                    data-name="{{ $item->name }}"
+                                                                    data-description="{{ $item->amount }}"
+                                                                    data-litre="{{ $item->quantity }}">
+                                                                    <i class="ph-note-pencil"></i>
+                                                                </button>
+                                                            @endcan
+                                                            @can('delete-trip-cost')
+                                                                <a href="javascript:void(0)" title="Remove Cost"
+                                                                    class="btn btn-danger btn-sm {{ $item->status == '0' ? '' : 'disabled' }}"
+                                                                    onclick="removeCost({{ $item->id }})">
+                                                                    <i class="ph-trash"></i>
+                                                                </a>
+                                                            @endcan
+                                                        @else
+                                                            <span class="badge bg-info bg-opacity-10 text-danger">Not
+                                                                Editable</span>
+                                                        @endif
+                                                    </td>
+                                                    {{-- @endcan --}}
                                                 @else
                                                     <td hidden></td>
                                                 @endif
