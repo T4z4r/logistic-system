@@ -601,7 +601,7 @@
                                                                 $trip->ref_no .
                                                                 '-' .
                                                                 $item->name;
-                                                            $lpo = App\Models\Store\ServicePurchase::where(
+                                                            $lpo = App\Models\ServicePurchase::where(
                                                                 'subject',
                                                                 $subject,
                                                             )->first();
@@ -761,10 +761,14 @@
                                     <div class="col-md-6 col-lg-6 mb-3">
                                         <label class="form-label">Subject</label>
                                         <input type="text" readonly class="form-control"
-                                            placeholder="{{ $truck->plate_number }} Fuel Purchase in Trip {{ $trip->ref_no }}"
+                                            placeholder="{{ $truck->plate_number }} Fuel Purchase in Trip 
+                                            {{-- {{ $trip->ref_no }} --}}
+                                             "
                                             name="subject1">
                                         <input type="hidden" class="form-control"
-                                            value="{{ $truck->plate_number }} Fuel Purchase in Trip {{ $trip->ref_no }}"
+                                            value="{{ $truck->plate_number }} Fuel Purchase in Trip 
+                                            {{-- {{ $trip->ref_no }} --}}
+                                             "
                                             name="subject">
                                     </div>
                                 </div>
