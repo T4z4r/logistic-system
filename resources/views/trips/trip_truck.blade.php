@@ -779,7 +779,7 @@
                                             required>
                                             <option value="">Select Currency</option>
                                             @php
-                                                $currencies = \App\Models\Settings\Currency::latest()->get();
+                                                $currencies = \App\Models\Currency::latest()->get();
                                             @endphp
                                             @foreach ($currencies as $currency)
                                                 <option value="{{ $currency->symbol . '--' . $currency->rate }}">
