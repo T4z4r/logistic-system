@@ -356,12 +356,12 @@
                                                     <i class="ph-info"></i>
                                                 </a>
                                             @else
-                                                @can('view-truck-expenses')
-                                                    <a href="{{ url('trips/trip-truck/' . $item->id) }}"
-                                                        class="btn btn-sm btn-alt-primary">
-                                                        <i class="ph-info"></i>
-                                                    </a>
-                                                @endcan
+                                                {{-- @can('view-truck-expenses') --}}
+                                                <a href="{{ url('trips/trip-truck/' . $item->id) }}"
+                                                    class="btn btn-sm btn-alt-primary">
+                                                    <i class="ph-info"></i>
+                                                </a>
+                                                {{-- @endcan --}}
                                             @endif
                                         @endif
                                     </td>
@@ -790,32 +790,32 @@
                                                     <small><b>Value:</b> Tsh {{ number_format($value, 2) }}</small>
                                                 </td>
                                                 @if ($allocation->status <= 0)
-                                                    @can('edit-trip-cost')
-                                                        <td>
-                                                            @if ($item->editable == 1)
-                                                                @can('edit-trip-cost')
-                                                                    <button class="btn btn-alt-primary btn-sm edit-button1"
-                                                                        data-bs-toggle="modal" data-bs-target="#edit-cost"
-                                                                        data-id1="{{ $item->id }}"
-                                                                        data-name="{{ $item->name }}"
-                                                                        data-description="{{ $item->amount }}"
-                                                                        data-litre="{{ $item->quantity }}">
-                                                                        <i class="ph-note-pencil"></i>
-                                                                    </button>
-                                                                @endcan
-                                                                @can('delete-trip-cost')
-                                                                    <a href="javascript:void(0)" title="Remove Cost"
-                                                                        class="btn btn-danger btn-sm {{ $item->status == '0' ? '' : 'disabled' }}"
-                                                                        onclick="removeCost({{ $item->id }})">
-                                                                        <i class="ph-trash"></i>
-                                                                    </a>
-                                                                @endcan
-                                                            @else
-                                                                <span class="badge bg-info bg-opacity-10 text-danger">Not
-                                                                    Editable</span>
-                                                            @endif
-                                                        </td>
-                                                    @endcan
+                                                    {{-- @can('edit-trip-cost') --}}
+                                                    <td>
+                                                        @if ($item->editable == 1)
+                                                            @can('edit-trip-cost')
+                                                                <button class="btn btn-alt-primary btn-sm edit-button1"
+                                                                    data-bs-toggle="modal" data-bs-target="#edit-cost"
+                                                                    data-id1="{{ $item->id }}"
+                                                                    data-name="{{ $item->name }}"
+                                                                    data-description="{{ $item->amount }}"
+                                                                    data-litre="{{ $item->quantity }}">
+                                                                    <i class="ph-note-pencil"></i>
+                                                                </button>
+                                                            @endcan
+                                                            @can('delete-trip-cost')
+                                                                <a href="javascript:void(0)" title="Remove Cost"
+                                                                    class="btn btn-danger btn-sm {{ $item->status == '0' ? '' : 'disabled' }}"
+                                                                    onclick="removeCost({{ $item->id }})">
+                                                                    <i class="ph-trash"></i>
+                                                                </a>
+                                                            @endcan
+                                                        @else
+                                                            <span class="badge bg-info bg-opacity-10 text-danger">Not
+                                                                Editable</span>
+                                                        @endif
+                                                    </td>
+                                                    {{-- @endcan --}}
                                                 @else
                                                     <td hidden></td>
                                                 @endif
