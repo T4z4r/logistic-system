@@ -35,10 +35,10 @@
              </li>
          @endcan
 
-          @can('view-logistics-modules')
-           <li class="nav-main-heading">Vendors Management</li>
-               @include('layouts.backend.sidebar.vendors')
-           @endcan
+         @can('view-logistics-modules')
+             <li class="nav-main-heading">Vendors Management</li>
+             @include('layouts.backend.sidebar.vendors')
+         @endcan
 
          @can('view-logistics-modules')
              @include('layouts.backend.sidebar.logistics')
@@ -50,6 +50,9 @@
 
          @can('view-tally-modules')
              @include('layouts.backend.sidebar.tally-accounting')
+
+
+             @include('layouts.backend.sidebar.accounting-settings')
          @endcan
 
 
@@ -109,7 +112,7 @@
                      'payment-methods*',
                      'payment-modes*',
                      'cargo-natures*',
-                    //  'currencies*',
+                     //  'currencies*',
                      'off_budget_categories.*',
                  ) || request()->routeIs('off_budget_categories.*')
                      ? ' open'
@@ -121,7 +124,7 @@
                          'payment-methods*',
                          'payment-modes*',
                          'cargo-natures*',
-                        //  'currencies*',
+                         //  'currencies*',
                          'off_budget_categories.*',
                      ) || request()->routeIs('off_budget_categories.*')
                          ? 'true'
@@ -192,8 +195,8 @@
              @endphp
              <li class="nav-main-item{{ $isSystemSettings ? ' open' : '' }}">
                  <a class="nav-main-link nav-main-link-submenu{{ $isSystemSettings ? ' active' : '' }}"
-                     data-toggle="submenu" aria-haspopup="true"
-                     aria-expanded="{{ $isSystemSettings ? 'true' : 'false' }}" href="#">
+                     data-toggle="submenu" aria-haspopup="true" aria-expanded="{{ $isSystemSettings ? 'true' : 'false' }}"
+                     href="#">
                      <i class="nav-main-link-icon fa fa-cogs text-blue"></i>
                      <span class="nav-main-link-name">System Settings</span>
                  </a>

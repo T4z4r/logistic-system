@@ -37,9 +37,9 @@ Route::middleware('auth')->group(function () {
 
 
 
-Route::view('/pages/slick', 'pages.slick');
-Route::view('/pages/datatables', 'pages.datatables');
-Route::view('/pages/blank', 'pages.blank')->name('blank');
+    Route::view('/pages/slick', 'pages.slick');
+    Route::view('/pages/datatables', 'pages.datatables');
+    Route::view('/pages/blank', 'pages.blank')->name('blank');
     // start of Permission Routes
     Route::get('permissions', [PermissionController::class, 'index'])->name('permissions.index');
 
@@ -77,6 +77,8 @@ Route::view('/pages/blank', 'pages.blank')->name('blank');
     require __DIR__ . '/approvals.php';
     require __DIR__ . '/settings.php';
 
+    // Accounting Routes
+    require __DIR__ . '/accounts_settings.php';
 
     // Tall Routes
     require __DIR__ . '/company_management.php';
@@ -85,5 +87,4 @@ Route::view('/pages/blank', 'pages.blank')->name('blank');
     require __DIR__ . '/vouchers.php';
     require __DIR__ . '/reports.php';
     require __DIR__ . '/tally.php';
-
 });

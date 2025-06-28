@@ -70,3 +70,36 @@ Route::any('/trips/delete-cost/{id}', [TripController::class, 'delete_cost'])->n
 
 Route::any('/trips/update-allocation-cost', [TripController::class, 'update_cost'])->name('flex.update-allocation-cost');
 Route::any('/trips/add-allocation-cost', [TripController::class, 'add_cost'])->name('flex.add-allocation-cost');
+
+
+// For Finance trips routes
+// Start of Trip Payments Routes
+    Route::prefix('finance/')->controller(TripPaymentController::class)->group(function () {
+        // Start of Trip Invoiceds
+        Route::any('all-trips', 'all_trips')->name('finance.all-trips');
+        Route::get('invoice-tabs/{tab}', 'tab_index')->name('trip_invoices.tab_index');
+        Route::any('trip-detail/{id}', 'trip_detail')->name('finance.trip-detail');
+        Route::any('create-invoice/{id}', 'create_invoice')->name('finance.create-invoice');
+        Route::any('save-invoice', 'save_invoice')->name('finance.save-invoice');
+        Route::any('edit-invoice/{id}', 'edit_invoice')->name('finance.edit-invoice');
+        Route::any('edit-other-invoice/{id}', 'edit_other_invoice')->name('finance.edit-other-invoice');
+        Route::any('update-invoice', 'update_invoice')->name('finance.update-invoice');
+        Route::any('delete-invoice/{id}', 'delete_invoice')->name('finance.delete-invoice');
+        Route::any('correct-invoice/{id}', 'correct_invoice')->name('finance.correct-invoice');
+        Route::any('view-invoice/{id}', 'view_invoice')->name('finance.view-invoice');
+        Route::any('view-other-invoice/{id}', 'view_other_invoice')->name('finance.view-other-invoice');
+        Route::any('print-invoice/{id}', 'print_invoice')->name('finance.print-invoice');
+        Route::any('print-other-invoice/{id}', 'print_other_invoice')->name('finance.print-other-invoice');
+        Route::any('submit-invoice/{id}', 'submit_invoice')->name('finance.submit-invoice');
+        Route::any('approve-invoice', 'approve_invoice')->name('finance.approve-invoice');
+        Route::any('disapprove-invoice', 'disapprove_invoice')->name('finance.disapprove-invoice');
+        Route::any('delete-invoiced_truck/{id}', 'delete_invoiced_truck')->name('finance.delete-invoiced-truck');
+        Route::any('add-truck', 'add_invoiced_truck')->name('finance.add_truck');
+        Route::any('add-truck-income', 'add_invoiced_truck_income')->name('finance.add_truck_income');
+        Route::any('delete-invoiced-truck-income/{id}', 'delete_invoiced_truck_income')->name('finance.delete-invoiced-truck-income');
+
+
+        // For Customer Invoice
+        Route::any('customer-invoices', 'customer_invoice')->name('finance.customer-invoice');
+        Route::any('create-invoice', 'create_customer_invoice')->name('finance.create-customer-invoice');
+    });
