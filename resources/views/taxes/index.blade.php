@@ -60,15 +60,15 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                    <button class="btn btn-sm btn-alt-warning" data-bs-toggle="modal"
                                         data-bs-target="#editTaxModal{{ $tax->id }}">
-                                        <i class="ph-pencil me-1"></i> Edit
+                                        <i class="fa fa-edit me-1"></i>
                                     </button>
                                     <form action="{{ route('taxes.destroy', $tax->id) }}" method="POST" class="d-inline"
                                         onsubmit="return confirm('Are you sure you want to delete this tax?')">
                                         @csrf @method('DELETE')
-                                        <button class="btn btn-sm btn-danger">
-                                            <i class="ph-trash me-1"></i> Delete
+                                        <button class="btn btn-sm btn-alt-danger">
+                                            <i class="fa fa-trash me-1"></i> Delete
                                         </button>
                                     </form>
                                 </td>
