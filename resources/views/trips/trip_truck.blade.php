@@ -788,7 +788,7 @@
                                         </select>
                                     </div>
                                     @php
-                                        $latest_service_purchase = App\Models\Store\ServicePurchase::latest()->first();
+                                        $latest_service_purchase = App\Models\ServicePurchase::latest()->first();
                                     @endphp
                                     <div class="col-md-2 col-lg-2 mb-3">
                                         <label class="form-label">SPO Prefix</label>
@@ -840,7 +840,7 @@
                                                 <select name="moreFields[0][tax_rate]" class="form-control item_tax"
                                                     required>
                                                     @php
-                                                        $taxes = \App\Models\Settings\Tax::all();
+                                                        $taxes = \App\Models\Tax::all();
                                                     @endphp
                                                     @foreach ($taxes as $tax)
                                                         <option value="{{ $tax->rate }}" @selected($tax->name == 'VAT')>

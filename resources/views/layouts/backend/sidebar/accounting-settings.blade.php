@@ -15,8 +15,7 @@
     </a>
 </li>
 <li class="nav-main-item">
-    <a class="nav-main-link{{ request()->is('settings/vat') ? ' active' : '' }}"
-        href="{{ url('finance.settings.vat') }}">
+    <a class="nav-main-link{{ request()->is('taxes') ? ' active' : '' }}" href="{{ route('taxes.index') }}">
         <i class="nav-main-link-icon fa fa-percent text-warning"></i>
         <span class="nav-main-link-name">VAT Settings</span>
     </a>
