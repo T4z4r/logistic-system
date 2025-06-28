@@ -22,8 +22,8 @@
     </div>
     <!-- END Hero -->
 
-    <!-- Page Content -->
-    <div class="content p-2 rounded-0">
+<!-- Page Content -->
+    <div class=" p-2 rounded-0">
         <!-- Ledger Mappers Block -->
         <div class="block block-rounded shadow-sm py-5 rounded-0">
             <div class="block-header">

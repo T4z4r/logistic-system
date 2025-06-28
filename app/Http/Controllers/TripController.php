@@ -14,7 +14,10 @@ use App\Models\CargoNature;
 use App\Models\PaymentMode;
 use Illuminate\Http\Request;
 use App\Models\ApprovalLevel;
+use App\Models\PaymentMethod;
 use App\Models\AllocationCost;
+use App\Models\ServicePurchase;
+use App\Models\TruckAllocation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -189,7 +192,7 @@ class TripController extends Controller
 
             // Determine current person based on approval status
             if ($current) {
-                $data['current_person'] = $current->roles?->name??'--';
+                $data['current_person'] = $current->roles?->name ?? '--';
             } else {
                 $data['current_person'] = ($latest_status <= 0) ? 'Assistant Fleet Controller' : 'Completed';
             }
@@ -200,7 +203,7 @@ class TripController extends Controller
                 ->first();
 
             // Other necessary data to be passed to the view
-            $data['check'] = 'Approved By ' . Auth()->user()->positions?->name??'--';
+            $data['check'] = 'Approved By ' . Auth()->user()->positions?->name ?? '--';
             $data['allocation'] = $allocation;
             $data['trip'] = $trip;
             $data['routes'] = Route::where('status', 1)->latest()->get();
@@ -384,5 +387,27 @@ class TripController extends Controller
         $position = Position::where('id', $uid)->first();
         $data['check'] = 'Approved By ' . $position;
         return view('trips.finance_trips', $data);
+    }
+
+
+    // For Trip details
+    public function trip_detail($id)
+    {
+
+        $uid = Auth::user()->position;
+        $process = Approval::where('process_name', 'Trip Approval')->first();
+        $data['level'] = ApprovalLevel::where('role_id', $uid)->where('approval_id', $process->id)->first();
+        $data['allocation'] = Allocation::find($id);
+        $data['check'] = 'Approved By ' . Auth()->user()->positions->name;
+        $allocation = Allocation::find($id);
+        $data['service_purchases'] = ServicePurchase::latest()->where('subject', 'LIKE', '%' . $allocation->ref_no)->with('supplier')->get();
+        // dd($data['service_purchases']);
+        $data['payment_methods'] = PaymentMethod::orderBy('id', 'desc')->get();
+
+        $data['count'] = 1;
+
+        $data['trucks'] = TruckAllocation::where('allocation_id', $id)->latest()->get();
+
+        return view('trips.trip_details', $data);
     }
 }
