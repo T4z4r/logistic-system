@@ -14,7 +14,7 @@
 @section('content')
     <!-- Hero -->
     <div class="bg-body-light">
-        <div class="content content-full">
+        <div class=" content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0">
                 <div class="flex-grow-1 text-center text-sm-start">
                     <h5 class="h5 text-main fw-bold mb-1">Truck Expenses</h5>
@@ -40,7 +40,7 @@
     <!-- END Hero -->
 
     <!-- Page Content -->
-    <div class="content p-2 rounded-0">
+    <div class=" p-2 rounded-0">
         <!-- Truck Expenses Block -->
         <div class="block block-rounded shadow-sm py-5 rounded-0">
             <div class="block-header">
@@ -160,7 +160,7 @@
                                 @endforeach
                             </div>
                         @endif
-                        @can('pay-trip-expenses')
+                        {{-- @can('pay-trip-expenses') --}}
                             @if ($trip->state == 2)
                                 <div class="row mb-3">
                                     <div class="col-md-6 col-12"></div>
@@ -183,7 +183,7 @@
                                     </div>
                                 </div>
                             @endif
-                        @endcan
+                        {{-- @endcan --}}
                         <table class="table table-striped table-bordered datatable-basic">
                             <thead>
                                 <tr>
@@ -194,11 +194,11 @@
                                     <th>Expense Name</th>
                                     <th>Amount</th>
                                     <th>Status</th>
-                                    @can('pay-trip-expenses')
+                                    {{-- @can('pay-trip-expenses') --}}
                                         <th>Option</th>
-                                    @else
+                                    {{-- @else
                                         <th hidden></th>
-                                    @endcan
+                                    @endcan --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -265,7 +265,7 @@
                                                         </span>
                                                     @endif
                                                 </td>
-                                                @can('pay-trip-expenses')
+                                                {{-- @can('pay-trip-expenses') --}}
                                                     <td>
                                                         @if ($item->quantity > 0)
                                                             @if ($item->route_cost != null)
@@ -326,9 +326,9 @@
                                                             @endif
                                                         @endif
                                                     </td>
-                                                @else
+                                                {{-- @else
                                                     <td hidden></td>
-                                                @endcan
+                                                @endcan --}}
                                             </tr>
                                         </label>
                                     @endif
@@ -349,11 +349,11 @@
                                 <th>Expense Name</th>
                                 <th>Amount</th>
                                 <th>Status</th>
-                                @can('pay-trip-expenses')
+                                {{-- @can('pay-trip-expenses') --}}
                                     <th>Option</th>
-                                @else
+                                {{-- @else
                                     <th hidden></th>
-                                @endcan
+                                @endcan --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -414,7 +414,7 @@
                                                 </span>
                                             @endif
                                         </td>
-                                        @can('pay-trip-expenses')
+                                        {{-- @can('pay-trip-expenses') --}}
                                             <td>
                                                 @if ($trip->state == 2 && $paid == 0)
                                                     <a href="#" class="btn btn-sm btn-success edit-button"
@@ -472,9 +472,9 @@
                                                     @endif
                                                 @endif
                                             </td>
-                                        @else
+                                        {{-- @else
                                             <td hidden></td>
-                                        @endcan
+                                        @endcan --}}
                                     </tr>
                                 @endif
                             @endforeach
@@ -506,11 +506,11 @@
                                 <th>Expense Name</th>
                                 <th>Amount</th>
                                 <th>Status</th>
-                                @can('pay-truck-expenses')
+                                {{-- @can('pay-truck-expenses') --}}
                                     <th>Option</th>
-                                @else
+                                {{-- @else
                                     <td hidden></td>
-                                @endcan
+                                @endcan --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -555,7 +555,7 @@
                                             </span>
                                         @endif
                                     </td>
-                                    @can('pay-truck-expenses')
+                                    {{-- @can('pay-truck-expenses') --}}
                                         <td>
                                             @if ($trip->state == 2 && $paid == 0)
                                                 @if ($item->quantity > 0)
@@ -629,9 +629,9 @@
                                                 @endif
                                             @endif
                                         </td>
-                                    @else
+                                    {{-- @else
                                         <td hidden></td>
-                                    @endcan
+                                    @endcan --}}
                                 </tr>
                             @endforeach
                         </tbody>
