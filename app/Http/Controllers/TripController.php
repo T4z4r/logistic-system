@@ -428,7 +428,7 @@ class TripController extends Controller
 
         $data['allocation'] = Allocation::find($allocation->allocation_id);
 
-        $data['tripo'] = Trip::where('allocation_id', $allocation->allocation_id)->first();
+        $data['trip'] = Trip::where('allocation_id', $allocation->allocation_id)->first();
         $data['costs'] = AllocationCost::where('allocation_id', $allocation->allocation_id)->orderBy('currency_id', 'asc')->get();
         $data['truck_costs'] = TruckCost::where('allocation_id', $allocation->id)->where('truck_id', $truck->id)->get();
 
