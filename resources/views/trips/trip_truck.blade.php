@@ -169,7 +169,7 @@
                                         <label for="">Choose Payment Method</label>
                                         <select name="credit_ledger" class="select form-control">
                                             @foreach ($payment_methods as $item)
-                                                <option value="{{ $item->account?->id }}">{{ $item->name }}</option>
+                                                <option value="{{ $item->account?->id??0 }}">{{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                         <input type="hidden" name="trip_id" value="{{ $trip->id }}">
@@ -676,7 +676,7 @@
                                 <label for="">Choose Payment Method</label>
                                 <select name="credit_ledger" class="select form-control">
                                     @foreach ($payment_methods as $item)
-                                        <option value="{{ $item->account??->id ?? 0 }}">{{ $item->name }}</option>
+                                        <option value="{{ $item->account?->id ?? 0 }}">{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -715,7 +715,7 @@
                                     <label for="">Choose Payment Method</label>
                                     <select name="credit_ledger" class="select form-control">
                                         @foreach ($payment_methods as $item)
-                                            <option value="{{ $item->account?->id }}">{{ $item->name }}</option>
+                                            <option value="{{ $item->account?->id??0 }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
