@@ -60,7 +60,7 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <button class="btn btn-sm btn-alt-warning" data-bs-toggle="modal"
+                                    <button class="btn btn-sm btn-alt-primary" data-bs-toggle="modal"
                                         data-bs-target="#editTaxModal{{ $tax->id }}">
                                         <i class="fa fa-edit me-1"></i>
                                     </button>
