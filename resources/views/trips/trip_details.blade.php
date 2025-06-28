@@ -65,16 +65,22 @@
                     @endif
                     @if ($trip->state == 2)
                         {{-- @can('pay-trip-expenses') --}}
+                        <a href="{{ url('trips/bulk-truck-payments/' . $allocation->id) }}"
+                            class="btn btn-sm btn-main  float-end mx-1">
+                            <i class="ph-wallet"></i>
+                            Bulk Truck Payments
+                        </a>
+
                         <a href="#" class="btn btn-sm btn-alt-primary mx-1" data-bs-toggle="modal"
                             data-bs-target="#fuelLPO" title="Generate Fuel LPO" data-id="{{ $trip->id }}"
                             data-name="{{ $trip->name }}" data-description="{{ $trip->amount }}">
                             <i class="ph-receipt me-1"></i> Generate Fuel LPO
                         </a>
-                        <a href="#" class="btn btn-sm btn-alt-primary mx-1" data-bs-toggle="modal"
+                        {{-- <a href="#" class="btn btn-sm btn-alt-primary mx-1" data-bs-toggle="modal"
                             data-bs-target="#advance" title="Pay Advance" data-id="{{ $trip->id }}"
                             data-name="{{ $trip->name }}" data-description="{{ $trip->amount }}">
                             <i class="ph-money me-1"></i> Deduction Payment
-                        </a>
+                        </a> --}}
                         {{-- @endcan --}}
                     @endif
                 </div>
