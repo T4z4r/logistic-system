@@ -96,7 +96,16 @@ class TripController extends Controller
                 $data['current_person'] = 'Completed';
             }
         }
-        $process1 = Approval::where('process_name', 'Truck Initiation Approval')->first();
+
+        $process1 = Approval::firstOrCreate(
+            ['process_name' => 'Truck Initiation Approval'],
+            [
+                'levels' => 0,
+                'escallation' => false, // or true, depending on your logic
+                'escallation_time' => null
+            ]
+        );
+        // $process1 = Approval::where('process_name', 'Truck Initiation Approval')->first();
         $data['level'] = ApprovalLevel::where('role_id', $uid)->where('approval_id', $process->id)->first();
         $data['level1'] = ApprovalLevel::where('role_id', $uid)->where('approval_id', $process1->id)->first();
         $data['check'] = 'Approved By ' . $position;
