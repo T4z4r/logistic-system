@@ -150,7 +150,7 @@ class UserController extends Controller
     public function activate($userId)
     {
         $user = User::where('id', $userId)->first();
-        $user->status = 0;
+        $user->status = 1;
         $user->update();
         return redirect()->route('users.active')->with('success', 'User activated successfully.');
     }
