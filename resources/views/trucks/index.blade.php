@@ -59,10 +59,15 @@
             <div class="block-header block-header-default">
                 <h3 class="block-title"></h3>
                 <div class="block-options">
-                    <a href="{{ route('trucks.create') }}" class="btn btn-alt-primary btn-sm">
+                    {{-- <a href="{{ route('trucks.create') }}" class="btn btn-alt-primary btn-sm">
                         <i class="fa fa-plus"></i>
                         Add New Truck
-                    </a>
+                    </a> --}}
+                    <button type="button" class="btn btn-alt-primary mb-3" data-bs-toggle="modal"
+                        data-bs-target="#createTruckModal">
+                        <i class="fa fa-plus"></i> Add New Truck
+                    </button>
+
                     {{-- <a href="{{ route('trucks.active') }}" class="btn btn-success btn-sm">Active</a>
           <a href="{{ route('trucks.inactive') }}" class="btn btn-warning btn-sm">Inactive</a> --}}
                 </div>
@@ -200,6 +205,48 @@
         </div>
     @endforeach
     <!-- END Assign Driver Modals -->
+
+    <!-- Create Truck Modal -->
+    <div class="modal fade" id="createTruckModal" tabindex="-1" aria-labelledby="createTruckModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <form action="{{ route('trucks.store') }}" method="POST">
+                    @csrf
+                    <div class="modal-header bg-body-light">
+                        <h5 class="modal-title text-main fw-bold" id="createTruckModalLabel">
+                            <i class="fa fa-truck me-1 text-main"></i> Create Truck
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row">
+                            {{-- Left Column --}}
+                            <div class="col-md-6">
+                                @include('trucks.partials.form-left')
+                            </div>
+
+                            {{-- Right Column --}}
+                            <div class="col-md-6">
+                                @include('trucks.partials.form-right')
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-alt-secondary" data-bs-dismiss="modal">
+                            <i class="fa fa-times-circle"></i> Cancel
+                        </button>
+                        <button type="submit" class="btn btn-alt-primary">
+                            <i class="fa fa-save"></i> Save Truck
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 
 @section('js')
     @if (session('modal'))
