@@ -194,7 +194,7 @@
                                     <label class="form-label" for="purchase_date">Purchase Date</label>
                                     <input type="date" name="purchase_date" id="purchase_date"
                                         class="form-control @error('purchase_date') is-invalid @enderror"
-                                        value="{{ old('purchase_date', $truck->purchase_date) }}">
+                                        value="{{ old('purchase_date', $truck->purchase_date ? \Illuminate\Support\Carbon::parse($truck->purchase_date)->format('Y-m-d') : '') }}">
                                 </div>
                                 <div class="col-md-4 mb-4">
                                     <label class="form-label" for="plate_number">Plate Number</label>

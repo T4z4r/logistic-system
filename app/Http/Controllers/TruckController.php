@@ -60,7 +60,7 @@ class TruckController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'purchase_date' => 'required|date',
+            'purchase_date' => 'required',
             'plate_number' => 'required|string|max:255|unique:trucks',
             'body_type' => 'required|string|max:255',
             'truck_type' => 'required|string|max:255',
