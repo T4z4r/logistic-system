@@ -612,15 +612,13 @@
 
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="mb-4">
-                                    <label class="form-label" for="initials">Initials</label>
-                                    <input type="text" name="initials" id="initials"
-                                        class="form-control @error('initials') is-invalid @enderror"
-                                        value="{{ old('initials') }}" placeholder="Enter initials">
-                                    @error('initials')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                                <div class="col-md-4 mb-4">
+                                    <label class="form-label" for="manufacturer">Manufacturer</label>
+                                    <input type="text" name="manufacturer" id="manufacturer"
+                                        class="form-control @error('manufacturer') is-invalid @enderror"
+                                        value="{{ old('manufacturer', $truck->manufacturer) }}">
                                 </div>
+
                             </div>
 
                             <div class="col-md-6">

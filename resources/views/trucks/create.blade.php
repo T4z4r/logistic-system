@@ -7,7 +7,7 @@
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0">
                 <div class="flex-grow-1">
                     <h5 class="h5 fw-bold mb-1 text-main">Create Truck</h5>
-                     <h2 class="fs-sm lh-base fw-normal text-muted mb-0">
+                    <h2 class="fs-sm lh-base fw-normal text-muted mb-0">
                         <i class="fa fa-info-circle text-main me-1"></i>
                         Add a new truck to the system
                     </h2>
