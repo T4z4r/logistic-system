@@ -174,7 +174,7 @@
         <!-- Edit Truck Modal -->
         <div class="modal fade" id="editTruckModal{{ $truck->id }}" tabindex="-1"
             aria-labelledby="editTruckModalLabel{{ $truck->id }}" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-xl  modal-dialog-scrollable">
                 <div class="modal-content">
                     <form action="{{ route('trucks.update', $truck->id) }}" method="POST">
                         @csrf
@@ -187,40 +187,184 @@
 
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="plate_number{{ $truck->id }}" class="form-label">Plate Number <span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" name="plate_number" id="plate_number{{ $truck->id }}"
-                                        class="form-control" value="{{ old('plate_number', $truck->plate_number) }}"
-                                        required>
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label class="form-label" for="purchase_date">Purchase Date</label>
+                                        <input type="date" name="purchase_date" id="purchase_date"
+                                            class="form-control @error('purchase_date') is-invalid @enderror"
+                                            value="{{ old('purchase_date', $truck->purchase_date) }}">
+
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="plate_number">Plate Number</label>
+                                        <input type="text" name="plate_number" id="plate_number"
+                                            class="form-control @error('plate_number') is-invalid @enderror"
+                                            value="{{ old('plate_number', $truck->plate_number) }}">
+
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="body_type">Body Type</label>
+                                        <input type="text" name="body_type" id="body_type"
+                                            class="form-control @error('body_type') is-invalid @enderror"
+                                            value="{{ old('body_type', $truck->body_type) }}">
+
+                                    </div>
+                                    <div class=" mb-4">
+                                        <label class="form-label ">Truck Type</label>
+                                        <select name="truck_type" id="" class="seiect form-control">
+                                            <option value="">--choose Truck Type--</option>
+                                            <option value="1" {{ 1 == $truck->truck_type ? 'selected' : '' }}>Semi
+                                            </option>
+                                            <option value="2" {{ 2 == $truck->truck_type ? 'selected' : '' }}>Pulling
+                                            </option>
+                                            <option value="3" {{ 3 == $truck->truck_type ? 'selected' : '' }}>Private
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="fuel_type">Fuel Type</label>
+                                        <input type="text" name="fuel_type" id="fuel_type"
+                                            class="form-control @error('fuel_type') is-invalid @enderror"
+                                            value="{{ old('fuel_type', $truck->fuel_type) }}">
+
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="fuel_capacity">Fuel Capacity</label>
+                                        <input type="text" name="fuel_capacity" id="fuel_capacity"
+                                            class="form-control @error('fuel_capacity') is-invalid @enderror"
+                                            value="{{ old('fuel_capacity', $truck->fuel_capacity) }}">
+
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="trailer_connection">Trailer Connection</label>
+                                        <input type="text" name="trailer_connection" id="trailer_connection"
+                                            class="form-control @error('trailer_connection') is-invalid @enderror"
+                                            value="{{ old('trailer_connection', $truck->trailer_connection) }}">
+
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="trailer_capacity">Trailer Capacity</label>
+                                        <input type="number" name="trailer_capacity" id="trailer_capacity"
+                                            class="form-control @error('trailer_capacity') is-invalid @enderror"
+                                            value="{{ old('trailer_capacity', $truck->trailer_capacity) }}">
+
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="transmission">Transmission</label>
+                                        <input type="text" name="transmission" id="transmission"
+                                            class="form-control @error('transmission') is-invalid @enderror"
+                                            value="{{ old('transmission', $truck->transmission) }}">
+
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="mileage">Mileage</label>
+                                        <input type="text" name="mileage" id="mileage"
+                                            class="form-control @error('mileage') is-invalid @enderror"
+                                            value="{{ old('mileage', $truck->mileage) }}">
+
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="vehicle_model">Vehicle Model</label>
+                                        <input type="text" name="vehicle_model" id="vehicle_model"
+                                            class="form-control @error('vehicle_model') is-invalid @enderror"
+                                            value="{{ old('vehicle_model', $truck->vehicle_model) }}">
+
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label class="form-label" for="year">Year</label>
+                                        <input type="text" name="year" id="year"
+                                            class="form-control @error('year') is-invalid @enderror"
+                                            value="{{ old('year', $truck->year) }}">
+
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="color">Color</label>
+                                        <input type="text" name="color" id="color"
+                                            class="form-control @error('color') is-invalid @enderror"
+                                            value="{{ old('color', $truck->color) }}">
+
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="engine_number">Engine Number</label>
+                                        <input type="text" name="engine_number" id="engine_number"
+                                            class="form-control @error('engine_number') is-invalid @enderror"
+                                            value="{{ old('engine_number', $truck->engine_number) }}">
+
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="engine_capacity">Engine Capacity</label>
+                                        <input type="text" name="engine_capacity" id="engine_capacity"
+                                            class="form-control @error('engine_capacity') is-invalid @enderror"
+                                            value="{{ old('engine_capacity', $truck->engine_capacity) }}">
+
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="gross_weight">Gross Weight</label>
+                                        <input type="number" step="0.01" name="gross_weight" id="gross_weight"
+                                            class="form-control @error('gross_weight') is-invalid @enderror"
+                                            value="{{ old('gross_weight', $truck->gross_weight) }}">
+
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="location">Location</label>
+                                        <input type="text" name="location" id="location"
+                                            class="form-control @error('location') is-invalid @enderror"
+                                            value="{{ old('location', $truck->location) }}">
+
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="status">Status</label>
+                                        <select name="status" id="status"
+                                            class="form-control @error('status') is-invalid @enderror">
+                                            <option value="1"
+                                                {{ old('status', $truck->status) == 1 ? 'selected' : '' }}>
+                                                Active</option>
+                                            <option value="0"
+                                                {{ old('status', $truck->status) == 0 ? 'selected' : '' }}>
+                                                Inactive</option>
+                                        </select>
+
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="added_by">Added By</label>
+                                        <select name="added_by" id="added_by"
+                                            class="form-control @error('added_by') is-invalid @enderror">
+                                            <option value="">Select User</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}"
+                                                    {{ old('added_by', $truck->added_by) == $user->id ? 'selected' : '' }}>
+                                                    {{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="amount">Amount</label>
+                                        <input type="number" step="0.01" name="amount" id="amount"
+                                            class="form-control @error('amount') is-invalid @enderror"
+                                            value="{{ old('amount', $truck->amount) }}">
+
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="capacity">Capacity</label>
+                                        <input type="number" step="0.01" name="capacity" id="capacity"
+                                            class="form-control @error('capacity') is-invalid @enderror"
+                                            value="{{ old('capacity', $truck->capacity) }}">
+
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="manufacturer">Manufacturer</label>
+                                        <input type="text" name="manufacturer" id="manufacturer"
+                                            class="form-control @error('manufacturer') is-invalid @enderror"
+                                            value="{{ old('manufacturer', $truck->manufacturer) }}">
+
+                                    </div>
                                 </div>
 
-                                <div class="col-md-6 mb-3">
-                                    <label for="vehicle_model{{ $truck->id }}" class="form-label">Vehicle Model <span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" name="vehicle_model" id="vehicle_model{{ $truck->id }}"
-                                        class="form-control" value="{{ old('vehicle_model', $truck->vehicle_model) }}"
-                                        required>
-                                </div>
 
-                                <div class="col-md-6 mb-3">
-                                    <label for="manufacturer{{ $truck->id }}" class="form-label">Manufacturer <span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" name="manufacturer" id="manufacturer{{ $truck->id }}"
-                                        class="form-control" value="{{ old('manufacturer', $truck->manufacturer) }}"
-                                        required>
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <label for="status{{ $truck->id }}" class="form-label">Status <span
-                                            class="text-danger">*</span></label>
-                                    <select name="status" id="status{{ $truck->id }}" class="form-control" required>
-                                        <option value="1" {{ old('status', $truck->status) == 1 ? 'selected' : '' }}>
-                                            Active</option>
-                                        <option value="0" {{ old('status', $truck->status) == 0 ? 'selected' : '' }}>
-                                            Inactive</option>
-                                    </select>
-                                </div>
                             </div>
                         </div>
 
@@ -273,36 +417,220 @@
     <!-- END Assign Driver Modals -->
 
     <!-- Create Truck Modal -->
+    <!-- Scrollable Modal for Create Truck -->
     <div class="modal fade" id="createTruckModal" tabindex="-1" aria-labelledby="createTruckModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
+                <div class="modal-header bg-body-light">
+                    <h5 class="modal-title fw-bold text-main" id="createTruckModalLabel">
+                        <i class="fa fa-truck me-1 text-main"></i> Create Truck
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
                 <form action="{{ route('trucks.store') }}" method="POST">
                     @csrf
-                    <div class="modal-header bg-body-light">
-                        <h5 class="modal-title text-main fw-bold" id="createTruckModalLabel">
-                            <i class="fa fa-truck me-1 text-main"></i> Create Truck
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
                     <div class="modal-body">
                         <div class="row">
-                            {{-- Left Column --}}
                             <div class="col-md-6">
-                                @include('trucks.partials.form-left')
+                                <!-- Left Column Form Fields -->
+                                <div class="mb-4">
+                                    <label class="form-label" for="purchase_date">Purchase Date</label>
+                                    <input type="date" name="purchase_date" id="purchase_date"
+                                        class="form-control @error('purchase_date') is-invalid @enderror"
+                                        value="{{ old('purchase_date') }}" placeholder="Select purchase date">
+                                    @error('purchase_date')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <!-- ... other left column inputs ... -->
+                                <div class="mb-4">
+                                    <label class="form-label" for="plate_number">Plate Number</label>
+                                    <input type="text" name="plate_number" id="plate_number"
+                                        class="form-control @error('plate_number') is-invalid @enderror"
+                                        value="{{ old('plate_number') }}" placeholder="Enter plate number">
+                                    @error('plate_number')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <!-- Repeat your existing left column inputs here exactly as you had -->
+                                <div class="mb-4">
+                                    <label class="form-label" for="body_type">Body Type</label>
+                                    <input type="text" name="body_type" id="body_type"
+                                        class="form-control @error('body_type') is-invalid @enderror"
+                                        value="{{ old('body_type') }}" placeholder="Enter body type">
+                                    @error('body_type')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label ">Truck Type</label>
+                                    <select name="truck_type" id="" class="select form-control">
+                                        <option value="">--choose Truck Type--</option>
+                                        <option value="1">Semi </option>
+                                        <option value="2">Pulling</option>
+                                        <option value="3">Private</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label ">Fuel Type</label>
+                                    <select name="fuel_type" id="" class=" select form-control">
+                                        <option value="Diesel">Diesel </option>
+                                        <option value="Petrol">Petrol </option>
+                                        <option value="Electric">Electric</option>
+                                        <option value="Hybrid">Hybrid</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label" for="fuel_capacity">Fuel Capacity</label>
+                                    <input type="text" name="fuel_capacity" id="fuel_capacity"
+                                        class="form-control @error('fuel_capacity') is-invalid @enderror"
+                                        value="{{ old('fuel_capacity') }}" placeholder="Enter fuel capacity (liters)">
+                                    @error('fuel_capacity')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label" for="trailer_connection">Trailer Connection</label>
+                                    <input type="text" name="trailer_connection" id="trailer_connection"
+                                        class="form-control @error('trailer_connection') is-invalid @enderror"
+                                        value="{{ old('trailer_connection') }}"
+                                        placeholder="Enter trailer connection type">
+                                    @error('trailer_connection')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label" for="trailer_capacity">Trailer Capacity</label>
+                                    <input type="number" name="trailer_capacity" id="trailer_capacity"
+                                        class="form-control @error('trailer_capacity') is-invalid @enderror"
+                                        value="{{ old('trailer_capacity') }}"
+                                        placeholder="Enter trailer capacity (tons)">
+                                    @error('trailer_capacity')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label" for="transmission">Transmission</label>
+                                    <input type="text" name="transmission" id="transmission"
+                                        class="form-control @error('transmission') is-invalid @enderror"
+                                        value="{{ old('transmission') }}" placeholder="Enter transmission type">
+                                    @error('transmission')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label" for="mileage">Mileage</label>
+                                    <input type="text" name="mileage" id="mileage"
+                                        class="form-control @error('mileage') is-invalid @enderror"
+                                        value="{{ old('mileage') }}" placeholder="Enter mileage (km)">
+                                    @error('mileage')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label" for="vehicle_model">Vehicle Model</label>
+                                    <input type="text" name="vehicle_model" id="vehicle_model"
+                                        class="form-control @error('vehicle_model') is-invalid @enderror"
+                                        value="{{ old('vehicle_model') }}" placeholder="Enter vehicle model">
+                                    @error('vehicle_model')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
 
-                            {{-- Right Column --}}
                             <div class="col-md-6">
-                                @include('trucks.partials.form-right')
+                                <!-- Right Column Form Fields -->
+                                <div class="mb-4">
+                                    <label class="form-label" for="year">Year</label>
+                                    <input type="text" name="year" id="year"
+                                        class="form-control @error('year') is-invalid @enderror"
+                                        value="{{ old('year') }}" placeholder="Enter year of manufacture">
+                                    @error('year')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <!-- Repeat all right column inputs exactly -->
+                                <div class="mb-4">
+                                    <label class="form-label" for="color">Color</label>
+                                    <input type="text" name="color" id="color"
+                                        class="form-control @error('color') is-invalid @enderror"
+                                        value="{{ old('color') }}" placeholder="Enter color">
+                                    @error('color')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label" for="engine_number">Engine Number</label>
+                                    <input type="text" name="engine_number" id="engine_number"
+                                        class="form-control @error('engine_number') is-invalid @enderror"
+                                        value="{{ old('engine_number') }}" placeholder="Enter engine number">
+                                    @error('engine_number')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label" for="engine_capacity">Engine Capacity</label>
+                                    <input type="text" name="engine_capacity" id="engine_capacity"
+                                        class="form-control @error('engine_capacity') is-invalid @enderror"
+                                        value="{{ old('engine_capacity') }}" placeholder="Enter engine capacity (cc)">
+                                    @error('engine_capacity')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label" for="gross_weight">Gross Weight</label>
+                                    <input type="number" step="0.01" name="gross_weight" id="gross_weight"
+                                        class="form-control @error('gross_weight') is-invalid @enderror"
+                                        value="{{ old('gross_weight') }}" placeholder="Enter gross weight (Tons)">
+                                    @error('gross_weight')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label" for="location">Location</label>
+                                    <input type="text" name="location" id="location"
+                                        class="form-control @error('location') is-invalid @enderror"
+                                        value="{{ old('location') }}" placeholder="Enter location">
+                                    @error('location')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label" for="cost_price">Cost Price</label>
+                                    <input type="number" step="0.01" name="cost_price" id="cost_price"
+                                        class="form-control @error('cost_price') is-invalid @enderror"
+                                        value="{{ old('cost_price') }}" placeholder="Enter cost price">
+                                    @error('cost_price')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label" for="initials">Initials</label>
+                                    <input type="text" name="initials" id="initials"
+                                        class="form-control @error('initials') is-invalid @enderror"
+                                        value="{{ old('initials') }}" placeholder="Enter initials">
+                                    @error('initials')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label" for="status">Status</label>
+                                    <select name="status" id="status" class="form-control">
+                                        <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Active
+                                        </option>
+                                        <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>
+                                            Inactive</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-alt-secondary" data-bs-dismiss="modal">
-                            <i class="fa fa-times-circle"></i> Cancel
+                            <i class="fa fa-times"></i> Cancel
                         </button>
                         <button type="submit" class="btn btn-alt-primary">
                             <i class="fa fa-save"></i> Save Truck
