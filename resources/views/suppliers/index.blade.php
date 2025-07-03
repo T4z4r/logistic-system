@@ -158,11 +158,12 @@
         <!-- END Suppliers Block -->
 
     </div>
+
     <!-- END Page Content -->
 
     <!-- Create/Edit Modal -->
     <div class="modal fade" id="addSupplierModal" tabindex="-1" aria-labelledby="addSupplierModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <form action="{{ route('suppliers.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="id" id="supplier_id">
