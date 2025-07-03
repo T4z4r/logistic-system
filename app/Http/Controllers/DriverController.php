@@ -14,11 +14,14 @@ class DriverController extends Controller
 {
     public function index()
     {
+
+        $departments = Department::all();
+        $managers = User::where('status', 1)->get();
         $drivers = User::with(['department', 'lineManager', 'position'])
             ->where('position_id', 1)
             ->latest()
             ->paginate(10);
-        return view('drivers.index', compact('drivers'));
+        return view('drivers.index', compact('drivers', 'departments', 'managers'));
     }
 
     public function active()
@@ -98,7 +101,7 @@ class DriverController extends Controller
 
     public function show($id)
     {
-      
+
         $driver = User::where('position_id', 1)->findOrFail($id);
         $departments = Department::all();
         $managers = User::where('status', 1)->where('id', '!=', $driver->id)->get();
