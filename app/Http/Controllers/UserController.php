@@ -13,17 +13,23 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::with(['department', 'lineManager', 'position'])->paginate(10);
-        return view('users.active', compact('users'));
+        $data['departments'] = Department::all();
+        $data['positions'] = Position::all();
+        $data['managers'] = User::where('status', 1)->get();
+        $data['users'] = User::with(['department', 'lineManager', 'position'])->paginate(10);
+        return view('users.active', $data);
     }
 
     public function active()
     {
-        $users = User::with(['department', 'lineManager', 'position'])
+        $data['departments'] = Department::all();
+        $data['positions'] = Position::all();
+        $data['managers'] = User::where('status', 1)->get();
+        $data['users'] = User::with(['department', 'lineManager', 'position'])
             ->where('status', 1)
             ->latest()
             ->get();
-        return view('users.active', compact('users'));
+        return view('users.active', $data);
     }
 
     public function inactive()
@@ -72,9 +78,9 @@ class UserController extends Controller
     }
 
 
-    public function show( $id)
+    public function show($id)
     {
-        $user=User::where('id',$id)->first();
+        $user = User::where('id', $id)->first();
         $departments = Department::all();
         $positions = Position::all();
         $managers = User::where('status', 1)->where('id', '!=', $user->id)->get();
@@ -82,9 +88,9 @@ class UserController extends Controller
     }
 
 
-    public function edit( $id)
+    public function edit($id)
     {
-        $user=User::where('id',$id)->first();
+        $user = User::where('id', $id)->first();
         $departments = Department::all();
         $positions = Position::all();
         $managers = User::where('status', 1)->where('id', '!=', $user->id)->get();
@@ -93,7 +99,7 @@ class UserController extends Controller
 
     public function update(Request $request,  $id)
     {
-        $user=User::where('id',$id)->first();
+        $user = User::where('id', $id)->first();
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
