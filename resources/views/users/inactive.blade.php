@@ -32,7 +32,7 @@
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center ">
                 <div class="flex-grow-1">
                     <h5 class="h5 fw-bold mb-1 text-main">Blocked Users</h5>
-                  <h2 class="fs-sm lh-base fw-normal text-muted mb-0">
+                    <h2 class="fs-sm lh-base fw-normal text-muted mb-0">
                         <i class="fa fa-info-circle text-main me-1"></i>
                         View all blocked or inactive users in the system
                     </h2>
@@ -51,7 +51,7 @@
     <!-- END Hero -->
 
     <!-- Page Content -->
-    <div class="content1 p-2 rounded-0" >
+    <div class="content1 p-2 rounded-0">
         <!-- Inactive Users Block -->
         <div class="block block-rounded rounded-0">
             <div class="block-header block-header-default">
@@ -93,9 +93,16 @@
                                 <td>{{ $user->lineManager?->name ?? 'N/A' }}</td>
                                 <td>{{ $user->status ? 'Active' : 'Inactive' }}</td>
                                 <td>
-                                    <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-alt-primary">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
+
+                                    <form action="{{ route('users.activate', $user) }}" method="POST"
+                                        class="d-inline delete-user-form">
+                                        @csrf
+                                        {{-- @method('DELETE') --}}
+                                        <button type="button" class="btn btn-sm btn-alt-success btn-delete-user"
+                                            data-user-name="{{ $user->name }}">
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                    </form>
                                     <form action="{{ route('users.destroy', $user) }}" method="POST"
                                         style="display: inline;">
                                         @csrf
@@ -116,4 +123,29 @@
         <!-- END Inactive Users Block -->
     </div>
     <!-- END Page Content -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.btn-delete-user').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    const form = this.closest('form');
+                    const userName = this.getAttribute('data-user-name');
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: `You are about to activate ${userName}. This action cannot be undone!`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Yes, activate it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 @endsection

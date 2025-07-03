@@ -113,7 +113,7 @@
                                     <form action="{{ route('users.deactivate', $user) }}" method="POST"
                                         class="d-inline delete-user-form">
                                         @csrf
-                                        @method('DELETE')
+                                        {{-- @method('DELETE') --}}
                                         <button type="button" class="btn btn-sm btn-alt-danger btn-delete-user"
                                             data-user-name="{{ $user->name }}">
                                             <i class="fa fa-trash"></i>
