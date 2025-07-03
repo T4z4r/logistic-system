@@ -329,7 +329,9 @@
 
                                     </div>
                                     <div class="mb-4">
-                                        <label class="form-label" for="added_by">Added By</label>
+                                        <input type="hidden" name="added_by" id="added_by"
+                                            value="{{ auth()->user()->id }}">
+                                        {{-- <label class="form-label" for="added_by">Added By</label>
                                         <select name="added_by" id="added_by"
                                             class="form-control @error('added_by') is-invalid @enderror">
                                             <option value="">Select User</option>
@@ -338,7 +340,7 @@
                                                     {{ old('added_by', $truck->added_by) == $user->id ? 'selected' : '' }}>
                                                     {{ $user->name }}</option>
                                             @endforeach
-                                        </select>
+                                        </select> --}}
 
                                     </div>
                                     <div class="mb-4">
