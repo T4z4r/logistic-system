@@ -2,25 +2,19 @@
 
 @section('content')
     <!-- Hero -->
-    <div class="bg-body-light ">
+    <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0">
                 <div class="flex-grow-1 text-center text-sm-start">
-                    <h5 class="h5 text-main fw-bold mb-1">
-                        Suppliers
-                    </h5>
-                    <h2 class="fs-base lh-base fw-medium text-muted mb-0">
-                        Manage Suppliers
-                    </h2>
+                    <h5 class="h5 text-main fw-bold mb-1">Suppliers</h5>
+                    <h2 class="fs-base lh-base fw-medium text-muted mb-0">Manage Suppliers</h2>
                 </div>
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
                         <li class="breadcrumb-item">
                             <a class="link-fx" href="{{ route('dashboard') }}">Dashboard</a>
                         </li>
-                        <li class="breadcrumb-item" aria-current="page">
-                            Suppliers
-                        </li>
+                        <li class="breadcrumb-item" aria-current="page">Suppliers</li>
                     </ol>
                 </nav>
             </div>
@@ -29,21 +23,20 @@
     <!-- END Hero -->
 
     <!-- Page Content -->
-    <div class="content1 p-2 rounded-0">
-
+    <div class="content p-2 rounded-0">
         <!-- Suppliers Block -->
-        <div class="block block-rounded shadow-sm  rounded-0">
+        <div class="block block-rounded shadow-sm rounded-0">
             <div class="block-header block-header-default">
                 <h3 class="block-title">Suppliers List</h3>
                 <button type="button" class="btn btn-alt-primary btn-sm" data-bs-toggle="modal"
-                    data-bs-target="#addSupplierModal">
+                    data-bs-target="#supplierModal">
                     <i class="fa fa-plus"></i> Add Supplier
                 </button>
             </div>
 
             <div class="block-content">
                 @if (session('success'))
-                    <div class="alert alert-success">{{ session('success') }}</div>
+                    <div class="alert alert-success" role="alert">{{ session('success') }}</div>
                 @endif
 
                 <table class="table table-bordered table-striped">
@@ -57,22 +50,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($suppliers as $supplier)
+                        @forelse ($suppliers as $supplier)
                             <tr>
                                 <td>{{ $supplier->name }}</td>
                                 <td>{{ $supplier->email }}</td>
                                 <td>{{ $supplier->phone }}</td>
                                 <td>
-                                    @if ($supplier->status == 'active')
-                                        <span class="badge bg-success">Active</span>
-                                    @else
-                                        <span class="badge bg-danger">Inactive</span>
-                                    @endif
+                                    <span class="badge {{ $supplier->status ? 'bg-success' : 'bg-danger' }}">
+                                        {{ $supplier->status ? 'Active' : 'Inactive' }}
+                                    </span>
                                 </td>
                                 <td class="text-center">
                                     <button class="btn btn-sm btn-alt-primary editBtn" data-bs-toggle="modal"
-                                        data-bs-target="#editSupplierModal-{{ $supplier->id }}"
-                                        data-id="{{ $supplier->id }}">
+                                        data-bs-target="#supplierModal" data-supplier='{{ json_encode($supplier) }}'>
                                         <i class="fa fa-edit"></i>
                                     </button>
                                     <form action="{{ route('suppliers.destroy', $supplier->id) }}" method="POST"
@@ -85,83 +75,21 @@
                                     </form>
                                 </td>
                             </tr>
-
-                            <!-- Edit Modal -->
-                            <div class="modal fade" id="editSupplierModal-{{ $supplier->id }}" tabindex="-1"
-                                aria-labelledby="editSupplierModalLabel-{{ $supplier->id }}" aria-hidden="true">
-                                <div class="modal-dialog modal-lg modal-dialog-centered">
-                                    <form action="{{ route('suppliers.update', $supplier->id) }}" method="POST">
-                                        @method('put')
-                                        @csrf
-                                        <input type="hidden" name="id" value="{{ $supplier->id }}">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="editSupplierModalLabel{{ $supplier->id }}">Edit
-                                                    Supplier</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-
-                                                <div class="mb-3">
-                                                    <label>Name</label>
-                                                    <input type="text" name="name" value="{{ $supplier->name }}"
-                                                        class="form-control" required>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label>Email</label>
-                                                    <input type="email" name="email" value="{{ $supplier->email }}"
-                                                        class="form-control">
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label>Phone</label>
-                                                    <input type="text" name="phone" value="{{ $supplier->phone }}"
-                                                        class="form-control">
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label>Address</label>
-                                                    <textarea name="address" class="form-control">{{ $supplier->address }}</textarea>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label>Status</label>
-                                                    <select name="status" class="form-control" required>
-                                                        <option value="1"
-                                                            {{ $supplier->status == 1 ? 'selected' : '' }}>Active
-                                                        </option>
-                                                        <option value="0"
-                                                            {{ $supplier->status == 0 ? 'selected' : '' }}>
-                                                            Inactive</option>
-                                                    </select>
-                                                </div>
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary">Update Supplier</button>
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <!-- END Edit Modal -->
-                        @endforeach
-
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center">No suppliers found</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
         </div>
         <!-- END Suppliers Block -->
-
     </div>
-
     <!-- END Page Content -->
+
     <!-- Create/Edit Modal -->
-    <div class="modal fade" id="addSupplierModal" tabindex="-1" aria-labelledby="addSupplierModalLabel" aria-hidden="true">
+    <div class="modal fade" id="supplierModal" tabindex="-1" aria-labelledby="supplierModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <form id="supplierForm" action="{{ route('suppliers.store') }}" method="POST">
@@ -169,7 +97,7 @@
                     @method('POST')
                     <input type="hidden" name="id" id="supplier_id">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addSupplierModalLabel">Add Supplier</h5>
+                        <h5 class="modal-title" id="supplierModalLabel">Add Supplier</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -230,122 +158,116 @@
             </div>
         </div>
     </div>
+@endsection
 
-    <!-- Optional JavaScript for enhanced form handling -->
+@push('scripts')
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('supplierForm');
-            const modal = document.getElementById('addSupplierModal');
-            const title = document.getElementById('addSupplierModalLabel');
+        $(document).ready(function() {
+            // Form submission handling
+            const form = $('#supplierForm');
+            const modal = $('#supplierModal');
+            const modalTitle = $('#supplierModalLabel');
+            const saveBtn = $('#saveSupplierBtn');
 
-            // Handle form submission
-            form.addEventListener('submit', function(e) {
-                const submitBtn = document.getElementById('saveSupplierBtn');
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = 'Saving...';
+            form.on('submit', function(e) {
+                saveBtn.prop('disabled', true).html('Saving...');
             });
 
-            // Reset form when modal is closed
-            modal.addEventListener('hidden.bs.modal', function() {
-                form.reset();
-                title.textContent = 'Add Supplier';
-                form.action = "{{ route('suppliers.store') }}";
-                form.querySelector('[name="_method"]').value = 'POST';
-                document.getElementById('supplier_id').value = '';
-                document.getElementById('saveSupplierBtn').disabled = false;
-                document.getElementById('saveSupplierBtn').innerHTML = 'Save Supplier';
-                // Remove validation classes
-                form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+            // Reset modal on close
+            modal.on('hidden.bs.modal', function() {
+                form[0].reset();
+                modalTitle.text('Add Supplier');
+                form.attr('action', '{{ route('suppliers.store') }}');
+                form.find('[name="_method"]').val('POST');
+                $('#supplier_id').val('');
+                saveBtn.prop('disabled', false).html('Save Supplier');
+                form.find('.is-invalid').removeClass('is-invalid');
+                form.find('.invalid-feedback').remove();
             });
 
-            // For edit functionality (if needed)
-            function populateForm(data) {
-                document.getElementById('supplier_id').value = data.id || '';
-                document.getElementById('name').value = data.name || '';
-                document.getElementById('email').value = data.email || '';
-                document.getElementById('phone').value = data.phone || '';
-                document.getElementById('address').value = data.address || '';
-                document.getElementById('status').value = data.status || '';
-                title.textContent = 'Edit Supplier';
-                form.action = `{{ url('suppliers') }}/${data.id}`;
-                form.querySelector('[name="_method"]').value = 'PUT';
-            }
+            // Edit button click handler
+            $('.editBtn').on('click', function() {
+                const supplier = $(this).data('supplier');
+                $('#supplier_id').val(supplier.id);
+                $('#name').val(supplier.name);
+                $('#email').val(supplier.email);
+                $('#phone').val(supplier.phone);
+                $('#address').val(supplier.address);
+                $('#status').val(supplier.status ? '1' : '0');
+                modalTitle.text('Edit Supplier');
+                form.attr('action', `{{ url('suppliers') }}/${supplier.id}`);
+                form.find('[name="_method"]').val('PUT');
+            });
+
+            // Delete button handler
+            $('.deleteBtn').on('click', function(e) {
+                e.preventDefault();
+                const form = $(this).closest('form');
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'This supplier will be permanently deleted!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'Cancel',
+                    showLoaderOnConfirm: true,
+                    preConfirm: async () => {
+                        try {
+                            return new Promise((resolve) => {
+                                $.ajax({
+                                    url: form.attr('action'),
+                                    method: 'POST',
+                                    data: form.serialize(),
+                                    success: () => resolve(true),
+                                    error: (xhr) => resolve(xhr.responseJSON
+                                        ?.message ||
+                                        'Failed to delete supplier')
+                                });
+                            });
+                        } catch (error) {
+                            Swal.showValidationMessage(`Request failed: ${error}`);
+                            return false;
+                        }
+                    },
+                    allowOutsideClick: false
+                }).then((result) => {
+                    if (result.isConfirmed && result.value === true) {
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: 'The supplier has been deleted.',
+                            icon: 'success',
+                            timer: 2000,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    } else if (result.value) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: result.value,
+                            icon: 'error',
+                            confirmButtonColor: '#dc3545'
+                        });
+                    }
+                });
+            });
         });
     </script>
 
     <style>
-        /* Ensure validation feedback is visible */
         .is-invalid~.invalid-feedback {
             display: block;
         }
+
+        .table th,
+        .table td {
+            vertical-align: middle;
+        }
     </style>
-@endsection
-
-<!-- Keep all existing HTML/Blade code except update the scripts section -->
-
-@push('scripts')
-    <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const deleteButtons = document.querySelectorAll('.deleteBtn');
-            deleteButtons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const form = this.closest('form');
-                    Swal.fire({
-                        title: 'Are you sure?',
-                        text: 'This supplier will be recovered!',
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#dc3545',
-                        cancelButtonColor: '#6c757d',
-                        confirmButtonText: 'Yes, delete it!',
-                        cancelButtonText: 'Cancel',
-                        showLoaderOnConfirm: true,
-                        preConfirm: async () => {
-                            try {
-                                // Simulate form submission
-                                form.submit();
-                                return true;
-                            } catch (error) {
-                                Swal.showValidationMessage(`Request failed: ${error}`);
-                                return false;
-                            }
-                        },
-                        allowOutsideClick: false
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            Swal.fire({
-                                title: 'Deleted!',
-                                text: 'The supplier has been deleted.',
-                                icon: 'success',
-                                timer: 2000,
-                                showConfirmButton: false
-                            });
-                        }
-                    }).catch((error) => {
-                        Swal.fire({
-                            title: 'Error!',
-                            text: 'Something went wrong while deleting.',
-                            icon: 'error',
-                            confirmButtonColor: '#dc3545'
-                        });
-                    });
-                });
-            });
-
-            // Edit supplier functionality
-
-            // Reset modal on close
-            $('#addSupplierModal').on('hidden.bs.modal', function() {
-                $(this).find('form')[0].reset();
-                $('#supplier_id').val('');
-                $('#status').val('1');
-                $('#addSupplierModalLabel').text('Add Supplier');
-            });
-        });
-    </script>
 @endpush
