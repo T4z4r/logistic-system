@@ -137,4 +137,21 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('users.active')->with('success', 'User deleted successfully.');
     }
+
+
+    public function deactivate($userId)
+    {
+        $user = User::where('id', $userId)->first();
+        $user->status = 0;
+        $user->update();
+        return redirect()->route('users.inactive')->with('success', 'User deactivated successfully.');
+    }
+
+    public function activate($userId)
+    {
+        $user = User::where('id', $userId)->first();
+        $user->status = 0;
+        $user->update();
+        return redirect()->route('users.active')->with('success', 'User activated successfully.');
+    }
 }

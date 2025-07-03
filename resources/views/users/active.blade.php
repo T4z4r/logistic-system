@@ -110,7 +110,7 @@
                                         <i class="fa fa-edit"></i>
                                     </button>
 
-                                    <form action="{{ route('users.destroy', $user) }}" method="POST"
+                                    <form action="{{ route('users.deactivate', $user) }}" method="POST"
                                         class="d-inline delete-user-form">
                                         @csrf
                                         @method('DELETE')
