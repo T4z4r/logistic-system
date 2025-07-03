@@ -105,9 +105,12 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('drivers.show', $driver->id) }}" class="btn btn-sm btn-alt-primary">
+                                    <!-- Trigger View Modal -->
+                                    <button type="button" class="btn btn-sm btn-alt-primary" data-bs-toggle="modal"
+                                        data-bs-target="#viewDriverModal{{ $driver->id }}">
                                         <i class="fa fa-list"></i>
-                                    </a>
+                                    </button>
+
 
                                     <!-- Trigger Edit Modal -->
                                     <button type="button" class="btn btn-sm btn-alt-primary" data-bs-toggle="modal"
@@ -125,6 +128,9 @@
                                     </form>
                                 </td>
                             </tr>
+
+
+
 
                             <!-- Edit Driver Modal -->
                             <div class="modal fade" id="editDriverModal{{ $driver->id }}" tabindex="-1"
@@ -219,6 +225,62 @@
     </div>
     <!-- END Page Content -->
 
+
+    @foreach ($drivers as $driver)
+        <!-- View Driver Modal -->
+        <div class="modal fade" id="viewDriverModal{{ $driver->id }}" tabindex="-1"
+            aria-labelledby="viewDriverModalLabel{{ $driver->id }}" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="viewDriverModalLabel{{ $driver->id }}">
+                            Driver Details - {{ $driver->name }}
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        @if ($driver && $driver->id)
+                            <table class="table table-bordered table-striped">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="w-25">Name</th>
+                                        <td>{{ htmlspecialchars($driver->name) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Department</th>
+                                        <td>{{ $driver->department ? htmlspecialchars($driver->department->name) : 'N/A' }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Line Manager</th>
+                                        <td>{{ $driver->lineManager ? htmlspecialchars($driver->lineManager->name) : 'N/A' }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Status</th>
+                                        <td>
+                                            <span class="badge {{ $driver->status ? 'bg-success' : 'bg-danger' }}">
+                                                {{ $driver->status ? 'Active' : 'Inactive' }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        @else
+                            <div class="alert alert-danger" role="alert">Driver not found.</div>
+                        @endif
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-alt-secondary" data-bs-dismiss="modal">
+                            <i class="fa fa-times"></i> Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
     <!-- Create Driver Modal -->
     <div class="modal fade" id="createDriverModal" tabindex="-1" aria-labelledby="createDriverModalLabel"
         aria-hidden="true">
