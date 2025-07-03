@@ -127,9 +127,11 @@
                                     <a href="{{ route('trucks.show', $truck->id) }}" class="btn btn-sm btn-alt-primary">
                                         <i class="fa fa-list"></i>
                                     </a>
-                                    <a href="{{ route('trucks.edit', $truck->id) }}" class="btn btn-sm btn-alt-primary">
+                                    <button type="button" class="btn btn-sm btn-alt-primary" data-bs-toggle="modal"
+                                        data-bs-target="#editTruckModal{{ $truck->id }}">
                                         <i class="fa fa-edit"></i>
-                                    </a>
+                                    </button>
+
                                     <form action="{{ route('trucks.delete', $truck->id) }}" method="POST"
                                         style="display: inline;">
                                         @csrf
@@ -169,6 +171,70 @@
 
     <!-- Assign Driver Modals -->
     @foreach ($trucks as $truck)
+        <!-- Edit Truck Modal -->
+        <div class="modal fade" id="editTruckModal{{ $truck->id }}" tabindex="-1"
+            aria-labelledby="editTruckModalLabel{{ $truck->id }}" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form action="{{ route('trucks.update', $truck->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editTruckModalLabel{{ $truck->id }}">Edit Truck -
+                                {{ $truck->plate_number }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="plate_number{{ $truck->id }}" class="form-label">Plate Number <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" name="plate_number" id="plate_number{{ $truck->id }}"
+                                        class="form-control" value="{{ old('plate_number', $truck->plate_number) }}"
+                                        required>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="vehicle_model{{ $truck->id }}" class="form-label">Vehicle Model <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" name="vehicle_model" id="vehicle_model{{ $truck->id }}"
+                                        class="form-control" value="{{ old('vehicle_model', $truck->vehicle_model) }}"
+                                        required>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="manufacturer{{ $truck->id }}" class="form-label">Manufacturer <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" name="manufacturer" id="manufacturer{{ $truck->id }}"
+                                        class="form-control" value="{{ old('manufacturer', $truck->manufacturer) }}"
+                                        required>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="status{{ $truck->id }}" class="form-label">Status <span
+                                            class="text-danger">*</span></label>
+                                    <select name="status" id="status{{ $truck->id }}" class="form-control" required>
+                                        <option value="1" {{ old('status', $truck->status) == 1 ? 'selected' : '' }}>
+                                            Active</option>
+                                        <option value="0" {{ old('status', $truck->status) == 0 ? 'selected' : '' }}>
+                                            Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-alt-primary">
+                                <i class="fa fa-save me-1"></i> Update Truck
+                            </button>
+                            <button type="button" class="btn btn-alt-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <div class="modal fade" id="assignDriverModal{{ $truck->id }}" tabindex="-1"
             aria-labelledby="assignDriverModalLabel{{ $truck->id }}" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -207,7 +273,8 @@
     <!-- END Assign Driver Modals -->
 
     <!-- Create Truck Modal -->
-    <div class="modal fade" id="createTruckModal" tabindex="-1" aria-labelledby="createTruckModalLabel" aria-hidden="true">
+    <div class="modal fade" id="createTruckModal" tabindex="-1" aria-labelledby="createTruckModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
                 <form action="{{ route('trucks.store') }}" method="POST">
