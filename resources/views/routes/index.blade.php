@@ -58,9 +58,15 @@
                 <h3 class="block-title">All Routes</h3>
                 <div class="block-options">
                     {{-- @can('add-route') --}}
-                    <a href="{{ route('routes.create') }}" class="btn btn-alt-primary btn-sm">
+                    {{-- <a href="{{ route('routes.create') }}" class="btn btn-alt-primary btn-sm">
                         <i class="fa fa-plus me-2"></i> Create Route
-                    </a>
+                    </a> --}}
+                    <button type="button" class="btn btn-main mb-3" data-bs-toggle="modal"
+                        data-bs-target="#createRouteModal">
+                        <i class="fa fa-plus-circle me-1"></i> Add New Route
+                    </button>
+
+
                     {{-- @endcan --}}
                 </div>
             </div>
@@ -82,7 +88,8 @@
                     </div>
                     <div class="col-sm-3">
                         <a href="{{ route('routes.export') }}" class="btn btn-sm btn-success">Export Routes</a>
-                        <a href="{{ route('routes.downloadTemplate') }}" class="btn btn-sm btn-alt-primary">Download Template</a>
+                        <a href="{{ route('routes.downloadTemplate') }}" class="btn btn-sm btn-alt-primary">Download
+                            Template</a>
                     </div>
                 </div>
 
@@ -140,13 +147,13 @@
                                         <td width="18%">{{ strtoupper($item->estimated_days) }}</td>
                                         <td width="18%">
                                             {{-- @can('view-route') --}}
-                                            <a href="{{ route('routes.show' , $item->id) }}"
-                                                title="View Route Details" class="btn btn-sm btn-alt-primary">
+                                            <a href="{{ route('routes.show', $item->id) }}" title="View Route Details"
+                                                class="btn btn-sm btn-alt-primary">
                                                 <i class="fa fa-list"></i>
                                             </a>
                                             {{-- @endcan
                                             @can('edit-route') --}}
-                                            <a href="{{ route('routes.edit' , $item->id) }}" title="Edit Route"
+                                            <a href="{{ route('routes.edit', $item->id) }}" title="Edit Route"
                                                 class="btn btn-sm btn-alt-primary">
                                                 <i class="fa fa-edit"></i>
                                             </a>
@@ -200,7 +207,7 @@
                                         <td width="18%">{{ strtoupper($item->estimated_days) }}</td>
                                         <td width="18%">
                                             {{-- @can('view-route') --}}
-                                            <a href="{{ route('routes.show' ,$item->id) }}"
+                                            <a href="{{ route('routes.show', $item->id) }}"
                                                 class="btn btn-sm btn-alt-primary">
                                                 <i class="fa fa-list"></i>
                                             </a>
@@ -232,6 +239,125 @@
         <!-- END Routes Block -->
     </div>
     <!-- END Page Content -->
+
+    <!-- Create Route Modal -->
+    <div class="modal fade" id="createRouteModal" tabindex="-1" aria-labelledby="createRouteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-main text-white">
+                    <h5 class="modal-title" id="createRouteModalLabel"><i class="fa fa-road me-2"></i>Create Route</h5>
+                    <button type="button" class="btn-close text-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <form id="myForm" action="{{ route('routes.store') }}" method="POST" class="form-horizontal">
+                    @csrf
+                    <div class="modal-body">
+                        @if ($errors->any())
+                            <div class="alert alert-danger mb-3">
+                                @foreach ($errors->all() as $error)
+                                    <div>{{ $error }}</div>
+                                @endforeach
+                            </div>
+                        @endif
+                        <div class="mb-4">
+                            <label class="form-label" for="name">Route Name <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" value="{{ old('name') }}"
+                                class="form-control @error('name') is-invalid @enderror" placeholder="Enter Route Name"
+                                name="name" id="name">
+                            @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label class="form-label" for="start_point">Starting Point <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control @error('start_point') is-invalid @enderror"
+                                        value="{{ old('start_point') }}" placeholder="Enter Start Point"
+                                        name="start_point" id="start_point">
+                                    @error('start_point')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label class="form-label" for="destination">Destination Point <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control @error('destination') is-invalid @enderror"
+                                        placeholder="Enter Destination Point" value="{{ old('destination') }}"
+                                        name="destination" id="destination">
+                                    @error('destination')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label class="form-label" for="estimated_distance">Estimated Distance (Km) <span
+                                            class="text-danger">*</span></label>
+                                    <input type="number" min="0" step="any"
+                                        class="form-control @error('estimated_distance') is-invalid @enderror"
+                                        placeholder="Enter Estimated Distance" name="estimated_distance"
+                                        value="{{ old('estimated_distance') }}" id="estimated_distance">
+                                    @error('estimated_distance')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label class="form-label" for="estimated_days">Planned Transit Time (Days) <span
+                                            class="text-danger">*</span></label>
+                                    <input type="number" min="0" step="any"
+                                        class="form-control @error('estimated_days') is-invalid @enderror"
+                                        placeholder="Enter Planned Transit Time (Days)" name="estimated_days"
+                                        value="{{ old('estimated_days') }}" id="estimated_days">
+                                    @error('estimated_days')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-alt-secondary" data-bs-dismiss="modal">
+                            <i class="fa fa-times"></i> Cancel
+                        </button>
+                        <button type="submit" id="add_route_btn" class="btn btn-alt-primary">
+                            <i class="fa fa-save"></i> Save Route
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Enhancements -->
+    <script>
+        $("#add-route-form").submit(function(e) {
+            $("#add_route_btn").html("<i class='ph-spinner spinner me-2'></i> Saving Route...").addClass(
+                'disabled');
+        });
+
+        $('#myForm').submit(function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Are you sure you want to Create This Route?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Create it!',
+                cancelButtonText: 'No, cancel!',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit();
+                }
+            });
+        });
+    </script>
 
     <script>
         function deleteRoute(id) {
