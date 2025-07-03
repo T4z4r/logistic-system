@@ -56,8 +56,10 @@ class SupplierController extends Controller
         return view('suppliers.edit', compact('supplier', 'regions'));
     }
 
-    public function update(Request $request, Supplier $supplier)
+    public function update(Request $request,  $supplierId)
     {
+
+        $supplier = Supplier::where('id', $supplierId)->first();
         $request->validate([
             'name' => 'required',
             'phone' => 'required',
@@ -83,8 +85,9 @@ class SupplierController extends Controller
         return redirect()->route('suppliers.index')->with('success', 'Supplier updated successfully.');
     }
 
-    public function destroy(Supplier $supplier)
+    public function destroy($supplierId)
     {
+        $supplier = Supplier::where('id', $supplierId)->first();
         $supplier->delete();
 
         return redirect()->route('suppliers.index')->with('success', 'Supplier deleted successfully.');

@@ -160,60 +160,125 @@
     </div>
 
     <!-- END Page Content -->
-
     <!-- Create/Edit Modal -->
     <div class="modal fade" id="addSupplierModal" tabindex="-1" aria-labelledby="addSupplierModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
-            <form action="{{ route('suppliers.store') }}" method="POST">
-                @csrf
-                <input type="hidden" name="id" id="supplier_id">
-                <div class="modal-content">
+            <div class="modal-content">
+                <form id="supplierForm" action="{{ route('suppliers.store') }}" method="POST">
+                    @csrf
+                    @method('POST')
+                    <input type="hidden" name="id" id="supplier_id">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addSupplierModalLabel">Add Supplier</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-
                         <div class="mb-3">
-                            <label>Name</label>
+                            <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
                             <input type="text" name="name" id="name" class="form-control" required
-                                placeholder="Enter supplier name">
+                                placeholder="Enter supplier name" aria-describedby="nameError">
+                            @error('name')
+                                <div class="invalid-feedback" id="nameError">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label>Email</label>
+                            <label for="email" class="form-label">Email</label>
                             <input type="email" name="email" id="email" class="form-control"
-                                placeholder="Enter supplier email">
+                                placeholder="Enter supplier email" aria-describedby="emailError">
+                            @error('email')
+                                <div class="invalid-feedback" id="emailError">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label>Phone</label>
-                            <input type="text" name="phone" id="phone" class="form-control"
-                                placeholder="Enter supplier phone">
+                            <label for="phone" class="form-label">Phone</label>
+                            <input type="tel" name="phone" id="phone" class="form-control"
+                                placeholder="Enter supplier phone" aria-describedby="phoneError">
+                            @error('phone')
+                                <div class="invalid-feedback" id="phoneError">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label>Address</label>
-                            <textarea name="address" id="address" class="form-control" placeholder="Enter supplier address"></textarea>
+                            <label for="address" class="form-label">Address</label>
+                            <textarea name="address" id="address" class="form-control" placeholder="Enter supplier address" rows="4"
+                                aria-describedby="addressError"></textarea>
+                            @error('address')
+                                <div class="invalid-feedback" id="addressError">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label>Status</label>
-                            <select name="status" id="status" class="form-control" required>
+                            <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
+                            <select name="status" id="status" class="form-select" required
+                                aria-describedby="statusError">
+                                <option value="" disabled selected>Select status</option>
                                 <option value="1">Active</option>
                                 <option value="0">Inactive</option>
                             </select>
+                            @error('status')
+                                <div class="invalid-feedback" id="statusError">{{ $message }}</div>
+                            @enderror
                         </div>
-
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Save Supplier</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="saveSupplierBtn">Save Supplier</button>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
+
+    <!-- Optional JavaScript for enhanced form handling -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('supplierForm');
+            const modal = document.getElementById('addSupplierModal');
+            const title = document.getElementById('addSupplierModalLabel');
+
+            // Handle form submission
+            form.addEventListener('submit', function(e) {
+                const submitBtn = document.getElementById('saveSupplierBtn');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = 'Saving...';
+            });
+
+            // Reset form when modal is closed
+            modal.addEventListener('hidden.bs.modal', function() {
+                form.reset();
+                title.textContent = 'Add Supplier';
+                form.action = "{{ route('suppliers.store') }}";
+                form.querySelector('[name="_method"]').value = 'POST';
+                document.getElementById('supplier_id').value = '';
+                document.getElementById('saveSupplierBtn').disabled = false;
+                document.getElementById('saveSupplierBtn').innerHTML = 'Save Supplier';
+                // Remove validation classes
+                form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+            });
+
+            // For edit functionality (if needed)
+            function populateForm(data) {
+                document.getElementById('supplier_id').value = data.id || '';
+                document.getElementById('name').value = data.name || '';
+                document.getElementById('email').value = data.email || '';
+                document.getElementById('phone').value = data.phone || '';
+                document.getElementById('address').value = data.address || '';
+                document.getElementById('status').value = data.status || '';
+                title.textContent = 'Edit Supplier';
+                form.action = `{{ url('suppliers') }}/${data.id}`;
+                form.querySelector('[name="_method"]').value = 'PUT';
+            }
+        });
+    </script>
+
+    <style>
+        /* Ensure validation feedback is visible */
+        .is-invalid~.invalid-feedback {
+            display: block;
+        }
+    </style>
 @endsection
 
 <!-- Keep all existing HTML/Blade code except update the scripts section -->
