@@ -68,8 +68,13 @@
                                 <td>{{ $customer->createdBy?->name ?? 'N/A' }}</td>
                                 <td>{{ $customer->status ? 'Active' : 'Inactive' }}</td>
                                 <td>
-                                    <a href="{{ route('customers.edit', $customer->id) }}"
-                                        class="btn btn-sm btn-primary">Edit</a>
+                                    <!-- Edit Button -->
+                                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#editCustomerModal{{ $customer->id }}">
+                                        Edit
+                                    </button>
+
+                                    <!-- Delete Form -->
                                     <form action="{{ route('customers.delete', $customer->id) }}" method="POST"
                                         style="display: inline;">
                                         @csrf
@@ -79,8 +84,102 @@
                                     </form>
                                 </td>
                             </tr>
+
+                            <!-- Edit Modal -->
+                            <div class="modal fade" id="editCustomerModal{{ $customer->id }}" tabindex="-1"
+                                aria-labelledby="editModalLabel{{ $customer->id }}" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <form action="{{ route('customers.update', $customer->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editModalLabel{{ $customer->id }}">Edit
+                                                    Customer</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    @php
+                                                        $inputClass = 'form-control';
+                                                    @endphp
+
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Company</label>
+                                                        <input type="text" name="company" class="{{ $inputClass }}"
+                                                            value="{{ $customer->company }}">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Contact Person</label>
+                                                        <input type="text" name="contact_person"
+                                                            class="{{ $inputClass }}"
+                                                            value="{{ $customer->contact_person }}">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Email</label>
+                                                        <input type="email" name="email" class="{{ $inputClass }}"
+                                                            value="{{ $customer->email }}">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Phone</label>
+                                                        <input type="text" name="phone" class="{{ $inputClass }}"
+                                                            value="{{ $customer->phone }}">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">TIN</label>
+                                                        <input type="text" name="TIN" class="{{ $inputClass }}"
+                                                            value="{{ $customer->TIN }}">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">VRN</label>
+                                                        <input type="text" name="VRN" class="{{ $inputClass }}"
+                                                            value="{{ $customer->VRN }}">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Address</label>
+                                                        <input type="text" name="address" class="{{ $inputClass }}"
+                                                            value="{{ $customer->address }}">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Abbreviation</label>
+                                                        <input type="text" name="abbreviation"
+                                                            class="{{ $inputClass }}"
+                                                            value="{{ $customer->abbreviation }}">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Status</label>
+                                                        <select name="status" class="{{ $inputClass }}">
+                                                            <option value="1"
+                                                                {{ $customer->status == 1 ? 'selected' : '' }}>Active
+                                                            </option>
+                                                            <option value="0"
+                                                                {{ $customer->status == 0 ? 'selected' : '' }}>Inactive
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Credit Term (days)</label>
+                                                        <input type="number" name="credit_term"
+                                                            class="{{ $inputClass }}"
+                                                            value="{{ $customer->credit_term }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-alt-primary">
+                                                    <i class="fa fa-save me-1"></i> Update
+                                                </button>
+                                                <button type="button" class="btn btn-alt-secondary"
+                                                    data-bs-dismiss="modal">Cancel</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
                     </tbody>
+
                 </table>
                 {{ $customers->links() }}
             </div>
