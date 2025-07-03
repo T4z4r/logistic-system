@@ -132,8 +132,9 @@ class UserController extends Controller
         return redirect()->route('users.active')->with('success', 'User updated successfully.');
     }
 
-    public function destroy(User $user)
+    public function destroy($userId)
     {
+        $user = User::where('id', $userId)->first();
         $user->delete();
         return redirect()->route('users.active')->with('success', 'User deleted successfully.');
     }
