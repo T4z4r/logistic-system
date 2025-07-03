@@ -63,7 +63,7 @@
                         <i class="fa fa-plus"></i> Add Customer
                     </button>
 
-                    <a href="{{ route('customers.inactive') }}" class="btn btn-secondary">View Inactive Customers</a>
+                    {{-- <a href="{{ route('customers.inactive') }}" class="btn btn-secondary">View Inactive Customers</a> --}}
                 </div>
             </div>
             <div class="block-content">
@@ -108,9 +108,7 @@
                                         style="display: inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-alt-danger swal-confirm-btn"
-                                        
-                                            >
+                                        <button type="submit" class="btn btn-sm btn-alt-danger swal-confirm-btn">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>

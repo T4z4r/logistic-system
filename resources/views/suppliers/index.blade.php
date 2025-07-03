@@ -32,10 +32,10 @@
     <div class="content1 p-2 rounded-0">
 
         <!-- Suppliers Block -->
-        <div class="block block-rounded shadow-sm p-3 rounded-0">
+        <div class="block block-rounded shadow-sm  rounded-0">
             <div class="block-header block-header-default">
                 <h3 class="block-title">Suppliers List</h3>
-                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                <button type="button" class="btn btn-alt-primary btn-sm" data-bs-toggle="modal"
                     data-bs-target="#addSupplierModal">
                     <i class="fa fa-plus"></i> Add Supplier
                 </button>
@@ -70,7 +70,7 @@
                                     @endif
                                 </td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-primary editBtn" data-bs-toggle="modal"
+                                    <button class="btn btn-sm btn-alt-primary editBtn" data-bs-toggle="modal"
                                         data-bs-target="#editSupplierModal-{{ $supplier->id }}"
                                         data-id="{{ $supplier->id }}">
                                         <i class="fa fa-edit"></i>
@@ -79,7 +79,7 @@
                                         class="deleteForm d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="button" class="btn btn-sm btn-danger deleteBtn">
+                                        <button type="button" class="btn btn-sm btn-alt-danger deleteBtn">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
@@ -89,7 +89,7 @@
                             <!-- Edit Modal -->
                             <div class="modal fade" id="editSupplierModal-{{ $supplier->id }}" tabindex="-1"
                                 aria-labelledby="editSupplierModalLabel-{{ $supplier->id }}" aria-hidden="true">
-                                <div class="modal-dialog">
+                                <div class="modal-dialog modal-lg modal-dialog-centered">
                                     <form action="{{ route('suppliers.update', $supplier->id) }}" method="POST">
                                         @method('put')
                                         @csrf
@@ -162,7 +162,7 @@
 
     <!-- Create/Edit Modal -->
     <div class="modal fade" id="addSupplierModal" tabindex="-1" aria-labelledby="addSupplierModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <form action="{{ route('suppliers.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="id" id="supplier_id">
@@ -175,22 +175,25 @@
 
                         <div class="mb-3">
                             <label>Name</label>
-                            <input type="text" name="name" id="name" class="form-control" required>
+                            <input type="text" name="name" id="name" class="form-control" required
+                                placeholder="Enter supplier name">
                         </div>
 
                         <div class="mb-3">
                             <label>Email</label>
-                            <input type="email" name="email" id="email" class="form-control">
+                            <input type="email" name="email" id="email" class="form-control"
+                                placeholder="Enter supplier email">
                         </div>
 
                         <div class="mb-3">
                             <label>Phone</label>
-                            <input type="text" name="phone" id="phone" class="form-control">
+                            <input type="text" name="phone" id="phone" class="form-control"
+                                placeholder="Enter supplier phone">
                         </div>
 
                         <div class="mb-3">
                             <label>Address</label>
-                            <textarea name="address" id="address" class="form-control"></textarea>
+                            <textarea name="address" id="address" class="form-control" placeholder="Enter supplier address"></textarea>
                         </div>
 
                         <div class="mb-3">
