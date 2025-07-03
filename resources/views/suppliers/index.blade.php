@@ -23,7 +23,7 @@
     <!-- END Hero -->
 
     <!-- Page Content -->
-    <div class="content p-2 rounded-0">
+    <div class="content1 p-2 rounded-0">
         <!-- Suppliers Block -->
         <div class="block block-rounded shadow-sm rounded-0">
             <div class="block-header block-header-default">
@@ -66,10 +66,10 @@
                                         <i class="fa fa-edit"></i>
                                     </button>
                                     <form action="{{ route('suppliers.destroy', $supplier->id) }}" method="POST"
-                                        class="deleteForm d-inline">
+                                        class=" d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="button" class="btn btn-sm btn-alt-danger deleteBtn">
+                                        <button type="button" class="btn btn-sm btn-alt-danger swal-confirm-btn">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
