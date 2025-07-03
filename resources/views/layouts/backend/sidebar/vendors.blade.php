@@ -13,7 +13,7 @@
         <a class="nav-main-link{{ request()->is('suppliers') || request()->is('suppliers/*') ? ' active' : '' }}"
             href="{{ route('suppliers.index') }}">
             <i class="nav-main-link-icon fa fa-user text-red"></i>
-            <span class="nav-main-link-name">Supplies </span>
+            <span class="nav-main-link-name">Suppliers </span>
         </a>
     </li>
 @endcan
