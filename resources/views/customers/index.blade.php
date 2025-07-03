@@ -109,7 +109,9 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger swal-confirm-btn"
-                                            onclick="return confirm('Are you sure?')">Delete</button>
+                                            onclick="return confirm('Are you sure?')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
                                     </form>
                                 </td>
                             </tr>
@@ -117,7 +119,7 @@
                             <!-- Edit Modal -->
                             <div class="modal fade" id="editCustomerModal{{ $customer->id }}" tabindex="-1"
                                 aria-labelledby="editModalLabel{{ $customer->id }}" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
+                                <div class="modal-dialog  modal-xl modal-dialog-scrollable">
                                     <div class="modal-content">
                                         <form action="{{ route('customers.update', $customer->id) }}" method="POST">
                                             @csrf
