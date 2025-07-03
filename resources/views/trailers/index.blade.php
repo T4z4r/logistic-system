@@ -63,7 +63,7 @@
                         <i class="fa fa-plus"></i>
                         Add New Trailer
                     </a> --}}
-                    <button type="button" class="btn btn-alt-success mb-2" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-alt-primary mb-2" data-bs-toggle="modal"
                         data-bs-target="#createTrailerModal">
                         <i class="fa fa-plus"></i> Add Trailer
                     </button>
@@ -118,10 +118,12 @@
                                     {{ $assignment ? $assignment->truck?->plate_number : 'None' }}
                                 </td>
                                 <td>
-                                    <a href="{{ route('trailers.edit', $trailer->id) }}"
-                                        class="btn btn-sm btn-alt-primary">
+                                    <button class="btn btn-sm btn-alt-primary" data-bs-toggle="modal"
+                                        data-bs-target="#editTrailerModal{{ $trailer->id }}">
                                         <i class="fa fa-edit"></i>
-                                    </a>
+                                    </button>
+
+
                                     <form action="{{ route('trailers.delete', $trailer->id) }}" method="POST"
                                         style="display: inline;">
                                         @csrf
@@ -161,6 +163,84 @@
 
     <!-- Assign Truck Modals -->
     @foreach ($trailers as $trailer)
+        <!-- Edit Trailer Modal -->
+        <div class="modal fade" id="editTrailerModal{{ $trailer->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="editTrailerLabel{{ $trailer->id }}" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-slideleft" role="document">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header bg-body-light">
+                        <h5 class="modal-title fw-bold" id="editTrailerLabel{{ $trailer->id }}">
+                            <i class="fa fa-edit text-primary me-1"></i> Edit Trailer - {{ $trailer->plate_number }}
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('trailers.update', $trailer->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="plate_number{{ $trailer->id }}" class="form-label">Plate Number</label>
+                                    <input type="text" name="plate_number" id="plate_number{{ $trailer->id }}"
+                                        class="form-control" value="{{ $trailer->plate_number }}">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="purchase_date{{ $trailer->id }}" class="form-label">Purchase Date</label>
+                                    <input type="date" name="purchase_date" id="purchase_date{{ $trailer->id }}"
+                                        class="form-control" value="{{ $trailer->purchase_date }}">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="amount{{ $trailer->id }}" class="form-label">Amount</label>
+                                    <input type="number" step="0.01" name="amount" id="amount{{ $trailer->id }}"
+                                        class="form-control" value="{{ $trailer->amount }}">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="capacity{{ $trailer->id }}" class="form-label">Capacity</label>
+                                    <input type="number" step="0.01" name="capacity"
+                                        id="capacity{{ $trailer->id }}" class="form-control"
+                                        value="{{ $trailer->capacity }}">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="manufacturer{{ $trailer->id }}" class="form-label">Manufacturer</label>
+                                    <input type="text" name="manufacturer" id="manufacturer{{ $trailer->id }}"
+                                        class="form-control" value="{{ $trailer->manufacturer }}">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="length{{ $trailer->id }}" class="form-label">Length</label>
+                                    <input type="number" step="0.01" name="length" id="length{{ $trailer->id }}"
+                                        class="form-control" value="{{ $trailer->length }}">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="trailer_type{{ $trailer->id }}" class="form-label">Trailer Type</label>
+                                    <input type="text" name="trailer_type" id="trailer_type{{ $trailer->id }}"
+                                        class="form-control" value="{{ $trailer->trailer_type }}">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="status{{ $trailer->id }}" class="form-label">Status</label>
+                                    <select name="status" id="status{{ $trailer->id }}" class="form-control">
+                                        <option value="1" {{ $trailer->status == 1 ? 'selected' : '' }}>Active
+                                        </option>
+                                        <option value="0" {{ $trailer->status == 0 ? 'selected' : '' }}>Inactive
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="text-end mt-3">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-save me-1"></i> Update Trailer
+                                </button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Edit Trailer Modal -->
+
+
         <div class="modal fade" id="assignTruckModal{{ $trailer->id }}" tabindex="-1"
             aria-labelledby="assignTruckModalLabel{{ $trailer->id }}" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
