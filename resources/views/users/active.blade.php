@@ -101,9 +101,11 @@
                                 <td>{{ $user->lineManager?->name ?? 'N/A' }}</td>
                                 <td>{{ $user->status ? 'Active' : 'Inactive' }}</td>
                                 <td>
-                                    <a href="{{ route('users.show', $user) }}" class="btn btn-sm btn-alt-primary">
+                                    <button type="button" class="btn btn-sm btn-alt-primary" data-bs-toggle="modal"
+                                        data-bs-target="#viewUserModal{{ $user->id }}">
                                         <i class="fa fa-list"></i>
-                                    </a>
+                                    </button>
+
                                     <!-- Trigger Edit Modal -->
                                     <button type="button" class="btn btn-sm btn-alt-primary" data-bs-toggle="modal"
                                         data-bs-target="#editUserModal{{ $user->id }}">
@@ -122,6 +124,7 @@
 
                                 </td>
                             </tr>
+
 
                             <!-- Edit Modal -->
                             <div class="modal fade" id="editUserModal{{ $user->id }}" tabindex="-1"
@@ -334,6 +337,66 @@
         </div>
     </div>
 
+
+    @foreach ($users as $user)
+        <!-- View User Modal -->
+        <div class="modal fade" id="viewUserModal{{ $user->id }}" tabindex="-1"
+            aria-labelledby="viewUserModalLabel{{ $user->id }}" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title" id="viewUserModalLabel{{ $user->id }}">User Details:
+                            {{ $user->name }}</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-bordered table-striped">
+                            <tbody>
+                                <tr>
+                                    <th style="width: 30%">Name</th>
+                                    <td>{{ $user->name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>{{ $user->email }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Department</th>
+                                    <td>{{ $user->department?->name ?? 'N/A' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Position</th>
+                                    <td>{{ $user->position?->name ?? 'N/A' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Line Manager</th>
+                                    <td>{{ $user->lineManager?->name ?? 'N/A' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <td>
+                                        @if ($user->status)
+                                            <span class="badge bg-success">Active</span>
+                                        @else
+                                            <span class="badge bg-danger">Inactive</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Created At</th>
+                                    <td>{{ $user->created_at->format('Y-m-d H:i') }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
