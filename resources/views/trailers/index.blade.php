@@ -187,7 +187,7 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="purchase_date{{ $trailer->id }}" class="form-label">Purchase Date</label>
                                     <input type="date" name="purchase_date" id="purchase_date{{ $trailer->id }}"
-                                        class="form-control" value="{{ $trailer->purchase_date }}">
+                                        class="form-control" value="{{ optional($trailer->purchase_date)->format('Y-m-d') }}">
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="amount{{ $trailer->id }}" class="form-label">Amount</label>
