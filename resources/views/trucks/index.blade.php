@@ -124,9 +124,9 @@
                                     {{ $truck->created_at->format('d M Y ') ?? 'N/A' }}
                                 </td>
                                 <td>
-                                    <button class="btn btn-sm btn-info" data-bs-toggle="modal"
+                                    <button class="btn btn-sm btn-alt-primary" data-bs-toggle="modal"
                                         data-bs-target="#viewTruckModal{{ $truck->id }}">
-                                        <i class="fa fa-eye"></i> View
+                                        <i class="fa fa-list"></i>
                                     </button>
 
                                     <button type="button" class="btn btn-sm btn-alt-primary" data-bs-toggle="modal"
@@ -294,7 +294,7 @@
         <!-- Edit Truck Modal -->
         <div class="modal fade" id="editTruckModal{{ $truck->id }}" tabindex="-1"
             aria-labelledby="editTruckModalLabel{{ $truck->id }}" aria-hidden="true">
-            <div class="modal-dialog modal-xl  modal-dialog-scrollable">
+            <div class="modal-dialog modal-xl ">
                 <div class="modal-content">
                     <form action="{{ route('trucks.update', $truck->id) }}" method="POST">
                         @csrf
@@ -518,7 +518,7 @@
     <!-- Scrollable Modal for Create Truck -->
     <div class="modal fade" id="createTruckModal" tabindex="-1" aria-labelledby="createTruckModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-dialog modal-xl ">
             <div class="modal-content">
                 <div class="modal-header bg-body-light">
                     <h5 class="modal-title fw-bold text-main" id="createTruckModalLabel">
