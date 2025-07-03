@@ -34,7 +34,7 @@
     <!-- END Hero -->
 
     <!-- Page Content -->
-    <div class="content p-2 rounded-0">
+    <div class="content1 p-2 rounded-0">
         <!-- Trip Expenses Block -->
         <div class="block block-rounded shadow-sm py-5 rounded-0">
             <div class="block-header">
