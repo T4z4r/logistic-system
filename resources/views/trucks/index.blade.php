@@ -612,7 +612,7 @@
 
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="col-md-4 mb-4">
+                                <div class=" mb-4">
                                     <label class="form-label" for="manufacturer">Manufacturer</label>
                                     <input type="text" name="manufacturer" id="manufacturer"
                                         class="form-control @error('manufacturer') is-invalid @enderror"
@@ -624,12 +624,16 @@
                             <div class="col-md-6">
                                 <div class="mb-4">
                                     <label class="form-label" for="status">Status</label>
-                                    <select name="status" id="status" class="form-control">
-                                        <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Active
+                                    <select name="status" id="status"
+                                        class="form-control @error('status') is-invalid @enderror">
+                                        <option value="1" {{ old('status', 1) == 1 ? 'selected' : '' }}>Active
                                         </option>
-                                        <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>
-                                            Inactive</option>
+                                        <option value="0" {{ old('status') == 0 ? 'selected' : '' }}>Inactive
+                                        </option>
                                     </select>
+                                    @error('status')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
