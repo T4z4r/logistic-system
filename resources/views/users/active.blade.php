@@ -63,7 +63,7 @@
                         <i class="fa fa-plus"></i>
                         Add New User
                     </a> --}}
-                    <button type="button" class="btn btn-primary btn-sm mb-3" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-alt-primary btn-sm " data-bs-toggle="modal"
                         data-bs-target="#createUserModal">
                         <i class="fa fa-user-plus me-1"></i> Create User
                     </button>
