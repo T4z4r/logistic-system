@@ -124,9 +124,11 @@
                                     {{ $truck->created_at->format('d M Y ') ?? 'N/A' }}
                                 </td>
                                 <td>
-                                    <a href="{{ route('trucks.show', $truck->id) }}" class="btn btn-sm btn-alt-primary">
-                                        <i class="fa fa-list"></i>
-                                    </a>
+                                    <button class="btn btn-sm btn-info" data-bs-toggle="modal"
+                                        data-bs-target="#viewTruckModal{{ $truck->id }}">
+                                        <i class="fa fa-eye"></i> View
+                                    </button>
+
                                     <button type="button" class="btn btn-sm btn-alt-primary" data-bs-toggle="modal"
                                         data-bs-target="#editTruckModal{{ $truck->id }}">
                                         <i class="fa fa-edit"></i>
@@ -171,6 +173,124 @@
 
     <!-- Assign Driver Modals -->
     @foreach ($trucks as $truck)
+        <!-- Truck Details Modal -->
+        <div class="modal fade" id="viewTruckModal{{ $truck->id }}" tabindex="-1"
+            aria-labelledby="viewTruckModalLabel{{ $truck->id }}" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="viewTruckModalLabel{{ $truck->id }}">Truck Details -
+                            {{ $truck->plate_number }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @php
+                            $types = [1 => 'Semi', 2 => 'Pulling', 3 => 'Private'];
+                        @endphp
+                        <table class="table table-bordered table-striped table-sm">
+                            <tbody>
+                                <tr>
+                                    <th>Purchase Date</th>
+                                    <td>{{ $truck->purchase_date }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Plate Number</th>
+                                    <td>{{ $truck->plate_number }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Body Type</th>
+                                    <td>{{ $truck->body_type }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Truck Type</th>
+                                    <td>{{ $types[$truck->truck_type] ?? 'N/A' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Fuel Type</th>
+                                    <td>{{ $truck->fuel_type }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Fuel Capacity</th>
+                                    <td>{{ $truck->fuel_capacity }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Trailer Connection</th>
+                                    <td>{{ $truck->trailer_connection }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Trailer Capacity</th>
+                                    <td>{{ $truck->trailer_capacity }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Transmission</th>
+                                    <td>{{ $truck->transmission }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Mileage</th>
+                                    <td>{{ $truck->mileage }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Vehicle Model</th>
+                                    <td>{{ $truck->vehicle_model }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Manufacturer</th>
+                                    <td>{{ $truck->manufacturer }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Year</th>
+                                    <td>{{ $truck->year }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Color</th>
+                                    <td>{{ $truck->color }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Engine Number</th>
+                                    <td>{{ $truck->engine_number }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Engine Capacity</th>
+                                    <td>{{ $truck->engine_capacity }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Gross Weight</th>
+                                    <td>{{ $truck->gross_weight }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Location</th>
+                                    <td>{{ $truck->location }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <td>
+                                        <span class="badge bg-{{ $truck->status ? 'success' : 'danger' }}">
+                                            {{ $truck->status ? 'Active' : 'Inactive' }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Added By</th>
+                                    <td>{{ optional($truck->addedBy)->name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Amount</th>
+                                    <td>{{ number_format($truck->amount, 2) }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Capacity</th>
+                                    <td>{{ $truck->capacity }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-alt-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Edit Truck Modal -->
         <div class="modal fade" id="editTruckModal{{ $truck->id }}" tabindex="-1"
             aria-labelledby="editTruckModalLabel{{ $truck->id }}" aria-hidden="true">
