@@ -52,11 +52,11 @@
     <!-- END Hero -->
 
     <!-- Page Content -->
-    <div class="content p-2">
+    <div class="content1 p-2">
         <!-- Active Customers Block -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Active Customers List</h3>
+                <h3 class="block-title"> Customers List</h3>
                 <div class="block-options">
                     {{-- <a href="{{ route('customers.create') }}" class="btn btn-primary">Add New Customer</a> --}}
                     <button class="btn btn-alt-primary" data-bs-toggle="modal" data-bs-target="#createCustomerModal">
@@ -98,9 +98,9 @@
                                 <td>{{ $customer->status ? 'Active' : 'Inactive' }}</td>
                                 <td>
                                     <!-- Edit Button -->
-                                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                    <button type="button" class="btn btn-sm btn-alt-primary" data-bs-toggle="modal"
                                         data-bs-target="#editCustomerModal{{ $customer->id }}">
-                                        Edit
+                                        <i class="fa fa-edit"></i>
                                     </button>
 
                                     <!-- Delete Form -->
@@ -108,7 +108,7 @@
                                         style="display: inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger"
+                                        <button type="submit" class="btn btn-sm btn-danger swal-confirm-btn"
                                             onclick="return confirm('Are you sure?')">Delete</button>
                                     </form>
                                 </td>
