@@ -61,7 +61,7 @@
                     {{-- <a href="{{ route('routes.create') }}" class="btn btn-alt-primary btn-sm">
                         <i class="fa fa-plus me-2"></i> Create Route
                     </a> --}}
-                    <button type="button" class="btn btn-main mb-3" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-alt-pimary  mb-3" data-bs-toggle="modal"
                         data-bs-target="#createRouteModal">
                         <i class="fa fa-plus-circle me-1"></i> Add New Route
                     </button>
@@ -329,7 +329,7 @@
         aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header bg-main text-white">
+                <div class="modal-header bg-body-light">
                     <h5 class="modal-title" id="createRouteModalLabel"><i class="fa fa-road me-2"></i>Create Route</h5>
                     <button type="button" class="btn-close text-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
