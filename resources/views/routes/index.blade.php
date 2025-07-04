@@ -344,7 +344,7 @@
                                 @endforeach
                             </div>
                         @endif
-                        <div class="mb-4">
+                        <div class="mb-3">
                             <label class="form-label" for="name">Route Name <span
                                     class="text-danger">*</span></label>
                             <input type="text" value="{{ old('name') }}"
@@ -355,8 +355,8 @@
                             @enderror
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-4">
+                            <div class="col-md-12">
+                                <div class="mb-3">
                                     <label class="form-label" for="start_point">Starting Point <span
                                             class="text-danger">*</span></label>
                                     <input type="text" class="form-control @error('start_point') is-invalid @enderror"
@@ -367,8 +367,8 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="mb-4">
+                            <div class="col-md-12">
+                                <div class="mb-3">
                                     <label class="form-label" for="destination">Destination Point <span
                                             class="text-danger">*</span></label>
                                     <input type="text" class="form-control @error('destination') is-invalid @enderror"
@@ -379,8 +379,8 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="mb-4">
+                            <div class="col-md-12">
+                                <div class="mb-3">
                                     <label class="form-label" for="estimated_distance">Estimated Distance (Km) <span
                                             class="text-danger">*</span></label>
                                     <input type="number" min="0" step="any"
@@ -392,8 +392,8 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="mb-4">
+                            <div class="col-md-12">
+                                <div class="mb-3">
                                     <label class="form-label" for="estimated_days">Planned Transit Time (Days) <span
                                             class="text-danger">*</span></label>
                                     <input type="number" min="0" step="any"
