@@ -492,19 +492,19 @@
     </div>
     <script>
         $("#add_cost_form").submit(function(e) {
-            $("#add_cost_btn").html("<i class='fa fa-spinner spinner me-2'></i> Saving Route Cost ...").addClass(
+            $("#add_cost_btn").html("<i class='fa fa-spinner  me-2'></i> Saving Route Cost ...").addClass(
                 'disabled');
         });
     </script>
     <script>
         $("#update_cost_form").submit(function(e) {
-            $("#update_cost_btn").html("<i class='fa fa-spinner spinner me-2'></i> Updating Route Cost ...")
+            $("#update_cost_btn").html("<i class='fa fa-spinner  me-2'></i> Updating Route Cost ...")
                 .addClass('disabled');
         });
     </script>
     <script>
         $("#fuel_cost_form").submit(function(e) {
-            $("#fuel_cost_btn").html("<i class='fa fa-spinner spinner me-2'></i> Saving Fuel Cost ...").addClass(
+            $("#fuel_cost_btn").html("<i class='fa fa-spinner  me-2'></i> Saving Fuel Cost ...").addClass(
                 'disabled');
         });
     </script>
