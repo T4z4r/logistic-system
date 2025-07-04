@@ -154,7 +154,7 @@
                                             {{-- @endcan
                                             @can('edit-route') --}}
                                             <button type="button" class="btn btn-sm btn-alt-primary" data-bs-toggle="modal"
-                                                data-bs-target="#editRouteModal{{ $route->id }}">
+                                                data-bs-target="#editRouteModal{{ $item->id }}">
                                                 <i class="fa fa-edit me-1"></i>
                                             </button>
                                             {{-- @endcan --}}
@@ -169,69 +169,69 @@
                                     </tr>
 
                                     <!-- Edit Modal -->
-                                    <div class="modal fade" id="editRouteModal{{ $route->id }}" tabindex="-1"
-                                        aria-labelledby="editRouteModalLabel{{ $route->id }}" aria-hidden="true">
+                                    <div class="modal fade" id="editRouteModal{{ $item->id }}" tabindex="-1"
+                                        aria-labelledby="editRouteModalLabel{{ $item->id }}" aria-hidden="true">
                                         <div class="modal-dialog modal-lg modal-dialog-slideleft">
                                             <div class="modal-content">
                                                 <div class="modal-header bg-body-light">
-                                                    <h5 class="modal-title" id="editRouteModalLabel{{ $route->id }}">
-                                                        Edit Route - {{ $route->name }}
+                                                    <h5 class="modal-title" id="editRouteModalLabel{{ $item->id }}">
+                                                        Edit Route - {{ $item->name }}
                                                     </h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
-                                                <form action="{{ route('routes.update', $route->id) }}" method="POST">
+                                                <form action="{{ route('routes.update', $item->id) }}" method="POST">
                                                     @csrf
                                                     @method('PUT')
                                                     <div class="modal-body">
                                                         <div class="mb-3">
-                                                            <label for="name{{ $route->id }}" class="form-label">Route
+                                                            <label for="name{{ $item->id }}" class="form-label">Route
                                                                 Name</label>
                                                             <input type="text" name="name"
-                                                                id="name{{ $route->id }}" class="form-control"
-                                                                value="{{ old('name', $route->name) }}">
+                                                                id="name{{ $item->id }}" class="form-control"
+                                                                value="{{ old('name', $item->name) }}">
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="start_point{{ $route->id }}"
+                                                            <label for="start_point{{ $item->id }}"
                                                                 class="form-label">Start Point</label>
                                                             <input type="text" name="start_point"
-                                                                id="start_point{{ $route->id }}" class="form-control"
-                                                                value="{{ old('start_point', $route->start_point) }}">
+                                                                id="start_point{{ $item->id }}" class="form-control"
+                                                                value="{{ old('start_point', $item->start_point) }}">
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="destination{{ $route->id }}"
+                                                            <label for="destination{{ $item->id }}"
                                                                 class="form-label">Destination</label>
                                                             <input type="text" name="destination"
-                                                                id="destination{{ $route->id }}" class="form-control"
-                                                                value="{{ old('destination', $route->destination) }}">
+                                                                id="destination{{ $item->id }}" class="form-control"
+                                                                value="{{ old('destination', $item->destination) }}">
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="estimated_distance{{ $route->id }}"
+                                                            <label for="estimated_distance{{ $item->id }}"
                                                                 class="form-label">Estimated Distance (km)</label>
                                                             <input type="number" step="0.01"
                                                                 name="estimated_distance"
-                                                                id="estimated_distance{{ $route->id }}"
+                                                                id="estimated_distance{{ $item->id }}"
                                                                 class="form-control"
-                                                                value="{{ old('estimated_distance', $route->estimated_distance) }}">
+                                                                value="{{ old('estimated_distance', $item->estimated_distance) }}">
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="estimated_days{{ $route->id }}"
+                                                            <label for="estimated_days{{ $item->id }}"
                                                                 class="form-label">Estimated Days</label>
                                                             <input type="number" name="estimated_days"
-                                                                id="estimated_days{{ $route->id }}"
+                                                                id="estimated_days{{ $item->id }}"
                                                                 class="form-control"
-                                                                value="{{ old('estimated_days', $route->estimated_days) }}">
+                                                                value="{{ old('estimated_days', $item->estimated_days) }}">
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="status{{ $route->id }}"
+                                                            <label for="status{{ $item->id }}"
                                                                 class="form-label">Status</label>
-                                                            <select name="status" id="status{{ $route->id }}"
+                                                            <select name="status" id="status{{ $item->id }}"
                                                                 class="form-select">
                                                                 <option value="1"
-                                                                    {{ old('status', $route->status) == 1 ? 'selected' : '' }}>
+                                                                    {{ old('status', $item->status) == 1 ? 'selected' : '' }}>
                                                                     Active</option>
                                                                 <option value="0"
-                                                                    {{ old('status', $route->status) == 0 ? 'selected' : '' }}>
+                                                                    {{ old('status', $item->status) == 0 ? 'selected' : '' }}>
                                                                     Inactive</option>
                                                             </select>
                                                         </div>
