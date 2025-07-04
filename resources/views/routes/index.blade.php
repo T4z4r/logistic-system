@@ -153,10 +153,10 @@
                                             </a>
                                             {{-- @endcan
                                             @can('edit-route') --}}
-                                            <a href="{{ route('routes.edit', $item->id) }}" title="Edit Route"
-                                                class="btn btn-sm btn-alt-primary">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
+                                            <button type="button" class="btn btn-sm btn-alt-primary" data-bs-toggle="modal"
+                                                data-bs-target="#editRouteModal{{ $route->id }}">
+                                                <i class="fa fa-edit me-1"></i>
+                                            </button>
                                             {{-- @endcan --}}
                                             {{-- @can('deactivate-route') --}}
                                             <a href="javascript:void(0)" title="Deactivate Route"
@@ -167,6 +167,90 @@
                                             {{-- @endcan --}}
                                         </td>
                                     </tr>
+
+                                    <!-- Edit Modal -->
+                                    <div class="modal fade" id="editRouteModal{{ $route->id }}" tabindex="-1"
+                                        aria-labelledby="editRouteModalLabel{{ $route->id }}" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg modal-dialog-slideleft">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-body-light">
+                                                    <h5 class="modal-title" id="editRouteModalLabel{{ $route->id }}">
+                                                        Edit Route - {{ $route->name }}
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <form action="{{ route('routes.update', $route->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <div class="modal-body">
+                                                        <div class="mb-3">
+                                                            <label for="name{{ $route->id }}" class="form-label">Route
+                                                                Name</label>
+                                                            <input type="text" name="name"
+                                                                id="name{{ $route->id }}" class="form-control"
+                                                                value="{{ old('name', $route->name) }}">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="start_point{{ $route->id }}"
+                                                                class="form-label">Start Point</label>
+                                                            <input type="text" name="start_point"
+                                                                id="start_point{{ $route->id }}" class="form-control"
+                                                                value="{{ old('start_point', $route->start_point) }}">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="destination{{ $route->id }}"
+                                                                class="form-label">Destination</label>
+                                                            <input type="text" name="destination"
+                                                                id="destination{{ $route->id }}" class="form-control"
+                                                                value="{{ old('destination', $route->destination) }}">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="estimated_distance{{ $route->id }}"
+                                                                class="form-label">Estimated Distance (km)</label>
+                                                            <input type="number" step="0.01"
+                                                                name="estimated_distance"
+                                                                id="estimated_distance{{ $route->id }}"
+                                                                class="form-control"
+                                                                value="{{ old('estimated_distance', $route->estimated_distance) }}">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="estimated_days{{ $route->id }}"
+                                                                class="form-label">Estimated Days</label>
+                                                            <input type="number" name="estimated_days"
+                                                                id="estimated_days{{ $route->id }}"
+                                                                class="form-control"
+                                                                value="{{ old('estimated_days', $route->estimated_days) }}">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="status{{ $route->id }}"
+                                                                class="form-label">Status</label>
+                                                            <select name="status" id="status{{ $route->id }}"
+                                                                class="form-select">
+                                                                <option value="1"
+                                                                    {{ old('status', $route->status) == 1 ? 'selected' : '' }}>
+                                                                    Active</option>
+                                                                <option value="0"
+                                                                    {{ old('status', $route->status) == 0 ? 'selected' : '' }}>
+                                                                    Inactive</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <input type="hidden" name="created_by"
+                                                                value="{{ auth()->user()->id }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer bg-body-light">
+                                                        <button type="button" class="btn btn-sm btn-alt-secondary"
+                                                            data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-sm btn-alt-primary">
+                                                            <i class="fa fa-save me-1"></i> Update Route
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endforeach
                             </tbody>
                         </table>
