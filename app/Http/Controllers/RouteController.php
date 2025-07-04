@@ -18,7 +18,7 @@ class RouteController extends Controller
 {
 
 
-     public function index()
+    public function index()
     {
         DB::beginTransaction(); // Start the transaction
 
@@ -71,7 +71,7 @@ class RouteController extends Controller
 
 
 
-     public function show($id)
+    public function show($id)
     {
         $data['route'] = Route::find($id);
         $data['common'] = CommonCost::latest()->get();
@@ -178,7 +178,7 @@ class RouteController extends Controller
     }
 
 
-        // For Saving Route Cost
+    // For Saving Route Cost
 
     public function saveRouteCost(Request $request)
     {
@@ -220,7 +220,7 @@ class RouteController extends Controller
             $cost->name = $common->name;
             $cost->cost_id = $request->cost_id;
             $cost->route_id = $request->route_id;
-            $cost->account_code = $common->account?->code??0000;
+            $cost->account_code = $common->account?->code ?? 0000;
             $cost->amount = $request->amount;
             $cost->type = $request->type;
             $cost->quantity = $request->quantity;
@@ -258,8 +258,46 @@ class RouteController extends Controller
         }
     }
 
+    public function updateRouteCost(Request $request)
+    {
+        $cost = RouteCost::find($request->id);
 
-        public function deleteRouteCost($id)
+        if ($cost->quantity > 0 || $request->quantity > 0) {
+            $common = FuelCost::find($cost->cost_id);
+            if ($common == null) {
+                return back()->with('msg', 'Sorry,the given route cost does not need quantity !!');
+            }
+            $cost->vat = $common->vat;
+            $cost->quantity = $request->quantity;
+            // $cost->editable=$common->editable;
+        } else {
+            $common = CommonCost::find($cost->cost_id);
+            $cost->vat = $common->vat;
+            $cost->amount = $request->amount;
+            // $cost->editable=$common->editable;
+        }
+
+        // $common=CommonCost::find($request->cost_id);
+        $cost->editable = $request->editable == true ? '1' : '0';
+        $cost->advancable = $request->advancable == true ? '1' : '0';
+        // $cost->return = $request->return == true ? '1' : '0';
+        $cost->vat = $common->vat;
+        $cost->type = $request->type;
+        $cost->name = $request->name;
+        $cost->amount = $request->amount;
+        // $cost->account_code= $common->account->code;
+        $cost->currency_id = $request->currency_id;
+        $currency = Currency::find($request->currency_id);
+        $cost->real_amount = $currency->rate * $request->amount;
+        $cost->rate = $currency->rate;
+
+        $cost->update();
+        $msg = "Route Cost Was Updated Successfully !";
+        return back()->with('msg', $msg);
+    }
+
+
+    public function deleteRouteCost($id)
     {
         DB::beginTransaction(); // Start the transaction
 
@@ -282,7 +320,6 @@ class RouteController extends Controller
 
             $msg = "Route Cost Was Deleted Successfully !";
             return back()->with('success', $msg);
-
         } catch (\Exception $e) {
             DB::rollBack(); // Rollback the transaction in case of error
 
@@ -295,7 +332,7 @@ class RouteController extends Controller
     }
 
 
-     // For Activate Route
+    // For Activate Route
     public function activateRoute($id)
     {
         DB::beginTransaction(); // Start the transaction
@@ -364,5 +401,4 @@ class RouteController extends Controller
             return back()->withErrors(['error' => 'An error occurred while deactivating the route. Please try again later.']);
         }
     }
-
 }
